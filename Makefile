@@ -24,6 +24,9 @@ transdir:
 init-translation-%: transdir translation-template
 	cp $(TRANSDIR)/$(PROJECT).pot $(TRANSDIR)/$(PROJECT)-$*.po
 
+update-translation-%: transdir
+	po4a-updatepo -f latex -m $(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po
+
 translation-template: transdir
 	po4a-gettextize -f latex -m $(PROJECT).tex -L Utf-8 -p $(TRANSDIR)/$(PROJECT).pot
 
