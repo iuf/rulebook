@@ -1,0 +1,9 @@
+# STRONG HTACCESS PROTECTION
+<Files ~ "^.*\.([Hh][Tt][Aa])">
+ order allow,deny
+ deny from all
+</Files>
+
+Options +Indexes
+IndexOptions +FancyIndexing
+IndexIgnore *.aux *.log *.toc

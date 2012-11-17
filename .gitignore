@@ -1,2 +1,3 @@
-/0_out
-/0_translations
+/out/*
+!/out/.htaccess
+/translations
