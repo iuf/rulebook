@@ -6,4 +6,4 @@
 
 Options +Indexes
 IndexOptions +FancyIndexing
-IndexIgnore *.aux *.log *.toc
+IndexIgnore *.aux *.log *.toc make.php
