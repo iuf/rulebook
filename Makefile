@@ -2,7 +2,7 @@ PROJECT='iuf-rulebook'
 SRCDIR='src'
 OUTDIR='out'
 TRANSDIR='translations'
-LATEXARGS= -halt-on-error -file-line-error -shell-escape -interaction=nonstopmode -output-directory=$(OUTDIR)
+LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
 
 all: original
 
@@ -15,8 +15,8 @@ translation-%: translate-% $(TRANSDIR)/$(PROJECT)-%-pdf
 
 %-pdf:
 	mkdir -p $(OUTDIR)
-	pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$*.tex && \
-	pdflatex $(LATEXARGS) $(SRCDIR)/$*.tex
+	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$*.tex && \
+	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) $(SRCDIR)/$*.tex
 
 
 transdir:
@@ -37,6 +37,6 @@ translate-%: transdir
 
 
 clean:
-	rm -rf $(OUTDIR)
+	rm -rf `find $(OUTDIR) -type f | grep -v '\.htaccess'`
 	rm -rf $(TRANSDIR)
 
