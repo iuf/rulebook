@@ -1,4 +1,2 @@
-/out/*
-!/out/.htaccess
-
+/out
 /translations
