@@ -1,17 +1,29 @@
-\documentclass{scrbook}
+\documentclass[a4paper,oneside]{scrbook}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 % \usepackage[nenglish]{babel}
 
+\usepackage{minitoc} % for table of contents per part
+\usepackage{hyperref} % clickable table of contents, index in pdf files
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
 \title{IUF Rulebook}
 \author{International Unicycling Federation}
-\date{2014}
+\date{\today}
 
 
 \begin{document}
 \maketitle
+
+\doparttoc
 \tableofcontents
 
 \include{1_general_rules_and_definitions}
