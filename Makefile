@@ -21,19 +21,19 @@ translation-%: translate-% $(TRANSDIR)/$(PROJECT)-%-pdf
 
 
 transdir:
-	mkdir -p $(TRANSDIR)
+	mkdir -p $(TRANSDIR)/templates
 
 init-translation-%: transdir translation-template
 	cp $(TRANSDIR)/$(PROJECT).pot $(TRANSDIR)/$(PROJECT)-$*.po
 
 update-translation-%: transdir
-	po4a-updatepo -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po
+	TEXINPUTS=$(SRCDIR): po4a-updatepo -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po
 
 translation-template: transdir
-	po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex -L Utf-8 -p $(TRANSDIR)/$(PROJECT).pot
+	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex -L Utf-8 -p $(TRANSDIR)/templates/$(PROJECT).pot
 
 translate-%: transdir
-	po4a-translate -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po -l $(TRANSDIR)/$(PROJECT)-$*.tex -k 0
+	TEXINPUTS=$(SRCDIR): po4a-translate -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po -l $(TRANSDIR)/$(PROJECT)-$*.tex -k 0
 
 
 
