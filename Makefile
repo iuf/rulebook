@@ -2,6 +2,7 @@ PROJECT='iuf-rulebook'
 SRCDIR='src'
 OUTDIR='out'
 TRANSDIR='translations'
+LATEXLOG='latex-build-log'
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
 
 all: original
@@ -15,8 +16,8 @@ translation-%: translate-% $(TRANSDIR)/$(PROJECT)-%-pdf
 
 %-pdf:
 	mkdir -p $(OUTDIR)
-	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$*.tex && \
-	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) $(SRCDIR)/$*.tex
+	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$*.tex 2>&1 > $(OUTDIR)/$(LATEXLOG) && \
+	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) $(SRCDIR)/$*.tex 2>&1 > $(OUTDIR)/$(LATEXLOG)
 
 
 transdir:
