@@ -1,4 +1,5 @@
 /out
-/translations
+/translated
+/po
 
 src/iuf-rulebook.texnicle

@@ -1,43 +1,69 @@
 PROJECT='iuf-rulebook'
+
 SRCDIR='src'
 OUTDIR='out'
-TRANSDIR='translations'
-LATEXLOG='latex-log'
+PODIR='po'
+TRANSLATEDDIR='translated'
+PO4ACHARSETS=-M Utf-8 -L Utf-8
+
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
 
-all: original
 
-original: $(PROJECT)-pdf
-
-translation-%: translate-% $(TRANSDIR)/$(PROJECT)-%-pdf
-	
+#TRANSLATED:=`for file in `find $(TRANSLATEDDIR)/*.tex`; do basename $(OUTDIR)/$file | sed "s/tex/pdf/"; done`
 
 
+all: master translated
 
-%-pdf:
+
+master:
 	mkdir -p $(OUTDIR)
-	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$*.tex 2>&1 | tee $(OUTDIR)/$(LATEXLOG) && \
-	TEXINPUTS=$(SRCDIR): pdflatex $(LATEXARGS) $(SRCDIR)/$*.tex 2>&1 | tee $(OUTDIR)/$(LATEXLOG)
+	TEXDIR=$(SRCDIR); \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $$TEXDIR/$(PROJECT).tex 2>&1 | tee $(OUTDIR)/$(PROJECT).tex.log && \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) $$TEXDIR/$(PROJECT).tex 2>&1 | tee $(OUTDIR)/$(PROJECT).tex.log; \
+
+translated: update-translation
+	mkdir -p $(TRANSLATEDDIR)
+	mkdir -p $(OUTDIR)
+	for file in `find $(TRANSLATEDDIR)/*.tex`; do \
+		TEXDIR=$(TRANSLATEDDIR); \
+		TEXFILE=`basename $$file`; \
+		#echo $$TEXDIR/$$TEXFILE: \
+		TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $$TEXDIR/$$TEXFILE 2>&1 | tee $(OUTDIR)/$$TEXFILE.log && \
+		TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) $$TEXDIR/$$TEXFILE 2>&1 | tee $(OUTDIR)/$$TEXFILE.log; \
+	done
+
+update-translation: translation-template
+	../pootle/manage.py sync_stores
+	TEXINPUTS=$(SRCDIR): po4a $(PO4ACHARSETS) po4a.cfg
+	chmod 0777 po/*
+	../pootle/manage.py update_stores
+
+translation-template: $(TRANSLATEDDIR) $(PODIR)
+	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -p $(PODIR)/template.pot
 
 
-transdir:
-	mkdir -p $(TRANSDIR)/templates
 
-init-translation-%: transdir translation-template
-	cp $(TRANSDIR)/$(PROJECT).pot $(TRANSDIR)/$(PROJECT)-$*.po
+$(OUTDIR):
 
-update-translation-%: transdir
-	TEXINPUTS=$(SRCDIR): po4a-updatepo -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po
+$(TRANSLATEDDIR):
 
-translation-template: transdir
-	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex -L Utf-8 -p $(TRANSDIR)/templates/$(PROJECT).pot
+$(PODIR):
+	mkdir -p $(PODIR)
 
-translate-%: transdir
-	TEXINPUTS=$(SRCDIR): po4a-translate -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po -l $(TRANSDIR)/$(PROJECT)-$*.tex -k 0
+
+
+#init-translation-%: transdir translation-template
+#	cp $(TRANSDIR)/$(PROJECT).pot $(TRANSDIR)/$(PROJECT)-$*.po
+
+#update-translation-%: transdir
+#	TEXINPUTS=$(SRCDIR): po4a-updatepo -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po
+
+#translate-%: transdir
+#	TEXINPUTS=$(SRCDIR): po4a-translate -f latex -m $(SRCDIR)/$(PROJECT).tex -p $(TRANSDIR)/$(PROJECT)-$*.po -l $(TRANSDIR)/$(PROJECT)-$*.tex -k 0
 
 
 
 clean:
 	rm -rf $(OUTDIR)/*
-	rm -rf $(TRANSDIR)/*
+	rm -rf $(TRANSLATEDDIR)
 
