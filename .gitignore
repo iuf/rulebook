@@ -14,3 +14,4 @@
 *.log
 *.mtc*
 *.synctex.gz
+*.DS_Store
