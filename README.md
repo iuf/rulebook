@@ -9,5 +9,7 @@ The official IUF Rulebook
  * lmodern
  * minitoc
  * hyperref
+ * enumerate
 * (for example **texlive** with **texlive-latex-extra** on debian based systems like Ubuntu. )
 * To produce colored diff pdfs: **latexdiff** and **rcs-latexdiff** (https://github.com/driquet/rcs-latexdiff)
+
