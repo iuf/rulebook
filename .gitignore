@@ -5,8 +5,7 @@
 *.texnicle
 *.aux
 *.toc
-*.ptc1
-*.ptc2
+*.ptc*
 *.pdf
 *.out
 *.blg
