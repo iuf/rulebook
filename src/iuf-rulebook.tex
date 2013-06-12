@@ -7,7 +7,10 @@
 % \usepackage[nenglish]{babel}
 
 \usepackage{minitoc} % for table of contents per part
-\mtcsetdepth{parttoc}{1}
+\mtcsetdepth{parttoc}{1} %only includes sections (not sub or subsubsections) in part TOCs
+
+\setcounter{secnumdepth}{3} %makes subsubsections numbered
+\setcounter{tocdepth}{0} %only includes parts/chapters (not sections) in main TOC
 
 \usepackage{hyperref} % clickable table of contents, index in pdf files
 \hypersetup{
