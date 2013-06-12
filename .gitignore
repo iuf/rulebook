@@ -13,5 +13,5 @@
 *.maf
 *.log
 *.mtc*
-*.synctex.gz
+*.synctex.gz*
 *.DS_Store
