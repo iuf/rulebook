@@ -3,11 +3,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\setlist{itemsep=-1mm, topsep=8pt, partopsep=0pt}
 % \usepackage[nenglish]{babel}
 
 \usepackage{minitoc} % for table of contents per part
 \mtcsetdepth{parttoc}{1} %only includes sections (not sub or subsubsections) in part TOCs
+\renewcommand{\mtcgapbeforeheads}{0pt}
+\renewcommand{\mtcgapafterheads}{0pt}
 
 \setcounter{secnumdepth}{3} %makes subsubsections numbered
 \setcounter{tocdepth}{0} %only includes parts/chapters (not sections) in main TOC
