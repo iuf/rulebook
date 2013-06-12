@@ -23,7 +23,9 @@
 % If you get the error: "Argument of \contentsline has an extra }"
 % This is because hyperref and minitoc don't work perfectly together.
 % Just continue to typeset ignoring all errors.
-% (In TeXworks just type 'q' for quiet mode into the console when the error appears.) 
+% Un-commenting the following line should supress errors.
+% \batchmode
+% Make sure to re-comment this line after typeseting to see future errors.
 % Then typeset again and the error should be gone.
 % This has to be done for each tex file (chapter) that contains a TOC.
 
