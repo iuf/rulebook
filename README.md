@@ -10,6 +10,9 @@ The official IUF Rulebook
  * minitoc
  * hyperref
  * enumitem
+ * graphicx
+ * wrapfig
+ * longtable
 * (for example **texlive** with **texlive-latex-extra** on debian based systems like Ubuntu. )
 * To produce colored diff pdfs: **latexdiff** and **rcs-latexdiff** (https://github.com/driquet/rcs-latexdiff)
 
