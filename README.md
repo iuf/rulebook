@@ -1,10 +1,10 @@
-# rulebook
+# IUF Rulebook
 
 The official IUF Rulebook
 
 ## Building the Rulebook
 
-# Requirements
+### Requirements
 
 * A latex distribution supporting **pdflatex** with the following packages installed (for example **texlive** with **texlive-latex-extra** on debian based systems like Ubuntu.):
  * inputenc
@@ -19,11 +19,13 @@ The official IUF Rulebook
  * gitinfo
 * To produce a colored PDF marking the changes: **latexdiff** and **rcs-latexdiff** (https://github.com/driquet/rcs-latexdiff)
 
-# Building
+### Building
 
 Open a terminal in the repository root and type **make**.
 Or use your favourite LaTeX editor.
 
-To include git revision information in the document, you need to install git hooks to extract the information from git. Do this with **./install_hooks**. Now, build the document again, and the information should appear.
+To include git revision information in the document, you need to install git hooks to extract the information from git.
+Do this with **./install_hooks**. Build the document again and the information should appear.
 
-To produce a colored PDF marking the changes, type **make diff OLDCOMMIT=2012 NEWCOMMIT=master**. OLDCOMMIT and NEWCOMMIT can be any git references.
+To produce a colored PDF marking the changes, type **make diff OLDCOMMIT=2012 NEWCOMMIT=master**.
+OLDCOMMIT and NEWCOMMIT can be any git references.
