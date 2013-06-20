@@ -1,0 +1,5 @@
+#!/bin/sh
+cp -a hooks/* .git/hooks/
+./.git/hooks/post-checkout
+echo "Git Hooks installed."
+

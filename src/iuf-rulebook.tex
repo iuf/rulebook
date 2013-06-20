@@ -44,14 +44,18 @@
 \graphicspath{{img/}}
 \usepackage{wrapfig}
 
+\usepackage{gitinfo}
+
+% Documentation of gitinfo
+% http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 \title{IUF Rulebook}
 \author{International Unicycling Federation}
-\date{\today}
+\date{\gitCommitterDate \\ \gitReferences \\ \gitHash}
+
 
 
 \begin{document}
 \maketitle
-
 \doparttoc
 \tableofcontents
 
