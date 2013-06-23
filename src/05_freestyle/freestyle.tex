@@ -895,11 +895,6 @@ Not all riders have the same high level of difficulty. \\
 \end{tabular}
 
 \subsection{Group Freestyle: Dismounts \label{subsec:freestyle_group-additional-judging-criteria_dismounts}}
-The number of dismounts should be weighted by the number of riders in the group.
-High scores for a routine with no major dismounts, and few or no minor dismounts.
-A group with three people cannot get a medium score if they have 5 major dismounts, while a group of 15 people can have 5 major dismounts and still earn a medium score.
-Judges need to be able to differentiate between a planned dismount and an unplanned dismount.
-
 \textbf{Major} dismounts are when the unicycle falls and a hand, or any body part other than the rider's foot or feet touch(es) the floor.
 Major dismounts are also when the Choreography of a rider's routine is clearly affected.
 
@@ -908,12 +903,23 @@ A minor dismount may also be counted when Judges cannot differentiate between a 
 
 \textbf{Score can be generated using the following calculations:}  \\
 \begin{tabular}{r l}
-Score = 10 & $- 0.5\ \cdot$ (number of major dismount(s)) \\
- & $- .025\ \cdot$ (number of minor dismount(s)) \\
+Mistake Score = 10 & $- 0.5\ \cdot$ (number of major dismount(s)) \\
+ & $- .25\ \cdot$ (number of minor dismount(s)) \\
 \end{tabular}
-
 The scores above will be applied using a calculation to adjust for the number of riders in the group.
-This is available in an Excel spreadsheet, or can be adapted to other applications as the calculations are straightforward.
+Judges need to be able to differentiate between a planned dismount and an unplanned dismount.
+The number of dismounts should be weighted by the number of riders in the group. The following formula is used:
+
+Final Dismount Score $= 10 \cdot $($1 -$ mistake score/number of riders).
+This score cannot be lower than 0.
+
+\textbf{Known Methods for Mistake and Boundary scores:}
+\begin{enumerate}
+\item Each presentational judge is responsible for mistake and rider counting. 
+\item Each presentational judge gets an additional counter seated next to him/her who counts mistakes and riders. 
+\item Mistake Counters: 4 counters seated at the edge of the performing area. Each of them counts mistakes and riders.
+The final dismount score will be calculated from an average of their counts.
+\end{enumerate}
 
 \subsection{Group Freestyle: Choreography And Style}
 In addition to the description for Individual Freestyle (section \ref{subsec:freestyle_individual-presentation-score_choreography-style}), judges are looking for teamwork and cooperation.
