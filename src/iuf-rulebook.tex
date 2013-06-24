@@ -12,16 +12,29 @@
 \setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
 % \usepackage[nenglish]{babel}
 
+
+
+
+
+% Numberings, table of Contents, bookmarks
 \usepackage{minitoc} % for table of contents per part
-\mtcsetdepth{parttoc}{1} %only includes sections (not sub or subsubsections) in part TOCs
+\usepackage{remreset} % for removal of counter resets
+\usepackage[numbered]{bookmark} % customize PDF bookmarks
+\usepackage{hyperref} % clickable table of contents, index in pdf files
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
 
-\setcounter{secnumdepth}{3} %makes subsubsections numbered
-\setcounter{tocdepth}{-1} %only includes parts (not chapters,sections) in main TOC
+\setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
+\mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
+\setcounter{secnumdepth}{3} % makes subsubsections numbered
 \renewcommand{\thepart}{\arabic{part}} % arabic part numbering
-
-\usepackage{hyperref} % clickable table of contents, index in pdf files
+\renewcommand{\thechapter}{} % hide numbers in chapters
+\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections
+\makeatletter
+\@addtoreset{chapter}{part} % reset chapter numbering for each part
+\@addtoreset{section}{part} % reset section numbering for each part
+\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
+\makeatother
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -38,16 +51,18 @@
 % Then typeset again and the error should be gone.
 % This has to be done for each tex file (chapter) that contains a TOC.
 
+
+
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use i.e. \unit{km} in math mode for better units
 
 \usepackage{graphicx}
 \graphicspath{{img/}}
 \usepackage{wrapfig}
 
+% Documentation of gitinfo:
+% http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 \usepackage{gitinfo}
 
-% Documentation of gitinfo
-% http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 \title{IUF Rulebook}
 \author{International Unicycling Federation}
 \date{\gitCommitterDate \\ \gitReferences \\ \gitHash}
