@@ -2,8 +2,8 @@ PROJECT='iuf-rulebook'
 
 SRCDIR='src'
 OUTDIR='out'
-OLDCOMMIT='HEAD~1'
-NEWCOMMIT='HEAD'
+OLDCOMMIT='2012'
+NEWCOMMIT='master'
 
 
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
