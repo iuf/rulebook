@@ -1,6 +1,16 @@
 # IUF Rulebook
 
-The official IUF Rulebook
+The rulebook is written in LaTeX and version controlled with git. Find out more about the [Technology](https://github.com/iuf/rulebook/wiki/Technology).
+
+We also have some [Working Guidelines](https://github.com/iuf/rulebook/wiki).
+
+An overview about the current state:
+* The old 2012 Rulebook: https://unicycling.org/files/IUF_Rules_2012_english.pdf
+* The 2012 Rulebook in the new format: https://unicycling.org/files/iuf-rulebook-2012-new.pdf
+* Passed proposals for the 2013 Rulebook: http://rulebook.unicycling.org/proposals/passed
+* The current 2013 Rulebook with applied proposals: https://unicycling.org/files/iuf-rulebook-2013.pdf
+* A document highlighting the changes: https://unicycling.org/files/iuf-rulebook-diff-2012-2013.pdf
+
 
 ## Building the Rulebook
 
@@ -17,7 +27,7 @@ The official IUF Rulebook
  * wrapfig
  * longtable
  * gitinfo
-* To produce a colored PDF marking the changes: **latexdiff** and **rcs-latexdiff** (https://github.com/driquet/rcs-latexdiff)
+* To produce a PDF highlighting the changes: [latexdiff](http://latexdiff.berlios.de/) and [rcs-latexdiff](https://github.com/driquet/rcs-latexdiff)
 
 ### Building
 
@@ -27,5 +37,5 @@ Or use your favourite LaTeX editor.
 To include git revision information in the document, you need to install git hooks to extract the information from git.
 Do this with **./install_hooks**. Build the document again and the information should appear.
 
-To produce a colored PDF marking the changes, type **make diff OLDCOMMIT=2012 NEWCOMMIT=master**.
+To produce a PDF highlighting the changes, type **make diff OLDCOMMIT=2012 NEWCOMMIT=master**.
 OLDCOMMIT and NEWCOMMIT can be any git references. This will generate **out/diff.pdf**.
