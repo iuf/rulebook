@@ -28,7 +28,7 @@
 \mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
 \setcounter{secnumdepth}{3} % makes subsubsections numbered
 \renewcommand{\thepart}{\arabic{part}} % arabic part numbering
-\renewcommand{\thechapter}{} % hide numbers in chapters
+\renewcommand{\thechapter}{\arabic{part}\alph{chapter}} % make chapters numbered with part and then letter
 \renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections
 \makeatletter
 \@addtoreset{chapter}{part} % reset chapter numbering for each part
@@ -61,6 +61,7 @@
 
 % Documentation of gitinfo:
 % http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
+%Simple instructions: copy "hooks" directory into ".git" directory
 \usepackage{gitinfo}
 
 \title{IUF Rulebook}
