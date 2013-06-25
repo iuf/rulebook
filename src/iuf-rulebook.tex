@@ -24,6 +24,18 @@
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
 
+\usepackage{tocstyle} % prettier TOC
+\usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
+\settocstylefeature [-1] {entryvskip} {15pt}
+\settocstylefeature [0] {entryvskip} {10pt}
+\settocstylefeature [0] {entryhook} {\hspace{18pt} }
+
+\newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
+\begin{mtchideinmaintoc}
+\addstarredchapter{#1}
+\chapter*{#1}
+\end{mtchideinmaintoc}}
+
 \setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
 \mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
 \setcounter{secnumdepth}{3} % makes subsubsections numbered
