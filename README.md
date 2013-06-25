@@ -11,6 +11,13 @@ An overview about the current state:
 * The current 2013 Rulebook with applied proposals: https://unicycling.org/files/iuf-rulebook-2013.pdf
 * A document highlighting the changes: https://unicycling.org/files/iuf-rulebook-diff-2012-2013.pdf
 
+## Reporting Issues
+If you find an issue or have an idea for improvement, you can directly report it here on GitHub. Here is what you need to do:
+* Get a GitHub Account and sign in (https://github.com/)
+* Browse to the IUF rulebook repository (https://github.com/iuf/rulebook)
+* Click on “Issues” (https://github.com/iuf/rulebook/issues)
+* For every issue you want to report, click “New Issue” (https://github.com/iuf/rulebook/issues/new)
+* Enter a title and a description and click “Submit new issue”
 
 ## Building the Rulebook
 
