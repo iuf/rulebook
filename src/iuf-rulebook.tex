@@ -17,10 +17,10 @@
 
 
 % Numberings, table of Contents, bookmarks
+\usepackage{hyperref} % clickable table of contents, index in pdf files (must be loaded before minitoc)
 \usepackage{minitoc} % for table of contents per part
 \usepackage{remreset} % for removal of counter resets
 \usepackage[numbered]{bookmark} % customize PDF bookmarks
-\usepackage{hyperref} % clickable table of contents, index in pdf files
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
 
@@ -87,6 +87,7 @@
 \doparttoc
 \tableofcontents
 
+\mainmatter
 \include{01_general}
 \include{02_track_field}
 \include{03_road_racing}
@@ -97,6 +98,7 @@
 \include{08_hockey}
 \include{09_basketball}
 \include{10_skill_levels}
-
+\backmatter
+\include{credits}
 
 \end{document} % Have to typset (ctrl-t) twice (or three times) to get everything to work
