@@ -13,6 +13,11 @@
 % \usepackage[nenglish]{babel}
 
 
+% turning off part numbering in the backmatter
+% parts will still go to the TOC
+\makeatletter
+\g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
+\makeatother
 
 
 
@@ -98,7 +103,7 @@
 \include{08_hockey}
 \include{09_basketball}
 \include{10_skill_levels}
-\backmatter\setcounter{secnumdepth}{-2}
+\backmatter
 \include{credits}
 
 \end{document} % Have to typset (ctrl-t) twice (or three times) to get everything to work
