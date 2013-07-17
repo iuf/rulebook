@@ -1,4 +1,4 @@
-\documentclass[a4paper,oneside,parskip=half]{scrbook}
+\documentclass[a4paper,oneside,parskip=half,numbers=noenddot]{scrbook}
 \textwidth=14.7cm
 \textheight=22.1cm
 %\hoffset=5.8754pt % enable if using letterpaper
@@ -13,14 +13,19 @@
 % \usepackage[nenglish]{babel}
 
 
+% turning off part numbering in the backmatter
+% parts will still go to the TOC
+\makeatletter
+\g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
+\makeatother
 
 
 
 % Numberings, table of Contents, bookmarks
+\usepackage{hyperref} % clickable table of contents, index in pdf files (must be loaded before minitoc)
 \usepackage{minitoc} % for table of contents per part
 \usepackage{remreset} % for removal of counter resets
 \usepackage[numbered]{bookmark} % customize PDF bookmarks
-\usepackage{hyperref} % clickable table of contents, index in pdf files
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
 
@@ -65,28 +70,39 @@
 
 
 
-\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use i.e. \unit{km} in math mode for better units
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use \unit{km} in math mode for better units
 
 \usepackage{graphicx}
 \graphicspath{{img/}}
 \usepackage{wrapfig}
+\usepackage{pict2e}
 
 % Documentation of gitinfo:
 % http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 %Simple instructions: copy "hooks" directory into ".git" directory
 \usepackage{gitinfo}
 
-\title{IUF Rulebook 2012}
-\author{International Unicycling Federation}
-\date{\gitCommitterDate \\ \gitReferences \\ \gitHash}
-
-
-
 \begin{document}
-\maketitle
+\begin{titlepage}
+\centering
+\ \\
+\vspace{5cm}
+{\Huge IUF Rulebook 2012}
+\vspace{5mm}
+
+\includegraphics{iuf-logo}
+
+\vspace{5mm}
+{\huge International Unicycling Federation}
+
+\vspace{5mm}
+{\large \gitCommitterDate \\ \gitReferences \\ \gitHash}
+\end{titlepage}
+
 \doparttoc
 \tableofcontents
 
+\mainmatter
 \include{1_general}
 \include{2_racing}
 \include{3_freestyle}
