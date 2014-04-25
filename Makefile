@@ -1,11 +1,14 @@
 PROJECT=iuf-rulebook
 TRANSIFEXPROJECT=rulebook.master
+IGNOREFORTRANSLATION=preamble
 
 REPO=.
 
 SRCDIR=$(REPO)/src
 OUTDIR=$(REPO)/out
 PODIR=$(REPO)/po
+
+SRCFILES=$(shell find $(SRCDIR) -type f)
 
 OLDCOMMIT=2012
 NEWCOMMIT=master
@@ -18,29 +21,28 @@ LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
 
 pdf: $(OUTDIR)/$(PROJECT).pdf
 
-$(OUTDIR)/%.pdf $(OUTDIR)/%.aux $(OUTDIR)/%.idx: $(SRCDIR)/%.tex $(OUTDIR) 
+$(OUTDIR)/%.pdf $(OUTDIR)/%.aux $(OUTDIR)/%.idx: $(SRCDIR)/%.tex $(SRCFILES) | $(OUTDIR) 
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $< 2>&1 | tee $(OUTDIR)/`basename $<`.log && \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $< 2>&1 | tee $(OUTDIR)/`basename $<`.log; \
 
-diff: $(OUTDIR)
+diff: | $(OUTDIR)
 	rcs-latexdiff -vo $(SRCDIR)/$(DIFFNAME).tex src/$(PROJECT).tex $(OLDCOMMIT) $(NEWCOMMIT)
 	$(MAKE) $(OUTDIR)/$(DIFFNAME).pdf
 
-translated: update-translation $(OUTDIR)
+translated: update-translation | $(OUTDIR)
 	for file in `find $(SRCDIR)/$(PROJECT)-*.tex`; do \
 		$(MAKE) $(OUTDIR)/`basename $$file | sed 's/\.tex$$/\.pdf/'`; \
 	done
 
 update-translation: $(PODIR)/template.pot
+	tx set --auto-local -t PO -r $(TRANSIFEXPROJECT) '$(PODIR)/<lang>.po' --source-lang en --source-file $(PODIR)/template.pot --execute
+	tx push -s
 	tx pull -a
 	TEXINPUTS=$(SRCDIR): po4a --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/po4a.cfg
 
-$(PODIR)/template.pot: $(PODIR)
-	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -p $(PODIR)/template.pot
-	tx set --auto-local -t PO -r $(TRANSIFEXPROJECT) '$(PODIR)/<lang>.po' --source-lang en --source-file $(PODIR)/template.pot --execute
-	tx push -s
-
+$(PODIR)/template.pot: $(SRCFILES) po4a.cfg | $(PODIR)
+	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -o 'exclude_include=$(IGNOREFORTRANSLATION)' -p $(PODIR)/template.pot
 
 
 $(OUTDIR):

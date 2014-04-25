@@ -1,0 +1,84 @@
+\documentclass[a4paper,oneside,parskip=half,numbers=noenddot]{scrbook}
+\textwidth=14.7cm
+\textheight=22.1cm
+%\hoffset=5.8754pt % enable if using letterpaper
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+\setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
+% \usepackage[nenglish]{babel}
+
+
+% turning off part numbering in the backmatter
+% parts will still go to the TOC
+\makeatletter
+\g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
+\makeatother
+
+
+
+% Numberings, table of Contents, bookmarks
+\usepackage{hyperref} % clickable table of contents, index in pdf files (must be loaded before minitoc)
+\usepackage{minitoc} % for table of contents per part
+\usepackage{remreset} % for removal of counter resets
+\usepackage[numbered]{bookmark} % customize PDF bookmarks
+\renewcommand{\mtcgapbeforeheads}{0pt}
+\renewcommand{\mtcgapafterheads}{0pt}
+
+\usepackage{tocstyle} % prettier TOC
+\usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
+\settocstylefeature [-1] {entryvskip} {15pt}
+\settocstylefeature [0] {entryvskip} {10pt}
+\settocstylefeature [0] {entryhook} {\hspace{18pt} }
+
+\newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
+\begin{mtchideinmaintoc}
+\addstarredchapter{#1}
+\chapter*{#1}
+\end{mtchideinmaintoc}}
+
+\setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
+\mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
+\setcounter{secnumdepth}{3} % makes subsubsections numbered
+\renewcommand{\thepart}{\arabic{part}} % arabic part numbering
+\renewcommand{\thechapter}{\arabic{part}\alph{chapter}} % make chapters numbered with part and then letter
+\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections
+\makeatletter
+\@addtoreset{chapter}{part} % reset chapter numbering for each part
+\@addtoreset{section}{part} % reset section numbering for each part
+\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
+\makeatother
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+% If you get the error: "Argument of \contentsline has an extra }"
+% This is because hyperref and minitoc don't work perfectly together.
+% Just continue to typeset ignoring all errors.
+% Un-commenting the following line should supress errors.
+% \batchmode
+% Make sure to re-comment this line after typeseting to see future errors.
+% Then typeset again and the error should be gone.
+% This has to be done for each tex file (chapter) that contains a TOC.
+
+
+
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use \unit{km} in math mode for better units
+
+\usepackage{graphicx}
+\graphicspath{{img/}}
+\usepackage{wrapfig}
+\usepackage{pict2e}
+
+% Documentation of gitinfo:
+% http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
+%Simple instructions: copy "hooks" directory into ".git" directory
+\usepackage{gitinfo}
+
