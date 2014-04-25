@@ -1,6 +1,6 @@
 /out
-/translated
 /po
+/src/iuf-rulebook-*
 
 *.texnicle
 *.aux
