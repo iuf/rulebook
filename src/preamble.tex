@@ -29,6 +29,7 @@
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
 
+
 %TOC customization
 \usepackage{tocstyle} % prettier TOC
 \usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
@@ -39,14 +40,13 @@
 \usepackage[nouppercase]{scrpage2} %better headings without uppercase TOC heading
 \pagestyle{scrheadings}
 
-
 \newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
 \begin{mtchideinmaintoc}
 \addstarredchapter{#1}
 \chapter*{#1}
 \markright{\thepart\ #1}
-\end{mtchideinmaintoc}
-}
+\end{mtchideinmaintoc}}
+
 
 \setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
 \mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
