@@ -36,9 +36,8 @@ translated: update-translation | $(OUTDIR)
 	done
 
 update-translation: $(PODIR)/template.pot
-	tx set --auto-local -t PO -r $(TRANSIFEXPROJECT) --execute
-	tx push -s
-	tx pull -a
+	tx push --source
+	tx pull --all
 	TEXINPUTS=$(SRCDIR): po4a --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/po4a.cfg
 
 $(PODIR)/template.pot: $(SRCFILES) po4a.cfg | $(PODIR)
