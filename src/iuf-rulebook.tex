@@ -1,52 +1,24 @@
-% po4a: environment longtable {}
-% po4a: separator longtable "(?:&|\\\\\\\\|\\\\hline)"
-
-
 \input{preamble}
+\includeonly{chapters/01_general.tex} 
 
 \begin{document}
-\begin{titlepage}
-\centering
-\ \\
-\vspace{5cm}
-{\Huge 2013 Competition Rulebook}
-\vspace{5mm}
-
-\includegraphics{iuf-logo}
-
-\vspace{5mm}
-{\huge International Unicycling Federation}
-
-\vspace{5mm}
-{\Large Final Version \quad September, 2013}
-
-\vspace{3mm}
-{\large with Cyclocross addition \quad June, 2014}
-
-\vspace{45mm}
-Prepared by the IUF Rulebook Committee.
-
-\vspace{5mm}
-{\small Copyright \copyright\ 2013 by the International Unicycling Federation, Inc. All rights reserved.}
-\small{Revision: \gitHash, \gitCommitterDate}
-
-\end{titlepage}
+\input{titlepage}
 
 \doparttoc
 \tableofcontents
 
 \mainmatter
-\include{01_general}
-\include{02_track_field}
-\include{03_road_racing}
-\include{04_muni}
-\include{05_freestyle}
-\include{06_flatland_street}
-\include{07_trials}
-\include{08_hockey}
-\include{09_basketball}
-\include{10_skill_levels}
-\backmatter
-\include{credits}
+\include{chapters/01_general}
+\include{chapters/02_track_field}
+\include{chapters/03_road_racing}
+\include{chapters/04_muni}
+\include{chapters/05_freestyle}
+\include{chapters/06_flatland_street}
+\include{chapters/07_trials}
+\include{chapters/08_hockey}
+\include{chapters/09_basketball}
+\include{chapters/10_skill_levels}
 
-\end{document} % Have to typset (ctrl-t) twice (or three times) to get everything to work
+\backmatter
+\input{credits}
+\end{document}
