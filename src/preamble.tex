@@ -63,15 +63,12 @@
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
 \renewcommand*{\chapterpagestyle}{headings} %display headers on first page of chapters
- 
 
 \chead[]{
-  \ifnum\value{part}>0
-    \ifnum\value{chapter}>0
-      \thepart \ \parttitle -- \leftmark\fi
-    \else
-      \thepart \ \parttitle \fi 
-    \fi
+  \ifnum\value{chapter}>0
+    \thepart \ \parttitle -- \leftmark\fi
+  \else
+    \thepart \ \parttitle \fi 
   \fi}
 \makeatother
 
