@@ -38,8 +38,33 @@
 \settocstylefeature [0] {entryvskip} {10pt}
 \settocstylefeature [0] {entryhook} {\hspace{18pt} }
 \mtcsettitle{parttoc}{Contents} %renames the part TOC to match main TOC
-\usepackage[nouppercase]{scrpage2} %better headings without uppercase TOC heading
+
+
+%%%headings
+\usepackage[markcase=ignoreuppercase]{scrlayer-scrpage} %better headings without uppercase TOC heading
+\usepackage{titlesec}
 \pagestyle{scrheadings}
+\clearscrheadfoot %clear all header and footer styles to allow custimization
+\cfoot[\pagemark]{\pagemark} %pagenumbers in footer
+\makeatletter
+\let\Oldpart\part
+\newcommand{\parttitle}{}
+\renewcommand{\part}[1]{\Oldpart{#1}\renewcommand{\parttitle}{#1}}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+
+\chead[]{
+  \if@mainmatter
+    \ifnum\value{part}>0
+      \ifnum\value{chapter}>0
+        \thepart \ \parttitle -- \leftmark\fi
+      \else
+        \thepart \ \parttitle \fi 
+      \fi
+    \fi
+  \fi}
+\makeatother
 
 \newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
 \begin{mtchideinmaintoc}
@@ -49,16 +74,16 @@
 \end{mtchideinmaintoc}}
 
 
-\setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
+\setcounter{tocdepth}{-1} % only includes parts and chapters (not sections) in main TOC
 \mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
 \setcounter{secnumdepth}{3} % makes subsubsections numbered
 \renewcommand{\thepart}{\arabic{part}} % arabic part numbering
-\renewcommand{\thechapter}{\arabic{part}\alph{chapter}} % make chapters numbered with part and then letter
-\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections
+\renewcommand{\thechapter}{\arabic{part}\Alph{chapter}} % make chapters numbered with part and then letter
+%\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections 
 \makeatletter
 \@addtoreset{chapter}{part} % reset chapter numbering for each part
 \@addtoreset{section}{part} % reset section numbering for each part
-\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
+%\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
 \makeatother
 \hypersetup{
     colorlinks,
