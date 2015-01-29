@@ -3,6 +3,8 @@
 \textheight=22.1cm
 %\hoffset=5.8754pt % enable if using letterpaper
 
+% \usepackage{etoolbox}
+
 \usepackage{framed}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -32,16 +34,18 @@
 
 
 %TOC customization
-\usepackage{tocstyle} % prettier TOC
+\usepackage[tocindentauto]{tocstyle} % prettier TOC
 \usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
 \settocstylefeature [-1] {entryvskip} {15pt}
 \settocstylefeature [0] {entryvskip} {10pt}
 \settocstylefeature [0] {entryhook} {\hspace{18pt} }
 \mtcsettitle{parttoc}{Contents} %renames the part TOC to match main TOC
+\usepackage[titles]{tocloft}
+\renewcommand*\cftsecnumwidth{3em}
 
 
 %%%headings
-\usepackage[markcase=ignoreuppercase]{scrlayer-scrpage} %better headings without uppercase TOC heading
+\usepackage[markcase=ignoreuppercase,autooneside]{scrlayer-scrpage} %better headings without uppercase TOC heading
 \usepackage{titlesec}
 \pagestyle{scrheadings}
 \clearscrheadfoot %clear all header and footer styles to allow custimization
