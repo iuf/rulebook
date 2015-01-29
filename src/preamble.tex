@@ -54,9 +54,10 @@
 \let\Oldpart\part
 \newcommand{\parttitle}{}
 \renewcommand{\part}[1]{\Oldpart{#1}\renewcommand{\parttitle}{#1}}
-
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
+\renewcommand*{\chapterpagestyle}{headings} %display headers on first page of chapters
+ 
 
 \chead[]{
   \if@mainmatter
