@@ -43,6 +43,12 @@
 \usepackage[titles]{tocloft}
 \renewcommand*\cftsecnumwidth{3em}
 
+% %don't reset page numbers ever
+\makeatletter
+\def\pagenumbering#1{%
+  \gdef\thepage{\csname @#1\endcsname \c@page}}
+\makeatother
+
 
 %%%headings
 \usepackage[markcase=ignoreuppercase,autooneside]{scrlayer-scrpage} %better headings without uppercase TOC heading
@@ -60,13 +66,11 @@
  
 
 \chead[]{
-  \if@mainmatter
-    \ifnum\value{part}>0
-      \ifnum\value{chapter}>0
-        \thepart \ \parttitle -- \leftmark\fi
-      \else
-        \thepart \ \parttitle \fi 
-      \fi
+  \ifnum\value{part}>0
+    \ifnum\value{chapter}>0
+      \thepart \ \parttitle -- \leftmark\fi
+    \else
+      \thepart \ \parttitle \fi 
     \fi
   \fi}
 \makeatother
