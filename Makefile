@@ -52,7 +52,7 @@ $(PODIR):
 
 
 clean:
-	rm -rf $(OUTDIR)
+	find $(OUTDIR) ! -name '.*' -type f -delete
 	rm -rf $(PODIR)
 	rm -rf $(SRCDIR)/$(PROJECT)-*
 
