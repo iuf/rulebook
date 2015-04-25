@@ -27,7 +27,7 @@ $(OUTDIR)/%.pdf $(OUTDIR)/%.aux $(OUTDIR)/%.idx: $(SRCDIR)/%.tex $(SRCFILES) | $
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $< 2>&1 | tee $(OUTDIR)/`basename $<`.log; \
 
 diff: | $(OUTDIR)
-	rcs-latexdiff -vo $(SRCDIR)/$(DIFFNAME).tex src/$(PROJECT).tex $(OLDCOMMIT) $(NEWCOMMIT)
+	rcs-latexdiff --no-pdf --no-open -vo $(SRCDIR)/$(DIFFNAME).tex src/$(PROJECT).tex $(OLDCOMMIT) $(NEWCOMMIT)
 	$(MAKE) $(OUTDIR)/$(DIFFNAME).pdf
 
 translated: update-translation | $(OUTDIR)
