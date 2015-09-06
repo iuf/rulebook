@@ -13,18 +13,22 @@ SRCFILES=$(shell find $(SRCDIR) -type f)
 OLDCOMMIT=2013
 NEWCOMMIT=2015_prelim
 DIFFNAME=$(PROJECT)-diff-$(OLDCOMMIT)-$(NEWCOMMIT)
+BRANCHNAME="current"
+
+FILEPREFIX=$(PROJECT)-$(BRANCHNAME)
 
 PO4ACHARSETS=-M Utf-8 -L Utf-8
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
 
 .DELETE_ON_ERROR:
 
-pdf: $(OUTDIR)/$(PROJECT).pdf
+pdf: $(OUTDIR)/$(FILEPREFIX).pdf
 
-$(OUTDIR)/%.pdf $(OUTDIR)/%.aux $(OUTDIR)/%.idx: $(SRCDIR)/%.tex $(SRCFILES) | $(OUTDIR) 
+$(OUTDIR)/$(FILEPREFIX).pdf $(OUTDIR)/$(PROJECT).aux $(OUTDIR)/$(PROJECT).idx: $(SRCDIR)/$(PROJECT).tex $(SRCFILES) | $(OUTDIR) 
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $< 2>&1 | tee $(OUTDIR)/`basename $<`.log && \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $< 2>&1 | tee $(OUTDIR)/`basename $<`.log; \
+	mv $(OUTDIR)/$(PROJECT).pdf $(OUTDIR)/$(FILEPREFIX).pdf
 
 diff: | $(OUTDIR)
 	rcs-latexdiff --no-pdf --no-open -vo $(SRCDIR)/$(DIFFNAME).tex src/$(PROJECT).tex $(OLDCOMMIT) $(NEWCOMMIT)

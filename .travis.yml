@@ -1,0 +1,68 @@
+sudo: false
+
+# blacklist
+branches:
+  except:
+    - road_racing_rewrite
+notifications:
+  email: false
+
+addons:
+  apt:
+    packages:
+        - python-virtualenv
+        - ncftp
+        - dvipng # TODO: do we need this?
+        - lmodern
+        - texlive-latex-base
+        - texlive-latex-recommended
+        - texlive-latex-extra
+        - texlive-fonts-recommended
+        - texlive-fonts-extra
+before_install:
+    - git branch -a
+    - "for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v travis`; do git branch --track ${branch##*/} $branch; done"
+    - git fetch --all
+    - git pull --all
+    - git branch
+    - current=`pwd`
+    # binaries
+    - export PATH=$PATH:$HOME/local/latexdiff/bin
+    # git metadata in pdf
+    - cp -a dependencies/gitinfo2/* src
+    - ./hooks/post-checkout
+    # latexdiff
+    - mkdir -p $HOME/local/latexdiff/bin
+    - mkdir -p $HOME/local/latexdiff/man/man1
+    - git clone https://github.com/ftilmann/latexdiff.git
+    - cd latexdiff/latexdiff-1.1.0
+    - make install INSTALLPATH=$HOME/local/latexdiff
+    - cd
+    # rcs-latexdiff
+    - mkdir -p $HOME/local/rcs-latexdiff
+    - git clone https://github.com/driquet/rcs-latexdiff.git
+    - cd rcs-latexdiff
+    - virtualenv --prompt==rcs-latexdiff venv
+    - source venv/bin/activate
+    - python setup.py install
+    - cd
+    # list
+    - ls -R ~
+script:
+#TODO: diffs
+#TODO: translations
+    - cd $current
+    - make BRANCHNAME=$TRAVIS_BRANCH
+    - touch diff-old-branches
+    - make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=2013
+    # - for oldcommit in $(cat diff-old-branches); do make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=$oldcommit; done
+after_success:
+  - mkdir upload
+  - mv out/*.pdf upload
+  - ncftpput -u $FTPUSER -p $FTPPASS -R unicycling.org /temp upload/
+
+env:
+  global:
+    - secure: "QFpLp44tE6qATEu0AMjzGS3Kzh4jZDd7gCIKJK+d3cFYh47kHf95Ke0LUf1p6MPAIlfBvfIvCTpSxK5PoPeMnZjMVzhEKgP0zrEQDWU3kOMep5faM0lDwzCcxfbEN6nlMrLXp/x/XnbPGgrG0iWjtgoZfpWUX+BHDfHFacQnjcQ="
+    - secure: "Rvoa5HPs7Vy070B0FnVGfE9kWZsRUJ+IGz5UtzeIOnEFllUEN77yDLz3AVJvLROhqLPOqSLCDOFngXhP5HJHeiz3tdVO6yAF4MVPBDSCWuc/J9bZu5wDN6cKqkQ5lgLXOXBYm9o30ShkvnoNWwobIknoiFLPB6XRlT6TJVd2FqM="
+    
