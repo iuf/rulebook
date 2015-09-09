@@ -41,6 +41,8 @@ source venv/bin/activate
 python setup.py install
 cd
 
+export PATH=$PATH:$HOME/travis/rcs-latexdiff/venv/bin
+
 # list (debug?)
 ls -R ~
 
