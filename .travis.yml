@@ -21,13 +21,13 @@ addons:
       - texlive-fonts-extra
 
 install:
-  - ./scripts/install.sh
+  - scripts/install.sh
 
 script:
-  - ./scripts/main.sh
+  - scripts/main.sh
 
 after_success:
-  - ./scripts/after-success.sh
+  - scripts/after-success.sh
 
 env:
   global:
