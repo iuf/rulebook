@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo $PATH
+which rcs-latexdiff
+
 # create iuf-rulebook.pdf
 make BRANCHNAME=$TRAVIS_BRANCH
 
