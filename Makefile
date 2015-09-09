@@ -18,13 +18,13 @@ BRANCHNAME="current"
 FILEPREFIX=$(PROJECT)-$(BRANCHNAME)
 
 PO4ACHARSETS=-M Utf-8 -L Utf-8
-LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
+LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error
 
 .DELETE_ON_ERROR:
 
 pdf: $(OUTDIR)/$(FILEPREFIX).pdf
 
-$(OUTDIR)/$(FILEPREFIX).pdf $(OUTDIR)/$(PROJECT).aux $(OUTDIR)/$(PROJECT).idx: $(SRCDIR)/$(PROJECT).tex $(SRCFILES) | $(OUTDIR) 
+$(OUTDIR)/$(FILEPREFIX).pdf $(OUTDIR)/$(PROJECT).aux $(OUTDIR)/$(PROJECT).idx: $(SRCDIR)/$(PROJECT).tex $(SRCFILES) | $(OUTDIR)
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $< 2>&1 | tee $(OUTDIR)/`basename $<`.log && \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $< 2>&1 | tee $(OUTDIR)/`basename $<`.log; \
@@ -59,4 +59,3 @@ clean:
 	rm -rf $(OUTDIR)
 	rm -rf $(PODIR)
 	rm -rf $(SRCDIR)/$(PROJECT)-*
-

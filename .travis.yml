@@ -4,6 +4,7 @@ sudo: false
 branches:
   except:
     - road_racing_rewrite
+
 notifications:
   email: false
 
@@ -22,7 +23,7 @@ addons:
 
 install:
   - scripts/install.sh
-  - export PATH=$PATH:$HOME/local/latexdiff/bin:$HOME/travis/rcs-latexdiff/venv/bin
+  - export PATH=$PATH:$HOME/local/latexdiff/bin:$HOME/rcs-latexdiff/venv/bin
 
 script:
   - scripts/main.sh
