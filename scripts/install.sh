@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # get branches
+git checkout $TRAVIS_BRANCH
 git branch -a
 
 #for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v travis`; do
