@@ -53,74 +53,74 @@
 \renewcommand{\gitCommitterUnixDate}{\gitInf@commudate}
 \renewcommand{\gitFirstTagDescribe}{\gitInf@firsttagdescribe}
 \renewcommand{\gitReferences}{\gitInf@refnames}
-\newcommand{\git@vtag}[1]{%
-    \def\do##1{%
-        \StrCut{##1}{tag: }\lcut\rcut%
-        \IfEq{\rcut}{}{%
-            \IfDecimal{\lcut}{% case where we have decimal e.g. 1.0
-                \renewcommand{\gitVtag}{\lcut}
-                \renewcommand{\gitVtags}{\space\lcut}
-                \renewcommand{\gitVtagn}{\space\lcut}
-                \listbreak
-            }{}%
-        }{%
-            \IfDecimal\rcut{% case where we have string: decimal e.g. tag: 1.0
-                \renewcommand{\gitVtag}{\rcut}
-                \renewcommand{\gitVtags}{\space\rcut}
-                \renewcommand{\gitVtagn}{\space\rcut}
-                \listbreak
-            }{}%
-        }%
-    }%
-    \expandafter\docsvlist\expandafter{#1}%
-    \StrDel{#1}{)}[\bcut]%
-    \StrDel{\bcut}{(HEAD}[\bcut]%
-    \StrCount{\bcut}{, }[\xcut]%
-    \StrCut[\xcut]{\bcut}{, }{\bcut}{\xcut}%
-    \IfEq{\xcut}{}{}{%
-        \renewcommand{\gitBranch}{\xcut}%
-    }%
-}%
-\newcommand{\git@taglist}[1]{%
-    \def\do##1{%
-        \StrCut{##1}{tag: }\llcut\rrcut%
-        \IfEq{\rrcut}{}{%
-            \IfDecimal{\llcut}{% case where we have decimal e.g. 1.0
-                \StrGobbleLeft{\gitTags,\space\llcut}{0}[\gitTags]
-            }{}%
-        }{%
-        \StrGobbleLeft{\gitTags,\space\rrcut}{0}[\gitTags]
-        }%
-    }%
-    \expandafter\docsvlist\expandafter{#1}%
-    \StrGobbleLeft{\gitTags}{2}[\gitTags]
-}%
-\newcommand{\git@rtag}[1]{%
-    \IfEq{#1}{}{}{%
-        \StrRight{#1}{2}[\gitInf@dirtflag]
-        \StrDel{#1}{-*}[\gitInf@describe]
-        \IfEq{\gitInf@dirtflag}{-*}{\renewcommand{\gitDirty}{\gitInf@dirty}}{}
-        \StrGobbleRight{\gitInf@describe}{9}[\gitInf@describe]%   Remove -g<hash>
-        \StrCount{\gitInf@describe}{-}[\gitInf@mcount]%           Find last -
-        \StrCut[\gitInf@mcount]{\gitInf@describe}{-}{\gitInf@rel}{\gitInf@off}
-        \renewcommand{\gitRel}{\gitInf@rel}
-        \renewcommand{\gitRels}{\space\gitInf@rel}
-        \renewcommand{\gitReln}{\space\gitInf@rel}
-        \renewcommand{\gitRoff}{\gitInf@off}
-        \renewcommand{\gitDescribe}{#1}
-    }%
-}%
-\git@vtag{\gitInf@refnames}
-\git@taglist{\gitInf@refnames}
-\git@rtag{\gitInf@reltag}
-\newcommand{\git@tagmark}{}
-\IfEq{\gitTags}{}{%
-    \renewcommand{\gitTags}{\gitInf@notags}
-    \ifbool{gitInf@marknotags}{%
-       \renewcommand{\git@tagmark}{\\Head tags: \gitTags}
-    }{%
-    }
-}{%
-    \renewcommand{\git@tagmark}{\\Head tags: \gitTags}
-}
+%    \newcommand{\git@vtag}[1]{%
+%        \def\do##1{%
+%            \StrCut{##1}{tag: }\lcut\rcut%
+%            \IfEq{\rcut}{}{%
+%                \IfDecimal{\lcut}{% case where we have decimal e.g. 1.0
+%                    \renewcommand{\gitVtag}{\lcut}
+%                    \renewcommand{\gitVtags}{\space\lcut}
+%                    \renewcommand{\gitVtagn}{\space\lcut}
+%                    \listbreak
+%                }{}%
+%            }{%
+%                \IfDecimal\rcut{% case where we have string: decimal e.g. tag: 1.0
+%                    \renewcommand{\gitVtag}{\rcut}
+%                    \renewcommand{\gitVtags}{\space\rcut}
+%                    \renewcommand{\gitVtagn}{\space\rcut}
+%                    \listbreak
+%                }{}%
+%           }%
+%        }%
+%        \expandafter\docsvlist\expandafter{#1}%
+%        \StrDel{#1}{)}[\bcut]%
+%        \StrDel{\bcut}{(HEAD}[\bcut]%
+%        \StrCount{\bcut}{, }[\xcut]%
+%        \StrCut[\xcut]{\bcut}{, }{\bcut}{\xcut}%
+%        \IfEq{\xcut}{}{}{%
+%            \renewcommand{\gitBranch}{\xcut}%
+%        }%
+%    }%
+%    \newcommand{\git@taglist}[1]{%
+%          \def\do##1{%
+%           \StrCut{##1}{tag: }\llcut\rrcut%
+%            \IfEq{\rrcut}{}{%
+%                \IfDecimal{\llcut}{% case where we have decimal e.g. 1.0
+%                    \StrGobbleLeft{\gitTags,\space\llcut}{0}[\gitTags]
+%                }{}%
+%            }{%
+%            \StrGobbleLeft{\gitTags,\space\rrcut}{0}[\gitTags]
+%            }%
+%        }%
+%        \expandafter\docsvlist\expandafter{#1}%
+%        \StrGobbleLeft{\gitTags}{2}[\gitTags]
+%    }%
+%    \newcommand{\git@rtag}[1]{%
+%        \IfEq{#1}{}{}{%
+%            \StrRight{#1}{2}[\gitInf@dirtflag]
+%            \StrDel{#1}{-*}[\gitInf@describe]
+%            \IfEq{\gitInf@dirtflag}{-*}{\renewcommand{\gitDirty}{\gitInf@dirty}}{}
+%            \StrGobbleRight{\gitInf@describe}{9}[\gitInf@describe]%   Remove -g<hash>
+%            \StrCount{\gitInf@describe}{-}[\gitInf@mcount]%           Find last -
+%            \StrCut[\gitInf@mcount]{\gitInf@describe}{-}{\gitInf@rel}{\gitInf@off}
+%            \renewcommand{\gitRel}{\gitInf@rel}
+%            \renewcommand{\gitRels}{\space\gitInf@rel}
+%            \renewcommand{\gitReln}{\space\gitInf@rel}
+%            \renewcommand{\gitRoff}{\gitInf@off}
+%            \renewcommand{\gitDescribe}{#1}
+%        }%
+%    }%
+%    \git@vtag{\gitInf@refnames}
+%    \git@taglist{\gitInf@refnames}
+%    \git@rtag{\gitInf@reltag}
+%    \newcommand{\git@tagmark}{}
+%    \IfEq{\gitTags}{}{%
+%        \renewcommand{\gitTags}{\gitInf@notags}
+%        \ifbool{gitInf@marknotags}{%
+%           \renewcommand{\git@tagmark}{\\Head tags: \gitTags}
+%        }{%
+%        }
+%    }{%
+%        \renewcommand{\git@tagmark}{\\Head tags: \gitTags}
+ %   }
 \renewcommand{\gitMark}{Branch: \gitBranch\,@\,\gitAbbrevHash{} \textbullet{} Release:\gitReln{} (\gitAuthorDate)\git@tagmark}
