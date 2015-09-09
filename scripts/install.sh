@@ -18,7 +18,7 @@ git branch
 current=`pwd`
 
 # binaries
-export PATH=$PATH:$HOME/local/latexdiff/bin
+# not here. $PATH must be set in .travis.yml, see http://docs.travis-ci.com/user/installing-dependencies/
 
 # git metadata in pdf
 cp -a dependencies/gitinfo2/* src
@@ -40,8 +40,6 @@ virtualenv --prompt==rcs-latexdiff venv
 source venv/bin/activate
 python setup.py install
 cd
-
-export PATH=$PATH:$HOME/travis/rcs-latexdiff/venv/bin
 
 # list (debug?)
 ls -R ~
