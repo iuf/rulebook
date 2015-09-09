@@ -11,5 +11,5 @@ make BRANCHNAME=$TRAVIS_BRANCH
 
 #create diffs (TODO)
 touch diff-branches
-# make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=2013
+make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=2013
 # - for oldcommit in $(cat diff-branches); do make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=$oldcommit; done
