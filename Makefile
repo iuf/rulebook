@@ -133,5 +133,3 @@ clean:
 
 # $(PODIR)/template.pot: $(SRCFILES) po4a.cfg | $(PODIR)
 # 	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -o 'exclude_include=$(IGNOREFORTRANSLATION)' -p $(PODIR)/template.pot
-
-
