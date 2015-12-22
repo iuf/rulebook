@@ -28,7 +28,7 @@ install:
     - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
     - tar -zxvf install-tl-unx.tar.gz
     - cd install-tl-*
-    - sudo ./install-tl --profile="$TRAVIS_BUILD_DIR/.utility/latex.profile"
+    - sudo ./install-tl --profile="$TRAVIS_BUILD_DIR/latex.profile"
     - export PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-linux
     - cd $TRAVIS_BUILD_DIR
 
