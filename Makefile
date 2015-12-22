@@ -40,8 +40,8 @@ rulebook: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
 $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 	# building $@ from $(MAINTEX)
 	TEXDIR=$(SRCDIR); \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(MAINTEX) 2>&1 | tee $(OUTDIR)/`basename $(MAINTEX)`.log && \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(MAINTEX) 2>&1 | tee $(OUTDIR)/`basename $(MAINTEX)`.log; \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(MAINTEX); \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(MAINTEX); \
 	mv $(OUTDIR)/$(PROJECT).pdf $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-$(LANG).pdf:
@@ -55,8 +55,8 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	# building diff against branch $(DIFFBRANCH)
 	rcs-latexdiff --no-pdf --no-open -D -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH) HEAD; \
 	TEXDIR=$(SRCDIR); \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX) 2>&1 | tee $(OUTDIR)/`basename $(DIFFTEX)`.log && \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX) 2>&1 | tee $(OUTDIR)/`basename $(DIFFTEX)`.log; \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX); \
 	mv $(OUTDIR)/`basename $@` $(BUILDDIR)
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH)-$(LANG).pdf:
