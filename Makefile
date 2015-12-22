@@ -35,13 +35,16 @@ diff: | $(OUTDIR)
 	$(MAKE) $(OUTDIR)/$(DIFFNAME).pdf
 
 translated: update-translation | $(OUTDIR)
+	# build pdfs for all translations
+	# from earlier generated translated src/iuf-rulebook-$LANG.tex
 	for file in `find $(SRCDIR)/$(PROJECT)-*.tex`; do \
 		$(MAKE) $(OUTDIR)/`basename $$file | sed 's/\.tex$$/\.pdf/'`; \
 	done
 
 update-translation: $(PODIR)/template.pot
-	tx push --source
-	tx pull --all
+	tx push --source # upload new strings to transifex
+	tx pull --all # download all translated strings from transifex
+	# generate language-dependent tex files e.g. src/iuf-rulebook-de_DE.tex
 	TEXINPUTS=$(SRCDIR): po4a --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/po4a.cfg
 
 $(PODIR)/template.pot: $(SRCFILES) po4a.cfg | $(PODIR)
