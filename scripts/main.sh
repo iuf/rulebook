@@ -4,12 +4,12 @@ echo $PATH
 which rcs-latexdiff
 
 # create iuf-rulebook.pdf
-make BRANCHNAME=$TRAVIS_BRANCH
+make pdf
 
 #TODO: translations
 
 
 #create diffs (TODO)
 touch diff-branches
-make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=2013
+make diff DIFFBRANCH=2013
 # - for oldcommit in $(cat diff-branches); do make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=$oldcommit; done
