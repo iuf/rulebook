@@ -28,7 +28,8 @@ cp -a dependencies/gitinfo2/* src
 mkdir -p $HOME/local/latexdiff/bin
 mkdir -p $HOME/local/latexdiff/man/man1
 git clone https://github.com/ftilmann/latexdiff.git
-cd latexdiff/latexdiff-1.1.0
+# cd latexdiff/latexdiff-1.1.0
+cd latexdiff
 make install INSTALLPATH=$HOME/local/latexdiff
 cd
 
