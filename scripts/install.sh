@@ -29,7 +29,7 @@ mkdir -p $HOME/local/latexdiff/bin
 mkdir -p $HOME/local/latexdiff/man/man1
 git clone https://github.com/ftilmann/latexdiff.git
 # cd latexdiff/latexdiff-1.1.0
-cd latexdiff
+cd latexdiff/latexdiff-1.0.4
 make install INSTALLPATH=$HOME/local/latexdiff
 cd
 
