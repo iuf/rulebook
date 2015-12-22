@@ -4,7 +4,7 @@ echo $PATH
 which rcs-latexdiff
 
 # create iuf-rulebook.pdf
-make pdf
+make rulebook
 
 #TODO: translations
 

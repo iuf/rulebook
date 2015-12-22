@@ -32,7 +32,7 @@ LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error
 # target variable: $@
 # dependency variable: $<
 
-pdf: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
+rulebook: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
 
 #TODO: error when branch in filename != current branch, because we can only build the current one
 #TODO: this rule is always rebuilding
