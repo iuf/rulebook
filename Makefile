@@ -53,7 +53,7 @@ diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	# building diff against branch $(DIFFBRANCH)
-	rcs-latexdiff --no-pdf --no-open -o $(DIFFTEX) -v $(MAINTEX) $(DIFFBRANCH) $(BRANCH); \
+	rcs-latexdiff --no-pdf --no-open -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH) $(BRANCH); \
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX) 2>&1 | tee $(OUTDIR)/`basename $(DIFFTEX)`.log && \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX) 2>&1 | tee $(OUTDIR)/`basename $(DIFFTEX)`.log; \
