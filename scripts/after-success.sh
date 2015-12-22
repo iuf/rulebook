@@ -6,4 +6,5 @@ ls -l src
 
 mkdir upload
 mv pdf/*.pdf upload
+mv src/iuf-rulebook* upload
 ncftpput -u $FTPUSER -p $FTPPASS -R unicycling.org /temp upload/
