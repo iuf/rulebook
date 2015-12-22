@@ -11,5 +11,5 @@ make rulebook
 
 #create diffs (TODO)
 touch diff-branches
-make diff DIFFBRANCH=2013
+make diff
 # - for oldcommit in $(cat diff-branches); do make diff NEWCOMMIT=$TRAVIS_BRANCH OLDCOMMIT=$oldcommit; done
