@@ -7,9 +7,7 @@ git fetch
 git branch
 
 # track all remote branches, to make them accessible to latexdiff-vc
-for remote in `git branch --remotes `; do
-    git branch -u $remote
-done
+for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done
 
 current=`pwd`
 
