@@ -57,7 +57,8 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	# rcs-latexdiff --no-pdf --no-open -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH);
 	git branch; \
 	git diff $(DIFFBRANCH); \
-	latexdiff-vc --git --flatten --fast --force -r $(DIFFBRANCH) $(MAINTEX); \
+	git status; \
+	latexdiff-vc --git --flatten --fast --force -r $(DIFFBRANCH) -r $(BRANCH) $(MAINTEX); \
 	mv $(SRCDIR)/$(PROJECT)-diff$(DIFFBRANCH).tex $(DIFFTEX); \
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
