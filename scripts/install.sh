@@ -42,6 +42,6 @@ python setup.py install
 cd
 
 # list (debug?)
-ls -R ~
+# ls -R ~
 
 cd $current

@@ -1,8 +1,5 @@
-# This is an example file that could be passed to
-# the --profile option of install-tl-ubuntu.
-# If you edit this file, you might also have
-# to edit debian-control-texlive-in.txt to
-# reflect your changes.
+# travis texlive installation profile
+# https://trac.macports.org/wiki/TeXLivePackages
 selected_scheme scheme-full
 TEXDIR /usr/local/texlive/CURRENT
 TEXMFCONFIG ~/.texlive/texmf-config
@@ -22,7 +19,7 @@ collection-fontutils 0
 collection-formatsextra 0
 collection-games 0
 collection-genericextra 0
-collection-genericrecommended 0
+collection-genericrecommended 1 # needed for latexdiff (ulem.sty)
 collection-htmlxml 0
 collection-humanities 0
 collection-langafrican 0
