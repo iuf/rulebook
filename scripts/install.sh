@@ -4,11 +4,8 @@
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 git fetch
 
-# track all branches to diff against
-# this makes git checkout BRANCH work and is needed for latexdiff
-for branch in $(cat diff-branches); do
-  git branch --track $branch;
-done
+# track all remote branches, to macke them accessible to latexdiff
+for remote in `git branch -r `; do git branch --track $remote; done
 
 current=`pwd`
 

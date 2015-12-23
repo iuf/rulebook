@@ -43,7 +43,7 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(MAINTEX); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(MAINTEX); \
 	mv $(OUTDIR)/$(PROJECT).pdf $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf; \
-	texfot cat $(OUTDIR)/$(PROJECT).log
+	cat $(OUTDIR)/$(PROJECT).log
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-$(LANG).pdf:
 
@@ -61,7 +61,7 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX); \
 	mv $(OUTDIR)/`basename $@` $(BUILDDIR); \
-	texfot cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).log
+	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).log
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH)-$(LANG).pdf:
 

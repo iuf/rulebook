@@ -11,7 +11,7 @@ sudo: false
 addons:
   apt:
     packages:
-      - python-virtualenv
+      # - python-virtualenv
       - ncftp
       - dvipng # TODO: do we need this?
       - lmodern
@@ -20,7 +20,7 @@ addons:
       - texlive-latex-extra
       - texlive-fonts-recommended
       - texlive-fonts-extra
-      - texlive-extra-utils # texfot
+      # - texlive-extra-utils # texfot
 
 install:
     # - sudo add-apt-repository ppa:texlive-backports/ppa -y
@@ -35,9 +35,9 @@ install:
     # - cd $TRAVIS_BUILD_DIR
 
     - scripts/install.sh
-    - export PATH=$PATH:$HOME/local/latexdiff/bin:$HOME/rcs-latexdiff/venv/bin
+    - export PATH=$PATH:$HOME/local/latexdiff/bin
 
-cache: apt
+# cache: apt
 
 script:
   - scripts/main.sh
