@@ -29,7 +29,7 @@ install:
     - tar -zxvf install-tl-unx.tar.gz
     - cd install-tl-*
     - sudo ./install-tl --profile="$TRAVIS_BUILD_DIR/latex.profile"
-    - export PATH=$PATH:/usr/local/texlive/2014/bin/x86_64-linux
+    - export PATH=$PATH:/usr/local/texlive/CURRENT/bin/x86_64-linux
     - cd $TRAVIS_BUILD_DIR
 
     - scripts/install.sh
