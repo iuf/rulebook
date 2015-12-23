@@ -18,8 +18,7 @@ SRCFILES=$(shell find $(SRCDIR) -type f)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 DIFFBRANCH=$(shell head -1 diff-branches)
 MAINTEX=$(SRCDIR)/$(PROJECT).tex
-# DIFFTEX=$(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).tex
-DIFFTEX=$(SRCDIR)/$(PROJECT)-diff$(DIFFBRANCH).tex # for latexdiff-vc
+DIFFTEX=$(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).tex
 
 # LaTeX
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error
@@ -57,6 +56,7 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	# building diff against branch $(DIFFBRANCH)
 	# rcs-latexdiff --no-pdf --no-open -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH);
 	latexdiff-vc --git --flatten --fast --force -r $(DIFFBRANCH) $(MAINTEX); \
+	mv $(SRCDIR)/$(PROJECT)-diff$(DIFFBRANCH).tex $(DIFFTEX); \
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX); \
