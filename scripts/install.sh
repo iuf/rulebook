@@ -6,8 +6,8 @@ git fetch
 
 git branch
 
-# track all remote branches, to make them accessible to latexdiff
-for remote in `git branch -r `; do
+# track all remote branches, to make them accessible to latexdiff-vc
+for remote in `git branch --remotes `; do
     git branch --track $remote
 done
 
