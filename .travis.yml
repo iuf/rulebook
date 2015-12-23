@@ -20,6 +20,7 @@ addons:
       - texlive-latex-extra
       - texlive-fonts-recommended
       - texlive-fonts-extra
+      - texlive-extra-utils # texfot
 
 install:
     # - sudo add-apt-repository ppa:texlive-backports/ppa -y
