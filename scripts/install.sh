@@ -1,20 +1,15 @@
 #!/bin/bash
 
-# get branches
-git checkout $TRAVIS_BRANCH # attach to HEAD
-git branch -a
+# travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git fetch
 
-#for branch in `git branch -a | grep remotes | grep -v HEAD | grep -v travis`; do
-#   git branch --track ${branch##*/} $branch;
-# done
-
+# track all branches to diff against
+# this makes git checkout BRANCH work and is needed for latexdiff
 for branch in $(cat diff-branches); do
   git branch --track $branch;
 done
 
-git fetch --all
-git pull --all
-git branch
 current=`pwd`
 
 # binaries
@@ -29,17 +24,17 @@ mkdir -p $HOME/local/latexdiff/bin
 mkdir -p $HOME/local/latexdiff/man/man1
 git clone https://github.com/ftilmann/latexdiff.git
 cd latexdiff/latexdiff-1.1.0
-make install-fast INSTALLPATH=$HOME/local/latexdiff
+make install INSTALLPATH=$HOME/local/latexdiff
 cd
 
 # rcs-latexdiff
-mkdir -p $HOME/local/rcs-latexdiff
-git clone https://github.com/driquet/rcs-latexdiff.git
-cd rcs-latexdiff
-virtualenv --prompt==rcs-latexdiff venv
-source venv/bin/activate
-python setup.py install
-cd
+# mkdir -p $HOME/local/rcs-latexdiff
+# git clone https://github.com/driquet/rcs-latexdiff.git
+# cd rcs-latexdiff
+# virtualenv --prompt==rcs-latexdiff venv
+# source venv/bin/activate
+# python setup.py install
+# cd
 
 # list (debug?)
 # ls -R ~

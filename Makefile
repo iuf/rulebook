@@ -43,7 +43,7 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(MAINTEX); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(MAINTEX); \
 	mv $(OUTDIR)/$(PROJECT).pdf $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf; \
-	cat $(OUTDIR)/$(PROJECT).log
+	texfot cat $(OUTDIR)/$(PROJECT).log
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-$(LANG).pdf:
 
@@ -55,13 +55,13 @@ diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
 	# building diff against branch $(DIFFBRANCH)
 	# rcs-latexdiff --no-pdf --no-open -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH);
-	latexdiff-vc --git --flatten --fast --force -r $(DIFFBRANCH) -r $(BRANCH) $(MAINTEX); \
+	latexdiff-vc --git --flatten --force -r $(DIFFBRANCH) $(MAINTEX); \
 	mv $(SRCDIR)/$(PROJECT)-diff$(DIFFBRANCH).tex $(DIFFTEX); \
 	TEXDIR=$(SRCDIR); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX); \
 	mv $(OUTDIR)/`basename $@` $(BUILDDIR); \
-	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).log
+	texfot cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).log
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH)-$(LANG).pdf:
 
