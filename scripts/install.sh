@@ -4,8 +4,12 @@
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 git fetch
 
-# track all remote branches, to macke them accessible to latexdiff
-for remote in `git branch -r `; do git branch --track $remote; done
+git branch
+
+# track all remote branches, to make them accessible to latexdiff
+for remote in `git branch -r `; do
+    git branch --track $remote
+done
 
 current=`pwd`
 
