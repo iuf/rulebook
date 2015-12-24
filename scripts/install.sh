@@ -12,8 +12,9 @@ for remote in `git branch -r | grep -v /HEAD`; do
 done
 
 git checkout $current_branch
-
 git branch
+
+
 
 current=`pwd`
 
