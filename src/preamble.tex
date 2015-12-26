@@ -9,6 +9,9 @@
 \usepackage{lmodern}
 \usepackage{longtable}
 \usepackage{multicol}
+\usepackage{multirow}
+\usepackage{array}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}} % use column type 'P' instead of 'p' for non-justified text
 \usepackage[shortlabels]{enumitem}
 \setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
 
@@ -91,5 +94,4 @@
 % Documentation of gitinfo:
 % http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 %Simple instructions: copy "hooks" directory into ".git" directory
- \usepackage{gitinfo2}
-
+\usepackage{gitinfo}
