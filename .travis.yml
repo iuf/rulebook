@@ -23,7 +23,6 @@ addons:
       # - texlive-extra-utils # texfot
 
 install:
-    - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
     # - sudo add-apt-repository ppa:texlive-backports/ppa -y
     # - sudo apt-get update -y
     # - sudo apt-get install texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra latexmk texlive-science -y
@@ -36,6 +35,7 @@ install:
     # - cd $TRAVIS_BUILD_DIR
 
     - scripts/install.sh
+    - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in the last one tracked by the install script
     - export PATH=$PATH:$HOME/local/latexdiff/bin
 
 # cache: apt
