@@ -21,7 +21,7 @@ MAINTEX=$(SRCDIR)/$(PROJECT).tex
 DIFFTEX=$(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).tex
 
 # LaTeX
-LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error
+LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error -halt-on-error
 
 # Help
 # target : normal-prerequesites | order-only-prerequesites
