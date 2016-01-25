@@ -11,6 +11,8 @@
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{array}
+\usepackage{color} % for latexdiff
+\usepackage[normalem]{ulem} % for latexdiff
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}} % use column type 'P' instead of 'p' for non-justified text
 \usepackage[shortlabels]{enumitem}
 \setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
@@ -48,11 +50,11 @@
 \pagestyle{scrheadings}
 
 \newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
-\begin{mtchideinmaintoc}
-\addstarredchapter{#1}
-\chapter*{#1}
-\markright{\thepart\ #1}
-\end{mtchideinmaintoc}}
+    \begin{mtchideinmaintoc}
+        \addstarredchapter{#1}
+        \chapter*{#1}
+        \markright{\thepart\ #1}
+    \end{mtchideinmaintoc}}
 
 
 \setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
