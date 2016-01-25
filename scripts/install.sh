@@ -22,8 +22,12 @@ current=`pwd`
 # not here. $PATH must be set in .travis.yml, see http://docs.travis-ci.com/user/installing-dependencies/
 
 # git metadata in pdf
+echo "installing gitinfo"
+pwd
 cp -a dependencies/gitinfo2/* src
+ls -l src
 ./hooks/post-checkout
+ls -l .git
 
 # latexdiff
 mkdir -p $HOME/local/latexdiff/bin
