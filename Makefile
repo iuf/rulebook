@@ -18,7 +18,6 @@ SRCFILES=$(shell find $(SRCDIR) -type f)
 BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 DIFFBRANCH=$(shell head -1 diff-branches)
 MAINTEX=$(SRCDIR)/$(PROJECT).tex
-DIFFTEX=$(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).tex
 
 # LaTeX
 LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error -halt-on-error
@@ -30,9 +29,27 @@ LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error -
 # updates in order-only-prerequesites do not trigger rebuilds
 #
 # target variable: $@
+# wildcard in target: $*
 # dependency variable: $<
 
+
+
+
+
+
+# build the rulebook pdf
 rulebook: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
+
+# build diff against branch $(DIFFBRANCH)
+# usage: make diff DIFFBRANCH=<branch you want to diff against>
+diffonly: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
+
+# for convenience: build all diffs against branches found in file `diff-branches`
+diff: $(shell sed "s/\(.*\)/.\/$(REPO)\/pdf\/$(PROJECT)-$(BRANCH)-diff-\1\.pdf/g" diff-branches)
+
+
+
+
 
 #TODO: error when branch in filename != current branch, because we can only build the current one
 #TODO: this rule is always rebuilding
@@ -47,21 +64,19 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-$(LANG).pdf:
 
-# DIFFBRANCH needs to be passed externally
-# TODO: make diff -> should produce all diffs from ./diff-branches
 
-diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 
-$(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf: | setup
-	# building diff against branch $(DIFFBRANCH)
-	# rcs-latexdiff --no-pdf --no-open -vo $(DIFFTEX) $(MAINTEX) $(DIFFBRANCH);
-	latexdiff-vc --git --flatten --force --exclude-textcmd="part,chapter,section,subsection,subsubsection" -r $(DIFFBRANCH) $(MAINTEX); \
-	mv $(SRCDIR)/$(PROJECT)-diff$(DIFFBRANCH).tex $(DIFFTEX); \
+$(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-%.pdf: | setup
+	# building diff against branch $*
+	latexdiff-vc --git --flatten --force --exclude-textcmd="part,chapter,section,subsection,subsubsection" -r $* $(MAINTEX); \
+	mv $(SRCDIR)/$(PROJECT)-diff$*.tex $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex; \
 	TEXDIR=$(SRCDIR); \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(DIFFTEX); \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(DIFFTEX); \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex; \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex; \
 	mv $(OUTDIR)/`basename $@` $(BUILDDIR); \
-	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).log
+	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$*.log
+
+
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH)-$(LANG).pdf:
 
@@ -83,7 +98,7 @@ clean:
 	rm -rf $(OUTDIR)
 	rm -rf $(BUILDDIR)
 	rm -rf $(PODIR)
-	rm -rf $(SRCDIR)/$(PROJECT)-* # TODO ?
+	rm -rf $(SRCDIR)/$(PROJECT)-*
 
 
 
