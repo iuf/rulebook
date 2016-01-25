@@ -26,6 +26,7 @@ echo "installing gitinfo"
 pwd
 cp -a dependencies/gitinfo2/* src
 ls -l src
+./instll_hooks
 ./hooks/post-checkout
 ls -l .git
 
