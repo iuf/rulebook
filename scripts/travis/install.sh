@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 install() {
     # travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches, to be able to diff against them.

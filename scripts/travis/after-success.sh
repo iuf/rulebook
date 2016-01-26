@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 ls -l out
 ls -l pdf
