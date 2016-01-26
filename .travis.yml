@@ -1,46 +1,48 @@
 branches:
   except:
-  - road_racing_rewrite
+    - road_racing_rewrite
 
 notifications:
   email: false
 
-sudo: false
-addons:
-  apt:
-    packages:
-    - ncftp
-      - dvipng # TODO: do we need this?
-    - lmodern
-    - texlive-latex-base
-    - texlive-latex-recommended
-    - texlive-latex-extra
-    - texlive-fonts-recommended
-    - texlive-fonts-extra
-      # - texlive-extra-utils # texfot
-    - po4a
-
 language: python
 
 python:
-    - '3.5'
+  - '3.5'
 
-before_install:
-    - openssl aes-256-cbc -K $encrypted_2ec82cbc4698_key -iv $encrypted_2ec82cbc4698_iv -in .transifexrc.enc -out .transifexrc -d
-install:
-    - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
-    - scripts/travis/install.sh
-    - export PATH=$PATH:$HOME/local/latexdiff/bin
+sudo: false
 
 cache: apt
 
+addons:
+  apt:
+    packages:
+      - ncftp
+      - dvipng # TODO: do we need this?
+      - lmodern
+      - texlive-latex-base
+      - texlive-latex-recommended
+      - texlive-latex-extra
+      - texlive-fonts-recommended
+      - texlive-fonts-extra
+      - po4a
+      # - texlive-extra-utils # texfot
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_2ec82cbc4698_key -iv $encrypted_2ec82cbc4698_iv -in .transifexrc.enc -out .transifexrc -d
+
+install:
+  - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
+  - scripts/travis/install.sh
+  - export PATH=$PATH:$HOME/local/latexdiff/bin
+
 script:
-    - scripts/travis/script.sh
+  - scripts/travis/script.sh
 
 after_success:
-    - scripts/travis/after-success.sh
+  - scripts/travis/after-success.sh
 
 env:
   global:
-  - secure: QFpLp44tE6qATEu0AMjzGS3Kzh4jZDd7gCIKJK+d3cFYh47kHf95Ke0LUf1p6MPAIlfBvfIvCTpSxK5PoPeMnZjMVzhEKgP0zrEQDWU3kOMep5faM0lDwzCcxfbEN6nlMrLXp/x/XnbPGgrG0iWjtgoZfpWUX+BHDfHFacQnjcQ=
-  - secure: Rvoa5HPs7Vy070B0FnVGfE9kWZsRUJ+IGz5UtzeIOnEFllUEN77yDLz3AVJvLROhqLPOqSLCDOFngXhP5HJHeiz3tdVO6yAF4MVPBDSCWuc/J9bZu5wDN6cKqkQ5lgLXOXBYm9o30ShkvnoNWwobIknoiFLPB6XRlT6TJVd2FqM=
+    - secure: QFpLp44tE6qATEu0AMjzGS3Kzh4jZDd7gCIKJK+d3cFYh47kHf95Ke0LUf1p6MPAIlfBvfIvCTpSxK5PoPeMnZjMVzhEKgP0zrEQDWU3kOMep5faM0lDwzCcxfbEN6nlMrLXp/x/XnbPGgrG0iWjtgoZfpWUX+BHDfHFacQnjcQ=
+    - secure: Rvoa5HPs7Vy070B0FnVGfE9kWZsRUJ+IGz5UtzeIOnEFllUEN77yDLz3AVJvLROhqLPOqSLCDOFngXhP5HJHeiz3tdVO6yAF4MVPBDSCWuc/J9bZu5wDN6cKqkQ5lgLXOXBYm9o30ShkvnoNWwobIknoiFLPB6XRlT6TJVd2FqM=
