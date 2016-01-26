@@ -24,7 +24,7 @@ install_latexdiff() {
 
 install_gitinfo() {
     cp -a dependencies/gitinfo2/* src
-    ./install_hooks
+    ./scripts/install-git-hooks.sh
 }
 
 git_fetch_all_branches() {
