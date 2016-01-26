@@ -18,4 +18,4 @@
 *.synctex.gz*
 *.DS_Store
 gitHeadInfo.gin
-
+/.transifexrc
