@@ -27,7 +27,7 @@ install:
 cache: apt
 
 script:
-  - scripts/travis/main.sh
+  - scripts/travis/script.sh
 
 after_success:
   - scripts/travis/after-success.sh
