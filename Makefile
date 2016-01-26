@@ -47,6 +47,24 @@ diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 # for convenience: build all diffs against branches found in file `diff-branches`
 diff-all: $(shell sed "s/\(.*\)/.\/$(REPO)\/pdf\/$(PROJECT)-$(BRANCH)-diff-\1\.pdf/g" diff-branches)
 
+translated: $(PODIR)/template.pot | setup
+	tx push --source # upload new strings to transifex
+	tx pull --all # download all translated strings from transifex
+	# generate language-dependent tex files e.g. src/iuf-rulebook-master-de_DE.tex
+	TEXINPUTS=$(SRCDIR): po4a --variable branch=$(BRANCH) --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/config/po4a.cfg
+	# build pdfs for all translations
+	for translated_tex in `find $(SRCDIR)/$(PROJECT)-*.tex`; do \
+		translated_pdf=$(OUTDIR)/`basename $$translated_tex | sed 's/\.tex$$/\.pdf/'` && \
+		translated_log=$(OUTDIR)/`basename $$translated_tex | sed 's/\.tex$$/\.log/'` && \
+		echo $$translated_tex && \
+		TEXDIR=$(SRCDIR) && \
+		TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $$translated_tex && \
+		TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $$translated_tex && \
+		mv $$translated_pdf $(BUILDDIR) && \
+		mv $$translated_tex $(OUTDIR) && \
+		cat $$translated_log; \
+	done
+
 
 #TODO: error when branch in filename != current branch, because we can only build the current one
 #TODO: this rule is always rebuilding
@@ -59,8 +77,6 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 	mv $(OUTDIR)/$(PROJECT).pdf $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf; \
 	cat $(OUTDIR)/$(PROJECT).log
 
-$(BUILDDIR)/$(PROJECT)-$(BRANCH)-$(LANG).pdf:
-
 
 
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-%.pdf: | setup
@@ -71,11 +87,30 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-%.pdf: | setup
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex; \
 	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex; \
 	mv $(OUTDIR)/`basename $@` $(BUILDDIR); \
+	mv $(SRCDIR)/$(PROJECT)-$(BRANCH)-diff-$*.tex $(OUTDIR); \
 	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$*.log
 
 
+$(BUILDDIR)/$(PROJECT)-$(BRANCH)-%.pdf: $(SRCDIR)/$(PROJECT)-$(BRANCH)-%.tex | $(OUTDIR) setup
+	# building for language $*
+	TEXDIR=$(SRCDIR); \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $(SRCDIR)/$(PROJECT)-$(BRANCH)-$*.tex; \
+	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $(SRCDIR)/$(PROJECT)-$(BRANCH)-$*.tex; \
+	mv $(OUTDIR)/`basename $@` $(BUILDDIR); \
+	mv $(SRCDIR)/$(PROJECT)-$(BRANCH)-$*.tex $(OUTDIR); \
+	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-$*.log
 
-$(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH)-$(LANG).pdf:
+$(SRCDIR)/$(PROJECT)-$(BRANCH)-%.tex: $(PODIR)/template.pot
+	tx push --source # upload new strings to transifex
+	tx pull --language=$* # download all translated strings for language $* from transifex
+	# generate language-dependent tex files e.g. src/iuf-rulebook-master-de_DE.tex
+	TEXINPUTS=$(SRCDIR): po4a --variable branch=$(BRANCH) --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/config/po4a.cfg
+
+$(PODIR)/template.pot: $(SRCFILES) config/po4a.cfg | $(PODIR) $(wildcard $(SRCDIR)/$(PROJECT)-$(BRANCH)-*.tex)
+	# extract strings from latex into po/template.pot
+	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -o 'exclude_include=$(IGNOREFORTRANSLATION)' -p $(PODIR)/template.pot
+
+
 
 
 
