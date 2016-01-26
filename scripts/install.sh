@@ -1,19 +1,16 @@
 #!/bin/bash
 
-
-# travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches, to be able to diff against them.
-git_fetch_all_branches
-
-
-# gitinfo is a latex package which allows to put git metadata (like current hash) into the latex document.
-install_gitinfo
-
-# latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
-install_latexdiff
+install() {
+    # travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches, to be able to diff against them.
+    git_fetch_all_branches
 
 
+    # gitinfo is a latex package which allows to put git metadata (like current hash) into the latex document.
+    install_gitinfo
 
-
+    # latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
+    install_latexdiff
+}
 
 install_latexdiff() {
     current=`pwd`
@@ -45,3 +42,6 @@ git_fetch_all_branches() {
     # checkout originally selected branch
     git checkout $current_branch
 }
+
+install
+
