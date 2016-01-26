@@ -1,53 +1,47 @@
 #!/bin/bash
 
-# travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches
-git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-git fetch
 
-current_branch=$(git rev-parse --abbrev-ref HEAD)
+# travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches, to be able to diff against them.
+git_fetch_all_branches
 
-# track all remote branches, to make them accessible to latexdiff-vc
-for remote in `git branch -r | grep -v /HEAD`; do
-    git checkout --track $remote
-done
 
-git checkout $current_branch
-git branch
+# gitinfo is a latex package which allows to put git metadata (like current hash) into the latex document.
+install_gitinfo
+
+# latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
+install_latexdiff
 
 
 
-current=`pwd`
 
-# binaries
-# not here. $PATH must be set in .travis.yml, see http://docs.travis-ci.com/user/installing-dependencies/
 
-# git metadata in pdf
-echo "installing gitinfo"
-pwd
-cp -a dependencies/gitinfo2/* src
-ls -l src
-./instll_hooks
-./hooks/post-checkout
-ls -l .git
+install_latexdiff() {
+    current=`pwd`
+    mkdir -p $HOME/local/latexdiff/bin
+    mkdir -p $HOME/local/latexdiff/man/man1
+    git clone https://github.com/ftilmann/latexdiff.git
+    cd latexdiff/latexdiff-1.1.0
+    make install INSTALLPATH=$HOME/local/latexdiff
+    cd $current
+}
 
-# latexdiff
-mkdir -p $HOME/local/latexdiff/bin
-mkdir -p $HOME/local/latexdiff/man/man1
-git clone https://github.com/ftilmann/latexdiff.git
-cd latexdiff/latexdiff-1.1.0
-make install INSTALLPATH=$HOME/local/latexdiff
-cd
+install_gitinfo() {
+    cp -a dependencies/gitinfo2/* src
+    ./install_hooks
+}
 
-# rcs-latexdiff
-# mkdir -p $HOME/local/rcs-latexdiff
-# git clone https://github.com/driquet/rcs-latexdiff.git
-# cd rcs-latexdiff
-# virtualenv --prompt==rcs-latexdiff venv
-# source venv/bin/activate
-# python setup.py install
-# cd
+git_fetch_all_branches() {
+    # cache current branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-# list (debug?)
-# ls -R ~
+    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+    git fetch
 
-cd $current
+    # track all remote branches
+    for remote in `git branch -r | grep -v /HEAD`; do
+        git checkout --track $remote
+    done
+
+    # checkout originally selected branch
+    git checkout $current_branch
+}
