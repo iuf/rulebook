@@ -10,6 +10,9 @@ install() {
 
     # latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
     install_latexdiff
+
+    # handles online translations on transifex.com
+    install_transifex_client
 }
 
 install_latexdiff() {
