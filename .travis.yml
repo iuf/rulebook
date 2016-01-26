@@ -19,6 +19,10 @@ addons:
       - texlive-fonts-extra
       # - texlive-extra-utils # texfot
 
+language: python
+python:
+    - "3.5"
+
 install:
     - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
     - scripts/travis/install.sh

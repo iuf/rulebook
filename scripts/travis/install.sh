@@ -27,6 +27,10 @@ install_gitinfo() {
     ./scripts/install-git-hooks.sh
 }
 
+install_transifex_client() {
+    pip install transifex-client
+}
+
 git_fetch_all_branches() {
     # cache current branch
     current_branch=$(git rev-parse --abbrev-ref HEAD)

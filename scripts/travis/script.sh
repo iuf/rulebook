@@ -2,4 +2,4 @@
 
 make rulebook
 make diff-all
-#TODO: translations
+make translated
