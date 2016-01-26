@@ -1,5 +1,3 @@
-
-# blacklist
 branches:
   except:
     - road_racing_rewrite
@@ -11,7 +9,6 @@ sudo: false
 addons:
   apt:
     packages:
-      # - python-virtualenv
       - ncftp
       - dvipng # TODO: do we need this?
       - lmodern
@@ -24,27 +21,16 @@ addons:
 
 install:
     - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
-    # - sudo add-apt-repository ppa:texlive-backports/ppa -y
-    # - sudo apt-get update -y
-    # - sudo apt-get install texlive-latex-extra texlive-fonts-extra texlive-bibtex-extra latexmk texlive-science -y
-    # - sudo apt-get install ncftp -y
-    # - wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-    # - tar -zxvf install-tl-unx.tar.gz
-    # - cd install-tl-*
-    # - sudo ./install-tl --profile="$TRAVIS_BUILD_DIR/latex.profile"
-    # - export PATH=$PATH:/usr/local/texlive/CURRENT/bin/x86_64-linux
-    # - cd $TRAVIS_BUILD_DIR
-
-    - scripts/install.sh
+    - scripts/travis/install.sh
     - export PATH=$PATH:$HOME/local/latexdiff/bin
 
-# cache: apt
+cache: apt
 
 script:
-  - scripts/main.sh
+  - scripts/travis/main.sh
 
 after_success:
-  - scripts/after-success.sh
+  - scripts/travis/after-success.sh
 
 env:
   global:
