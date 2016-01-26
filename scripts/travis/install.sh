@@ -36,7 +36,7 @@ git_fetch_all_branches() {
 
     # track all remote branches
     for remote in `git branch -r | grep -v /HEAD`; do
-        git checkout --force --track $remote
+        git checkout --track $remote || true
     done
 
     # checkout originally selected branch
