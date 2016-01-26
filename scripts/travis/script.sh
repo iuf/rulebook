@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
 make rulebook
-make diff
+make diff-all
 #TODO: translations

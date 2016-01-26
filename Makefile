@@ -42,13 +42,10 @@ rulebook: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
 
 # build diff against branch $(DIFFBRANCH)
 # usage: make diff DIFFBRANCH=<branch you want to diff against>
-diffonly: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
+diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 
 # for convenience: build all diffs against branches found in file `diff-branches`
-diff: $(shell sed "s/\(.*\)/.\/$(REPO)\/pdf\/$(PROJECT)-$(BRANCH)-diff-\1\.pdf/g" diff-branches)
-
-
-
+diff-all: $(shell sed "s/\(.*\)/.\/$(REPO)\/pdf\/$(PROJECT)-$(BRANCH)-diff-\1\.pdf/g" diff-branches)
 
 
 #TODO: error when branch in filename != current branch, because we can only build the current one
