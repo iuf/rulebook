@@ -35,18 +35,45 @@ LATEXARGS= -output-directory=$(OUTDIR) -interaction=batchmode -file-line-error -
 
 
 
+#
+# PUBLIC API
+#
+# See: https://github.com/iuf/rulebook/wiki/Build-&-Deploy
+#
+################################################################################
 
 
+#
+# make rulebook
+#
 # build the rulebook pdf
 rulebook: $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf
 
+#
+# make diff
+#
 # build diff against branch $(DIFFBRANCH)
-# usage: make diff DIFFBRANCH=<branch you want to diff against>
+#
+# Parameters:
+#   DIFFBRANCH = the branch you want to diff against
 diff: $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-$(DIFFBRANCH).pdf
 
-# for convenience: build all diffs against branches found in file `diff-branches`
+#
+# make diff-all
+#
+# build all diffs against branches found in file `diff-branches`
 diff-all: $(shell sed "s/\(.*\)/.\/$(REPO)\/pdf\/$(PROJECT)-$(BRANCH)-diff-\1\.pdf/g" diff-branches)
 
+#
+# make translation
+#
+# Generates a translated version of the rulebook
+#
+# Parameters:
+#   LOCALE = the language-tag for the translated version
+#
+# TODO: change translated to translation ?
+# TODO: make translation-all task
 translated: $(PODIR)/template.pot | setup
 	tx push --source # upload new strings to transifex
 	tx pull --all # download all translated strings from transifex
@@ -65,7 +92,28 @@ translated: $(PODIR)/template.pot | setup
 		cat $$translated_log; \
 	done
 
+# TODO
+# make tailored
+#
+# Parameters:
+#   AUDIENCE = Takes a comma separated list of arguments. Valid items: competitor, organizer
+#   PART = Takes a comma separated list of arguments. Valid items: TODO !
+#   LOCALE = the language-tag for a translated version of the above
+#
 
+
+#
+# PRIVATE API
+#
+# tasks used internally by public tasks
+#
+################################################################################
+
+#
+# make rulebook
+#
+# output: iuf-rulebook-<version>.pdf
+#
 #TODO: error when branch in filename != current branch, because we can only build the current one
 #TODO: this rule is always rebuilding
 #  $(OUTDIR)/$(PROJECT)-$(BRANCH).aux $(OUTDIR)/$(PROJECT)-$(BRANCH).idx
@@ -78,7 +126,11 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH).pdf: $(SRCFILES) | setup
 	cat $(OUTDIR)/$(PROJECT).log
 
 
-
+#
+# make diff
+#
+# output: iuf-rulebook-<version>-diff-<branch>.pdf
+#
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-%.pdf: | setup
 	# building diff against branch $*
 	latexdiff-vc --git --flatten --force --exclude-textcmd="part,chapter,section,subsection,subsubsection" -r $* $(MAINTEX); \
@@ -91,6 +143,11 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-diff-%.pdf: | setup
 	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-diff-$*.log
 
 
+#
+# make translation
+#
+# output: iuf-rulebook-<version>-<locale>.pdf
+#
 $(BUILDDIR)/$(PROJECT)-$(BRANCH)-%.pdf: $(SRCDIR)/$(PROJECT)-$(BRANCH)-%.tex | $(OUTDIR) setup
 	# building for language $*
 	TEXDIR=$(SRCDIR); \
@@ -100,20 +157,34 @@ $(BUILDDIR)/$(PROJECT)-$(BRANCH)-%.pdf: $(SRCDIR)/$(PROJECT)-$(BRANCH)-%.tex | $
 	mv $(SRCDIR)/$(PROJECT)-$(BRANCH)-$*.tex $(OUTDIR); \
 	cat $(OUTDIR)/$(PROJECT)-$(BRANCH)-$*.log
 
+
+#
+# locale preparation
+# loads strings from transifex and turns them into tex files
+#
+# output: iuf-rulebook-<version>-<locale>.tex
+#
 $(SRCDIR)/$(PROJECT)-$(BRANCH)-%.tex: $(PODIR)/template.pot
 	tx push --source # upload new strings to transifex
 	tx pull --language=$* # download all translated strings for language $* from transifex
 	# generate language-dependent tex files e.g. src/iuf-rulebook-master-de_DE.tex
 	TEXINPUTS=$(SRCDIR): po4a --variable branch=$(BRANCH) --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/config/po4a.cfg
 
+
+#
+# transifex preparation
+# generates strings from tex files
+#
+# output: template.pot
+#
 $(PODIR)/template.pot: $(SRCFILES) config/po4a.cfg | $(PODIR) $(wildcard $(SRCDIR)/$(PROJECT)-$(BRANCH)-*.tex)
 	# extract strings from latex into po/template.pot
 	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -o 'exclude_include=$(IGNOREFORTRANSLATION)' -p $(PODIR)/template.pot
 
 
-
-
-
+#
+# Setup tasks
+#
 setup: | $(OUTDIR) $(BUILDDIR) $(PODIR)
 
 $(BUILDDIR):
