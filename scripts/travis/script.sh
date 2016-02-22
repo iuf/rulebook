@@ -1,5 +1,5 @@
 #!/bin/bash -e
 
-make rulebook
-make diff-all
-make translated
+scripts/build/pdf.sh
+scripts/build/diff-all.sh
+scripts/build/translation.sh
