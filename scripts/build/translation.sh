@@ -29,7 +29,7 @@ tx push --source
 tx pull --all
 
 # extracts the list of languages by looking at one chapter's po-files
-LANGUAGES=$(basename --multiple $(ls tmp/po/$(ls tmp/po | head -1)/*.po) | sed "s/\\.po$//")
+LANGUAGES=$(ls tmp/po/$(ls tmp/po | head -1)/*.po | xargs -n1 basename | sed "s/\\.po$//")
 
 for LANG in $LANGUAGES; do
     cp --archive --no-target-directory src tmp/src_$LANG
