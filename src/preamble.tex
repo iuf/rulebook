@@ -4,7 +4,8 @@
 %\hoffset=5.8754pt % enable if using letterpaper
 
 % \usepackage{etoolbox}
-
+\usepackage{comment}
+\excludecomment{comment-2016}
 \usepackage{framed}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -112,7 +113,8 @@
 
 \newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use \unit{km} in math mode for better units
 
-\newcommand{\oldrule}[1]{\framebox{#1}} % defines the \oldrule command to allow for nice styling
+\newcommand{\oldrule}[1]{}
+%\newcommand{\oldrule}[1]{\framebox{#1}} % defines the \oldrule command to allow for nice styling
 
 \usepackage{graphicx}
 \graphicspath{{img/}}
