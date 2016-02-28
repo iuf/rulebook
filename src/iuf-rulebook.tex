@@ -1,5 +1,10 @@
+% when po4a (translation) fails, because of unknown environment, add it here:
+% po4a: environment longtable {}
+% po4a: environment judging_items {}
+% po4a: separator longtable "(?:&|\\\\\\\\|\\\\hline)"
+
 \input{preamble}
-%\includeonly{chapters/01_general} 
+%\inputonly{chapters/01_general} 
 
 \begin{document}
 \input{titlepage}
@@ -8,22 +13,22 @@
 \tableofcontents
 
 \mainmatter
-\include{chapters/01_general}%scott
-\include{chapters/02_track_races}
-\include{chapters/03_track_other}%scott
-\include{chapters/04_road_races}
-\include{chapters/05_muni_races}
-\include{chapters/06_muni_cyclocross}
-\include{chapters/07_freestyle_artistic}%scott
-\include{chapters/08_freestyle_standards}
-\include{chapters/09_freestyle_xstyle}
-\include{chapters/10_urban_flatland}
-\include{chapters/11_urban_street}
-\include{chapters/12_urban_trials}
-\include{chapters/13_urban_jumps}
-\include{chapters/14_team_hockey}
-\include{chapters/15_team_basketball}
-%\include{chapters/16_skill_levels}
+\input{src/chapters/01_general}%scott
+\input{chapters/02_track_races}
+\input{chapters/03_track_other}%scott
+\input{chapters/04_road_races}
+\input{chapters/05_muni_races}
+\input{chapters/06_muni_cyclocross}
+\input{chapters/07_freestyle_artistic}%scott
+\input{chapters/08_freestyle_standards}
+\input{chapters/09_freestyle_xstyle}
+\input{chapters/10_urban_flatland}
+\input{chapters/11_urban_street}
+\input{chapters/12_urban_trials}
+\input{chapters/13_urban_jumps}
+\input{chapters/14_team_hockey}
+\input{chapters/15_team_basketball}
+\input{chapters/16_skill_levels}
 
 \backmatter
 \input{credits}

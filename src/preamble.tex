@@ -3,18 +3,25 @@
 \textheight=22.1cm
 %\hoffset=5.8754pt % enable if using letterpaper
 
-% \usepackage{etoolbox}
 \usepackage{comment}
 \excludecomment{comment-2016}
 \usepackage{framed}
+\usepackage{verbatim}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{longtable}
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{array}
+\usepackage{color} % for latexdiff
+\usepackage[normalem]{ulem} % for latexdiff
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}} % use column type 'P' instead of 'p' for non-justified text
 \usepackage[shortlabels]{enumitem}
 \setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
+
+\newlist{judging_items}{itemize}{1} %redefine itemize for the freestyle judging grid to fit
+\setlist[judging_items]{label=\textbullet,leftmargin=*, labelsep=0.7mm,itemsep=-1mm, topsep=-6pt, partopsep=-5pt}
 % \usepackage[nenglish]{babel}
 
 
@@ -55,6 +62,7 @@
 %%%headings
 \usepackage[markcase=ignoreuppercase,autooneside]{scrlayer-scrpage} %better headings without uppercase TOC heading
 \usepackage{titlesec}
+%\usepackage[nouppercase]{scrpage2} %better headings without uppercase TOC heading
 \pagestyle{scrheadings}
 \clearscrheadfoot %clear all header and footer styles to allow custimization
 \cfoot[\pagemark]{\pagemark} %pagenumbers in footer
@@ -68,18 +76,19 @@
 
 \chead[]{
   \ifnum\value{chapter}>0
-    \thepart \ \parttitle -- \leftmark\fi
+    \thepart \ \parttitle -- \leftmark
   \else
-    \thepart \ \parttitle \fi 
-  \fi}
+    \thepart \ \parttitle 
+  \fi
+  }
 \makeatother
 
 \newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
-\begin{mtchideinmaintoc}
-\addstarredchapter{#1}
-\chapter*{#1}
-\markright{\thepart\ #1}
-\end{mtchideinmaintoc}}
+    \begin{mtchideinmaintoc}
+        \addstarredchapter{#1}
+        \chapter*{#1}
+        \markright{\thepart\ #1}
+    \end{mtchideinmaintoc}}
 
 
 \setcounter{tocdepth}{-1} % only includes parts and chapters (not sections) in main TOC
@@ -124,8 +133,4 @@
 % Documentation of gitinfo:
 % http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
 %Simple instructions: copy "hooks" directory into ".git" directory
-\usepackage{gitinfo}
-
-
-% po4a: environment longtable {}
-% po4a: separator longtable "(?:&|\\\\\\\\|\\\\hline)"
+\usepackage{gitinfo2}
