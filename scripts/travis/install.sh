@@ -8,8 +8,8 @@ install() {
     # gitinfo is a latex package which allows to put git metadata (like current hash) into the latex document.
     install_gitinfo
 
-    # scrlayer-scrpage is a latex package for header styles
-    install_scrlayer
+    # koma-script is a latex package
+    install_koma-script
 
     # latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
     install_latexdiff
@@ -33,8 +33,8 @@ install_gitinfo() {
     ./scripts/install-git-hooks.sh
 }
 
-install_scrlayer() {
-    cp -a dependencies/scrlayer/* src
+install_koma-script() {
+    cp -a dependencies/koma-script/* src
 }
 
 install_transifex_client() {
