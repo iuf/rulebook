@@ -63,6 +63,12 @@
 \usepackage[markcase=ignoreuppercase,autooneside]{scrlayer-scrpage} %better headings without uppercase TOC heading
 \usepackage{titlesec}
 %\usepackage[nouppercase]{scrpage2} %better headings without uppercase TOC heading
+
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt} %save space after (sub)section headers
+
+
 \pagestyle{scrheadings}
 \clearscrheadfoot %clear all header and footer styles to allow custimization
 \cfoot[\pagemark]{\pagemark} %pagenumbers in footer
