@@ -89,12 +89,6 @@
 %\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
 \makeatother
 
-% turning off part numbering in the backmatter
-% parts will still go to the TOC
-\makeatletter
-\g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
-\makeatother
-
 %don't reset page numbers ever (specifically not after frontmatter)
 \makeatletter
 \def\pagenumbering#1{%
