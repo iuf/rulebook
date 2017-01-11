@@ -7,6 +7,7 @@
 %% scrkernel-version.dtx  (with options: `class,report')
 %% scrkernel-basics.dtx  (with options: `load')
 %% tocbasic.dtx  (with options: `class,load,chapter')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,prepare')
 %% scrkernel-sections.dtx  (with options: `class,report,prepare')
 %% scrkernel-compatibility.dtx  (with options: `class,report,option')
 %% scrkernel-miscellaneous.dtx  (with options: `class,report,option')
@@ -15,6 +16,7 @@
 %% scrkernel-typearea.dtx  (with options: `class,report,option')
 %% scrkernel-paragraphs.dtx  (with options: `class,report,option')
 %% scrkernel-title.dtx  (with options: `class,report,option')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,option')
 %% scrkernel-sections.dtx  (with options: `class,report,option')
 %% scrkernel-pagestyles.dtx  (with options: `class,report,option')
 %% scrkernel-floats.dtx  (with options: `class,report,option')
@@ -31,6 +33,11 @@
 %% scrkernel-typearea.dtx  (with options: `class,report,body')
 %% scrkernel-paragraphs.dtx  (with options: `class,report,body')
 %% scrkernel-title.dtx  (with options: `class,report,body')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,body')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,style,part')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,style,chapter')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,style,section')
+%% scrkernel-tocstyle.dtx  (with options: `class,report,style,default')
 %% scrkernel-sections.dtx  (with options: `class,report,body')
 %% scrkernel-miscellaneous.dtx  (with options: `class,report,body')
 %% scrkernel-pagestyles.dtx  (with options: `class,report,body')
@@ -42,7 +49,7 @@
 %% scrkernel-listsandtabulars.dtx  (with options: `class,report,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -74,7 +81,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -96,7 +103,7 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@clsextension}{\@clsextension}
 \AtBeginDocument{%
@@ -111,21 +118,23 @@
 \newcommand*{\KOMAClassFileName}{\KOMAClassName.\@clsextension}
 \edef\KOMAClassFileName{\KOMAClassFileName}
 \ProvidesClass{\KOMAClassName}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   document class (\ClassName)%
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: tocbasic.dtx 2146 2015-06-20 06:38:46Z kohm $
+%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
 \RequirePackage{tocbasic}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
 ]
 \AtAddToTocList[\@currname.\@currext]{\setuptoc{\@currext}{onecolumn}}%
 \AtAddToTocList[float]{\setuptoc{\@currext}{onecolumn}}%
 \addtotoclist{toc}
 \addtotoclist[float]{lof}
 \addtotoclist[float]{lot}
-%%% From File: $Id: scrkernel-sections.dtx 2212 2015-10-03 12:51:00Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: prepare)
+%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
 %%%            (run: prepare)
 \newif\if@openright
 \@openrightfalse
@@ -200,8 +209,8 @@
 \newcommand*{\size@subsubsection}{}
 \newcommand*{\size@paragraph}{}
 \newcommand*{\size@subparagraph}{}
-\newcommand*{\sectfont}{\normalcolor\sffamily\bfseries}
-%%% From File: $Id: scrkernel-compatibility.dtx 2213 2015-10-03 12:59:03Z kohm $
+\newcommand*{\sectfont}{\normalcolor\@gr@gsffamily\bfseries}
+%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
 \newif\if@scr@emulatestandardclasses
 \let\scr@emulatestandardclassestrue\relax
 \let\scr@emulatestandardclassesfalse\relax
@@ -325,6 +334,8 @@
 \@namedef{scr@v@3.18a}{15}
 \@namedef{scr@v@3.19}{15}
 \@namedef{scr@v@3.19a}{15}
+\@namedef{scr@v@3.20}{15}
+\@namedef{scr@v@3.21}{15}
 \@namedef{scr@v@last}{15}
 \newcommand*{\scr@v@is@lt}[1]{%
   \scr@compatibility<\@nameuse{scr@v@#1}
@@ -338,7 +349,7 @@
 \newcommand*{\scr@v@is@ge}[1]{%
   \numexpr\scr@compatibility+\@ne\relax>\@nameuse{scr@v@#1}
 }
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \KOMA@key{draft}[true]{%
   \KOMA@set@ifkey{draft}{@tempswa}{#1}%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed
@@ -360,8 +371,12 @@
 {final}{draft=false}
 \DeclareOption{leqno}{\input{leqno.clo}}
 \DeclareOption{fleqn}{\input{fleqn.clo}}
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+\KOMA@ifkey{egregdoesnotlikesansseriftitles}{@egregdoesnotlikesansseriftitles}
+\newcommand*{\@gr@gsffamily}{%
+  \if@egregdoesnotlikesansseriftitles\else\sffamily\fi
+}
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*\@ptsize{%
   11%
 }
@@ -428,7 +443,25 @@
     \KOMAClassFileName
   }{fontsize}{#1}%
 }
-%%% From File: $Id: scrkernel-typearea.dtx 2166 2015-07-26 08:15:44Z kohm $
+\DeclareOption{enabledeprecatedfontcommands}{%
+  \ClassWarningNoLine{\KOMAClassName}{%
+    deprecated option `enabledeprecatedfontcommands'.\MessageBreak
+    Note, that this option was already depreacted when\MessageBreak
+    it has been defined. Support for old font commands\MessageBreak
+    has been removed from KOMA-Script more than one\MessageBreak
+    decade ago. It is not recommended to use them any\MessageBreak
+    longer. Therefore usage of this class option also\MessageBreak
+    is not recommended%
+  }%
+  \let\scr@defineobsoletefonts\@ne
+}
+\scr@ifundefinedorrelax{scr@defineobsoletefonts}{%
+  \let\scr@defineobsoletefonts\z@
+}{}
+\BeforePackage{tex4ht}{%
+  \let\scr@defineobsoletefonts\thr@@
+}
+%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
 \newcommand*{\@BCOR}{\expandafter\@@BCOR\CurrentOption BCORBCOR\@@BCOR}
 \newcommand*{\@@BCOR}{}
 \def\@@BCOR #1BCOR#2BCOR#3\@@BCOR{%
@@ -494,12 +527,12 @@
   }{%
     \def\FamilyElseValue{, `semi'}%
     \KOMA@set@ifkey{twoside}{%
-      @tempswa%
+      @twoside%
     }{#1}%
   }%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed
     \expandafter\ifnum\scr@v@is@ge{3.17}%
-      \if@tempswa\flushbottom
+      \if@twoside\flushbottom
       \else\if@twocolumn\flushbottom\else\raggedbottom\fi\fi
     \fi
     \KOMA@kav@xreplacevalue{.%
@@ -517,10 +550,13 @@
     \KOMA@kav@replacebool{.%
       \KOMAClassFileName
     }{twocolumn}{@twocolumn}%
-    \expandafter\ifnum\scr@v@is@ge{3.17}%
+    \if@atdocument\expandafter\@firstofone
+    \else\@ifpackageloaded{typearea}{\expandafter\@firstofone}
+                                    {\expandafter\AtEndOfClass}\fi
+    {\expandafter\ifnum\scr@v@is@ge{3.17}%
       \if@twocolumn\twocolumn\sloppy\flushbottom
       \else\onecolumn\if@twoside\flushbottom\else\raggedbottom\fi\fi
-    \fi
+    \fi}%
   \fi
 }
 \AtEndOfClass{%
@@ -534,7 +570,8 @@
   {onecolumn}{twocolumn=false}
 \DeclareOption*{%
   \x@paper}
-%%% From File: $Id: scrkernel-paragraphs.dtx 2179 2015-08-22 06:36:48Z kohm $
+%%% From File: $Id: scrkernel-paragraphs.dtx 2351 2016-02-22 08:20:29Z kohm $
+%%%            run: option
 \newcommand*{\setparsizes}[3]{%
   \edef\f@parindent{\the\parindent}%
   \edef\f@parskip{\the\parskip}%
@@ -569,6 +606,7 @@
 \let\par@update\relax
 \newcommand*{\default@par@update}{}
 \let\default@par@update\relax
+\AtBeginDocument{\par@update}
 \newcommand*{\scr@parindent}{1em}
 \newcommand*{\scr@parskip}{\z@}
 \newcommand*{\scr@parfillskip}{\z@ \@plus 1fil}
@@ -698,7 +736,7 @@
 \KOMA@DeclareDeprecatedOption{parindent}{parskip=false}
 \KOMA@kav@add{.\KOMAClassFileName}{parskip}{false}
 \KOMA@kav@add{.\KOMAClassFileName}{parskip}{absolute}
-%%% From File: $Id: scrkernel-title.dtx 2182 2015-08-25 09:10:08Z kohm $
+%%% From File: $Id: scrkernel-title.dtx 2227 2015-10-14 14:31:04Z kohm $
 \newif\if@titlepage
 \@titlepagetrue
 \newif\if@titlepageiscoverpage
@@ -732,7 +770,9 @@
 \KOMA@ifkey{abstract}{@abstrt}
 \KOMA@DeclareStandardOption{abstracton}{abstract=true}
 \KOMA@DeclareStandardOption{abstractoff}{abstract=false}
-%%% From File: $Id: scrkernel-sections.dtx 2212 2015-10-03 12:51:00Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: option)
+%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
 %%%            (run: option)
 \KOMA@key{open}{%
   \KOMA@set@ncmdkey{open}{@tempa}{%
@@ -994,33 +1034,11 @@
 \KOMA@DeclareDeprecatedOption{bigheadings}{headings=big}
 \KOMA@DeclareDeprecatedOption{normalheadings}{headings=normal}
 \KOMA@DeclareDeprecatedOption{smallheadings}{headings=small}
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
-\newif\if@hsl
-\KOMA@key{headsepline}[true]{%
-  \KOMA@set@ifkey{headsepline}{@hsl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.\KOMAClassFileName}{headsepline}{@hsl}%
-    \@ifundefined{typearea}{%
-      \PassOptionsToPackage{headinclude=#1}{typearea}%
-    }{%
-      \KOMAoptions{headinclude=#1}{}%
-    }%
-  \fi
-}
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
+\KOMA@ifkey{headsepline}{@hsl}%
 \KOMA@kav@add{.\KOMAClassFileName}{headsepline}{false}
 \KOMA@DeclareDeprecatedOption{headnosepline}{headsepline=false}
-\newif\if@fsl
-\KOMA@key{footsepline}[true]{%
-  \KOMA@set@ifkey{footsepline}{@fsl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.\KOMAClassFileName}{footsepline}{@fsl}%
-    \@ifundefined{typearea}{%
-      \PassOptionsToPackage{footinclude=#1}{typearea}%
-    }{%
-      \KOMAoptions{footinclude=#1}%
-    }%
-  \fi
-}
+\KOMA@ifkey{footsepline}{@fsl}%
 \KOMA@kav@add{.\KOMAClassFileName}{footsepline}{false}
 \KOMA@DeclareDeprecatedOption{footnosepline}{footsepline=false}
 \KOMA@key{cleardoublepage}{%
@@ -1120,7 +1138,7 @@
 \KOMA@DeclareDeprecatedOption{cleardoubleempty}{cleardoublepage=empty}
 \KOMA@DeclareDeprecatedOption{cleardoubleplain}{cleardoublepage=plain}
 \KOMA@DeclareDeprecatedOption{cleardoublestandard}{cleardoublepage=current}
-%%% From File: $Id: scrkernel-floats.dtx 2002 2015-03-12 12:06:17Z kohm $
+%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
 \newif\if@captionabove\@captionabovefalse
 \newif\if@tablecaptionabove\@tablecaptionabovefalse
 \newif\if@figurecaptionabove\@figurecaptionabovefalse
@@ -1324,7 +1342,7 @@
   \csname FN@mf@prepare\endcsname
   \ifhmode\spacefactor\@x@sf\fi
   \relax}
-%%% From File: $Id: scrkernel-listsof.dtx 2206 2015-09-27 08:08:34Z kohm $
+%%% From File: $Id: scrkernel-listsof.dtx 2384 2016-03-15 11:58:53Z kohm $
 \newif\if@tocleft
 \KOMA@key{toc}{%
   \KOMA@set@ncmdkey{toc}{@tempa}{%
@@ -1845,19 +1863,19 @@
 \KOMA@kav@add{.\KOMAClassFileName}{index}{notoc}
 \KOMA@kav@add{.\KOMAClassFileName}{index}{standardlevel}
 \KOMA@DeclareDeprecatedOption{idxtotoc}{index=totoc}
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2028 2015-03-23 12:19:51Z kohm $
-%%% From File: $Id: scrkernel-sections.dtx 2212 2015-10-03 12:51:00Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
+%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
 %%%            (run: execoption)
 \KOMAExecuteOptions{headings=openany}
 \KOMAExecuteOptions{numbers=autoendperiod}
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \KOMAExecuteOptions{%
   parskip=false,%
   headings=big%
 }
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrkernel-compatibility.dtx 2213 2015-10-03 12:59:03Z kohm $
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*\scr@setlength[4]{%
   \expandafter\ifnum\scr@v@is@lt{3.12}\relax
     \setlength{#1}{#2 \@plus#3 \@minus#4}%
@@ -2247,42 +2265,78 @@
   }%
 }
 \newcommand*{\scr@DeclareOldFontCommand}[3]{%
-  \DeclareRobustCommand #1{\@fontswitch {%
-      \ClassWarning{\KOMAClassName}{%
-        Usage of deprecated font command `\string#1'!\MessageBreak
-        You should note, that in 1994 font command `\string#1' has\MessageBreak
-        been defined for compatiblitiy to Script 2.0 only.\MessageBreak
-        Now, after two decades of LaTeX2e and NFSS2, you\MessageBreak
-        shouldn't use such commands any longer and within\MessageBreak
-        KOMA-Script usage of `\string#1' is definitely deprecated.\MessageBreak
-        See `fntguide.pdf' for more information about\MessageBreak
-        recommended font commands.\MessageBreak
-        Note also, that KOMA-Script will remove the definition\MessageBreak
-        of `\string#1' anytime until release of about version 3.20.\MessageBreak
-        But for now, KOMA-Script will replace deprecated
-        `\string#1'\MessageBreak
-        by `\detokenize{#2}'%
+  \ifnum\scr@defineobsoletefonts<\z@\else
+    \ifnum\scr@defineobsoletefonts>\tw@
+      \DeclareOldFontCommand{#1}{#2}{#3}%
+    \else
+      \DeclareOldFontCommand{#1}{%
+        \scr@ErrorWarningInfo{#1}{#2}#2%
+      }{%
+        \scr@ErrorWarningInfo{#1}{#3}#3%
       }%
-      #2%
-    }{%
-      \ClassWarning{\KOMAClassName}{%
-        Usage of deprecated font command `\string#1'!\MessageBreak
-        You should note, that in 1994 font command `\string#1' has\MessageBreak
-        been defined for compatiblitiy to Script 2.0 only.\MessageBreak
-        Now, after two decades of LaTeX2e and NFSS2, you\MessageBreak
-        shouldn't use such commands any longer and within\MessageBreak
-        KOMA-Script usage of `\string#1' is definitely deprecated.\MessageBreak
-        See `fntguide.pdf' for more information about\MessageBreak
-        recommended font commands.\MessageBreak
-        Note also, that KOMA-Script will remove the definition\MessageBreak
-        of `\string#1' anytime until release of about version 3.20.\MessageBreak
-        But for now, KOMA-Script will replace deprecated
-        `\string#1'\MessageBreak
-        by `\detokenize{#3}'%
-      }%
-      #3%
+    \fi
+  \fi
+}
+\DeclareRobustCommand*{\scr@ErrorWarningInfo}[2]{%
+  \ifnum \scr@defineobsoletefonts=\z@
+    \ClassError{\KOMAClassName}{undefined old font command `\string#1'}{%
+      You should note that since 1994 LaTeX2e provides a new font selection
+      scheme\MessageBreak
+      called NFSS2 with several new, combinable font commands. New
+      KOMA-Script\MessageBreak
+      classes have defined the old font commands like `\string#1'
+      only for compatibility\MessageBreak
+      with old LaTeX 2.09 document styles of Script 2.0. Nevertheless,
+      these\MessageBreak
+      commands are deprecated and undocumented at least since
+      2003. Since 2013\MessageBreak
+      KOMA-Script classes warn abouts soon removement of these deprecated
+      commands.\MessageBreak
+      Now, after two decades of LaTeX2e and NFSS2, these commands will not
+      work any\MessageBreak
+      more. If loading a package results in this error message, you should
+      contact\MessageBreak
+      the author of that package and ask him to replace the deprecated font
+      command\MessageBreak
+      `\string#1', e.g., by `\detokenize{#2}`. Otherwise you should
+      reconfigure\MessageBreak
+      or replace the package. If you have used the old font command
+      `\string#1' yourself,\MessageBreak
+      you should replace it, e.g., by `\detokenize{#2}'.\MessageBreak
+      To make it work for now, you can use the already also deprecated class
+      option\MessageBreak
+      `enabledeprecatedfontcommands'.%
     }%
-  }%
+  \else
+    \ifcase \scr@defineobsoletefonts
+    \or
+      \expandafter\ClassWarning
+    \or
+      \expandafter\ClassInfo
+    \else
+      \expandafter\@gobbletwo
+    \fi
+    {\KOMAClassName}{deprecated old font command `\string#1' used.\MessageBreak
+      You should note, that since 1994 LaTeX2e provides a\MessageBreak
+      new font selection scheme called NFSS2 with several\MessageBreak
+      new, combinable font commands. New KOMA-Script classes\MessageBreak
+      have defined the old font commands like `\string#1' only for\MessageBreak
+      compatibility with LaTeX 2.09 document styles of\MessageBreak
+      Script 2.0. These commands are deprecated and\MessageBreak
+      undocumented at least since 2003. Since 2013,\MessageBreak
+      KOMA-Script classes warn about soon removement of\MessageBreak
+      these deprecated commands. Now, after two decades of\MessageBreak
+      LaTeX2e, NFSS2, and KOMA-Script these commands will\MessageBreak
+      not work any longer. If loading a package results in\MessageBreak
+      this message you should contact the author of that\MessageBreak
+      package and ask him to replace the depracted font\MessageBreak
+      command `\string#1', e.g., by `\detokenize{#2}'.\MessageBreak
+      Otherwise you should reconfigure or replace the\MessageBreak
+      package. If you have used the old font command\MessageBreak
+      `\string #1' yourself you should replace it, e.g., by\MessageBreak
+      `\detokenize{#2}'%
+    }%
+  \fi
 }
 \scr@DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \scr@DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
@@ -2295,12 +2349,12 @@
   \@nomath\sfb}
 \DeclareRobustCommand*{\cal}{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*{\mit}{\@fontswitch\relax\mathnormal}
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
       \def\today{\ifcase\month\or
         January\or February\or March\or April\or May\or June\or
         July\or August\or September\or October\or November\or December\fi
         \space\number\day, \number\year}%
-%%% From File: $Id: scrkernel-typearea.dtx 2166 2015-07-26 08:15:44Z kohm $
+%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
 \let\@BCOR                =\relax
 \let\@@BCOR               =\relax
 \let\@DIV                 =\relax
@@ -2344,7 +2398,8 @@
     }\reserved@a
   \fi
 \fi
-%%% From File: $Id: scrkernel-paragraphs.dtx 2179 2015-08-22 06:36:48Z kohm $
+%%% From File: $Id: scrkernel-paragraphs.dtx 2351 2016-02-22 08:20:29Z kohm $
+%%%            run: body
 \setlength{\lineskip}{\p@}
 \setlength{\normallineskip}{\p@}
 \setlength{\columnsep}{10\p@}
@@ -2472,7 +2527,7 @@
 \@lowpenalty  = 51
 \@medpenalty  =151
 \@highpenalty =301
-%%% From File: $Id: scrkernel-title.dtx 2182 2015-08-25 09:10:08Z kohm $
+%%% From File: $Id: scrkernel-title.dtx 2227 2015-10-14 14:31:04Z kohm $
 \newcommand*{\@extratitle}{}%
 \newcommand{\extratitle}[1]{\gdef\@extratitle{%
     #1%
@@ -2509,6 +2564,7 @@
   \@thanks\global\let\@thanks\@empty
   \clearpage
   \csname titlepage@restore\endcsname
+      \setparsizes{\z@}{\z@}{\z@\@plus 1fil}\par@updaterelative
   \thispagestyle{empty}%
   \let\footnote\thanks
   \setcounter{footnote}{0}%
@@ -2812,7 +2868,54 @@
   \fi
 }
 \newcommand*\abstractname{Abstract}
-%%% From File: $Id: scrkernel-sections.dtx 2212 2015-10-03 12:51:00Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: body)
+\let\numberline\scr@numberline
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: class,style,part)
+\CloneTOCEntryStyle{tocline}{part}
+\TOCEntryStyleStartInitCode{part}{%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@linefill\endcsname{\hfill}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@entryformat\endcsname[1]{\usekomafont{partentry}{##1}}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@pagenumberformat\endcsname[1]{%
+    \usekomafont{partentry}{\usekomafont{partentrypagenumber}{##1}}}%
+  \expandafter\providecommand\expandafter*%
+  \csname scr@tso@#1@beforeskip\endcsname{2.25em \@plus\p@}%
+}
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: class,style,chapter)
+\CloneTOCEntryStyle{tocline}{chapter}
+\TOCEntryStyleStartInitCode{chapter}{%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@linefill\endcsname{%
+    \if@chapterentrywithdots
+      \TOCLineLeaderFill\relax
+    \else
+      \hfill
+    \fi
+  }%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@entryformat\endcsname{\usekomafont{chapterentry}}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@pagenumberformat\endcsname[1]{%
+    \usekomafont{chapterentry}{\usekomafont{chapterentrypagenumber}{##1}}}%
+  \expandafter\providecommand\expandafter*%
+  \csname scr@tso@#1@beforeskip\endcsname{1.0em \@plus\p@}%
+}
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: class,style,section)
+\CloneTOCEntryStyle{tocline}{section}
+\TOCEntryStyleStartInitCode{section}{%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@linefill\endcsname{\TOCLineLeaderFill\relax}%
+}
+%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%%            (run: class,style,default)
+\CloneTOCEntryStyle{section}{default}
+%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
 %%%            (run: body)
 \setcounter{secnumdepth}{2}
 \newcommand*{\ifnumbered}[1]{%
@@ -2839,7 +2942,7 @@
 }
 \BeforeClosingMainAux{%
   \if@autodot\if@filesw\immediate\write\@mainaux{%
-      \string\global\string\@altsecnumformattrue}%
+      \string\global\string\csname\space @altsecnumformattrue\string\endcsname}%
   \fi\fi}
 \newcommand{\@maybeautodot}[1]{\if@autodot\else\begingroup%
   \expandafter\@@maybeautodot #1\@stop\endgroup\fi
@@ -2873,11 +2976,33 @@
   \else
     \addpenalty\@secpenalty\addvspace\@tempskipa
   \fi
+  \kernel@ifstar
+    {\@ssect{#3}{#4}{#5}{#6}}%
+    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}%
+}
+\def\reserved@a#1#2#3#4#5#6{%
+  \if@noskipsec \leavevmode \fi
+  \par
+  \@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\@tempskipa
+  \fi
   \@ifstar
     {\@ssect{#3}{#4}{#5}{#6}}%
     {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}%
 }
-\ifx\@startsection\scr@saved@startsection
+\ifcase \ifx\@startsection\scr@saved@startsection 0
+        \else
+          \ifx\@startsection\reserved@a 0
+          \else 1
+          \fi
+        \fi
   \newcommand*{\scr@startsection}[6]{%
     \if@noskipsec \leavevmode \fi
     \par
@@ -2892,7 +3017,7 @@
     \else
       \addpenalty\@secpenalty\addvspace\@tempskipa
     \fi
-    \@ifstar {%
+    \kernel@ifstar {%
       \csname scr@preto@ssect@hook\endcsname
       \def\scr@s@ct@@nn@m@{#1}%
       \@ssect{\glueexpr #3\relax}{\glueexpr #4\relax}{\glueexpr #5\relax}{#6}%
@@ -2923,7 +3048,7 @@
   }%
   \let\scr@saved@startsection\@startsection
   \newcommand*{\scr@startsection}[6]{%
-    \@ifstar {%
+    \kernel@ifstar {%
       \scr@saved@startsection{#1}{\numexpr #2\relax}{\glueexpr #3\relax}%
       {\glueexpr #4\relax}{\glueexpr #5\relax}{#6}*%
     }{%
@@ -2964,7 +3089,7 @@
     \expandafter\scr@startsection
   \fi
 }
-\newcommand*{\SecDef}[2]{\@ifstar{#2}{\scr@section@dblarg{#1}}}
+\newcommand*{\SecDef}[2]{\kernel@ifstar{#2}{\scr@section@dblarg{#1}}}
 \CheckCommand*{\secdef}[2]{\@ifstar{#2}{\@dblarg{#1}}}
 \let\secdef\SecDef
 \def\@tempa#1#2#3#4#5#6[#7]#8{%
@@ -3037,7 +3162,7 @@
   \@tempskipa \glueexpr #5\relax\relax
   \ifdim \@tempskipa>\z@
     \begingroup
-      #6{\interlinepenalty \@M
+      #6{\nobreak\interlinepenalty \@M
         \sectionlinesformat{#1}{\glueexpr #3\relax}\@svsec{#8}\@@par}%
     \endgroup
     \expandafter\csname #1mark\expandafter\endcsname\expandafter{\scr@ds@head}%
@@ -3057,7 +3182,7 @@
     \fi
   \else
     \def\@svsechd{%
-      #6{\sectioncatchphraseformat{#1}{\glueexpr #3\relax}\@svsec{#8}}%
+      #6{\nobreak\sectioncatchphraseformat{#1}{\glueexpr #3\relax}\@svsec{#8}}%
        \expandafter\csname #1mark\expandafter\endcsname
        \expandafter{\scr@ds@head}%
       \ifx\scr@ds@tocentry\@empty\else
@@ -3130,13 +3255,14 @@
   \@tempskipa #3\relax
   \ifdim \@tempskipa>\z@
     \begingroup
-      #4{\interlinepenalty \@M
+      #4{\nobreak\interlinepenalty \@M
         \expandafter\sectionlinesformat\expandafter{\scr@s@ct@@nn@m@}%
         {\glueexpr #1\relax}\@empty{#5}\@@par}%
     \endgroup
   \else
     \edef\@svsechd{%
       \unexpanded{#4}{%
+        \noexpand\nobreak
         \noexpand\sectioncatchphraseformat{\scr@s@ct@@nn@m@}%
         \unexpanded{{\glueexpr #1\relax}\@empty{#5}}%
       }%
@@ -3155,7 +3281,7 @@
     Neither the then-code nor the else-code will be\MessageBreak
     executed.\MessageBreak
     You may change this and avoid the warning by LOCALLY\MessageBreak
-    setting \string\IsUsePrefixLine\space to either
+    setting \string\IfUsePrefixLine\space to either
     \string\@firstoftwo\space or\MessageBreak
     \string\@secondoftwo\space before using it%
   }%
@@ -3167,26 +3293,40 @@
 \DefineFamily{KOMAarg}
 \DefineFamilyMember[.dsc]{KOMAarg}
 \newcommand*{\DeclareSectionCommandStyleOption}[3]{%
-  \DeclareSectionCommandDummyOption{#2}%
+  \AddToSectionCommandOptionsDoList{#2}%
   \expandafter\g@addto@macro\csname scr@dsc@style@#1@options\endcsname{%
     \DefineFamilyKey[.dsc]{KOMAarg}{#2}{#3}%
   }%
 }
-\newcommand*{\DeclareSectionCommandDummyOption}[1]{%
-  \@ifstar {%
-    \g@addto@macro{\scr@dsc@dummyoptions}{%
-      \DefineFamilyKey[.dsc]{KOMAarg}{#1}[]{\FamilyKeyStateProcessed}%
-    }%
-  }{%
-    \g@addto@macro{\scr@dsc@dummyoptions}{%
-      \DefineFamilyKey[.dsc]{KOMAarg}{#1}{\FamilyKeyStateProcessed}%
-    }%
-  }%
+\newcommand*{\AddToSectionCommandOptionsDoList}[1]{%
+  \kernel@ifnextchar [%]
+    {\@AddToSectionCommandOptionListWithDefault{#1}}%
+    {\l@addto@macro\scr@dsc@doopts{\do{#1}}}%
 }
-\newcommand*{\scr@dsc@dummyoptions}{}
+\newcommand*{\@AddToSectionCommandOptionListWithDefault}{}
+\def\@AddToSectionCommandOptionListWithDefault#1[#2]{%
+  \l@addto@macro\scr@dsc@doopts{\do[{#2}]{#1}}
+}%
+\newcommand*{\scr@dsc@doopts}{}
+\newcommand*{\RelaxSectionCommandOptions}{%
+  \begingroup
+    \def\do@endgroup{\endgroup}%
+    \def\do{%
+      \kernel@ifnextchar [%]
+        {\@do}%
+        {\@do[]}%
+    }%
+    \def\@do[##1]##2{%
+      \l@addto@macro\do@endgroup{\RelaxFamilyKey[.dsc]{KOMAarg}{##2}}%
+    }%
+    \scr@dsc@doopts
+  \do@endgroup
+}
 \newcommand*{\DeclareSectionCommandStyleLengthOption}[4]{%
   \DeclareSectionCommandStyleOption{#1}{#2}{%
-    \FamilySetLength{KOMAarg}{#2}{\@tempskipa}{##1}%
+    \protected@edef\reserved@a{%
+      \noexpand\FamilySetLength{KOMAarg}{#2}{\noexpand\@tempskipa}{##1}%
+    }\reserved@a
     \ifx\FamilyKeyState\FamilyKeyStateProcessed
       \ifscr@dsc@expandtopt
         \expandafter\edef\csname #3\scr@dsc@current#4\endcsname{%
@@ -3199,9 +3339,11 @@
 }
 \newcommand*{\DeclareSectionCommandStyleNumberOption}[4]{%
   \DeclareSectionCommandStyleOption{#1}{#2}{%
-    \FamilySetCounter{KOMAarg}{#2}{\@tempcnta}{##1}%
+    \protected@edef\reserved@a{%
+      \noexpand\FamilySetCounterMacro{KOMAarg}{#2}{\noexpand\reserved@a}{##1}
+    }\reserved@a
     \ifx\FamilyKeyState\FamilyKeyStateProcessed
-      \expandafter\edef\csname #3\scr@dsc@current#4 \endcsname{\the\@tempcnta}%
+      \expandafter\let\csname #3\scr@dsc@current#4 \endcsname\reserved@a
     \fi
   }%
 }
@@ -3215,13 +3357,6 @@
     \FamilyKeyStateProcessed
   }%
 }
-\DeclareSectionCommandDummyOption{style}
-\DeclareSectionCommandDummyOption{expandtopt}*
-\DeclareSectionCommandDummyOption{increaselevel}
-\DeclareSectionCommandDummyOption{level}
-\DeclareSectionCommandDummyOption{toclevel}
-\DeclareSectionCommandDummyOption{tocindent}
-\DeclareSectionCommandDummyOption{tocnumwidth}
 \newcommand*{\scr@dsc@style@section@options}{}
 \DeclareSectionCommandStyleLengthOption{section}
                                        {indent}{scr@}{@sectionindent}
@@ -3238,7 +3373,7 @@
     {\csname scr@#1@beforeskip\endcsname}%
     {\csname scr@#1@afterskip\endcsname}%
     {%
-      \ifdim\glueexpr\csname scr@#1@beforeskip\endcsname <\z@
+      \ifdim\glueexpr\csname scr@#1@afterskip\endcsname >\z@
         \expandafter\ifnum\scr@v@is@gt{2.96}\relax
           \setlength{\parfillskip}{\z@ plus 1fil}%
         \fi
@@ -3360,11 +3495,10 @@
 \newif\ifscr@dsc@parametersonly
 \newcommand*{\DeclareSectionCommand}[2][]{%
   \edef\scr@dsc@current{#2}%
-  \scr@dsc@dummyoptions
   \scr@dsc@parametersonlyfalse
   \DefineFamilyKey[.dsc]{KOMAarg}{style}{%
-    \ifstr{##1}{}{%
-      \ifscr@dsc@parametersonlytrue
+    \IfArgIsEmpty{##1}{%
+      \scr@dsc@parametersonlytrue
       \FamilyKeyStateProcessed
     }{%
       \scr@ifundefinedorrelax{scr@dsc@def@style@##1@command}{%
@@ -3375,7 +3509,27 @@
       }%
     }%
   }%
+  \DefineFamilyKey[.dsc]{KOMAarg}{tocstyle}{%
+    \IfArgIsEmpty{##1}{%
+      \expandafter\let\csname scr@dte@\scr@dsc@current @style\endcsname
+      \relax
+      \FamilyKeyStateProcessed
+    }{%
+      \scr@ifundefinedorrelax{scr@dte@def@l@##1}{%
+        \FamilyKeyStateUnknownValue
+      }{%
+        \@namedef{scr@dte@\scr@dsc@current @style}{##1}%
+        \FamilyKeyStateProcessed
+      }%
+    }%
+  }%
+  \DefineFamilyKey[.dsc]{KOMAarg}{@else@}{%
+    \FamilyKeyStateProcessed
+  }%
   \FamilyExecuteOptions[.dsc]{KOMAarg}{#1}%
+  \RelaxFamilyKey[.dsc]{KOMAarg}{@else@}%
+  \RelaxFamilyKey[.dsc]{KOMAarg}{tocstyle}%
+  \RelaxFamilyKey[.dsc]{KOMAarg}{style}%
   \begingroup
     \scr@ifundefinedorrelax{scr@\scr@dsc@current @style}{%
       \scr@declaresectioncommanderror{\scr@dsc@current}
@@ -3383,8 +3537,63 @@
     }{}%
   \endgroup
   \@firstofone{%
-    \scr@dsc@dummyoptions
     \@nameuse{scr@dsc@style@\@nameuse{scr@\scr@dsc@current @style}@options}%
+    \scr@ifundefinedorrelax{scr@dte@\scr@dsc@current @style}{%
+      \scr@ifundefinedorrelax{l@\scr@dsc@current}{%
+        \@namedef{scr@dte@\scr@dsc@current @style}{default}%
+      }{}%
+    }{}%
+    \let\scr@dsc@tocstyle@options\@empty
+    \let\scr@dsc@extra@relax@opts\@empty
+    \scr@ifundefinedorrelax{scr@dte@\scr@dsc@current @style}{}{%
+      \begingroup
+        \def\scr@dte@current{#2}%
+        \edef\reserved@a{%
+          \noexpand\@ExecuteTOCEntryStyleInitCode{%
+            \@nameuse{scr@dte@\scr@dsc@current @style}%
+          }{\scr@dsc@current}%
+        }\reserved@a
+        \def\do@endgroup{\endgroup}%
+        \def\do##1{%
+          \l@addto@macro\do@endgroup{%
+            \l@addto@macro\scr@dsc@extra@relax@opts{%
+              \RelaxFamilyKey[.dsc]{KOMAarg}{toc##1}%
+              \RelaxFamilyKey[.dsc]{KOMAarg}{tocentry##1}%
+            }%
+          }%
+          \kernel@ifnextchar[%]
+            {\@dodefault{##1}}%
+            {\@donodefault{##1}}%
+        }%
+        \def\@donodefault##1{%
+          \l@addto@macro\do@endgroup{%
+            \DefineFamilyKey[.dsc]{KOMAarg}{toc##1}{%
+              \l@addto@macro{\scr@dsc@tocstyle@options}{##1={####1},}%
+              \FamilyKeyStateProcessed
+            }%
+            \DefineFamilyKey[.dsc]{KOMAarg}{tocentry##1}{%
+              \l@addto@macro{\scr@dsc@tocstyle@options}{##1={####1},}%
+              \FamilyKeyStateProcessed
+            }%
+          }%
+        }%
+        \def\@dodefault##1[##2]{%
+          \l@addto@macro\do@endgroup{%
+            \DefineFamilyKey[.dsc]{KOMAarg}{toc##1}[##2]{%
+              \l@addto@macro{\scr@dsc@tocstyle@options}{##1={####1},}%
+              \FamilyKeyStateProcessed
+            }%
+            \DefineFamilyKey[.dsc]{KOMAarg}{tocentry##1}[##2]{%
+              \l@addto@macro{\scr@dsc@tocstyle@options}{##1={####1},}%
+              \FamilyKeyStateProcessed
+            }%
+          }%
+        }%
+        \scr@dte@doopts
+      \do@endgroup
+    }%
+    \DefineFamilyKey[.dsc]{KOMAarg}{style}{\FamilyKeyStateProcessed}%
+    \DefineFamilyKey[.dsc]{KOMAarg}{tocstyle}{\FamilyKeyStateProcessed}%
     \FamilyBoolKey[.dsc]{KOMAarg}{expandtopt}{scr@dsc@expandtopt}%
     \scr@dsc@expandtoptfalse
     \scr@ifundefinedorrelax{scr@local@levelincrease}{%
@@ -3417,63 +3626,37 @@
     \let\scr@local@counterwithout\relax
     \FamilyStringKey[.dsc]{KOMAarg}{counterwithin}{\scr@local@counterwithin}%
     \let\scr@local@counterwithin\relax
-    \scr@ifundefinedorrelax{scr@local@tocleveloffset}{%
-      \edef\reserved@a{%
-        \noexpand\FamilyCounterMacroKey[.dsc]{KOMAarg}{toclevel}{%
-          \expandafter\noexpand\csname \scr@dsc@current tocdepth\endcsname}%
-      }\reserved@a
-    }{%
-      \edef\reserved@a{%
-        \noexpand\DefineFamilyKey[.dsc]{KOMAarg}{toclevel}{%
-          \noexpand\FamilySetCounterMacro{KOMAarg}{toclevel}{%
-            \expandafter\noexpand\csname \scr@dsc@current tocdepth\endcsname
-          }%
-          \unexpanded{%
-            {\numexpr ##1+\scr@local@tocleveloffset\relax}%
-            \edef\scr@local@tocleveloffset{%
-              \the\numexpr\scr@local@tocleveloffset
-              +\scr@local@levelincrease\relax
+    \scr@ifundefinedorrelax{scr@local@tocleveloffset}{}{%
+      \scr@ifundefinedorrelax{KV@KOMAarg.dsc@toclevel}{%
+      }{%
+        \DefineFamilyKey[.dsc]{KOMAarg}{toclevel}{%
+          \edef\reserved@a{%
+            \noexpand\l@addto@macro{\noexpand\scr@dsc@tocstyle@options}{%
+              level=\the\numexpr ##1+\scr@local@tocleveloffset\relax,%
             }%
+          }\reserved@a
+          \edef\scr@local@tocleveloffset{%
+            \the\numexpr\scr@local@tocleveloffset+\scr@local@levelincrease\relax
           }%
+          \FamilyKeyStateProcessed
         }%
-      }\reserved@a
-    }%
-    \DefineFamilyKey[.dsc]{KOMAarg}{tocindent}{%
-      \FamilySetLength{KOMAarg}{#2}{\@tempskipa}{##1}%
-      \ifx\FamilyKeyState\FamilyKeyStateProcessed
-        \ifscr@dsc@expandtopt
-          \expandafter\edef\csname scr@\scr@dsc@current @tocindent\endcsname{%
-            \the\@tempskipa}%
-        \else
-          \expandafter\edef\csname scr@\scr@dsc@current @tocindent\endcsname{%
-            ##1}%
-        \fi
-      \fi
-    }%
-    \DefineFamilyKey[.dsc]{KOMAarg}{tocnumwidth}{%
-      \FamilySetLength{KOMAarg}{#2}{\@tempskipa}{##1}%
-      \ifx\FamilyKeyState\FamilyKeyStateProcessed
-        \ifscr@dsc@expandtopt
-          \expandafter\edef\csname scr@\scr@dsc@current @tocnumwidth\endcsname{%
-            \the\@tempskipa}%
-        \else
-          \expandafter\edef\csname scr@\scr@dsc@current @tocnumwidth\endcsname{%
-            ##1}%
-        \fi
-      \fi
+      }%
     }%
     \FamilyExecuteOptions[.dsc]{KOMAarg}{#1}%
+    \scr@dsc@extra@relax@opts
+    \let\scr@dsc@extra@relax@opts\relax
+    \RelaxSectionCommandOptions
+    \RelaxFamilyKey[.dsc]{KOMAarg}{style}%
+    \RelaxFamilyKey[.dsc]{KOMAarg}{tocstyle}%
+    \RelaxFamilyKey[.dsc]{KOMAarg}{expandtopt}%
+    \scr@ifundefinedorrelax{scr@local@levelincrease}{}{%
+      \RelaxFamilyKey[.dsc]{KOMAarg}{increaselevel}%
+    }%
+    \RelaxFamilyKey[.dsc]{KOMAarg}{level}%
+    \RelaxFamilyKey[.dsc]{KOMAarg}{counterwithin}%
     \begingroup
       \scr@ifundefinedorrelax{\scr@dsc@current numdepth}{%
         \scr@declaresectioncommanderror{\scr@dsc@current}{section level}{level}%
-      }{}%
-      \scr@ifundefinedorrelax{scr@\scr@dsc@current @tocindent}{%
-        \scr@declaresectioncommanderror{\scr@dsc@current}{toc entry indent}
-        {tocindent}%
-      }{}%
-      \scr@ifundefinedorrelax{scr@\scr@dsc@current @tocnumwidth}{%
-        \scr@declaresectioncommanderror{\scr@dsc@current}{toc entry number
-          width}{tocnumwidth}%
       }{}%
       \@nameuse{scr@dsc@style@%
         \@nameuse{scr@\scr@dsc@current @style}%
@@ -3494,7 +3677,7 @@
         \else
           \@removefromreset{#2}{\scr@local@counterwithin}%
           \@addtoreset{#2}{\scr@local@counterwithin}%
-          \expandafter\def\csname the#2\expandafter\endcsname{%
+          \expandafter\def\csname the#2\expandafter\endcsname\expandafter{%
             \csname the\scr@local@counterwithin\endcsname.\arabic{#2}}%
         \fi
       \fi
@@ -3531,22 +3714,23 @@
       }{%
         \DeclareSectionNumberDepth{#2}{\csname #2numdepth\endcsname}%
       }%
-      \scr@ifundefinedorrelax{#2tocdepth}{%
-        \expandafter\let\csname #2tocdepth\expandafter\endcsname
-        \csname #2numdepth\endcsname
-      }{}%
       \expandafter\providecommand\expandafter*%
       \csname add#2tocentry\endcsname[2]{%
         \addtocentrydefault{#2}{##1}{##2}%
       }%
+      \scr@ifundefinedorrelax{scr@dte@#2@style}{%
+      }{%
+        \DeclareTOCStyleEntry[\scr@dsc@tocstyle@options]{%
+          \@nameuse{scr@dte@#2@style}%
+        }{#2}%
+      }%
       \scr@ifundefinedorrelax{l@#2}{%
-        \expandafter\edef\csname l@#2\endcsname{%
-          \noexpand\bprot@dottedtocline
-          \expandafter\noexpand\csname #2tocdepth\endcsname
-          \expandafter\noexpand\csname scr@#2@tocindent\endcsname
-          \expandafter\noexpand\csname scr@#2@tocnumwidth\endcsname
-        }%
+        \DeclareTOCStyleEntry[\scr@dsc@tocstyle@options]{default}{#2}%
       }{}%
+      \scr@ifundefinedorrelax{toclevel@part}{}{%
+        \expandafter\let\csname toclevel@#2\expandafter\endcsname
+        \csname #2tocdepth\endcsname
+      }%
     }%
   }%
   \let\scr@dsc@current\relax
@@ -3606,9 +3790,9 @@
 }
 \newcommand*{\DeclareSectionCommands}[2][]{%
   \edef\reserved@a{#2}%
-  \let\scr@local@levelincrease\z@
-  \let\scr@local@leveloffset\z@
-  \let\scr@local@tocleveloffset\z@
+  \def\scr@local@levelincrease{\z@}%
+  \def\scr@local@leveloffset{\z@}%
+  \def\scr@local@tocleveloffset{\z@}%
   \@for\reserved@a:=\reserved@a\do{%
     \edef\reserved@a{%
       \unexpanded{\DeclareSectionCommand[{#1}]}{\reserved@a}%
@@ -3621,9 +3805,9 @@
 }
 \newcommand*{\DeclareNewSectionCommands}[2][]{%
   \edef\reserved@a{#2}%
-  \let\scr@local@levelincrease\z@
-  \let\scr@local@leveloffset\z@
-  \let\scr@local@tocleveloffset\z@
+  \def\scr@local@levelincrease{\z@}%
+  \def\scr@local@leveloffset{\z@}%
+  \def\scr@local@tocleveloffset{\z@}%
   \@for\reserved@a:=\reserved@a\do{%
     \@ifundefined{\reserved@a}{}{%
       \ClassError{\KOMAClassName}{%
@@ -3651,9 +3835,9 @@
 }
 \newcommand*{\RedeclareSectionCommands}[2][]{%
   \edef\reserved@a{#2}%
-  \let\scr@local@levelincrease\z@
-  \let\scr@local@leveloffset\z@
-  \let\scr@local@tocleveloffset\z@
+  \def\scr@local@levelincrease{\z@}%
+  \def\scr@local@leveloffset{\z@}%
+  \def\scr@local@tocleveloffset{\z@}%
   \@for\reserved@a:=\reserved@a\do{%
     \@ifundefined{\reserved@a}{%
       \ClassError{\KOMAClassName}{%
@@ -3679,9 +3863,9 @@
 }
 \newcommand*{\ProvideSectionCommands}[2][]{%
   \edef\reserved@a{#2}%
-  \let\scr@local@levelincrease\z@
-  \let\scr@local@leveloffset\z@
-  \let\scr@local@tocleveloffset\z@
+  \def\scr@local@levelincrease{\z@}%
+  \def\scr@local@leveloffset{\z@}%
+  \def\scr@local@tocleveloffset{\z@}%
   \@for\reserved@a:=\reserved@a\do{%
     \@ifundefined{\reserved@a}{%
       \edef\reserved@a{%
@@ -3689,7 +3873,7 @@
       }%
       \reserved@a
     }{%
-      \scr@dsc@dummyoptions
+      \DefineFamilyKey[.dsc]{KOMAarg}{@else@}{\FamilyKeyStateProcessed}%
       \FamilyCounterMacroKey[.dsc]{KOMAarg}{increaselevel}[1]%
         {\scr@local@levelincrease}%
       \DefineFamilyKey[.dsc]{KOMAarg}{level}{%
@@ -3697,11 +3881,18 @@
         \edef\scr@local@leveloffset{%
           \the\numexpr\scr@local@leveloffset+\scr@local@levelincrease\relax
         }%
+      }%
+      \DefineFamilyKey[.dsc]{KOMAarg}{toclevel}{%
+        \FamilySetCounterMacro{KOMAarg}{toclevel}{\reserved@b}{##1}%
         \edef\scr@local@tocleveloffset{%
           \the\numexpr\scr@local@tocleveloffset+\scr@local@levelincrease\relax
         }%
       }%
       \FamilyExecuteOptions[.dsc]{KOMAarg}{#1}%
+      \RelaxFamilyKey[.dsc]{KOMAarg}{toclevel}%
+      \RelaxFamilyKey[.dsc]{KOMAarg}{level}%
+      \RelaxFamilyKey[.dsc]{KOMAarg}{increaselevel}%
+      \RelaxFamilyKey[.dsc]{KOMAarg}{@else@}%
     }%
   }%
   \let\scr@local@levelincrease\relax
@@ -3715,12 +3906,12 @@
   }%
 }
 \newcommand*{\set@preamble}[1]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
   {\set@@preamble{#1}}{\set@@@preamble{#1}[][\hsize]}%
 }
 \newcommand*{\set@@preamble}{}
 \def\set@@preamble#1[#2]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
   {\set@@@preamble{#1}[{#2}]}{\set@@@preamble{#1}[{#2}][\hsize]}%
 }
 \newcommand{\set@@@preamble}{}
@@ -3819,19 +4010,11 @@
 \newcommand*{\bprot@dottedtocline}[5]{%
   \expandafter\ifnum\scr@v@is@gt{2.96}\relax
     \ifnum #1>\c@tocdepth \else
-      \begingroup
-        \@tempcnta 20010
-        \advance \@tempcnta by -#1
-      \ifnum \@tempcnta>\lastpenalty
-        \endgroup
+      \ifnum \lastpenalty<\numexpr 20010-#1\relax
         \addpenalty{\@lowpenalty}%
-      \else
-        \endgroup
       \fi
       \@dottedtocline{#1}{#2}{#3}{#4}{#5}%
-      \@tempcnta 20009
-      \advance \@tempcnta by -#1
-      \penalty\@tempcnta
+      \penalty \numexpr 20009-#1\relax
     \fi
   \else
     \@dottedtocline{#1}{#2}{#3}{#4}{#5}%
@@ -3919,11 +4102,11 @@
     \interlinepenalty \@M
     \normalfont\sectfont\nobreak
     \ifnumbered{#1}{%
-      \usekomafont{#1prefix}{\@nameuse{#1format}}%
+      \usekomafont{#1prefix}{\nobreak\@nameuse{#1format}}%
       \setlength{\@tempskipa}{\@nameuse{scr@#1@innerskip}}%
       \partheadmidvskip
     }{}%
-    \usekomafont{part}{#3}\strut
+    \usekomafont{part}{\nobreak #3}\strut
     \expandafter\ifx\csname #1mark\endcsname\@gobble
       \@mkboth{}{}%
     \else
@@ -3943,7 +4126,7 @@
     \raggedpart
     \interlinepenalty \@M
     \normalfont
-    \sectfont\nobreak\usekomafont{#1}{#2}\strut\@mkboth{}{}\par
+    \sectfont\nobreak\usekomafont{#1}{\nobreak #2}\strut\@mkboth{}{}\par
   \endgroup
   \@nameuse{@end#1}%
 }
@@ -3997,34 +4180,6 @@
 \newcommand{\@saddpart}[1]{%
   \part*{#1}%
   \addpartmark{}%
-}
-\newcommand*\l@part[2]{%
-  \ifnum \c@tocdepth <\parttocdepth \else
-    \addpenalty{-\@highpenalty}%
-    \addvspace{2.25em \@plus\p@}%
-    \setlength{\@tempdima}{\scr@part@tocnumwidth}%
-    \if@tocleft
-      \ifx\toc@l@number\@empty\else
-        \setlength\@tempdima{0\toc@l@number}%
-      \fi
-    \fi
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      \usekomafont{partentry}{#1\nobreak
-        \usekomafont{partentrypagenumber}{\hfil\nobreak
-          \hb@xt@\@pnumwidth{\hss#2}}}\par
-      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
-      \endgroup
-      \penalty20010
-      \else
-          \penalty\@highpenalty
-      \endgroup
-    \fi
-  \fi
 }
 \newcounter{part}
 \renewcommand*{\thepart}{\@Roman\c@part}
@@ -4169,7 +4324,7 @@
   \ifdim\@tempskipa<\z@\@tempskipa-\@tempskipa\fi
   \chapterheadstartvskip
   {%
-    \setlength{\parindent}{\z@}\setlength{\parfillskip}{\fill}%
+    \setlength{\parindent}{\z@}\setlength{\parfillskip}{\z@ plus 1fil}%
     \def\IfUseNumber{\ifnumbered{#1}}%
     \if@chapterprefix
       \let\IfUsePrefixLine\@firstoftwo
@@ -4219,7 +4374,7 @@
   \ifdim\@tempskipa<\z@\@tempskipa-\@tempskipa\fi
   \chapterheadstartvskip
   {%
-    \setlength{\parindent}{\z@}\setlength{\parfillskip}{\fill}%
+    \setlength{\parindent}{\z@}\setlength{\parfillskip}{\z@ plus 1fil}%
     \let\IfUseNumber\secondoftwo
     \if@chapterprefix
       \let\IfUsePrefixLine\@firstoftwo
@@ -4332,49 +4487,6 @@
   \chapter*{#1}%
   \addchapmark{}%
 }%
-\newcommand*\l@chapter[2]{%
-  \ifnum \c@tocdepth <\chaptertocdepth \else
-    \ifnum \lastpenalty<20010
-      \addpenalty{-\@highpenalty}%
-    \fi
-    \expandafter\ifnum\scr@v@is@lt{3.15}%
-      \vskip 1.0em \@plus\p@
-    \else
-      \addvspace{1.0em \@plus\p@}%
-    \fi
-    \setlength\@tempdima{\scr@chapter@tocnumwidth}%
-    \if@tocleft
-      \ifx\toc@l@number\@empty\else
-        \setlength\@tempdima{0\toc@l@number}%
-      \fi
-    \fi
-    \begingroup
-      \raggedchapterentry
-      \parindent \z@ \advance\rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \interlinepenalty\@M
-      \leavevmode
-      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-      \edef\@pnumwidth{\the\dimexpr\@pnumwidth\relax}%
-      \usekomafont{chapterentry}{#1\nobreak
-        \usekomafont{chapterentrypagenumber}{%
-          {\usekomafont{chapterentrydots}{%
-              \if@chapterentrywithdots
-                \leaders\hbox{$\m@th
-                  \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
-                  mu$}%
-              \fi
-              \hfill}}\nobreak
-          \hb@xt@\@pnumwidth{\hss#2}}}\par
-      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
-      \endgroup
-      \penalty20009
-      \else
-        \penalty\@highpenalty
-      \endgroup
-    \fi
-  \fi
-}
 \newcommand*{\raggedchapterentry}{}
 \newcommand*{\l@chapteratlist}{\l@chapter}
 \newcounter{chapter}
@@ -4454,7 +4566,7 @@
     \expandafter\ifnum\scr@v@is@gt{2.96}\relax
       \setlength{\parfillskip}{\z@ plus 1fil}\fi
     \raggedsection\normalfont\sectfont\nobreak
-    \usekomafont{minisec}#1\par\nobreak}\nobreak%
+    \usekomafont{minisec}{\nobreak #1\par\nobreak}}\nobreak%
   \@afterheading
 }
 \newcommand*{\addsectiontocentry}[2]{%
@@ -4514,16 +4626,18 @@
   style=part,%
   level=\m@ne,%
   pagestyle=plain,%
+  tocstyle=part,%
   toclevel=\m@ne,%
   tocindent=\z@,%
-  tocnumwidth=2em
+  tocnumwidth=2em%
 ]{part}
 \DeclareSectionCommand[%
   style=chapter,%
   level=\z@,%
   pagestyle=plain,%
+  tocstyle=chapter,%
   tocindent=\z@,%
-  tocnumwidth=1.5em
+  tocnumwidth=1.5em%
 ]{chapter}
 \DeclareSectionCommand[%
   style=section,%
@@ -4531,6 +4645,7 @@
   indent=\z@,%
   beforeskip=-3.5ex \@plus -1ex \@minus -.2ex,%
   afterskip=2.3ex \@plus.2ex,%
+  tocstyle=section,%
   tocindent=1.5em,%
   tocnumwidth=2.3em%
 ]{section}
@@ -4540,6 +4655,7 @@
   indent=\z@,%
   beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
   afterskip=1.5ex \@plus .2ex,%
+  tocstyle=section,%
   tocindent=3.8em,%
   tocnumwidth=3.2em%
 ]{subsection}
@@ -4549,6 +4665,7 @@
   indent=\z@,%
   beforeskip=-3.25ex\@plus -1ex \@minus -.2ex,%
   afterskip=1.5ex \@plus .2ex,%
+  tocstyle=section,%
   tocindent=7.0em,%
   tocnumwidth=4.1em%
 ]{subsubsection}
@@ -4558,6 +4675,7 @@
   indent=\z@,%
   beforeskip=3.25ex \@plus1ex \@minus.2ex,%
   afterskip=-1em,%
+  tocstyle=section,%
   tocindent=10em,%
   tocnumwidth=5em%
 ]{paragraph}
@@ -4567,6 +4685,7 @@
   indent=\scr@parindent,%
   beforeskip=3.25ex \@plus1ex \@minus .2ex,%
   afterskip=-1em,%
+  tocstyle=section,%
   tocindent=12em,%
   tocnumwidth=6em%
 ]{subparagraph}
@@ -4577,7 +4696,7 @@
 \fi
 \newcommand*{\scr@fnt@disposition}{\sectfont}
 \aliaskomafont{sectioning}{disposition}
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \newif\if@restonecol
 \newcommand{\dictum}[2][]{\par%
   \begingroup
@@ -4598,7 +4717,7 @@
 \newcommand*{\dictumauthorformat}[1]{(#1)}
 \newcommand*{\raggeddictumtext}{\raggedright}
 \newcommand*{\raggeddictumauthor}{\raggedleft}
-\newkomafont{dictum}{\normalfont\normalcolor\sffamily\small}
+\newkomafont{dictum}{\normalfont\normalcolor\@gr@gsffamily\small}
 \newkomafont{dictumauthor}{\itshape}
 \aliaskomafont{dictumtext}{dictum}
 \setlength{\skip\@mpfootins}{\skip\footins}
@@ -4610,6 +4729,13 @@
   \@arabic\c@equation
 }
 \newcommand*{\new@tpo@label}{\@newl@bel{tpo}}
+\AtBeginDocument{%
+  \if@filesw
+    \immediate\write\@auxout{%
+      \string\providecommand*\string\new@tpo@label[2]{}%
+    }%
+  \fi
+}
 \newcommand*{\scr@tpo}{0}
 \newcommand*{\is@thispageodd}[1][\is@thispageodd@setlabel]{%
   \@bsphack
@@ -4632,9 +4758,11 @@
     \fi
   \endgroup
   \edef\is@thispageodd@setlabel{%
-    \unexpanded{\protected@write\@auxout{\let\arabic\relax}}{%
-      \noexpand\string
-      \noexpand\new@tpo@label{\scr@tpo}{\noexpand\arabic{page}}}%
+    \if@filesw
+      \unexpanded{\protected@write\@auxout{\let\arabic\relax}}{%
+        \noexpand\string
+        \noexpand\new@tpo@label{\scr@tpo}{\noexpand\arabic{page}}}%
+    \fi
   }%
   #1%
   \@esphack
@@ -4694,7 +4822,7 @@
   \let\scr@ttl@saved@subparagraph\subparagraph
 }
 \AfterPackage{titlesec}{%
-  \@ifpackagelater{titlesec}{2014/10/09}{%
+  \@ifpackagelater{titlesec}{2016/03/22}{%
     \ClassInfo{\KOMAClassName}{%
       Deactivating the `titlesec` workaround,\MessageBreak
       because package is newer than expected%
@@ -4754,7 +4882,7 @@
     \let\scr@ttl@@extract\relax
   }%
 }
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
 \newcommand*{\set@tempdima@hw}{%
   \setlength{\@tempdima}{\textwidth}%
   \if@mincl
@@ -4852,7 +4980,7 @@
 \newcommand*{\indexpagestyle}{plain}
 \pagestyle{plain}
 \pagenumbering{arabic}
-%%% From File: $Id: scrkernel-floats.dtx 2002 2015-03-12 12:06:17Z kohm $
+%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
 \newcommand\marginline[1]{%
   \marginpar[\raggedleft{#1}]{\raggedright #1}%
 }
@@ -4872,21 +5000,21 @@
 \newif\ifscap@alt
 \newcommand*{\@captionbeside}{}
 \long\def\@captionbeside[#1]#2{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\@@captionbeside[{#1}]{#2}}
     {\c@pti@nb@sid@[{#1}]{#2}}%
 }
 \newcommand*{\@@captionbeside}{}
 \long\def\@@captionbeside[#1]#2[#3]{%
   \def\scap@pos{#3}%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\@@@captionbeside[{#1}]{#2}}
     {\c@pti@nb@sid@[{#1}]{#2}}%
 }
 \newcommand*{\@@@captionbeside}{}
 \long\def\@@@captionbeside[#1]#2[#3]{%
   \def\scap@width{#3}%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\@@@@captionbeside[{#1}]{#2}}
     {\setlength{\@tempdima}{#3}%
       \addtolength{\@tempdima}{-\linewidth}%
@@ -4897,7 +5025,7 @@
 \newcommand*{\@@@@captionbeside}{}
 \long\def\@@@@captionbeside[#1]#2[#3]{%
   \def\scap@move{#3}%
-  \@ifstar
+  \kernel@ifstar
     {\scap@alttrue\c@pti@nb@sid@[{#1}]{#2}}
     {\scap@altfalse\c@pti@nb@sid@[{#1}]{#2}}%
 }
@@ -4978,7 +5106,7 @@
 \newif\ifdofullc@p
 \dofullc@ptrue
 \newif\if@capbreak\@capbreakfalse
-\newcommand*{\setcapindent}{\@ifstar{\@@setcapindent}{\@setcapindent}}
+\newcommand*{\setcapindent}{\kernel@ifstar{\@@setcapindent}{\@setcapindent}}
 \newcommand*{\@setcapindent}[1]{%
   \setlength{\@tempdima}{#1}%
   \ifdim\@tempdima>\hsize
@@ -5005,7 +5133,7 @@
       `\string\setcapindent'%
     }%
     \captionstyle{indent}%
-    \@ifstar{\setlength{\captionindent}}{\setlength{\captionindent}}%
+    \kernel@ifstar{\setlength{\captionindent}}{\setlength{\captionindent}}%
   }%
 }
 \newcommand*{\setcaphanging}{\dofullc@ptrue\@capbreakfalse}
@@ -5114,9 +5242,103 @@
     \setcaptionwidth{#2}%
   }%
 }%
+\newcommand*{\setcapdynwidth}[2][]{%
+  \def\cap@width{#2}%
+  \begingroup
+    \edef\@tempa{#1}%
+    \def\@tempb{c}\ifx\@tempa\@tempb
+      \endgroup
+      \def\cap@margin{%
+        \ifdim \cap@width<\z@
+          \ClassWarning{\KOMAClassName}{%
+            caption width less than 0pt not allowed.\MessageBreak
+            Setting caption width to 0pt%
+          }%
+          \let\cap@width\z@
+        \fi
+        \let\cap@left=\hfill\let\cap@right=\hfill}%
+    \else
+      \def\@tempb{l}\ifx\@tempa\@tempb
+        \endgroup
+        \def\cap@margin{%
+          \ifdim \cap@width<\z@
+            \ClassWarning{\KOMAClassName}{%
+              caption width less than 0pt not allowed.\MessageBreak
+              Setting caption width to 0pt%
+            }%
+            \let\cap@width\z@
+          \fi
+          \let\cap@left=\relax\let\cap@right\hfill}%
+      \else
+        \def\@tempb{r}\ifx\@tempa\@tempb
+          \endgroup
+          \def\cap@margin{%
+            \ifdim \cap@width<\z@
+              \ClassWarning{\KOMAClassName}{%
+                caption width less than 0pt not allowed.\MessageBreak
+                Setting caption width to 0pt%
+              }%
+              \let\cap@width\z@
+            \fi
+            \let\cap@left=\hfill\let\cap@right=\relax}%
+        \else
+          \def\@tempb{i}\ifx\@tempa\@tempb
+            \endgroup
+            \def\cap@margin{%
+              \ifdim \cap@width<\z@
+                \ClassWarning{\KOMAClassName}{%
+                  caption width less than 0pt not allowed.\MessageBreak
+                  Setting caption width to 0pt%
+                }%
+                \let\cap@width\z@
+              \fi
+              \let\cap@left=\relax
+              \let\cap@right=\hfill
+              \if@twoside
+                \ifthispageodd{}{%
+                  \let\cap@left=\hfill
+                  \let\cap@right=\relax
+                }%
+              \fi
+            }%
+          \else
+            \def\@tempb{o}\ifx\@tempa\@tempb
+              \endgroup
+              \def\cap@margin{%
+                \ifdim \cap@width<\z@
+                  \ClassWarning{\KOMAClassName}{%
+                    caption width less than 0pt not allowed.\MessageBreak
+                    Setting caption width to 0pt%
+                  }%
+                  \let\cap@width\z@
+                \fi
+                \let\cap@left=\hfill
+                \let\cap@right=\relax
+                \if@twoside
+                  \ifthispageodd{}{%
+                    \let\cap@left=\relax
+                    \let\cap@right=\hfill
+                  }%
+                \fi
+              }%
+            \else
+              \ifx \@tempa\@empty\else
+                \ClassError{\KOMAClassName}{%
+                  unknown optional position argument%
+                }{%
+                  You've used `#1' as position argument at
+                  \string\setcaptionwidth,\MessageBreak
+                  but only ONE of `c', `l', `r', `i`, `o` ist
+                  allowed.\MessageBreak
+                  Argument will be ignored, if you'll continue.%
+                }%
+              \fi
+              \endgroup
+  \fi\fi\fi\fi\fi
+}
 \newcommand*{\cap@margin}{}
 \let\cap@margin=\relax%
-\newcommand*{\setcapmargin}{\@ifstar{\@setcapmargin}{\@@setcapmargin}}
+\newcommand*{\setcapmargin}{\kernel@ifstar{\@setcapmargin}{\@@setcapmargin}}
 \newcommand*{\@setcapmargin}[2][\@tempdimb]{%
   \def\cap@margin{%
     \onelinecaptionsfalse
@@ -5180,71 +5402,97 @@
 }
 \newcommand{\@@makecaption}[3]{%
   \cap@margin
-  \ifonelinecaptions
-    \@tempcnta=\value{mpfootnote}\@tempcntb=\value{footnote}%
-    \let\scr@tmp@footnotetext=\@footnotetext
-    \let\@footnotetext=\@gobble
-    \sbox\@tempboxa{%
-      {\usekomafont{caption}{\strut\ignorespaces
-        #1{{\usekomafont{captionlabel}{#2\captionformat}}}%
-        #3\unskip\strut}}%
-    }%
-    \let\@footnotetext=\scr@tmp@footnotetext
-    \let\scr@tmp@footnotetext=\undefined
-    \setcounter{footnote}{\@tempcntb}%
-    \setcounter{mpfootnote}{\@tempcnta}%
-  \else
-    \sbox\@tempboxa{\hspace*{2\cap@width}}%
-  \fi
-  \begingroup%
-    \setlength{\@tempdima}{\cap@width}%
-    \ifdim \wd\@tempboxa >\@tempdima
+  \begingroup
+    \ifonelinecaptions
+      \let\stepcounter\@gobble
+      \let\refstepcounter\@gobble
+      \let\label\@gobble
+      \let\@footnotetext=\@gobble
+      \let\hypertarget\@gobbletwo
+      \settowidth{\@tempdima}{\scr@@makesinglelinecaption{#1}{#2}{#3}}%
+      \ifdim\@tempdima>\linewidth
+        \aftergroup\scr@makemultilinecaption
+      \else
+        \aftergroup\scr@makesinglelinecaption
+      \fi
+    \else
+      \aftergroup\scr@makemultilinecaption
+    \fi
+  \endgroup
+  {#1}{#2}{#3}%
+}
+\newcommand{\scr@makesinglelinecaption}[3]{%
+  {%
+    \usefontofkomafont{caption}{%
       \hb@xt@\hsize{%
-        \setbox\@tempboxa\vbox{\hsize=\cap@width
+        \cap@left
+        \scr@@makesinglelinecaption{#1}{#2}{#3}%
+        \cap@right
+      }\par\kern\dp\strutbox%
+    }%
+  }\kern-\dp\strutbox
+}
+\newcommand{\scr@@makesinglelinecaption}[3]{%
+    \usekomafont{caption}{\strut\ignorespaces
+      #1{{\usekomafont{captionlabel}{#2\captionformat}}}%
+      \ignorespaces #3\unskip}%
+}
+\newcommand{\scr@makemultilinecaption}[3]{%
+  {%
+    \usefontofkomafont{caption}{%
+      \hb@xt@\hsize{%
+        \cap@left
+        \vbox{\hsize\cap@width\linewidth\hsize
           \ifdofullc@p
-            {\usekomafont{caption}{\@hangfrom{\scr@smashdp{\strut\ignorespaces
-                  #1{{\usekomafont{captionlabel}{#2\captionformat}}}}}%
-              {#3\unskip\strut\par}}}%
-          \else%
+            \@hangfrom{%
+              \strut
+              \scr@smashdp{%
+                #1{%
+                  \usekomafont{caption}{%
+                    \usekomafont{captionlabel}{#2\captionformat}%
+                  }%
+                }%
+              }%
+            }%
+            {\usekomafont{caption}{#3\unskip\strut\par}}%
+          \else
             \ifdim\cap@indent<\z@
-              {\usekomafont{caption}{\strut\ignorespaces
-                #1{{\usekomafont{captionlabel}{#2\captionformat\par}}}%
-                \noindent\hspace*{-\cap@indent}#3\unskip\strut\par}}%
-            \else%
+              \strut
+              #1{%
+                \usekomafont{caption}{%
+                  \usekomafont{captionlabel}{#2\captionformat\par}%
+                }%
+              }%
+              \noindent{\usekomafont{caption}{%
+                  \hspace*{-\cap@indent}#3\unskip\strut\par
+              }}%
+            \else
               \if@capbreak
-                {\usekomafont{caption}{\strut\ignorespaces
-                  #1{{\usekomafont{captionlabel}{#2\captionformat\par}}}%
-                  \noindent\@hangfrom{\hspace*{\cap@indent}}{#3\par}}}%
+                \strut
+                #1{%
+                  \usekomafont{caption}{%
+                    \usekomafont{captionlabel}{#2\captionformat\par}%
+                  }%
+                }%
+                \noindent\@hangfrom{\hspace*{\cap@indent}}%
+                {\usekomafont{caption}{#3\unskip\strut\par}}%
               \else
-                {\usekomafont{caption}{%
-                    \@hangfrom{\scr@smashdp\strut\hspace*{\cap@indent}}%
-                  {\hspace{-\cap@indent}\scr@smashdp{\ignorespaces#1%
-                    {{\usekomafont{captionlabel}{%
-                          #2\captionformat}}}}#3\unskip\strut\par}}}%
+                \@hangfrom{\scr@smashdp\strut\hspace*{\cap@indent}}%
+                {%
+                  \hspace{-\cap@indent}%
+                  \scr@smashdp{%
+                    #1{\usekomafont{captionlabel}{#2\captionformat}}%
+                  }%
+                  {\usekomafont{caption}{#3\unskip\strut}\par}%
+                }%
               \fi
             \fi
           \fi
         }%
-        \setlength{\@tempdima}{\ht\@tempboxa}%
-        \addtolength{\@tempdima}{\dp\@tempboxa}%
-        \addtolength{\@tempdima}{-\ht\strutbox}%
-        \ht\@tempboxa\ht\strutbox
-        \dp\@tempboxa\@tempdima
-        \strut\cap@left
-        \box\@tempboxa
-        \cap@right\strut
-      }%
-    \else
-      \global \@minipagefalse
-      \sbox\@tempboxa{%
-        {\usekomafont{caption}{\scr@smashdp{\strut\ignorespaces
-          #1{{\usekomafont{captionlabel}{#2\captionformat}}}}%
-          #3}}%
-      }%
-      {\usesizeofkomafont{caption}{%
-          \hb@xt@\hsize{\strut\cap@left\box\@tempboxa\cap@right\strut}}}%
-    \fi
-  \endgroup
+        \cap@right
+      }\par\kern\dp\strutbox
+    }%
+  }\kern-\dp\strutbox
 }
 \newcommand*{\scr@caption@before@longtable@warning}[1]{%
   \ClassWarning{\KOMAClassName}{%
@@ -5360,15 +5608,19 @@
 \newcommand*{\ext@figure}{lof}
 \newcommand*{\fnum@figure}{\figureformat}
 \newenvironment{figure}{%
-  \if@figurecaptionabove\let\caption\captionabove
-  \else\let\caption\captionbelow\fi
+  \def\caption{%
+    \if@figurecaptionabove\expandafter\captionabove
+    \else\expandafter\captionbelow\fi
+  }%
   \@float{figure}%
 }{%
   \end@float
 }
 \newenvironment{figure*}{%
-  \if@figurecaptionabove\let\caption\captionabove
-  \else\let\caption\captionbelow\fi
+  \def\caption{%
+    \if@figurecaptionabove\expandafter\captionabove
+    \else\expandafter\captionbelow\fi
+  }%
   \@dblfloat{figure}%
 }{%
   \end@dblfloat
@@ -5387,15 +5639,19 @@
 \newcommand*{\ext@table}{lot}
 \newcommand*{\fnum@table}{\tableformat}
 \newenvironment{table}{%
-  \if@tablecaptionabove\let\caption\captionabove
-  \else\let\caption\captionbelow\fi
+  \def\caption{%
+    \if@tablecaptionabove\expandafter\captionabove
+    \else\expandafter\captionbelow\fi
+  }%
   \@float{table}%
 }{%
   \end@float
 }
 \newenvironment{table*}{%
-  \if@tablecaptionabove\let\caption\captionabove
-  \else\let\caption\captionbelow\fi
+  \def\caption{%
+    \if@tablecaptionabove\expandafter\captionabove
+    \else\expandafter\captionbelow\fi
+  }%
   \@dblfloat{table}%
 }{%
   \end@dblfloat
@@ -5538,24 +5794,17 @@
   \endgroup
   \@footnotemark
 }
-%%% From File: $Id: scrkernel-listsof.dtx 2206 2015-09-27 08:08:34Z kohm $
+%%% From File: $Id: scrkernel-listsof.dtx 2384 2016-03-15 11:58:53Z kohm $
+\g@addto@macro{\numberline@numberpostfix}{\autodot}
+\usetocbasicnumberline[%
+  \ClassInfo{\KOMAClassName}{Redefining `\string\numberline'}%
+]
 \doforeachtocfile[float]{%
   \setuptoc{\@currext}{chapteratlist}%
 }
 \AtAddToTocList[float]{%
   \setuptoc{\@currext}{chapteratlist}%
 }
-\renewcommand*{\numberline}[1]{%
-  \numberline@box{%
-    \numberline@prefix
-    \ifstr{#1}{}{#1}{\numberline@numberformat{#1}}%
-    \numberline@postfix
-  }%
-}
-\newcommand*{\numberline@prefix}{}
-\newcommand*{\numberline@postfix}{\hfil}
-\newcommand*{\numberline@numberformat}[1]{\ifstr{#1}{}{}{#1\autodot}}
-\newcommand*{\numberline@box}[1]{\hb@xt@\@tempdima{#1}}
 \newcommand*\@pnumwidth{1.55em}
 \newcommand*\@tocrmarg {2.55em}
 \newcommand*\@dotsep{4.5}
@@ -5571,7 +5820,7 @@
     \setlength{\@tempdima}{\last@l@number}%
   \fi%
 }
-\newcommand*{\before@starttoc}[1]{
+\newcommand*{\before@starttoc}[1]{%
   \let\scr@dottedtocline=\@dottedtocline
   \renewcommand*{\@dottedtocline}[3]{%
     \scr@dottedtocline{##1}{\z@}{\last@l@number}}%
@@ -5588,6 +5837,24 @@
       \expandafter=\csname#1@l@number\endcsname
     \fi
   }%
+  \begingroup
+    \def\do@endgroup{\endgroup}%
+    \def\do##1{%
+      \scr@ifundefinedorrelax{scr@tso@##1@numwidth}{}{%
+        \typeout{Setting numwidth of `##1' to \last@l@number}%
+        \l@addto@macro\do@endgroup{%
+          \@namedef{scr@tso@##1@numwidth}{\last@l@number}%
+        }%
+      }%
+      \scr@ifundefinedorrelax{scr@tso@##1@indent}{}{%
+        \typeout{Setting indent of `##1' to \string\z@}%
+        \l@addto@macro\do@endgroup{%
+          \@namedef{scr@tso@##1@indent}{\z@}%
+        }%
+      }%
+    }%
+    \@nameuse{scr@dte@donumwidth}%
+  \do@endgroup
 }
 \newcommand*{\after@starttoc}[1]{%
   \protected@write\@auxout{}{%
@@ -5809,7 +6076,7 @@
   \par \vskip 10\p@ \@plus5\p@ \@minus3\p@\relax
 }
 \newcommand*\indexname{Index}
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
 \if@twocolumn
   \setlength{\leftmargini}{2em}
 \else
@@ -5956,7 +6223,7 @@
   }%
   \item\is@thispageodd@setlabel\nobreak\ignorespaces
 }
-\newcommand*\descfont{\sffamily\bfseries}
+\newcommand*\descfont{\@gr@gsffamily\bfseries}
 \newcommand*{\scr@fnt@descriptionlabel}{\descfont}
 \newkomafont{labelinglabel}{}
 \newkomafont{labelingseparator}{}

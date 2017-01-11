@@ -13,7 +13,7 @@
 %% scrlayer-scrpage.dtx  (with options: `interface,trace,scrpage,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2012-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2012-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -45,13 +45,13 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlayer-scrpage.dtx 2147 2015-06-24 06:16:16Z kohm $ (identify)
+%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (identify)
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{scrlayer-scrpage}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package
   (end user interface for scrlayer)]
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (init)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
 \RequirePackage{scrlayer}
 \scr@ifundefinedorrelax{scrlayer@AtEndOfPackage}{%
   \AtEndOfPackage{\let\scrlayer@AtEndOfPackage\@firstofone}%
@@ -62,7 +62,7 @@
 }
 \let\scrlayer@AtEndOfPackage\AtEndOfPackage
 \scrlayerInitInterface
-%%% From File: $Id: scrlayer-scrpage.dtx 2147 2015-06-24 06:16:16Z kohm $ (init)
+%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
 \AtEndOfPackage{%
   \sls@auto@pagestyleset%
 }
@@ -78,7 +78,7 @@
     {pagestyleset=KOMA-Script}%
   }%
 }
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (options)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
 \KOMA@key{markcase}{%
 \scrlayer@AtEndOfPackage{%
   \begingroup
@@ -209,7 +209,7 @@
   \KOMA@kav@replacebool{.scrlayer.sty}{autoremoveinterfaces}
                        {scrlayer@autoremoveinterfaces}%
 }
-%%% From File: $Id: scrlayer-scrpage.dtx 2147 2015-06-24 06:16:16Z kohm $ (options)
+%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
 \KOMA@key{headwidth}{%
   \begingroup
     \sls@split@at@iicolons#1:::\@nil
@@ -694,7 +694,7 @@
 \scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@hmode@default}%
 \scrlayer@AddCsToInterface{sls@leavevmode@linetrue}
 \scrlayer@AddCsToInterface{sls@leavevmode@linefalse}
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (body)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
 \KOMAProcessOptions\relax
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @markcase\endcsname\relax
@@ -765,7 +765,7 @@
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @autoremoveinterfaces@default\endcsname
   \relax
-%%% From File: $Id: scrlayer-scrpage.dtx 2147 2015-06-24 06:16:16Z kohm $ (body)
+%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
 \scrlayerAddToInterface\setheadwidth{%
   \newcommand*{\setheadwidth}[2][]{%
     \KOMAoptions{headwidth=#2:#1}%
@@ -790,7 +790,7 @@
 }
 \scrlayerAddToInterface\sls@setline{%
   \newcommand*\sls@setline[2]{%
-    \@ifnextchar[%]
+    \kernel@ifnextchar[%]
     {\sls@@setline{#1}{#2}}{\sls@@@setline{#1#2}}%
   }%
 }
@@ -842,7 +842,7 @@
       `\string\setkomafont' or `\string\addtokomafont' to\MessageBreak
       setup the colour%
     }%
-    \@ifnextchar[%]
+    \kernel@ifnextchar[%]
     {%
       \sls@@@@setline{#1}%
     }{%
@@ -948,14 +948,14 @@
 }
 \scrlayerAddToInterface\sls@defhead{%
   \newcommand*\sls@defhead[1]{%
-    \@ifnextchar(%)
+    \kernel@ifnextchar(%)
     {\sls@@defhead{#1}}%
     {\sls@@defhead{#1}(\sls@headabove@linelength,\sls@headabove@linethickness)}%
   }%
 }
 \scrlayerAddToInterface\sls@@defhead{%
   \def\sls@@defhead#1(#2,#3)#4#5#6{%
-    \@ifnextchar(%)
+    \kernel@ifnextchar(%)
     {\sls@@@defhead{#1}({#2},{#3}){#4}{#5}{#6}}%
     {\sls@@@defhead{#1}%
                    ({#2},{#3})%
@@ -1020,14 +1020,14 @@
 }
 \scrlayerAddToInterface\sls@deffoot{%
   \newcommand*\sls@deffoot[1]{%
-    \@ifnextchar(%)
+    \kernel@ifnextchar(%)
     {\sls@@deffoot{#1}}%
     {\sls@@deffoot{#1}(\sls@footabove@linelength,\sls@footabove@linethickness)}%
   }%
 }
 \scrlayerAddToInterface\sls@@deffoot{%
   \def\sls@@deffoot#1(#2,#3)#4#5#6{%
-    \@ifnextchar(%)
+    \kernel@ifnextchar(%)
     {\sls@@@deffoot{#1}({#2},{#3}){#4}{#5}{#6}}%
     {\sls@@@deffoot{#1}%
                    ({#2},{#3})%
@@ -1301,14 +1301,14 @@
 }
 \scrlayerAddToInterface\scrlayer@triplestyle{%
   \def\scrlayer@triplestyle#1{%
-    \@ifnextchar[%]
+    \kernel@ifnextchar[%]
     {\scrlayer@@triplestyle{#1}}%
     {\scrlayer@@triplestyle{#1}[\z@]}%
   }
 }
 \scrlayerAddToInterface\scrlayer@@triplestyle{%
   \def\scrlayer@@triplestyle#1[#2]{%
-   \@ifnextchar[%]
+   \kernel@ifnextchar[%]
     {\scrlayer@@@triplestyle{#1}[#2]}%
     {\scrlayer@@@triplestyle{#1}[\z@][#2]}%
   }%
@@ -1475,8 +1475,8 @@
 }
 \scrlayerAddToInterface\sls@init@pair@page@style{%
   \newcommand*{\sls@init@pair@page@style}{%
-    \@ifstar {%
-      \@ifstar {%
+    \kernel@ifstar {%
+      \kernel@ifstar {%
         \sls@let@pair@page@style\relax
       }{%
         \sls@let@pair@page@style\@empty
@@ -1658,10 +1658,10 @@
 \DeclarePageStyleAlias{scrplain}{plain.scrheadings}
 \scrlayerOnAutoRemoveInterface{\DestroyPageStyleAlias{scrplain}}
 \scrlayerAddToInterface\ihead{%
-  \newcommand*{\ihead}{\@ifstar {\@dblarg\@@@ihead}{\@ihead}}%
+  \newcommand*{\ihead}{\kernel@ifstar {\@dblarg\@@@ihead}{\@ihead}}%
 }
 \scrlayerAddToInterface\@ihead{%
-  \newcommand*{\@ihead}{\@ifnextchar[{\@@@ihead}{\@@ihead}}%
+  \newcommand*{\@ihead}{\kernel@ifnextchar[{\@@@ihead}{\@@ihead}}%
 }
 \scrlayerAddToInterface\@@ihead{%
   \newcommand*{\@@ihead}[1]{\rehead{#1}\lohead{#1}}%
@@ -1670,10 +1670,10 @@
   \newcommand*{\@@@ihead}[2][]{\rehead[{#1}]{#2}\lohead[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\ohead{%
-  \newcommand*{\ohead}{\@ifstar {\@dblarg\@@@ohead}{\@ohead}}%
+  \newcommand*{\ohead}{\kernel@ifstar {\@dblarg\@@@ohead}{\@ohead}}%
 }
 \scrlayerAddToInterface\@ohead{%
-  \newcommand*{\@ohead}{\@ifnextchar[{\@@@ohead}{\@@ohead}}%
+  \newcommand*{\@ohead}{\kernel@ifnextchar[{\@@@ohead}{\@@ohead}}%
 }
 \scrlayerAddToInterface\@@ohead{%
   \newcommand*{\@@ohead}[1]{\lehead{#1}\rohead{#1}}%
@@ -1682,10 +1682,10 @@
   \newcommand*{\@@@ohead}[2][]{\lehead[{#1}]{#2}\rohead[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\chead{%
-  \newcommand*{\chead}{\@ifstar {\@dblarg\@@@chead}{\@chead}}%
+  \newcommand*{\chead}{\kernel@ifstar {\@dblarg\@@@chead}{\@chead}}%
 }
 \scrlayerAddToInterface\@chead{%
-  \newcommand*{\@chead}{\@ifnextchar[{\@@@chead}{\@@chead}}%
+  \newcommand*{\@chead}{\kernel@ifnextchar[{\@@@chead}{\@@chead}}%
 }
 \scrlayerAddToInterface\@@chead{%
   \newcommand*{\@@chead}[1]{\cehead{#1}\cohead{#1}}%
@@ -1712,10 +1712,10 @@
   \newcommand*{\cohead}{\sls@renewelement{odd}{middle}{head}}%
 }
 \scrlayerAddToInterface\ifoot{%
-  \newcommand*{\ifoot}{\@ifstar {\@dblarg\@@@ifoot}{\@ifoot}}%
+  \newcommand*{\ifoot}{\kernel@ifstar {\@dblarg\@@@ifoot}{\@ifoot}}%
 }
 \scrlayerAddToInterface\@ifoot{%
-  \newcommand*{\@ifoot}{\@ifnextchar[{\@@@ifoot}{\@@ifoot}}%
+  \newcommand*{\@ifoot}{\kernel@ifnextchar[{\@@@ifoot}{\@@ifoot}}%
 }
 \scrlayerAddToInterface\@@ifoot{%
   \newcommand*{\@@ifoot}[1]{\refoot{#1}\lofoot{#1}}%
@@ -1724,10 +1724,10 @@
   \newcommand*{\@@@ifoot}[2][]{\refoot[{#1}]{#2}\lofoot[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\ofoot{%
-  \newcommand*{\ofoot}{\@ifstar {\@dblarg\@@@ofoot}{\@ofoot}}%
+  \newcommand*{\ofoot}{\kernel@ifstar {\@dblarg\@@@ofoot}{\@ofoot}}%
 }
 \scrlayerAddToInterface\@ofoot{%
-  \newcommand*{\@ofoot}{\@ifnextchar[{\@@@ofoot}{\@@ofoot}}%
+  \newcommand*{\@ofoot}{\kernel@ifnextchar[{\@@@ofoot}{\@@ofoot}}%
 }
 \scrlayerAddToInterface\@@ofoot{%
   \newcommand*{\@@ofoot}[1]{\lefoot{#1}\rofoot{#1}}%
@@ -1736,10 +1736,10 @@
   \newcommand*{\@@@ofoot}[2][]{\lefoot[{#1}]{#2}\rofoot[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\cfoot{%
-  \newcommand*{\cfoot}{\@ifstar {\@dblarg\@@@cfoot}{\@cfoot}}%
+  \newcommand*{\cfoot}{\kernel@ifstar {\@dblarg\@@@cfoot}{\@cfoot}}%
 }
 \scrlayerAddToInterface\@cfoot{%
-  \newcommand*{\@cfoot}{\@ifnextchar[{\@@@cfoot}{\@@cfoot}}%
+  \newcommand*{\@cfoot}{\kernel@ifnextchar[{\@@@cfoot}{\@@cfoot}}%
 }
 \scrlayerAddToInterface\@@cfoot{%
   \newcommand*{\@@cfoot}[1]{\cefoot{#1}\cofoot{#1}}%
@@ -1767,13 +1767,13 @@
 }
 \scrlayerAddToInterface\sls@renewelement{%
   \newcommand*{\sls@renewelement}[3]{%
-    \@ifstar{\@dblarg{\sls@@@@renewelement{#1}{#2}{#3}}}%
-            {\sls@@renewelement{#1}{#2}{#3}}%
+    \kernel@ifstar{\@dblarg{\sls@@@@renewelement{#1}{#2}{#3}}}%
+                  {\sls@@renewelement{#1}{#2}{#3}}%
   }%
 }
 \scrlayerAddToInterface\sls@@renewelement{%
   \newcommand*{\sls@@renewelement}[3]{%
-    \@ifnextchar[%]
+    \kernel@ifnextchar[%]
     {\sls@@@@renewelement{#1}{#2}{#3}}%
     {\sls@@@renewelement{#1}{#2}{#3}}%
   }%

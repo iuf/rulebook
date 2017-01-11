@@ -11,7 +11,7 @@
 %% scrtime.dtx  (with options: `package,scrtime,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -43,7 +43,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -65,29 +65,29 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrtime.dtx 1874 2014-12-11 13:46:00Z kohm $
+%%% From File: $Id: scrtime.dtx 2429 2016-04-12 12:10:19Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{scrtime}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package
   (time of LaTeX run)%
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: scrtime.dtx 1874 2014-12-11 13:46:00Z kohm $
+%%% From File: $Id: scrtime.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newif\if@Hxii
 \KOMA@ifkey{12h}{@Hxii}
 \KOMA@DeclareDeprecatedOption[scrtime]{24h}{12h=false}
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrtime.dtx 1874 2014-12-11 13:46:00Z kohm $
+%%% From File: $Id: scrtime.dtx 2429 2016-04-12 12:10:19Z kohm $
 \def\thistime{%
-  \@ifstar
+  \kernel@ifstar
     {\let\@tempif\iffalse\@thistime}
     {\let\@tempif\iftrue\@thistime}}
 \newcommand*{\@thistime}[1][:]{%

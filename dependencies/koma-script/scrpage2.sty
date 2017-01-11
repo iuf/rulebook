@@ -7,7 +7,7 @@
 %% scrpage.dtx  (with options: `scrpage,v2')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -39,10 +39,10 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrpage.dtx 1547 2013-12-14 17:23:38Z mjk $
+%%% From File: $Id: scrpage.dtx 2428 2016-04-12 10:31:07Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{scrpage2}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package (page head and foot)]
 \newcommand*{\@Pass@Obsolete@Option@To@Typearea}[1]{%
   \@expandtwoargs\in@{,\CurrentOption,}{,\@curroptions,}%
@@ -185,12 +185,12 @@
   }%
 }
 \def\def@head{%
-  \@ifnextchar(%)
+  \kernel@ifnextchar(%)
   {\def@@head}%
   {\def@@head(\scr@headabove@linelength,%
               \scr@headabove@linethickness)}}
 \def\def@@head(#1,#2)#3#4#5{%
-  \@ifnextchar(%)
+  \kernel@ifnextchar(%)
   {\def@@@head({#1},{#2}){#3}{#4}{#5}}%
   {\def@@@head({#1},{#2}){#3}{#4}{#5}%
               (\scr@headbelow@linelength,%
@@ -222,12 +222,12 @@
   }\hskip\@evenheadshift\hss}%
 }
 \def\def@foot{%
-  \@ifnextchar(%)
+  \kernel@ifnextchar(%)
   {\def@@foot}
   {\def@@foot(\scr@footabove@linelength,%
                      \scr@footabove@linethickness)}}
 \def\def@@foot(#1,#2)#3#4#5{%
-  \@ifnextchar(%)
+  \kernel@ifnextchar(%)
   {\def@@@foot({#1},{#2}){#3}{#4}{#5}}%
   {\def@@@foot({#1},{#2}){#3}{#4}{#5}%
                      (\scr@footbelow@linelength,%
@@ -349,12 +349,12 @@
   {\@deftripstyle[-]}%
   {\@deftripstyle[+]}}
 \def\@deftripstyle[#1]#2{%
-  \@ifnextchar[%]
+  \kernel@ifnextchar[%]
   {\@@deftripstyle[#1]{#2}}%
   {\@@deftripstyle[#1]{#2}[\z@]}}
 \def\@@deftripstyle[#1]#2[#3]{%
   \def\@tempa{#1}%
-  \@ifnextchar[%]
+  \kernel@ifnextchar[%]
   {\@@@deftripstyle#2[#3]}%
   {\@@@deftripstyle#2[\z@][#3]}}
 \def\@@@deftripstyle#1[#2][#3]#4#5#6#7#8#9{%
@@ -657,7 +657,7 @@
 \newcommand*{\setfootsepline}{\scr@setline{foot}{above}}
 \newcommand*{\setfootbotline}{\scr@setline{foot}{below}}
 \def\scr@setline#1#2{%
-  \@ifnextchar[%]
+  \kernel@ifnextchar[%]
   {\@scr@setline{#1}{#2}}{\@@scr@setline{#1#2}}%
 }
 \def\@scr@setline#1#2[#3]{%
@@ -675,7 +675,7 @@
       \expandafter\edef\csname scr@#1@linethickness\endcsname%
       {\the\@tempdima}%
   \fi\fi
-  \@ifnextchar[%]
+  \kernel@ifnextchar[%]
   {\@src@set@pre@line{#1}}{}%
 }
 \def\@src@set@pre@line#1[#2]{%
@@ -880,80 +880,80 @@
 \newcommand*{\scrheadings@odd@left@foot}{}
 \newcommand*{\scrheadings@odd@middle@foot}{}
 \newcommand*{\scrheadings@odd@right@foot}{}
-\newcommand{\ihead}{\@ifnextchar[{\@@lhead}{\@lhead}}
+\newcommand{\ihead}{\kernel@ifnextchar[{\@@lhead}{\@lhead}}
 \newcommand{\@lhead}[1]{\@rehead{#1}\@lohead{#1}}
 \newcommand{\@@lhead}[2][]{\@@rehead[{#1}]{#2}\@@lohead[{#1}]{#2}}
-\newcommand{\ohead}{\@ifnextchar[{\@@rhead}{\@rhead}}
+\newcommand{\ohead}{\kernel@ifnextchar[{\@@rhead}{\@rhead}}
 \newcommand{\@rhead}[1]{\@lehead{#1}\@rohead{#1}}
 \newcommand{\@@rhead}[2][]{\@@lehead[{#1}]{#2}\@@rohead[{#1}]{#2}}
-\newcommand{\chead}{\@ifnextchar[{\@@chead}{\@chead}}
+\newcommand{\chead}{\kernel@ifnextchar[{\@@chead}{\@chead}}
 \newcommand{\@chead}[1]{\@cehead{#1}\@cohead{#1}}
 \newcommand{\@@chead}[2][]{\@@cehead[{#1}]{#2}\@@cohead[{#1}]{#2}}
-\newcommand{\lehead}{\@ifnextchar[{\@@lehead}{\@lehead}}
+\newcommand{\lehead}{\kernel@ifnextchar[{\@@lehead}{\@lehead}}
 \newcommand{\@lehead}[1]{\renewcommand*{\scrheadings@even@left@head}{#1}}
 \newcommand{\@@lehead}[2][]{%
   \renewcommand*{\scrplain@even@left@head}{#1}%
   \renewcommand*{\scrheadings@even@left@head}{#2}}
-\newcommand{\lohead}{\@ifnextchar[{\@@lohead}{\@lohead}}
+\newcommand{\lohead}{\kernel@ifnextchar[{\@@lohead}{\@lohead}}
 \newcommand{\@lohead}[1]{\renewcommand*{\scrheadings@odd@left@head}{#1}}
 \newcommand{\@@lohead}[2][]{%
   \renewcommand*{\scrplain@odd@left@head}{#1}%
   \renewcommand*{\scrheadings@odd@left@head}{#2}}
-\newcommand{\rehead}{\@ifnextchar[{\@@rehead}{\@rehead}}
+\newcommand{\rehead}{\kernel@ifnextchar[{\@@rehead}{\@rehead}}
 \newcommand{\@rehead}[1]{\renewcommand*{\scrheadings@even@right@head}{#1}}
 \newcommand{\@@rehead}[2][]{%
   \renewcommand*{\scrplain@even@right@head}{#1}%
   \renewcommand*{\scrheadings@even@right@head}{#2}}
-\newcommand{\rohead}{\@ifnextchar[{\@@rohead}{\@rohead}}
+\newcommand{\rohead}{\kernel@ifnextchar[{\@@rohead}{\@rohead}}
 \newcommand{\@rohead}[1]{\renewcommand*{\scrheadings@odd@right@head}{#1}}
 \newcommand{\@@rohead}[2][]{%
   \renewcommand*{\scrplain@odd@right@head}{#1}%
   \renewcommand*{\scrheadings@odd@right@head}{#2}}
-\newcommand{\cehead}{\@ifnextchar[{\@@cehead}{\@cehead}}
+\newcommand{\cehead}{\kernel@ifnextchar[{\@@cehead}{\@cehead}}
 \newcommand{\@cehead}[1]{\renewcommand*{\scrheadings@even@middle@head}{#1}}
 \newcommand{\@@cehead}[2][]{%
   \renewcommand*{\scrplain@even@middle@head}{#1}%
   \renewcommand*{\scrheadings@even@middle@head}{#2}}
-\newcommand{\cohead}{\@ifnextchar[{\@@cohead}{\@cohead}}
+\newcommand{\cohead}{\kernel@ifnextchar[{\@@cohead}{\@cohead}}
 \newcommand{\@cohead}[1]{\renewcommand*{\scrheadings@odd@middle@head}{#1}}
 \newcommand{\@@cohead}[2][]{%
   \renewcommand*{\scrplain@odd@middle@head}{#1}%
   \renewcommand*{\scrheadings@odd@middle@head}{#2}}
-\newcommand{\ifoot}{\@ifnextchar[{\@@lfoot}{\@lfoot}}
+\newcommand{\ifoot}{\kernel@ifnextchar[{\@@lfoot}{\@lfoot}}
 \newcommand{\@lfoot}[1]{\@refoot{#1}\@lofoot{#1}}
 \newcommand{\@@lfoot}[2][]{\@@refoot[{#1}]{#2}\@@lofoot[{#1}]{#2}}
-\newcommand{\ofoot}{\@ifnextchar[{\@@rfoot}{\@rfoot}}
+\newcommand{\ofoot}{\kernel@ifnextchar[{\@@rfoot}{\@rfoot}}
 \newcommand{\@rfoot}[1]{\@lefoot{#1}\@rofoot{#1}}
 \newcommand{\@@rfoot}[2][]{\@@lefoot[{#1}]{#2}\@@rofoot[{#1}]{#2}}
-\newcommand{\cfoot}{\@ifnextchar[{\@@cfoot}{\@cfoot}}
+\newcommand{\cfoot}{\kernel@ifnextchar[{\@@cfoot}{\@cfoot}}
 \newcommand{\@cfoot}[1]{\@cefoot{#1}\@cofoot{#1}}
 \newcommand{\@@cfoot}[2][]{\@@cefoot[{#1}]{#2}\@@cofoot[{#1}]{#2}}
-\newcommand{\lefoot}{\@ifnextchar[{\@@lefoot}{\@lefoot}}
+\newcommand{\lefoot}{\kernel@ifnextchar[{\@@lefoot}{\@lefoot}}
 \newcommand{\@lefoot}[1]{\renewcommand*{\scrheadings@even@left@foot}{#1}}
 \newcommand{\@@lefoot}[2][]{%
   \renewcommand*{\scrplain@even@left@foot}{#1}%
   \renewcommand*{\scrheadings@even@left@foot}{#2}}
-\newcommand{\lofoot}{\@ifnextchar[{\@@lofoot}{\@lofoot}}
+\newcommand{\lofoot}{\kernel@ifnextchar[{\@@lofoot}{\@lofoot}}
 \newcommand{\@lofoot}[1]{\renewcommand*{\scrheadings@odd@left@foot}{#1}}
 \newcommand{\@@lofoot}[2][]{%
   \renewcommand*{\scrplain@odd@left@foot}{#1}%
   \renewcommand*{\scrheadings@odd@left@foot}{#2}}
-\newcommand{\refoot}{\@ifnextchar[{\@@refoot}{\@refoot}}
+\newcommand{\refoot}{\kernel@ifnextchar[{\@@refoot}{\@refoot}}
 \newcommand{\@refoot}[1]{\renewcommand*{\scrheadings@even@right@foot}{#1}}
 \newcommand{\@@refoot}[2][]{%
   \renewcommand*{\scrplain@even@right@foot}{#1}%
   \renewcommand*{\scrheadings@even@right@foot}{#2}}
-\newcommand{\rofoot}{\@ifnextchar[{\@@rofoot}{\@rofoot}}
+\newcommand{\rofoot}{\kernel@ifnextchar[{\@@rofoot}{\@rofoot}}
 \newcommand{\@rofoot}[1]{\renewcommand*{\scrheadings@odd@right@foot}{#1}}
 \newcommand{\@@rofoot}[2][]{%
   \renewcommand*{\scrplain@odd@right@foot}{#1}%
   \renewcommand*{\scrheadings@odd@right@foot}{#2}}
-\newcommand{\cefoot}{\@ifnextchar[{\@@cefoot}{\@cefoot}}
+\newcommand{\cefoot}{\kernel@ifnextchar[{\@@cefoot}{\@cefoot}}
 \newcommand{\@cefoot}[1]{\renewcommand*{\scrheadings@even@middle@foot}{#1}}
 \newcommand{\@@cefoot}[2][]{%
   \renewcommand*{\scrplain@even@middle@foot}{#1}%
   \renewcommand*{\scrheadings@even@middle@foot}{#2}}
-\newcommand{\cofoot}{\@ifnextchar[{\@@cofoot}{\@cofoot}}
+\newcommand{\cofoot}{\kernel@ifnextchar[{\@@cofoot}{\@cofoot}}
 \newcommand{\@cofoot}[1]{\renewcommand*{\scrheadings@odd@middle@foot}{#1}}
 \newcommand{\@@cofoot}[2][]{%
   \renewcommand*{\scrplain@odd@middle@foot}{#1}%

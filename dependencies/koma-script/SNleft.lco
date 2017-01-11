@@ -8,7 +8,7 @@
 %% scrkernel-letterclassoptions.dtx  (with options: `lco,SwissLeft,head')
 %% scrkernel-letterclassoptions.dtx  (with options: `lco,SwissLeft,body')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -40,7 +40,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -62,9 +62,9 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \ProvidesFile{%
   SNleft%
   .lco}[\KOMAScriptVersion\space letter-class-option]
@@ -78,7 +78,7 @@
     Letter class option  #1 Warning: #2%
   }%
 }
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \@ifundefined{scr@fromname@var}{%
   \LCOWarningNoLine{%
     SNleft%

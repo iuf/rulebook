@@ -14,7 +14,7 @@
 %% scrlayer-notecolumn.dtx  (with options: `interface,trace,notecolumn,final')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2013-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2013-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -46,13 +46,13 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlayer-notecolumn.dtx 1760 2014-06-03 08:28:36Z kohm $ (identify)
+%%% From File: $Id: scrlayer-notecolumn.dtx 2398 2016-03-25 10:22:23Z kohm $ (identify)
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{scrlayer-notecolumn}[%
-  2014/06/03 v0.1.1760 KOMA-Script 
+  2016/03/25 v0.1.2398 KOMA-Script 
   package
   (end user interface for scrlayer)]
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (init)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
 \RequirePackage{scrlayer}
 \scr@ifundefinedorrelax{scrlayer@AtEndOfPackage}{%
   \AtEndOfPackage{\let\scrlayer@AtEndOfPackage\@firstofone}%
@@ -63,19 +63,31 @@
 }
 \let\scrlayer@AtEndOfPackage\AtEndOfPackage
 \scrlayerInitInterface
-%%% From File: $Id: scrlayer-notecolumn.dtx 1760 2014-06-03 08:28:36Z kohm $ (init)
+%%% From File: $Id: scrlayer-notecolumn.dtx 2398 2016-03-25 10:22:23Z kohm $ (init)
 \@tempswatrue
 \scr@ifundefinedorrelax{pdfsavepos}{%
-  \expandafter\@tempswafalse
-}{%
-  \scr@ifundefinedorrelax{pdflastypos}{%
+  \scr@ifundefinedorrelax{savepos}{%
     \expandafter\@tempswafalse
-  }{}%
+  }{%
+    \let\scr@savepos\savepos
+  }%
+}{%
+  \let\scr@savepos\pdfsavepos
+  \scr@ifundefinedorrelax{pdflastypos}{%
+    \scr@ifundefinedorrelax{lastypos}{%
+      \expandafter\@tempswafalse
+    }{%
+      \let\scr@lastypos\lastypos
+    }%
+  }{%
+    \let\scr@lastypos\pdflastypos
+  }%
 }
 \if@tempswa\else
-  \PackageError{scrlayer-notecolumn}{missing pdfTeX features}{%
-    This package needs \string\pdfsavepos\space and
-    \string\pdflastypos.\MessageBreak
+  \PackageError{scrlayer-notecolumn}{missing pdfTeX/luaTeX features}{%
+    This package needs \string\pdfsavepos\space or \string\savepos\space
+    and\MessageBreak
+    \string\pdflastypos\space or \string\lastypos.\MessageBreak
     This error is fatal, because usage of the package without these
     features\MessageBreak
     cannot work!\MessageBreak
@@ -83,7 +95,7 @@
   }%
   \batchmode\csname @@end\endcsname\end
 \fi
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (options)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
 \KOMA@key{markcase}{%
   \begingroup
     \KOMA@set@ncmdkey{markcase}{reserved@a}{%
@@ -212,11 +224,11 @@
   \KOMA@kav@replacebool{.scrlayer.sty}{autoremoveinterfaces}
                        {scrlayer@autoremoveinterfaces}%
 }
-%%% From File: $Id: scrlayer-notecolumn.dtx 1760 2014-06-03 08:28:36Z kohm $ (options)
+%%% From File: $Id: scrlayer-notecolumn.dtx 2398 2016-03-25 10:22:23Z kohm $ (options)
 \KOMA@ifkey{autoclearnotecolumns}{slnc@autoclearnotecolumns}\slnc@autoclearnotecolumnstrue
 \scrlayer@AddCsToInterface{KV@KOMA.\@currname.\@currext @autoclearnotecolumns}
 \scrlayer@AddCsToInterface{KV@KOMA.\@currname.\@currext @autoclearnotecolumns@default}
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (body)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
 \KOMAProcessOptions\relax
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @markcase\endcsname\relax
@@ -287,7 +299,7 @@
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @autoremoveinterfaces@default\endcsname
   \relax
-%%% From File: $Id: scrlayer-notecolumn.dtx 1760 2014-06-03 08:28:36Z kohm $ (body)
+%%% From File: $Id: scrlayer-notecolumn.dtx 2398 2016-03-25 10:22:23Z kohm $ (body)
 \scrlayerAddToInterface\DeclareNoteColumn{%
   \newcommand*{\DeclareNoteColumn}[2][]{%
     \@ifundefined{slnc@#2@box}{%
@@ -531,9 +543,11 @@
 \scrlayerAddToInterface\tf@slnc{%
   \newwrite\tf@slnc
   \AtBeginDocument{%
-    \immediate\write\@auxout{%
-      \noexpand\csname slnc@initwrite\noexpand\endcsname
-    }%
+    \if@filesw
+      \immediate\write\@auxout{%
+        \noexpand\csname slnc@initwrite\noexpand\endcsname
+      }%
+    \fi
   }%
   \AtEndDocument{\let\slnc@initwrite\slnc@openwrite}%
 }
@@ -582,11 +596,11 @@
 \scrlayerAddToInterface\makenote{%
   \newcommand{\makenote}[2][marginpar]{%
     \@bsphack
-    \pdfsavepos
+    \scr@savepos
     \addtocontents{slnc}{%
       \string\slnc@note{#1}%
                        {\noexpand\number\value{slncpage}}%
-                       {\noexpand\number\pdflastypos}%
+                       {\noexpand\number\scr@lastypos}%
                        {#2}%
     }%
     \@esphack
@@ -646,7 +660,11 @@
                   }%
                 \fi
                 \scr@ifundefinedorrelax{pdfpageheight}{%
-                  \@tempdima=\paperheight
+                  \scr@ifundefinedorrelax{pageheight}{%
+                    \@tempdima=\paperheight
+                  }{%
+                    \@tempdima=\pageheight
+                  }%
                 }{%
                   \@tempdima=\pdfpageheight
                 }%
@@ -703,11 +721,11 @@
           \if@filesw
             \expandafter\setbox\csname slnc@#1@box\endcsname\vbox{%
               \expandafter\unvbox\csname slnc@#1@box\endcsname
-              \pdfsavepos
+              \scr@savepos
               \protected@write\@auxout{}{%
                 \string\newlabel{notecolumn.##1.##3.syncnote.label}{%
                   {%
-                    \noexpand\number\pdflastypos
+                    \noexpand\number\scr@lastypos
                   }{\thepage}%
                 }%
               }%
@@ -1097,12 +1115,12 @@
       \fi
       {%
         \if@filesw
-          \pdfsavepos
+          \scr@savepos
           \protected@write\@auxout{}{%
             \string\newlabel{notecolumn.\theslnc@syncpoint.synctext.label}{%
               {%
                 \noexpand\number
-                \numexpr \pdflastypos\slnc@voffset\relax
+                \numexpr \scr@lastypos\slnc@voffset\relax
               }{\thepage}%
             }%
           }%
@@ -1159,7 +1177,11 @@
                 \edef\slnc@textpage{\the\numexpr\slnc@textpage+1\relax}%
               }%
               \scr@ifundefinedorrelax{pdfpageheight}{%
-                \@tempdima=\paperheight
+                \scr@ifundefinedorrelax{pageheight}{%
+                  \@tempdima=\paperheight
+                }{%
+                  \@tempdima=\pageheight
+                }%
               }{%
                 \@tempdima=\pdfpageheight
               }%

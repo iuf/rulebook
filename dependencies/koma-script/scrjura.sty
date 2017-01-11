@@ -1,49 +1,51 @@
 %%
 %% This is file `scrjura.sty',
-%% generated with the docstrip utility.
+%% generated with the docstrip utility, extended by scrdocstrip.
 %%
 %% The original source files were:
 %%
 %% scrjura.dtx  (with options: `package')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2007-2013
-%% Markus Kohm and any individual authors listed elsewhere in this file.
+%% Copyright (c) 2007-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
 %% 
-%% This work may be distributed and/or modified under the conditions of
-%% the LaTeX Project Public License, version 1.3c of the license.
-%% The latest version of this license is in
-%%   http://www.latex-project.org/lppl.txt
-%% and version 1.3c or later is part of all distributions of LaTeX
-%% version 2005/12/01 or later and of this work.
+%% It may be distributed under the conditions of the
+%% LaTeX Project Public License in the version distributed together
+%% with KOMA-Script, see file `lppl.txt' or `lppl-de.txt'.
 %% 
-%% This work has the LPPL maintenance status "author-maintained".
+%% This file may only be distributed together with a copy of the
+%% KOMA-Script bundle.  You may however distribute the
+%% KOMA-Script bundle without all such generated files.  See also
+%% `lppl.txt' or `lppl-de.txt' for additional information.
 %% 
-%% The Current Maintainer and author of this work is Markus Kohm.
+%% The list of files belonging to KOMA-Script distribution is given in
+%% the file `manifest.txt'.  See also `lppl.txt' or `lppl-de.txt' for
+%% additional information.
 %% 
-%% This file may only be distributed together with the files
-%% `scrlogo.dtx' and `scrjura.dtx'. You may however distribute the files
-%% `scrlogo.dtx' and `scrjura.dtx' without this file.
-%% See also `scrjura.dtx' for additional information.
+%% If this file is a beta version, you may not be allowed to distribute
+%% it.  Look at the comments below to see if this is the case.
 %% 
-%% If this file is a beta version, you are not allowed to distribute it.
+%% English and German manuals are part of KOMA-Script bundle.
+%% ----------------------------------------------------------
 %% 
-%% Currently there is only a short german manual at `scrjura.dtx', that
-%% should also be found as `scrjura.pdf'.
+%% See `README'.
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
-%% LaTeX2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.
+%% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
+%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% find a complete unmodified copy of LaTeX2e at
+%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrjura.dtx 2098 2015-05-13 16:23:25Z kohm $
+%%% From File: $Id: scrjura.dtx 2448 2016-05-06 09:06:19Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
-\ProvidesPackage{scrjura}
-                [2015/05/13 v0.9d KOMA-Script for jurists
-                (package)%
-                ]
+\ProvidesPackage{scrjura}[%
+  2016/05/06 v0.9h KOMA-Script 
+  for jurists
+  (package)%
+]
 \@ifpackageloaded{hyperref}{%
   \PackageError{scrjura}{Package hyperref already loaded}{%
     If you want to use package scrjura with package hyperref, you have to
@@ -118,9 +120,9 @@
 \KOMA@kav@add{.scrjura.sty}{parnumber}{true}
 \KOMA@kav@add{.scrjura.sty}{parnumber}{auto}
 \newcommand*{\Clausemark}[1]{}
-\KOMA@key{paragraphmark}{%
+\KOMA@key{clausemark}{%
   \begingroup
-    \KOMA@set@ncmdkey{paragraphmark}{@tempa}{%
+    \KOMA@set@ncmdkey{clausemark}{@tempa}{%
       {false}{0},{off}{0},{no}{0},%
       {forceright}{1},%
       {forceboth}{2},%
@@ -161,11 +163,20 @@
     \endgroup
     \FamilyKeyStateUnknownValue
   \fi
-  \KOMA@kav@xreplacevalue{.scrjura.sty}{paragraphmark}{#1}%
+  \KOMA@kav@xreplacevalue{.scrjura.sty}{clausemark}{#1}%
 }
-\KOMA@kav@add{.scrjura.sty}{paragraphmark}{false}
-\KOMA@DeclareDeprecatedOption[scrjura]{markright}{paragraphmark=forceright}
-\KOMA@DeclareDeprecatedOption[scrjura]{markboth}{paragraphmark=forceboth}
+\KOMA@kav@add{.scrjura.sty}{clausemark}{false}
+\KOMA@DeclareDeprecatedOption[scrjura]{markright}{clausemark=forceright}
+\KOMA@DeclareDeprecatedOption[scrjura]{markboth}{clausemark=forceboth}
+\KOMA@key{paragraphmark}{%
+  \PackageWarningNoLine{scrjura}{%
+    You've used obsolete option `paragraphmark'.\MessageBreak
+    Usage of this option is deprecated.\MessageBreak
+    You should simply replace `paragraphmark'\MessageBreak
+    by `clausemark'%
+  }%
+  \KOMAExecuteOptions[.scrjura.sty]{clausemark=#1}%
+}
 \newcommand*{\parcite@format}{0}
 \newcommand*{\sentencecite@format}{0}
 \KOMA@key{ref}{%
@@ -304,11 +315,14 @@
   \begingroup
     \KOMAoptions{parnumber=manual}\parellipsis\par
     \addtocounter{par}{#1}%
-    \protected@write\@auxout{}{%
-      \string\newmaxpar{\scrjura@env@type}%
-                       {\csname the\scrjura@env@type AbsoluteClause\endcsname}%
-                       {\thepar}%
-    }%
+    \if@filesw
+      \protected@write\@auxout{}{%
+        \string\newmaxpar{\scrjura@env@type}%
+                         {\csname the\scrjura@env@type
+                           AbsoluteClause\endcsname}%
+                         {\thepar}%
+      }%
+    \fi
   \endgroup
   \addtocounter{par}{-1}\refstepcounter{par}%
   \ignorespaces
@@ -362,7 +376,7 @@
       Declaration will be ignored}%
     \long\def\reserved@defjuraenvironment##1[##2]##3##4{}%
   }%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\reserved@defjuraenvironment{#1}}{\reserved@defjuraenvironment{#1}[]}%
 }
 \@onlypreamble\DeclareNewJuraEnvironment
@@ -399,7 +413,7 @@
     \csname #1@Clauseformat\endcsname[1]{\Clauseformat{##1}}%
   }{}%
   \expandafter\renewcommand\expandafter*\csname the#1Clause\endcsname{%
-    \csname #1@Clauseformat\endcsname{\arabic{#1Clause}}}%
+    \protect\@nameuse{#1@Clauseformat}{\arabic{#1Clause}}}%
   \newenvironment{#1}{%
     \par
     \ifx\scrjura@env@type\@empty
@@ -514,7 +528,7 @@
       \cl@Clause
     \endgroup
     \protected@edef\theClause{%
-      \csname \scrjura@env@type @Clauseformat\endcsname{\contract@number}%
+      \protect\@nameuse{\scrjura@env@type @Clauseformat}{\contract@number}%
     }%
     \protected@edef\@currentlabel{\theClause}%
   \fi
@@ -633,6 +647,45 @@
   \AutoPar
 }
 \newcommand*{\scrjura@everypar}{}
+\providecommand*{\IncludeInRelease}[3]{%
+  \PackageInfo{scrjura}{temporary definition of \string\IncludeInRelease}%
+  \ifstr{#1}{0000/00/00}{%
+    \let\IncludeInRelease\@undefined
+    \def\EndIncludeInRelease{\let\EndIncludeInRelease\@undefined}%
+  }{%
+    \let\EndIncludeInRelease\relax
+    \long\def\@gobble@IncludeInRelease##1\EndIncludeInRelease{%
+      \let\@gobble@IncludeInRelease\@undefined
+    }%
+    \expandafter\@gobble@IncludeInRelease
+  }%
+}
+\IncludeInRelease{2015/01/01}{\@doendpe}{clubpenalty fix}
+\CheckCommand*\@doendpe{\@endpetrue
+     \def\par{\@restorepar
+              \clubpenalty\@clubpenalty
+              \everypar{}\par\@endpefalse}\everypar
+               {{\setbox\z@\lastbox}%
+                \everypar{}\@endpefalse}}
+\newcommand*{\scrjura@doendpe}{%
+  \@endpetrue
+  \def\par{%
+    \@restorepar
+    \clubpenalty\@clubpenalty
+    \everypar{%
+      \csname scrjura@everypar\endcsname
+    }%
+    \par\@endpefalse
+  }%
+  \everypar{%
+    {\setbox\z@\lastbox}\everypar{%
+      \csname scrjura@everypar\endcsname
+    }%
+    \@endpefalse
+  }%
+}
+\EndIncludeInRelease
+\IncludeInRelease{0000/00/00}{\@doendpe}{clubpenalty fix}
 \CheckCommand*\@doendpe{\@endpetrue
   \def\par{\@restorepar\everypar{}\par\@endpefalse}\everypar
   {{\setbox\z@\lastbox}\everypar{}\@endpefalse}}
@@ -651,6 +704,7 @@
     \@endpefalse
   }%
 }
+\EndIncludeInRelease
 \newcommand*{\l@cpar}[2]{%
   \ifnum\value{juratoclevel}>\value{tocdepth}\else
     \scr@ifundefinedorrelax{bprot@dottedtocline}{%
@@ -667,6 +721,7 @@
 \renewcommand*{\thepar}{\arabic{par}}
 \newcommand*{\theHpar}{\theH@AbsClause-\Roman{par}}
 \newcommand*{\parformat}{(\thepar)}
+\newcommand*{\parformatseparation}{\nobreakspace}
 \newkomafont{parnumber}{}
 \renewcommand*\p@par{{\scrjura@usetype{\scrjura@env@type}\theSubClause\scrjura@separator{\nobreakspace}}}
 \@addtoreset{par}{Clause}
@@ -689,26 +744,29 @@
       \setcounter{sentence}{0}\refstepcounter{sentence}%
     \fi
     \begingroup
-      \protected@write\@auxout{%
-        \expandafter\let\csname \scrjura@env@type @Clauseformat\endcsname
-        \@firstofone
-      }{%
-        \string\newmaxpar{\scrjura@env@type}%
-                         {\csname the\scrjura@env@type AbsoluteClause\endcsname}%
-                         {\thepar}%
-      }%
+      \if@filesw
+        \protected@write\@auxout{%
+          \expandafter\let\csname \scrjura@env@type @Clauseformat\endcsname
+          \@firstofone
+        }{%
+          \string\newmaxpar{\scrjura@env@type}%
+                           {\csname the\scrjura@env@type
+                             AbsoluteClause\endcsname}%
+                           {\thepar}%
+        }%
+      \fi
       \getmaxpar\@tempa{\scrjura@env@type}%
                        {\csname the\scrjura@env@type AbsoluteClause\endcsname}%
       \typeout{Stored max is \@tempa}%
       \def\reserved@a##1\@nnil{\def\@tempa{##1}}%
       \afterassignment\reserved@a\@tempcnta=0\@tempa\relax\@nnil
       \ifnum \@tempcnta>\@ne
-        {\usekomafont{parnumber}{\parformat\nobreakspace}}%
+        {\usekomafont{parnumber}{\parformat\parformatseparation}}%
       \else
         \def\reserved@a{\relax}%
         \ifx\@tempa\reserved@a
         \else
-          {\usekomafont{parnumber}{\parformat\nobreakspace}}%
+          {\usekomafont{parnumber}{\parformat\parformatseparation}}%
         \fi
       \fi
     \endgroup
@@ -723,7 +781,7 @@
 \let\scrjura@special@par\relax
 \newcommand*{\scrjura@special@reset@par}{}
 \let\scrjura@special@reset@par\relax
-\newcommand*{\refL}{\@ifstar {\ref@L*}{\ref@L{}}}
+\newcommand*{\refL}{\kernel@ifstar {\ref@L*}{\ref@L{}}}
 \newcommand*{\ref@L}[2]{%
   \begingroup
     \def\parcite@format{0}%
@@ -731,7 +789,7 @@
     \ref#1{#2}%
   \endgroup
 }
-\newcommand*{\refS}{\@ifstar {\ref@S*}{\ref@S{}}}
+\newcommand*{\refS}{\kernel@ifstar {\ref@S*}{\ref@S{}}}
 \newcommand*{\ref@S}[2]{%
   \begingroup
     \def\parcite@format{1}%
@@ -739,7 +797,7 @@
     \ref#1{#2}%
   \endgroup
 }
-\newcommand*{\refN}{\@ifstar {\ref@N*}{\ref@N{}}}
+\newcommand*{\refN}{\kernel@ifstar {\ref@N*}{\ref@N{}}}
 \newcommand*{\ref@N}[2]{%
   \begingroup
     \def\parcite@format{2}%
@@ -748,7 +806,7 @@
   \endgroup
 }
 \newcommand*{\refClause}{%
-  \@ifstar {\ref@Clause*}{\ref@Clause{}}
+  \kernel@ifstar {\ref@Clause*}{\ref@Clause{}}
 }
 \newcommand*{\ref@Clause}[2]{%
   \expandafter\ifx\csname r@#2\endcsname\relax
@@ -777,7 +835,7 @@
   \fi
 }
 \newcommand*{\refClauseN}{%
-  \@ifstar {\ref@ClauseN*}{\ref@ClauseN{}}
+  \kernel@ifstar {\ref@ClauseN*}{\ref@ClauseN{}}
 }
 \newcommand*{\ref@ClauseN}[2]{%
   \begingroup
@@ -786,7 +844,7 @@
   \endgroup
 }
 \newcommand*{\refPar}{%
-  \@ifstar {\ref@Par*}{\ref@Par{}}
+  \kernel@ifstar {\ref@Par*}{\ref@Par{}}
 }
 \newcommand*{\ref@Par}[2]{%
   \expandafter\ifx\csname r@#2\endcsname\relax
@@ -821,7 +879,7 @@
   \fi
 }
 \newcommand*{\refParL}{%
-  \@ifstar {\ref@ParX0*}{\ref@ParX0{}}
+  \kernel@ifstar {\ref@ParX0*}{\ref@ParX0{}}
 }
 \newcommand*{\ref@ParX}[3]{%
   \begingroup
@@ -831,13 +889,13 @@
   \endgroup
 }
 \newcommand*{\refParS}{%
-  \@ifstar {\ref@ParX1*}{\ref@ParX1{}}
+  \kernel@ifstar {\ref@ParX1*}{\ref@ParX1{}}
 }
 \newcommand*{\refParN}{%
-  \@ifstar {\ref@ParN2*}{\ref@ParN2{}}
+  \kernel@ifstar {\ref@ParN2*}{\ref@ParN2{}}
 }
 \newcommand*{\ref@ParN}[2]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\ref@@ParN{#1}{#2}}%
     {\ref@ParX{#1}{#2}}%
 }
@@ -851,7 +909,7 @@
   \endgroup
 }
 \newcommand*{\refSentence}{%
-  \@ifstar {\ref@Sentence*}{\ref@Sentence{}}
+  \kernel@ifstar {\ref@Sentence*}{\ref@Sentence{}}
 }
 \newcommand*{\ref@Sentence}[2]{%
   \expandafter\ifx\csname r@#2\endcsname\relax
@@ -886,7 +944,7 @@
   \fi
 }
 \newcommand*{\refSentenceL}{%
-  \@ifstar {\ref@SentenceX0*}{\ref@SentenceX0{}}
+  \kernel@ifstar {\ref@SentenceX0*}{\ref@SentenceX0{}}
 }
 \newcommand*{\ref@SentenceX}[3]{%
   \begingroup
@@ -896,10 +954,10 @@
   \endgroup
 }
 \newcommand*{\refSentenceS}{%
-  \@ifstar {\ref@SentenceX1*}{\ref@SentenceX1{}}
+  \kernel@ifstar {\ref@SentenceX1*}{\ref@SentenceX1{}}
 }
 \newcommand*{\refSentenceN}{%
-  \@ifstar {\ref@SentenceX2*}{\ref@SentenceX2{}}
+  \kernel@ifstar {\ref@SentenceX2*}{\ref@SentenceX2{}}
 }
 \newcounter{sentence}[par]
 \renewcommand*{\thesentence}{\arabic{sentence}}
@@ -908,7 +966,15 @@
 \newcommand*{\p@@sentence}[1]{\p@par{{\par@cite{\thepar}}%
     \scrjura@separator{\nobreakspace}}{\sentence@cite{#1}}}
 \newcommand*{\contract@sentence}{%
-  \refstepcounter{sentence}%
+  \ifvmode
+    \if@endpe
+      \refstepcounter{sentence}%
+    \else
+      \leavevmode
+    \fi
+  \else
+    \refstepcounter{sentence}%
+  \fi
   \textsuperscript{\thesentence}\nobreak\hskip\z@
 }
 \DeclareRobustCommand*{\par@cite}[1]{\parciteformat{#1}}
@@ -996,9 +1062,11 @@
   \@tempa
 }
 \AtBeginDocument{%
-  \immediate\write\@mainaux{%
-    \string\providecommand*{\string\newmaxpar}[3]{}
-  }%
+  \if@filesw
+    \immediate\write\@auxout{%
+      \string\providecommand*\string\newmaxpar[3]{}
+    }%
+  \fi
 }
 %%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
 \@ifundefined{KOMAScript}{%

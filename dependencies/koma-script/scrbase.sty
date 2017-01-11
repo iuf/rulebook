@@ -12,7 +12,7 @@
 %% scrkernel-language.dtx  (with options: `package,body,base')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2002-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2002-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -44,7 +44,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -66,18 +66,18 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{%
   scrbase%
 }[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package (%
     KOMA-Script-independent
  basics and keyval usage)]
@@ -106,6 +106,7 @@
   \fi
 \expandafter\reserved@a\expandafter{\reserved@b}
 \RequirePackage{keyval}
+\providecommand*\kernel@ifstar[1]{\kernel@ifnextchar*{\@firstoftwo{#1}}}
 \newcommand{\scr@ifundefinedorrelax}[1]{%
   \ifcsname #1\endcsname
     \expandafter\ifx\csname #1\endcsname\relax
@@ -167,7 +168,7 @@
   }%
 }
 \newcommand*{\DefineFamilyKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar[%]
+  \kernel@ifnextchar[%]
   {%
     \edef\reserved@a{#1}%
     \expandafter\scr@define@family@key
@@ -228,12 +229,6 @@
 \newcommand*{\FamilyOfKey}{}
 \newcommand*{\FamilyMemberOfKey}{}
 \newcommand*{\@globaloptionslist}{}
-\let\@globaloptionslist\@classoptionslist
-\scr@ifundefinedorrelax{XKV@classoptionslist}{}{%
-  \ifx\XKV@classoptionslist\@empty\else
-    \let\@globaloptionslist\XKV@classoptionslist
-  \fi
-}
 \newcommand*{\FamilyProcessOptions}[2][.\@currname.\@currext]{%
   \ifx\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions
     \PackageError{scrbase}{nested \string\FamilyProcessOptions\space
@@ -259,6 +254,14 @@
   \let\ds@\@empty
   \edef\@curroptions{\@ptionlist{\@currname.\@currext}}%
   \ifx\@currext\@clsextension\else
+    \let\@globaloptionslist\@classoptionslist
+    \scr@ifundefinedorrelax{XKV@classoptionslist}{%
+    }{%
+      \ifx\XKV@classoptionslist\@empty
+      \else
+        \let\@globaloptionslist\XKV@classoptionslist
+      \fi
+    }%
     \scr@ifundefinedorrelax{@globaloptionslist}{}{%
       \@for\CurrentOption:=\@globaloptionslist\do{%
         \ifx\CurrentOption\@empty\else
@@ -387,12 +390,12 @@
   \fi
 }
 \FamilyProcessOptions{KOMA}\relax
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
-%%% From File: $Id: scrlfile.dtx 1525 2013-11-22 12:57:29Z mjk $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
+%%% From File: $Id: scrlfile.dtx 2429 2016-04-12 12:10:19Z kohm $
 \RequirePackage{scrlfile}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \newcommand*{\XdivY}[2]{%
   \numexpr ( #1 + #2 / 2 ) / #2 - 1\relax
 }
@@ -500,21 +503,261 @@
     \expandafter\@secondoftwo
   \fi
 }
-\newcommand*{\ifisdimen}[1]{%
+\newcommand*{\ifislengthprimitive}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifislengthprimitive#1\@nil}%
+}
+\newcommand*{\scr@ifislengthprimitive}[1]{%
   \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\dimen}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifrelax@to@nnil
-      \@tempdima=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifislengthprimitive
+    }{%
+      \def\reserved@c{\aftergroup\scr@secondoftwoAfterNil}%
+      \@for\reserved@a:=\baselineskip,\dp,\hsize,\ht,\lineskip,%
+                        \parindent,\parskip,\pdfpageheight,\pdfpagewidth,%
+                        \wd,\vsize \do {%
+        \expandafter\ifstr\expandafter{\expandafter\string\reserved@a}{%
+          \meaning #1%
+        }{%
+          \def\reserved@c{\aftergroup\scr@TestDimenAssignTillNil}%
+        }%
       }%
-    }{\aftergroup\@secondoftwo}%
+      \reserved@c
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*{\ifisdimen}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisdimen#1\@nil}%
+}
+\newcommand*{\scr@ifisdimen}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisdimen
+    }{%
+      \ifstrstart{\meaning #1}{\string\dimen}{%
+        \aftergroup\scr@TestDimenAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*\scr@TestDimenAssignTillNil{}
+\def\scr@TestDimenAssignTillNil#1\@nil{%
+  \begingroup
+    \afterassignment\scr@AfterEndGroupIfArgIsRelaxTillNnil
+    \@tempdima=#1\relax\@nnil
+}
+\newcommand*\scr@AfterEndGroupIfArgIsRelaxTillNnil{}
+\def\scr@AfterEndGroupIfArgIsRelaxTillNnil#1\@nnil{%
+  \endgroup
+  \ifstr{\detokenize{#1}}{\detokenize{\relax}}{\@firstoftwo}{%
+    \ifstrstart{\detokenize{#1}}{\detokenize{\relax}}{%
+      \scr@IfArgIsRelaxAfterRelaxTillNnil #1\@nnil
+    }{\@secondoftwo}%
+  }%
+}
+\newcommand*\scr@IfArgIsRelaxAfterRelaxTillNnil{}
+\def\scr@IfArgIsRelaxAfterRelaxTillNnil \relax#1\@nnil{%
+  \ifstr{\detokenize{#1}}{\detokenize{\relax}}{\@firstoftwo}{%
+    \ifstrstart{\detokenize{#1}}{\detokenize{\relax}}{%
+      \scr@IfArgIsRelaxAfterRelaxTillNnil #1\@nnil
+    }{\@secondoftwo}%
+  }%
+}
+\newcommand*{\scr@secondoftwoAfterNil}{\scr@@secondoftwoAfterNil\@empty}
+\newcommand*{\scr@@secondoftwoAfterNil}{}
+\def\scr@@secondoftwoAfterNil#1\@nil{\@secondoftwo}
+\newcommand*{\ifisskip}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisskip#1\@nil}%
+}
+\newcommand*{\scr@ifisskip}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisskip
+    }{%
+      \ifstrstart{\meaning #1}{\string\skip}{%
+        \aftergroup\scr@TestSkipAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*\scr@TestSkipAssignTillNil{}
+\def\scr@TestSkipAssignTillNil#1\@nil{%
+  \begingroup
+    \afterassignment\scr@AfterEndGroupIfArgIsRelaxTillNnil
+    \@tempskipa=#1\relax\@nnil
+}
+\newcommand*{\ifiscount}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifiscount#1\@nil}%
+}
+\newcommand*{\scr@ifiscount}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifiscount
+    }{%
+      \ifstrstart{\meaning #1}{\string\count}{%
+        \aftergroup\scr@TestCountAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*\scr@TestCountAssignTillNil{}
+\def\scr@TestCountAssignTillNil#1\@nil{%
+  \begingroup
+    \afterassignment\scr@AfterEndGroupIfArgIsRelaxTillNnil
+    \@tempcnta=#1\relax\@nnil
+}
+\newcommand*{\ifisdimexpr}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisdimexpr#1\relax\@nil}%
+}
+\newcommand*{\scr@ifisdimexpr}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisdimexpr
+    }{%
+      \ifstrstart{\meaning #1}{\string\dimexpr}{%
+        \aftergroup\scr@TestDimenAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*{\ifisglueexpr}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisglueexpr#1\relax\@nil}%
+}
+\newcommand*{\scr@ifisglueexpr}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisglueexpr
+    }{%
+      \ifstrstart{\meaning #1}{\string\glueexpr}{%
+        \aftergroup\scr@TestSkipAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*{\ifisnumexpr}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisnumexpr#1\relax\@nil}%
+}
+\newcommand*{\scr@ifisnumexpr}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisnumexpr
+    }{%
+      \ifstrstart{\meaning #1}{\string\numexpr}{%
+        \aftergroup\scr@TestCountAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*{\ifisdefchar}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisdefchar#1\@nil}%
+}
+\newcommand*{\scr@ifisdefchar}[1]{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisdefchar
+    }{%
+      \ifstrstart{\meaning #1}{\string\char\string"}{%
+        \aftergroup\scr@TestCountAssignTillNil
+      }{%
+        \aftergroup\scr@secondoftwoAfterNil
+      }%
+    }%
+  \endgroup
+  #1%
+}
+\newcommand*{\ifiscounter}[1]{%
+  \begingroup
+    \scr@ifundefinedorrelax{c@#1}{%
+      \aftergroup\@secondoftwo
+    }{%
+      \aftergroup\@firstoftwo
+    }%
+  \endgroup
+}
+\newcommand*{\ifisinteger}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisinteger#1\@nil}%
+}
+\def\scr@ifisinteger#1{%
+  \begingroup
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisinteger\aftergroup#1%
+    }{%
+      \ifstrstart{\meaning #1}{\detokenize{the character}}{%
+        \if #1-\aftergroup\scr@ifisinteger
+        \else
+          \if #1+\aftergroup\scr@ifisinteger
+          \else
+            \ifnum 0=0\if #10\else\if #11\else\if #12\else\if #13\else
+                      \if #14\else\if #15\else\if #16\else\if #17\else
+                      \if #18\else\if #19\else 1\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+                      \relax
+              \aftergroup\scr@TestCountAssignTillNil
+              \aftergroup#1%
+            \else
+              \aftergroup\scr@secondoftwoAfterNil
+              \aftergroup#1%
+            \fi
+          \fi
+        \fi
+      }{%
+        \ifstrstart{\meaning #1}{\string\char\string"}{%
+          \aftergroup\scr@TestCountAssignTillNil
+        }{%
+          \def\reserved@c{%
+            \aftergroup\scr@secondoftwoAfterNil
+          }%
+          \@for\reserved@a:=\abovedisplayskip,\abovedisplayshortskip,%
+                            \adjdemerits,%
+                            \baselineskip,\belowdisplayskip,%
+                            \belowdisplayshortskip,\binoppenalty,\boxmaxdepth,%
+                            \brokenpenalty,%
+                            \clubpenalty,\count,%
+                            \dimen,\dimexpr,\doublehyphendemerits,\dp,%
+                            \emergenystretch,\exhyphenpenalty,%
+                            \finalhyphendemerits,%
+                            \glueexpr,%
+                            \hbadness,\hfuzz,\hsize,\ht,\hyphenpenalty,%
+                            \lastskip,\lastpenalty,\linepenalty,%
+                            \lineskip,\lineskiplimit,%
+                            \maxdepth,\numexpr,%
+                            \overfullrule,%
+                            \parfillskip,\parindent,\parskip,%
+                            \pdfpageheight,\pdfpagewidth,%
+                            \predisplaypenalty,\pretolerance,%
+                            \relpenalty,\widowpenalty,%
+                            \skip,\splitmaxdepth,\splittopskip,%
+                            \tolerance,\topskip,%
+                            \wd,\vbadness,\vfuzz,\vsize
+          \do {%
+            \expandafter\ifstr\expandafter{\expandafter\string\reserved@a}{%
+              \meaning #1%
+            }{%
+              \def\reserved@c{\aftergroup\scr@TestCountAssignTillNil}%
+            }%
+          }%
+          \reserved@c
+        }%
+        \aftergroup#1%
+      }%
+    }%
   \endgroup
 }
 \newcommand*{\scr@ifrelax@to@nnil}{}
@@ -528,201 +771,196 @@
     \fi
   \endgroup
 }
-\newcommand*{\ifisdimexpr}[1]{%
-  \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\dimexpr}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifemptyorrelax@to@nnil
-      \@tempdima=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
-      }%
-    }{\aftergroup\@secondoftwo}%
-  \endgroup
+\newcommand*{\ifisdimension}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisdimension#1\@nil}%
 }
-\newcommand*{\scr@ifemptyorrelax@to@nnil}{}
-\def\scr@ifemptyorrelax@to@nnil#1\@nnil{%
+\newcommand*{\scr@ifisdimension}[1]{%
   \begingroup
-    \def\reserved@a{#1}\def\reserved@b{\relax}%
-    \ifx\reserved@a\reserved@b
-      \aftergroup\@firstoftwo
-    \else
-      \ifx\reserved@a\@empty
-        \aftergroup\@firstoftwo
-      \else
-        \aftergroup\@secondoftwo
-      \fi
-    \fi
-  \endgroup
-}
-\newcommand*{\ifisskip}[1]{%
-  \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\skip}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifrelax@to@nnil
-      \@tempskipa=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
-      }%
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisdimension\aftergroup#1%
     }{%
-      \ifstr{\reserved@a}{\string\baselineskip}{%
-        \aftergroup\@firstoftwo
+      \ifstrstart{\meaning #1}{\detokenize{the character}}{%
+        \if #1-\aftergroup\scr@ifisdimension
+        \else
+          \if #1-\aftergroup\scr@ifisdimension
+          \else
+            \if #1.%
+              \aftergroup\scr@TestDimensionAssignTillNil
+              \aftergroup#1%
+            \else
+              \if #1,%
+                \aftergroup\scr@TestDimensionAssignTillNil
+                \aftergroup#1%
+              \else
+                \ifnum 0=0\if #10\else\if #11\else\if #12\else\if #13\else
+                          \if #14\else\if #15\else\if #16\else\if #17\else
+                          \if #18\else\if #19\else 1\fi\fi
+                          \fi\fi\fi\fi
+                          \fi\fi\fi\fi
+                          \relax
+                  \aftergroup\scr@TestDimensionAssignTillNil
+                  \aftergroup#1%
+                \else
+                  \aftergroup\scr@secondoftwoAfterNil
+                  \aftergroup#1%
+                \fi
+              \fi
+            \fi
+          \fi
+        \fi
       }{%
-        \ifstr{\reserved@a}{\string\parskip}{%
-          \aftergroup\@firstoftwo
+        \ifstrstart{\meaning #1}{\string\char\string"}{%
+          \aftergroup\scr@TestDimensionAssignTillNil
         }{%
-          \aftergroup\@secondoftwo
+          \def\reserved@c{%
+            \aftergroup\scr@secondoftwoAfterNil
+            \aftergroup\@empty
+          }%
+          \@for\reserved@a:=\abovedisplayskip,\abovedisplayshortskip,%
+                            \adjdemerits,%
+                            \baselineskip,\belowdisplayskip,%
+                            \belowdisplayshortskip,\binoppenalty,\boxmaxdepth,%
+                            \brokenpenalty,%
+                            \clubpenalty,\count,%
+                            \dimen,\dimexpr,\doublehyphendemerits,\dp,%
+                            \emergenystretch,\exhyphenpenalty,%
+                            \finalhyphendemerits,%
+                            \glueexpr,%
+                            \hbadness,\hfuzz,\hsize,\ht,\hyphenpenalty,%
+                            \lastskip,\lastpenalty,\linepenalty,%
+                            \lineskip,\lineskiplimit,%
+                            \maxdepth,\numexpr,%
+                            \overfullrule,%
+                            \parfillskip,\parindent,\parskip,%
+                            \pdfpageheight,\pdfpagewidth,%
+                            \predisplaypenalty,\pretolerance,%
+                            \relpenalty,\widowpenalty,%
+                            \skip,\splitmaxdepth,\splittopskip,%
+                            \tolerance,\topskip,%
+                            \wd,\vbadness,\vfuzz,\vsize
+          \do {%
+            \expandafter\ifstr\expandafter{\expandafter\string\reserved@a}{%
+              \meaning #1%
+            }{%
+              \def\reserved@c{\aftergroup\scr@TestDimensionAssignTillNil}%
+            }%
+          }%
+          \reserved@c
         }%
+        \aftergroup#1%
       }%
     }%
   \endgroup
 }
-\newcommand*{\ifisglueexpr}[1]{%
+\newcommand*\scr@TestDimensionAssignTillNil{}
+\def\scr@TestDimensionAssignTillNil#1\@nil{%
   \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\glueexpr}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifemptyorrelax@to@nnil
-      \@tempskipa=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
-      }%
-    }{\aftergroup\@secondoftwo}%
+    \afterassignment\scr@AfterEndGroupIfArgIsRelaxTillptNnil
+    \@tempdima=#1pt\@nnil
+}
+\newcommand*\scr@AfterEndGroupIfArgIsRelaxTillptNnil{}
+\def\scr@AfterEndGroupIfArgIsRelaxTillptNnil#1\@nnil{%
   \endgroup
+  \ifstr{\detokenize{#1}}{\detokenize{pt}}{\@firstoftwo}{%
+    \ifstrstart{\detokenize{#1}}{\detokenize{\relax}}{%
+      \scr@IfArgIsRelaxAfterRelaxTillptNnil #1\@nnil
+    }{\@secondoftwo}%
+  }%
 }
-\newcommand*{\ifiscount}[1]{%
-  \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\count}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifrelax@to@nnil
-      \@tempcnta=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
-      }%
-    }{\aftergroup\@secondoftwo}%
-  \endgroup
-}
-\newcommand*{\ifisnumexpr}[1]{%
-  \begingroup
-    \edef\reserved@a{#1}%
-    \expandafter\expandafter\expandafter\def
-    \expandafter\expandafter\expandafter\reserved@a
-    \expandafter\expandafter\expandafter{\expandafter\meaning\reserved@a}%
-    \expandafter\def\expandafter\reserved@b\expandafter{\string\numexpr}%
-    \ifstrstart{\reserved@a}{\reserved@b}{%
-      \afterassignment\scr@ifemptyorrelax@to@nnil
-      \@tempcnta=#1\relax\@nnil{%
-        \aftergroup\@firstoftwo
-      }{%
-        \aftergroup\@secondoftwo
-      }%
-    }{\aftergroup\@secondoftwo}%
-  \endgroup
-}
-\newcommand*{\ifiscounter}[1]{%
-  \begingroup
-    \@ifundefined{c@#1}%
-                 {\aftergroup\@secondoftwo}%
-                 {\aftergroup\@firstoftwo}%
-  \endgroup
-}
-\newcommand*{\ifisinteger}[1]{%
-  \begingroup
-    \edef\reserved@a{#1}\expandafter
-    \scr@ifintegerplusminus\reserved@a\@nil{\aftergroup\@firstoftwo}%
-                                           {\aftergroup\@secondoftwo}%
-  \endgroup
-}
-\newcommand*{\scr@ifintegerplusminus}{}
-\def\scr@ifintegerplusminus#1#2\@nil{%
-  \def\scr@next{\scr@ifintegerplusminus #2\@nil}%
-  \if #1-\relax
-  \else \if #1+\relax
-    \else
-      \def\scr@next{%
-        \afterassignment\scr@ifrelax@to@nnil
-        \@tempcnta=#1#2\relax\@nnil
-      }%
-      \if #10\else\if #11\else\if #12\else\if #13\else\if #14\else
-      \if #15\else\if #16\else\if #17\else\if #18\else\if #19\else
-        \let\scr@next\@secondoftwo
-      \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
-    \fi
-  \fi
-  \scr@next
-}
-\newcommand*{\ifisdimension}[1]{%
-  \begingroup
-    \edef\reserved@a{#1\relax}\expandafter
-    \scr@ifdimensionplusminus\reserved@a\@nil{\aftergroup\@firstoftwo}%
-                                             {\aftergroup\@secondoftwo}%
-  \endgroup
-}
-\newcommand*{\scr@ifdimensionplusminus}{}
-\def\scr@ifdimensionplusminus#1#2\@nil{%
-  \def\scr@next{\scr@ifdimensionplusminus #2\@nil}%
-  \if #1-\relax
-  \else \if #1+\relax
-    \else
-      \def\scr@next{%
-        \afterassignment\scr@ifrelax@to@nnil
-        \@tempdima=#1#2\@nnil
-      }%
-      \if #1,\else\if #1.\else
-        \if #10\else\if #11\else\if #12\else\if #13\else\if #14\else
-        \if #15\else\if #16\else\if #17\else\if #18\else\if #19\else
-          \let\scr@next\@secondoftwo
-        \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
-      \fi\fi
-    \fi
-  \fi
-  \scr@next
+\newcommand*\scr@IfArgIsRelaxAfterRelaxTillptNnil{}
+\def\scr@IfArgIsRelaxAfterRelaxTillptNnil \relax#1pt\@nnil{%
+  \ifstr{\detokenize{#1}}{\detokenize{pt}}{\@firstoftwo}{%
+    \ifstrstart{\detokenize{#1}}{\detokenize{\relax}}{%
+      \scr@IfArgIsRelaxAfterRelaxTillptNnil #1\@nnil
+    }{\@secondoftwo}%
+  }%
 }
 \newcommand*{\ifisglue}[1]{%
+  \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifisglue#1\@nil}%
+}
+\newcommand*{\scr@ifisglue}[1]{%
   \begingroup
-    \edef\reserved@a{#1\relax}\expandafter
-    \scr@ifglueplusminus\reserved@a\@nil{\aftergroup\@firstoftwo}%
-                                        {\aftergroup\@secondoftwo}%
+    \ifstrstart{\meaning #1}{\detokenize{macro:}}{%
+      \aftergroup\expandafter\aftergroup\scr@ifisglue\aftergroup#1%
+    }{%
+      \ifstrstart{\meaning #1}{\detokenize{the character}}{%
+        \if #1-\aftergroup\scr@ifisglue
+        \else
+          \if #1-\aftergroup\scr@ifisdimension
+          \else
+            \if #1.%
+              \aftergroup\scr@TestGlueAssignTillNil
+              \aftergroup#1%
+            \else
+              \if #1,%
+                \aftergroup\scr@TestGlueAssignTillNil
+                \aftergroup#1%
+              \else
+                \ifnum 0=0\if #10\else\if #11\else\if #12\else\if #13\else
+                          \if #14\else\if #15\else\if #16\else\if #17\else
+                          \if #18\else\if #19\else 1\fi\fi
+                          \fi\fi\fi\fi
+                          \fi\fi\fi\fi
+                          \relax
+                  \aftergroup\scr@TestGlueAssignTillNil
+                  \aftergroup#1%
+                \else
+                  \aftergroup\scr@secondoftwoAfterNil
+                  \aftergroup#1%
+                \fi
+              \fi
+            \fi
+          \fi
+        \fi
+      }{%
+        \ifstrstart{\meaning #1}{\string\char\string"}{%
+          \aftergroup\scr@TestGlueAssignTillNil
+        }{%
+          \def\reserved@c{%
+            \aftergroup\scr@secondoftwoAfterNil
+            \aftergroup\@empty
+          }%
+          \@for\reserved@a:=\abovedisplayskip,\abovedisplayshortskip,%
+                            \adjdemerits,%
+                            \baselineskip,\belowdisplayskip,%
+                            \belowdisplayshortskip,\binoppenalty,\boxmaxdepth,%
+                            \brokenpenalty,%
+                            \clubpenalty,\count,%
+                            \dimen,\dimexpr,\doublehyphendemerits,\dp,%
+                            \emergenystretch,\exhyphenpenalty,%
+                            \finalhyphendemerits,%
+                            \glueexpr,%
+                            \hbadness,\hfuzz,\hsize,\ht,\hyphenpenalty,%
+                            \lastskip,\lastpenalty,\linepenalty,%
+                            \lineskip,\lineskiplimit,%
+                            \maxdepth,\numexpr,%
+                            \overfullrule,%
+                            \parfillskip,\parindent,\parskip,%
+                            \pdfpageheight,\pdfpagewidth,%
+                            \predisplaypenalty,\pretolerance,%
+                            \relpenalty,\widowpenalty,%
+                            \skip,\splitmaxdepth,\splittopskip,%
+                            \tolerance,\topskip,%
+                            \wd,\vbadness,\vfuzz,\vsize
+          \do {%
+            \expandafter\ifstr\expandafter{\expandafter\string\reserved@a}{%
+              \meaning #1%
+            }{%
+              \def\reserved@c{\aftergroup\scr@TestGlueAssignTillNil}%
+            }%
+          }%
+          \reserved@c
+        }%
+        \aftergroup#1%
+      }%
+    }%
   \endgroup
 }
-\newcommand*{\scr@ifglueplusminus}{}
-\def\scr@ifglueplusminus#1#2\@nil{%
-  \def\scr@next{\scr@ifglueplusminus #2\@nil}%
-  \if #1-\relax
-  \else \if #1+\relax
-    \else
-      \def\scr@next{%
-        \afterassignment\scr@ifrelax@to@nnil
-        \@tempskipa=#1#2\@nnil
-      }%
-      \if #1,\else\if #1.\else
-        \if #10\else\if #11\else\if #12\else\if #13\else\if #14\else
-        \if #15\else\if #16\else\if #17\else\if #18\else\if #19\else
-          \let\scr@next\@secondoftwo
-        \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
-      \fi\fi
-    \fi
-  \fi
-  \scr@next
+\newcommand*\scr@TestGlueAssignTillNil{}
+\def\scr@TestGlueAssignTillNil#1\@nil{%
+  \begingroup
+    \afterassignment\scr@AfterEndGroupIfArgIsRelaxTillptNnil
+    \@tempskipa=#1pt\@nnil
 }
 \newcommand\ifnumber[1]{%
   \begingroup\@tempswafalse\let\scr@next\test@number
@@ -823,7 +1061,15 @@
             \ifstr{#1}{mm}{\@tempswatrue}{%
               \ifstr{#1}{dd}{\@tempswatrue}{%
                 \ifstr{#1}{cc}{\@tempswatrue}{%
-                  \ifstr{#1}{sp}{\@tempswatrue}{}%
+                  \ifstr{#1}{sp}{\@tempswatrue}{%
+                    \ifstr{#1}{ex}{\@tempswatrue}{%
+                      \ifstr{#1}{em}{\@tempswatrue}{%
+                        \scr@ifpdfoutput{%
+                          \ifstr{#1}{px}{\@tempswatrue}{}%
+                        }{}%
+                      }%
+                    }%
+                  }%
                 }%
               }%
             }%
@@ -837,14 +1083,26 @@
 \let@as@internal@defined{ifpdftex}
 \BeforePackage{pdfcprot}{\let\ifpdftex\relax}
 \AfterPackage{pdfcprot}{\let@as@internal@defined{ifpdftex}}
+\newcommand{\scr@ifluatex}{\ifnotundefined{luatexversion}}
+\newcommand*{\scr@ifpdforluatex}{%
+  \scr@ifpdftex{\@firstoftwo}{\scr@ifluatex{\@firstoftwo}{\@secondoftwo}}%
+}
 \newcommand{\scr@ifVTeX}{\ifnotundefined{VTeXversion}}
 \let@as@internal@defined{ifVTeX}
 \newcommand{\scr@ifpdfoutput}{%
   \scr@ifundefinedorrelax{pdfoutput}{%
-    \scr@ifundefinedorrelax{OpMode}{%
-      \expandafter\@secondoftwo%
+    \scr@ifundefinedorrelax{outputmode}{%
+      \scr@ifundefinedorrelax{OpMode}{%
+        \expandafter\@secondoftwo%
+      }{%
+        \ifnum\OpMode=1
+          \expandafter\@firstoftwo
+        \else
+          \expandafter\@secondoftwo
+        \fi
+      }%
     }{%
-      \ifnum\OpMode=1
+      \ifnum\outputmode>0
         \expandafter\@firstoftwo
       \else
         \expandafter\@secondoftwo
@@ -937,17 +1195,35 @@
       \ifx\scr@key@name\space\else
         \scr@ifundefinedorrelax{KV@#2@\scr@key@name}{%
           \scr@ifundefinedorrelax{KV@#2#1@\scr@key@name}{%
-            \PackageError{scrbase}{%
-              unknown option
-              `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+            \scr@ifundefinedorrelax{KV@#2#1@@else@}{%
+              \PackageError{scrbase}{%
+                unknown option
+                `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+              }{%
+                Member `#1' of family `#2'\MessageBreak
+                cannot handle option `\scr@key@name'.\MessageBreak
+                So it cannot be set%
+                \ifx\scr@key@value\@empty\else
+                  \space to value
+                  `\expandafter\detokenize\expandafter{\scr@key@value}'%
+                \fi.%
+              }%
             }{%
-              Member `#1' of family `#2'\MessageBreak
-              cannot handle option `\scr@key@name'.\MessageBreak
-              So it cannot be set%
-              \ifx\scr@key@value\@empty\else
-                \space to value
-                `\expandafter\detokenize\expandafter{\scr@key@value}'%
-              \fi.%
+              \scr@execute@elseoption{#2#1}%
+              \ifx\FamilyKeyState\FamilyKeyStateProcessed\else
+                \PackageError{scrbase}{%
+                  unknown option
+                  `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+                }{%
+                  Member `#1' of family `#2'\MessageBreak
+                  cannot handle option `\scr@key@name'.\MessageBreak
+                  So it cannot be set%
+                  \ifx\scr@key@value\@empty\else
+                    \space to value
+                    `\expandafter\detokenize\expandafter{\scr@key@value}'%
+                  \fi.%
+                }%
+              \fi
             }%
           }{%
             \scr@execute@option{#2#1}%
@@ -955,7 +1231,11 @@
         }{%
           \scr@execute@option{#2}%
           \ifstr{#1}{}{}{%
-            \scr@ifundefinedorrelax{KV@#2#1\scr@key@name}{}{%
+            \scr@ifundefinedorrelax{KV@#2#1@\scr@key@name}{%
+              \scr@ifundefinedorrelax{KV@#2#1@@else@}{}{%
+                \scr@execute@elseoption{#2#1}%
+              }%
+            }{%
               \ifx\FamilyKeyState\FamilyKeyStateProcessed
                 \scr@execute@option{#2#1}%
                 \FamilyKeyStateProcessed
@@ -1087,7 +1367,7 @@
     \noexpand\let\noexpand\KV@err\noexpand\scr@KV@err
     \noexpand\setkeys{#1}{%
       \unexpanded\expandafter{\scr@key@atlist}}%
-     \noexpand\def\noexpand\scr@key@atlist{%
+    \noexpand\def\noexpand\scr@key@atlist{%
       \unexpanded\expandafter{\scr@key@atlist}}%
     \noexpand\def\noexpand\scr@key@name{%
       \unexpanded\expandafter{\scr@key@name}}%
@@ -1132,6 +1412,22 @@
   \FamilyKeyStateNeedValue
 }
 \newcommand*{\scr@key@run@errors}{}
+\newcommand*{\scr@execute@elseoption}[1]{%
+  \protected@edef\reserved@a{%
+    \noexpand\def\noexpand\scr@key@name{@else@}%
+    \noexpand\def\noexpand\scr@key@value{%
+      \unexpanded\expandafter{\scr@key@atlist}}%
+    \noexpand\def\noexpand\scr@key@atlist{%
+      @else@={\unexpanded\expandafter{\scr@key@atlist}}}%
+    \noexpand\scr@execute@option{#1}%
+    \noexpand\def\noexpand\scr@key@atlist{
+      \unexpanded\expandafter{\scr@key@atlist}}%
+    \noexpand\def\noexpand\scr@key@name{%
+      \unexpanded\expandafter{\scr@key@name}}%
+    \noexpand\def\noexpand\scr@key@value{%
+      \unexpanded\expandafter{\scr@key@value}}%
+  }\reserved@a
+}
 \newif\ifscr@key@found@
 \newcommand*{\scr@key@atlist}{}
 \newcommand*{\scr@key@name}{}
@@ -1184,6 +1480,69 @@
 \long\def\l@addto@macro#1#2{%
   \edef#1{\unexpanded\expandafter{#1#2}}%
 }%
+\begingroup
+  \catcode`\^^A=\catcode`\#
+  \@makeother\#
+  \gdef\l@addto@macro@a^^A1{%
+    \begingroup
+      \@makeother\#
+      \def\l@addto@macro@a@cmd{^^A1}%
+      \l@addto@macro@a@
+  }
+  \gdef\l@addto@macro@a@^^A1{%
+    \def\l@addto@macro@a@add{^^A1}%
+    \l@addto@macro@a@@
+  }
+\endgroup
+\begingroup
+  \@makeother\#
+  \gdef\l@addto@macro@a@@{%
+    \@makeother\#
+    \edef\reserved@a{%
+      \detokenize{\endgroup\def}%
+      \detokenize\expandafter{\l@addto@macro@a@cmd#1}%
+      {%
+        \expandafter\detokenize%
+        \expandafter\expandafter\expandafter{\l@addto@macro@a@cmd{#1}}%
+        \expandafter\detokenize\expandafter{\l@addto@macro@a@add}%
+      }%
+    }%
+    \expandafter\scantokens\expandafter{\reserved@a}%
+  }%
+\endgroup
+\newcommand\l@preto@macro[2]{%
+  \edef#1{\unexpanded{#2}\unexpanded\expandafter{#1}}%
+}%
+\begingroup
+  \catcode`\^^A=\catcode`\#
+  \@makeother\#
+  \gdef\l@preto@macro@a^^A1{%
+    \begingroup
+      \@makeother\#
+      \def\l@preto@macro@a@cmd{^^A1}%
+      \l@preto@macro@a@
+  }
+  \gdef\l@preto@macro@a@^^A1{%
+    \def\l@preto@macro@a@add{^^A1}%
+    \l@preto@macro@a@@
+  }
+\endgroup
+\begingroup
+  \@makeother\#
+  \gdef\l@preto@macro@a@@{%
+    \@makeother\#
+    \edef\reserved@a{%
+      \detokenize{\endgroup\def}%
+      \detokenize\expandafter{\l@preto@macro@a@cmd#1}%
+      {%
+        \expandafter\detokenize\expandafter{\l@preto@macro@a@add}%
+        \expandafter\detokenize%
+        \expandafter\expandafter\expandafter{\l@preto@macro@a@cmd{#1}}%
+      }%
+    }%
+    \expandafter\scantokens\expandafter{\reserved@a}%
+  }%
+\endgroup
 \newcommand{\FamilyUnknownKeyValue}[4]{%
   \FamilyKeyStateUnknownValue
   \ifx\FamilyElseValues\@empty\else
@@ -1222,7 +1581,7 @@
   \let\FamilyElseValues\@empty
 }
 \newcommand*{\FamilyCounterKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@@Counter@@Key{#1}{#2}{#3}}%
     {\Family@Counter@Key{#1}{#2}{#3}}%
 }
@@ -1236,15 +1595,26 @@
   \DefineFamilyKey[{#1}]{#2}{#3}{\FamilySetCounter{#2}{#3}{#4}{##1}}%
 }
 \newcommand*{\FamilySetCounter}[4]{%
-  \ifiscount{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-    \ifisdimen{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-      \ifisskip{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-        \ifisnumexpr{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-          \ifisdimexpr{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-            \ifisinteger{#4}{\value{#3}=#4\FamilyKeyStateProcessed}{%
-              \ifiscounter{#4}{\value{#3}=\value{#4}\FamilyKeyStateProcessed}{%
-                \FamilyUnknownKeyValue{#1}{#2}{#4}{%
-                  integer numbers, counters, lengths, skips, dimens
+  \begingroup
+    \protected@edef\reserved@a{#4}%
+    \def\reserved@b{\endgroup\value{#3}=#4 \FamilyKeyStateProcessed}%
+    \expandafter\ifiscount\expandafter{\reserved@a}{}{%
+      \expandafter\ifisdimen\expandafter{\reserved@a}{}{%
+        \expandafter\ifisskip\expandafter{\reserved@a}{}{%
+          \expandafter\ifisnumexpr\expandafter{\reserved@a}{}{%
+            \expandafter\ifisdimexpr\expandafter{\reserved@a}{}{%
+              \expandafter\ifisinteger\expandafter{\reserved@a}{}{%
+                \expandafter\ifiscounter\expandafter{\reserved@a}{%
+                  \def\reserved@b{%
+                    \endgroup\value{#3}=\value{#4}\FamilyKeyStateProcessed
+                  }%
+                }{%
+                  \def\reserved@b{%
+                    \endgroup
+                    \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+                      integer numbers, counters, lengths, skips, dimens
+                    }%
+                  }%
                 }%
               }%
             }%
@@ -1252,10 +1622,10 @@
         }%
       }%
     }%
-  }%
+  \reserved@b
 }
 \newcommand*{\FamilyCounterMacroKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@@Counter@@Macro@@Key{#1}{#2}{#3}}%
     {\Family@Counter@Macro@Key{#1}{#2}{#3}}%
 }
@@ -1270,31 +1640,25 @@
 }
 \newcommand*{\FamilySetCounterMacro}[4]{%
   \begingroup
-    \ifiscount{#4}{\@tempcnta=#4\aftergroup\FamilyKeyStateProcessed}{%
-      \ifisdimen{#4}{\@tempcnta=#4\aftergroup\FamilyKeyStateProcessed}{%
-        \ifisskip{#4}{\@tempcnta=#4\aftergroup\FamilyKeyStateProcessed}{%
-          \ifisnumexpr{#4}{\@tempcnta=#4\aftergroup\FamilyKeyStateProcessed}{%
-            \ifisdimexpr{#4}{\@tempcnta=#4\aftergroup\FamilyKeyStateProcessed}{%
-              \ifisinteger{#4}{%
-                \@tempcnta=#4\aftergroup\FamilyKeyStateProcessed
-              }{%
-                \ifiscounter{#4}{%
-                  \@tempcnta=\value{#4}\FamilyKeyStateProcessed}{%
-                  \FamilyUnknownKeyValue{#1}{#2}{#4}{%
-                    integer numbers, counters, lengths, skips, dimens
-                  }%
-                }%
-              }%
-            }%
-          }%
+    \FamilySetCounter{#1}{#2}{page}{#4}%
+    \ifx\FamilyKeyState\FamilyKeyStateProcessed
+      \edef\reserved@a{%
+        \unexpanded{\endgroup\def#3}%
+        {\the\value{page}}%
+        \noexpand\FamilyKeyStateProcessed
+      }%
+    \else
+      \def\reserved@a{%
+        \endgroup
+        \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+          integer numbers, counters, lengths, skips, dimens
         }%
       }%
-    }%
-  \expandafter\expandafter\expandafter\endgroup
-  \expandafter\def\expandafter#3\expandafter{\the\@tempcnta}%
+    \fi
+  \reserved@a
 }
 \newcommand*{\FamilyLengthKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@@Length@@Key{#1}{#2}{#3}}%
     {\Family@Length@Key{#1}{#2}{#3}}%
 }
@@ -1308,16 +1672,30 @@
   \DefineFamilyKey[{#1}]{#2}{#3}{\FamilySetLength{#2}{#3}{#4}{##1}}%
 }
 \newcommand*{\FamilySetLength}[4]{%
-  \ifiscount{#4}{#3=#4\FamilyKeyStateProcessed}{%
-    \ifisdimen{#4}{#3=#4\FamilyKeyStateProcessed}{%
-      \ifisskip{#4}{#3=#4\FamilyKeyStateProcessed}{%
-        \ifisnumexpr{#4}{#3=#4\FamilyKeyStateProcessed}{%
-          \ifisdimexpr{#4}{#3=#4\FamilyKeyStateProcessed}{%
-            \ifisglueexpr{#4}{#3=#4\FamilyKeyStateProcessed}{%
-              \ifisglue{#4}{#3=#4\FamilyKeyStateProcessed}{%
-                \FamilyUnknownKeyValue{#1}{#2}{#4}{%
-                  length values, counters, lengths, skips, dimens
-                }%
+  \begingroup
+    \protected@edef\reserved@a{#4}%
+    \expandafter\ifiscount\expandafter{\reserved@a}{%
+      \aftergroup\@firstoftwo
+    }{%
+    \expandafter\ifisdimen\expandafter{\reserved@a}{%
+      \aftergroup\@firstoftwo
+    }{%
+      \expandafter\ifisskip\expandafter{\reserved@a}{%
+        \aftergroup\@firstoftwo
+      }{%
+        \expandafter\ifisnumexpr\expandafter{\reserved@a}{%
+          \aftergroup\@firstoftwo
+        }{%
+          \expandafter\ifisdimexpr\expandafter{\reserved@a}{%
+            \aftergroup\@firstoftwo
+          }{%
+            \expandafter\ifisglueexpr\expandafter{\reserved@a}{%
+              \aftergroup\@firstoftwo
+            }{%
+              \expandafter\ifisglue\expandafter{\reserved@a}{%
+                \aftergroup\@firstoftwo
+              }{%
+                \aftergroup\@secondoftwo
               }%
             }%
           }%
@@ -1325,9 +1703,16 @@
       }%
     }%
   }%
+  \endgroup
+  {#3=#4\FamilyKeyStateProcessed}%
+  {%
+    \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+      length values, counters, lengths, skips, dimens
+    }%
+  }%
 }
 \newcommand*{\FamilyLengthMacroKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@@Length@@Macro@@Key{#1}{#2}{#3}}%
     {\Family@Length@Macro@Key{#1}{#2}{#3}}%
 }
@@ -1342,34 +1727,59 @@
 }
 \newcommand*{\FamilySetLengthMacro}[4]{%
   \begingroup
-    \ifiscount{#4}{\@tempskipa=#4\aftergroup\FamilyKeyStateProcessed}{%
-      \ifisdimen{#4}{\@tempskipa=#4\aftergroup\FamilyKeyStateProcessed}{%
-        \ifisskip{#4}{\@tempkipa=#4\aftergroup\FamilyKeyStateProcessed}{%
-          \ifisnumexpr{#4}{\@tempskipa=#4\aftergroup\FamilyKeyStateProcessed}{%
-            \ifisdimexpr{#4}{%
-              \@tempskipa=#4\aftergroup\FamilyKeyStateProcessed
-            }{%
-              \ifisglueexpr{#4}{%
-                \@tempskipa=#4\aftergroup\FamilyKeyStateProcessed
-              }{%
-                \ifisglue{#4}{%
-                  \@tempskipa=#4\aftergroup\FamilyKeyStateProcessed
-                }{%
-                  \FamilyUnknownKeyValue{#1}{#2}{#4}{%
-                    length values, counters, lengths, skips, dimens
-                  }%
-                }%
-              }%
-            }%
-          }%
+    \FamilySetLength{#1}{#2}{\@tempskipa}{#4}%
+    \ifx\FamilyKeyState\FamilyKeyStateProcessed
+      \edef\reserved@a{%
+        \unexpanded{\endgroup\def#3}%
+        {\the\@tempskipa}%
+        \noexpand\FamilyKeyStateProcessed
+      }%
+    \else
+      \def\reserved@a{%
+        \endgroup
+        \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+          length values, counters, lengths, skips, dimens
         }%
       }%
-    }%
-  \expandafter\expandafter\expandafter\endgroup
-  \expandafter\def\expandafter#3\expandafter{\the\@tempskipa}%
+    \fi
+  \reserved@a
+}
+\newcommand*{\FamilyUseLengthMacroKey}[3][.\@currname.\@currext]{%
+  \kernel@ifnextchar [%]
+    {\Family@@UseLength@@Macro@@Key{#1}{#2}{#3}}%
+    {\Family@UseLength@Macro@Key{#1}{#2}{#3}}%
+}
+\newcommand*{\Family@@UseLength@@Macro@@Key}{}
+\def\Family@@UseLength@@Macro@@Key#1#2#3[#4]#5{%
+  \ifdefined#5\else\let#5\z@\fi
+  \DefineFamilyKey[{#1}]{#2}{#3}[{#4}]{%
+    \FamilySetUseLengthMacro{#2}{#3}{#5}{##1}%
+  }%
+}
+\newcommand*{\Family@UseLength@Macro@Key}[4]{%
+  \ifdefined#4\else\let#4\z@\fi
+  \DefineFamilyKey[{#1}]{#2}{#3}{\FamilySetUseLengthMacro{#2}{#3}{#4}{##1}}%
+}
+\newcommand*{\FamilySetUseLengthMacro}[4]{%
+  \begingroup
+    \FamilySetLength{#1}{#2}{\@tempskipa}{#4}%
+    \ifx\FamilyKeyState\FamilyKeyStateProcessed
+      \def\reserved@a{%
+        \endgroup\def#3{#4}%
+        \FamilyKeyStateProcessed
+      }%
+    \else
+      \def\reserved@a{%
+        \endgroup
+        \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+          length values, counters, lengths, skips, dimens
+        }%
+      }%
+    \fi
+  \reserved@a
 }
 \newcommand*{\FamilyNumericalKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@Numerical@Key{#1}{#2}{#3}}{\Family@Numerical@Key{#1}{#2}{#3}[]}%
 }
 \newcommand*{\Family@Numerical@Key}{}
@@ -1413,7 +1823,7 @@
   \let\FamilyElseValues\@empty
 }
 \newcommand*{\FamilyStringKey}[3][.\@currname.\@currext]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\Family@@String@@Key{#1}{#2}{#3}}{\Family@String@Key{#1}{#2}{#3}}%
 }
 \newcommand*{\Family@@String@@Key}{}
@@ -1423,9 +1833,9 @@
 \newcommand{\Family@String@Key}[4]{%
   \DefineFamilyKey[{#1}]{#2}{#3}{\def#4{##1}\FamilyKeyStateProcessed}%
 }
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newcommand*{\defcaptionname}{%
-  \@ifstar\scr@def@scaptionname\scr@def@captionname
+  \kernel@ifstar\scr@def@scaptionname\scr@def@captionname
 }
 \newcommand*{\scr@def@scaptionname}[3]{%
   \if@atdocument \expandafter\@firstofone
@@ -1462,9 +1872,24 @@
   \ifx\languagename\scr@reserved@a
     \@tempswatrue
   \else
-    \ifcsname l@\scr@reserved@a\endcsname
-      \expandafter\ifnum\csname l@\scr@reserved@a\endcsname=\language
-        \@tempswatrue
+    \edef\scr@reserved@b{\detokenize{german}}%
+    \ifx\languagename\scr@reserved@b
+      \edef\scr@reserved@b{%
+        \expandafter\ifx\csname if@german@oldspelling\expandafter\endcsname
+        \csname iffalse\endcsname n\fi
+        \expandafter\ifx\csname if@austrian@locale\expandafter\endcsname
+        \csname iftrue\endcsname austrian\else
+          \expandafter\ifx\csname if@swiss@locale\expandafter\endcsname
+          \csname iftrue\endcsname swiss\else german\fi\fi
+      }%
+      \@onelevel@sanitize\scr@reserved@b
+      \ifx\scr@reserved@a\scr@reserved@b \@tempswatrue\fi
+    \fi
+    \if@tempswa\else
+      \ifcsname l@\scr@reserved@a\endcsname
+        \expandafter\ifnum\csname l@\scr@reserved@a\endcsname=\language
+          \@tempswatrue
+        \fi
       \fi
     \fi
   \fi
@@ -1522,8 +1947,33 @@
     \reserved@b
   }%
 }
+\AfterPackage*{polyglossia}{%
+  \scr@ifundefinedorrelax{init@extras@german}{%
+    \AfterFile{gloss-german.ldf}%
+  }{%
+    \@firstofone
+  }%
+  {%
+    \providecommand*\captionsngerman{}%
+    \providecommand*\captionsaustrian{}%
+    \providecommand*\captionsnaustrian{}%
+    \providecommand*\captionsswiss{}%
+    \providecommand*\captionsnswiss{}%
+    \csgappto{init@extras@german}{%
+      \if@austrian@locale
+        \csuse{captions\if@german@oldspelling\else n\fi austrian}%
+      \else
+        \if@swiss@locale
+          \csuse{captions\if@german@oldspelling\else n\fi swiss}%
+        \else
+          \if@german@oldspelling\else \csuse{captionsngerman}\fi
+        \fi
+      \fi
+    }%
+  }%
+}
 \newcommand*{\providecaptionname}{%
-  \@ifstar\scr@provide@scaptionname\scr@provide@captionname
+  \kernel@ifstar\scr@provide@scaptionname\scr@provide@captionname
 }
 \newcommand*{\scr@provide@scaptionname}[3]{%
   \if@atdocument \expandafter\@firstofone
@@ -1608,7 +2058,7 @@
   }%
 }
 \newcommand*{\newcaptionname}{%
-  \@ifstar\scr@new@scaptionname\scr@new@captionname
+  \kernel@ifstar\scr@new@scaptionname\scr@new@captionname
 }
 \newcommand*{\scr@new@scaptionname}[3]{%
   \if@atdocument \expandafter\@firstofone
@@ -1703,7 +2153,7 @@
   }%
 }
 \newcommand*{\renewcaptionname}{%
-  \@ifstar\scr@renew@scaptionname\scr@renew@captionname
+  \kernel@ifstar\scr@renew@scaptionname\scr@renew@captionname
 }
 \newcommand*{\scr@renew@scaptionname}[3]{%
   \if@atdocument \expandafter\@firstofone

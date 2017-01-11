@@ -1,6 +1,6 @@
 % ======================================================================
 % scrdoc.dtx
-% Copyright (c) Markus Kohm, 2002-2012
+% Copyright (c) Markus Kohm, 2002-2016
 %
 % This file is part of the LaTeX2e KOMA-Script bundle.
 %
@@ -18,7 +18,7 @@
 % This work consists of all files listed in manifest.txt.
 % ----------------------------------------------------------------------
 % scrdoc.dtx
-% Copyright (c) Markus Kohm, 2002-2012
+% Copyright (c) Markus Kohm, 2002-2016
 %
 % Dieses Werk darf nach den Bedingungen der LaTeX Project Public Lizenz,
 % Version 1.3c, verteilt und/oder veraendert werden.
@@ -42,7 +42,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{scrdoc}[%
-  2003/01/19 v0.1d KOMA-Script source documentation class]
+  2016/04/12 v0.1e KOMA-Script source documentation class]
 
 % Load standard LaTeX documentation class, passing all options to it
 % but use scrartcl instead of article.
@@ -141,7 +141,8 @@
 \DoNotIndex{\if@tempswa,\ifcase,\or,\fi,\fi}
 \DoNotIndex{\ifnum,\ifodd,\ifx,\fi,\fi,\fi}
 \DoNotIndex{\include,\input,\InputIfFileExists,\item,\itshape}
-\DoNotIndex{\kern,\leavevmode,\leftmark,\leftskip,\let,\lineskip}
+\DoNotIndex{\kern,\kernel@ifnextchar}
+\DoNotIndex{\leavevmode,\leftmark,\leftskip,\let,\lineskip}
 \DoNotIndex{\list,\long}
 \DoNotIndex{\m@ne,\m@th,\marginpar,\markboth,\markright,\mathbf,\mathcal}
 \DoNotIndex{\mathit,\mathnormal,\mathrm,\mathsf,\mathtt,\MessageBreak}

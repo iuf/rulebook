@@ -8,7 +8,7 @@
 %% scrhack.dtx  (with options: `hack,listings,identify')
 %% scrhack.dtx  (with options: `hack,listings,body')
 %% 
-%% Copyright (c) 2008-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2008-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -40,7 +40,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -62,16 +62,16 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrhack.dtx 2175 2015-08-11 15:51:46Z kohm $
+%%% From File: $Id: scrhack.dtx 2451 2016-05-07 18:11:55Z kohm $
 \ProvidesFile{listings.hak}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package
   (hacking package
     listings)%
 ]
-%%% From File: $Id: scrhack.dtx 2175 2015-08-11 15:51:46Z kohm $
+%%% From File: $Id: scrhack.dtx 2451 2016-05-07 18:11:55Z kohm $
 \newcommand*{\scr@do@hack@listings}{%
   \RequirePackage{tocbasic}%
   \addtotoclist[float]{lol}%

@@ -28,7 +28,7 @@
 %% scrkernel-circularletters.dtx  (with options: `package,letter,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -60,7 +60,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -82,19 +82,19 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
 \ProvidesPackage{scrletter}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   letter package extending any KOMA-Script class%
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \scr@ifundefinedorrelax{KOMAClassName}{%
   \PackageWarningNoLine{scrletter}{%
     Cannot detect any KOMA-Script class.\MessageBreak
@@ -107,8 +107,8 @@
 }{}
 
 \newcommand*{\scr@renewforletter}{%
-  \@ifstar {\@renewforletter*}%
-           {\@renewforletter{}}%
+  \kernel@ifstar {\@renewforletter*}%
+                 {\@renewforletter{}}%
 }
 \newcommand*{\@renewforletter}[2]{%
   \g@addto@macro\do@renewforletter@list{\do#2}%
@@ -129,8 +129,8 @@
   \endgroup
   \let\do@renewforletter@list\@empty
 }
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*{\lco@test}{%
   \IfFileExists{\CurrentOption.lco}{%
     \expandafter
@@ -147,7 +147,7 @@
 }
 \AtEndOfPackage
   {\LoadLetterOption{DIN}}
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newif\if@orgdate\@orgdatetrue
 \KOMA@key{numericaldate}[true]{%
   \if@orgdate\@orgdatefalse\else\@orgdatetrue\fi
@@ -162,11 +162,11 @@
 }{orgdate}{true}
 \KOMA@DeclareDeprecatedOption{scrdate}{numericaldate=true}
 \KOMA@DeclareDeprecatedOption{orgdate}{numericaldate=false}
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
-%%% From File: $Id: scrkernel-variables.dtx 2001 2015-03-12 11:29:57Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-variables.dtx 2429 2016-04-12 12:10:19Z kohm $
 %%% From File: $Id: scrkernel-pseudolengths.dtx 2001 2015-03-12 11:29:57Z kohm $
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
-%%% From File: $Id: scrkernel-notepaper.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
 \KOMA@ifkey{firsthead}{@firsthead}
 \KOMAExecuteOptions{firsthead=true}
 \newcommand*{\@alignfrom}{0}
@@ -665,11 +665,19 @@
         \fi
       \endgroup
     \else
-      \ifstr{\@currname.\@currext}{scrletter.\scr@pkgextension}{%
-        \expandafter\AtEndOfPackage
-      }{%
+      \ifx\@fileswith@pti@ns\@badrequireerror
+        \ifstr{\@currext}{\@clsextension}{%
+          \expandafter\AtEndOfClass
+        }{%
+          \ifstr{\@currext}{\@pksextension}{%
+            \expandafter\AtEndOfPackage
+          }{%
+            \expandafter\AtBeginDocument
+          }%
+        }%
+      \else
         \expandafter\@firstofone
-      }%
+      \fi
       {\RequirePackage{marvosym}}%
     \fi
   \fi
@@ -678,11 +686,11 @@
   scrletter.\scr@pkgextension
 }{symbolicnames}{false}%
 %%% From File: $Id: scrkernel-circularletters.dtx 2001 2015-03-12 11:29:57Z kohm $
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*{\LoadLetterOption}[1]{%
   \@ifundefined{@restore@catcode@level}%
     {\let\@restore@catcode@level=\z@}{}%
@@ -845,7 +853,7 @@
 \newcommand*{\LetterOptionNeedsPapersize}[2]{%
   \edef\LOPNP@size{#2}\edef\LOPNP@option{#1}%
 }
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newcommand*{\g@addnumerical@date}[2]{%
   \@ifundefined{date#1}{%
     \PackageInfo{scrletter%
@@ -1385,9 +1393,9 @@
     \fi
   \fi
 }
-%%% From File: $Id: scrkernel-variables.dtx 2001 2015-03-12 11:29:57Z kohm $
+%%% From File: $Id: scrkernel-variables.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newcommand*{\newkomavar}{%
-  \@ifstar {\@tempswatrue\@newkomavar}{\@tempswafalse\@newkomavar}}
+  \kernel@ifstar {\@tempswatrue\@newkomavar}{\@tempswafalse\@newkomavar}}
 \newcommand*{\@newkomavar}[2][\relax]{%
   \@ifundefined{scr@#2@name}{%
     \@ifundefined{scr@#2@var}{%
@@ -1419,9 +1427,9 @@
   }%
 }
 \newcommand*{\setkomavar}{%
-  \@ifstar {\@setkomaname}{\@setkomavar}}
+  \kernel@ifstar {\@setkomaname}{\@setkomavar}}
 \newcommand*{\@setkomavar}[1]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
   {\@@setkomavar{#1}}{\@@setkomavar{#1}[\relax]}}
 \newcommand*{\@setkomaname}[2]{%
   \@ifundefined{scr@#1@var}{%
@@ -1459,7 +1467,7 @@
   }%
 }
 \DeclareRobustCommand*{\usekomavar}{%
-  \@ifstar {\@usekomaname}{\@usekomavar}}
+  \kernel@ifstar {\@usekomaname}{\@usekomavar}}
 \newcommand*{\@usekomavar}[2][\@firstofone]{%
   \@ifundefined{scr@#2@var}{%
     \@komavar@err{use}{#2}%
@@ -1483,8 +1491,8 @@
 }
 \DeclareRobustCommand*{\ifkomavarempty}{%
   \begingroup
-  \@ifstar {\@tempswatrue\@ifkomavarempty}%
-           {\@tempswafalse\@ifkomavarempty}%
+  \kernel@ifstar {\@tempswatrue\@ifkomavarempty}%
+                 {\@tempswafalse\@ifkomavarempty}%
 }
 \newcommand{\@ifkomavarempty}[1]{%
     \ifkomavar{#1}{%
@@ -1566,7 +1574,7 @@
       }%
     \@tempa%
   }
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
 \newcommand*{%
   \letterpagemark
 }{%
@@ -1597,7 +1605,7 @@
   \rofoot[\ifnum\@pageat=5 \pagemark\fi]%
          {}%
 }
-%%% From File: $Id: scrkernel-notepaper.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
 \newkomavar{firsthead}
 \setkomavar{firsthead}{%
   \parbox[b]{\useplength{firstheadwidth}}%
@@ -1763,7 +1771,7 @@
 \newkomafont{fromname}{}
 \newkomafont{fromaddress}{}
 \newkomafont{fromrule}{}
-\newkomafont{backaddress}{\sffamily}
+\newkomafont{backaddress}{\@gr@gsffamily}
 \newkomafont{specialmail}{}
 \newkomafont{priority}{\fontsize{10pt}{10pt}\sffamily\bfseries}
 \newkomafont{prioritykey}{\fontsize{24.88pt}{24.88pt}\selectfont}
@@ -1772,10 +1780,10 @@
 \newkomafont{addressee}{}
 \newkomafont{toname}{}
 \newkomafont{toaddress}{}
-\newkomafont{refname}{\sffamily\scriptsize}
+\newkomafont{refname}{\@gr@gsffamily\scriptsize}
   \newkomafont{refvalue}{}
 \newkomafont{placeanddate}{}
-\newkomafont{lettertitle}{\normalcolor\sffamily\bfseries}
+\newkomafont{lettertitle}{\normalcolor\@gr@gsffamily\bfseries}
 \scr@ifundefinedorrelax{scr@fnt@title}{%
   \aliaskomafont{title}{lettertitle}%
 }{}
@@ -2701,11 +2709,11 @@
  \def\par{\@@par\nobreak}\let\\=\@nobreakcr
  \let\vspace\@nobreakvspace}
 \newcommand*{\@nobreakvspace}{%
-  \@ifstar{\@nobreakvspacex}{\@nobreakvspacex}}
+  \kernel@ifstar{\@nobreakvspacex}{\@nobreakvspacex}}
 \newcommand*{\@nobreakvspacex}[1]{\ifvmode\nobreak\vskip #1\relax\else
  \@bsphack\vadjust{\nobreak\vskip #1}\@esphack\fi}
 \newcommand*{\@nobreakcr}{%
-  \vadjust{\penalty\@M}\@ifstar{\@xnewline}{\@xnewline}}
+  \vadjust{\penalty\@M}\kernel@ifstar{\@xnewline}{\@xnewline}}
 \newcommand*{\startbreaks}{\let\\=\@normalcr
  \interlinepenalty 200\def\par{\@@par\penalty 200}}
 \newcommand{\opening}[1]{%
@@ -2740,7 +2748,8 @@
     \ifdim\@tempdima>\@tempdimb\setlength{\@tempdima}{\@tempdimb}\fi
     \hspace{\useplength{sigindent}}%
     \parbox{\@tempdima}{\raggedsignature\strut\ignorespaces
-      #1\ifhmode\unskip\strut\fi\\[\useplength{sigbeforevskip}]
+      #1\ifhmode\unskip\strut\\[\useplength{sigbeforevskip}]
+        \else\vskip \useplength{sigbeforevskip}\fi
       \strut\ignorespaces
       \usekomavar{signature}\ifhmode\unskip\strut\fi}}\par
   \nobreak\vskip\baselineskip

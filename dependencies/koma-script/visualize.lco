@@ -9,7 +9,7 @@
 %% scrkernel-letterclassoptions.dtx  (with options: `lco,visualize,body')
 %% scrkernel-notepaper.dtx  (with options: `lco,visualize,body')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -41,7 +41,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -63,9 +63,9 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \ProvidesFile{%
   visualize%
   .lco}[\KOMAScriptVersion\space letter-class-option]
@@ -79,7 +79,7 @@
     Letter class option  #1 Warning: #2%
   }%
 }
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \RequirePackage{eso-pic}
 \newcommand*{\showfields}[1]{%
   \AtBeginLetter{%
@@ -299,7 +299,7 @@
 \newcommand*{\@@showenvelope}{}
 \newcommand*{\@@@showenvelope}{}
 \def\showenvelope(#1,#2){%
-  \@ifnextchar (%)
+  \kernel@ifnextchar (%)
     {\@showenvelope({#1},{#2})}%
     {\@@@showenvelope({#1},{#2})}%
 }
@@ -342,7 +342,7 @@
   \@tempa
 }
 \def\@showenvelope(#1,#2)(#3,#4){%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\@@showenvelope({#1},{#2})({#3},{#4})}%
     {\@@showenvelope({#1},{#2})({#3},{#4})[]}%
 }
@@ -574,7 +574,7 @@
 \newcommand*{\showUScheck}{%
   \showenvelope(8.625in,3.625in)%
 }
-%%% From File: $Id: scrkernel-notepaper.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
 \endinput
 %%
 %% End of file `visualize.lco'.

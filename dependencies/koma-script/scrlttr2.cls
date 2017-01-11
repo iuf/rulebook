@@ -39,7 +39,7 @@
 %% scrkernel-circularletters.dtx  (with options: `class,letter,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -71,7 +71,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -93,7 +93,7 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@clsextension}{\@clsextension}
 \AtBeginDocument{%
@@ -108,12 +108,12 @@
 \newcommand*{\KOMAClassFileName}{\KOMAClassName.\@clsextension}
 \edef\KOMAClassFileName{\KOMAClassFileName}
 \ProvidesClass{\KOMAClassName}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   document class (\ClassName)%
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2190 2015-08-29 17:21:55Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: scrkernel-compatibility.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
 \newcommand*
   {\scr@compatibility}{\scr@v@last}
 \KOMA@key{version}[last]{%
@@ -212,6 +212,8 @@
 \@namedef{scr@v@3.18a}{15}
 \@namedef{scr@v@3.19}{15}
 \@namedef{scr@v@3.19a}{15}
+\@namedef{scr@v@3.20}{15}
+\@namedef{scr@v@3.21}{15}
 \@namedef{scr@v@last}{15}
 \newcommand*{\scr@v@is@lt}[1]{%
   \scr@compatibility<\@nameuse{scr@v@#1}
@@ -225,7 +227,7 @@
 \newcommand*{\scr@v@is@ge}[1]{%
   \numexpr\scr@compatibility+\@ne\relax>\@nameuse{scr@v@#1}
 }
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \KOMA@key{draft}[true]{%
   \KOMA@set@ifkey{draft}{@tempswa}{#1}%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed
@@ -245,7 +247,11 @@
 \KOMA@kav@add{.\KOMAClassFileName}{draft}{false}
 \KOMA@DeclareStandardOption
 {final}{draft=false}
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+\KOMA@ifkey{egregdoesnotlikesansseriftitles}{@egregdoesnotlikesansseriftitles}
+\newcommand*{\@gr@gsffamily}{%
+  \if@egregdoesnotlikesansseriftitles\else\sffamily\fi
+}
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*{\lco@test}{%
   \IfFileExists{\CurrentOption.lco}{%
     \expandafter
@@ -262,7 +268,7 @@
 }
 \AtEndOfClass
   {\LoadLetterOption{DIN}}
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newif\if@orgdate\@orgdatetrue
 \KOMA@key{numericaldate}[true]{%
   \if@orgdate\@orgdatefalse\else\@orgdatetrue\fi
@@ -277,7 +283,7 @@
 }{orgdate}{true}
 \KOMA@DeclareDeprecatedOption{scrdate}{numericaldate=true}
 \KOMA@DeclareDeprecatedOption{orgdate}{numericaldate=false}
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*\@ptsize{%
   12%
 }
@@ -344,9 +350,27 @@
     \KOMAClassFileName
   }{fontsize}{#1}%
 }
-%%% From File: $Id: scrkernel-variables.dtx 2001 2015-03-12 11:29:57Z kohm $
+\DeclareOption{enabledeprecatedfontcommands}{%
+  \ClassWarningNoLine{\KOMAClassName}{%
+    deprecated option `enabledeprecatedfontcommands'.\MessageBreak
+    Note, that this option was already depreacted when\MessageBreak
+    it has been defined. Support for old font commands\MessageBreak
+    has been removed from KOMA-Script more than one\MessageBreak
+    decade ago. It is not recommended to use them any\MessageBreak
+    longer. Therefore usage of this class option also\MessageBreak
+    is not recommended%
+  }%
+  \let\scr@defineobsoletefonts\@ne
+}
+\scr@ifundefinedorrelax{scr@defineobsoletefonts}{%
+  \let\scr@defineobsoletefonts\z@
+}{}
+\BeforePackage{tex4ht}{%
+  \let\scr@defineobsoletefonts\thr@@
+}
+%%% From File: $Id: scrkernel-variables.dtx 2429 2016-04-12 12:10:19Z kohm $
 %%% From File: $Id: scrkernel-pseudolengths.dtx 2001 2015-03-12 11:29:57Z kohm $
-%%% From File: $Id: scrkernel-typearea.dtx 2166 2015-07-26 08:15:44Z kohm $
+%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
 \newcommand*{\@BCOR}{\expandafter\@@BCOR\CurrentOption BCORBCOR\@@BCOR}
 \newcommand*{\@@BCOR}{}
 \def\@@BCOR #1BCOR#2BCOR#3\@@BCOR{%
@@ -412,7 +436,7 @@
   }{%
     \def\FamilyElseValue{, `semi'}%
     \KOMA@set@ifkey{twoside}{%
-      @tempswa%
+      @twoside%
     }{#1}%
   }%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed
@@ -434,10 +458,13 @@
     \KOMA@kav@replacebool{.%
       \KOMAClassFileName
     }{twocolumn}{@twocolumn}%
-    \expandafter\ifnum\scr@v@is@ge{3.17}%
+    \if@atdocument\expandafter\@firstofone
+    \else\@ifpackageloaded{typearea}{\expandafter\@firstofone}
+                                    {\expandafter\AtEndOfClass}\fi
+    {\expandafter\ifnum\scr@v@is@ge{3.17}%
       \if@twocolumn\twocolumn\sloppy\flushbottom
       \else\onecolumn\if@twoside\flushbottom\else\raggedbottom\fi\fi
-    \fi
+    \fi}%
   \fi
 }
 \AtEndOfClass{%
@@ -451,7 +478,8 @@
 \DeclareOption*{%
   \lco@test
   \x@paper}
-%%% From File: $Id: scrkernel-paragraphs.dtx 2179 2015-08-22 06:36:48Z kohm $
+%%% From File: $Id: scrkernel-paragraphs.dtx 2351 2016-02-22 08:20:29Z kohm $
+%%%            run: option
 \newcommand*{\setparsizes}[3]{%
   \edef\f@parindent{\the\parindent}%
   \edef\f@parskip{\the\parskip}%
@@ -486,6 +514,7 @@
 \let\par@update\relax
 \newcommand*{\default@par@update}{}
 \let\default@par@update\relax
+\AtBeginDocument{\par@update}
 \newcommand*{\scr@parindent}{1em}
 \newcommand*{\scr@parskip}{\z@}
 \newcommand*{\scr@parfillskip}{\z@ \@plus 1fil}
@@ -615,33 +644,11 @@
 \KOMA@DeclareDeprecatedOption{parindent}{parskip=false}
 \KOMA@kav@add{.\KOMAClassFileName}{parskip}{false}
 \KOMA@kav@add{.\KOMAClassFileName}{parskip}{absolute}
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
-\newif\if@hsl
-\KOMA@key{headsepline}[true]{%
-  \KOMA@set@ifkey{headsepline}{@hsl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.\KOMAClassFileName}{headsepline}{@hsl}%
-    \@ifundefined{typearea}{%
-      \PassOptionsToPackage{headinclude=#1}{typearea}%
-    }{%
-      \KOMAoptions{headinclude=#1}{}%
-    }%
-  \fi
-}
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
+\KOMA@ifkey{headsepline}{@hsl}%
 \KOMA@kav@add{.\KOMAClassFileName}{headsepline}{false}
 \KOMA@DeclareDeprecatedOption{headnosepline}{headsepline=false}
-\newif\if@fsl
-\KOMA@key{footsepline}[true]{%
-  \KOMA@set@ifkey{footsepline}{@fsl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.\KOMAClassFileName}{footsepline}{@fsl}%
-    \@ifundefined{typearea}{%
-      \PassOptionsToPackage{footinclude=#1}{typearea}%
-    }{%
-      \KOMAoptions{footinclude=#1}%
-    }%
-  \fi
-}
+\KOMA@ifkey{footsepline}{@fsl}%
 \KOMA@kav@add{.\KOMAClassFileName}{footsepline}{false}
 \KOMA@DeclareDeprecatedOption{footnosepline}{footsepline=false}
 \KOMA@key{cleardoublepage}{%
@@ -741,7 +748,7 @@
 \KOMA@DeclareDeprecatedOption{cleardoubleempty}{cleardoublepage=empty}
 \KOMA@DeclareDeprecatedOption{cleardoubleplain}{cleardoublepage=plain}
 \KOMA@DeclareDeprecatedOption{cleardoublestandard}{cleardoublepage=current}
-%%% From File: $Id: scrkernel-floats.dtx 2002 2015-03-12 12:06:17Z kohm $
+%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
 %%% From File: $Id: scrkernel-footnotes.dtx 2180 2015-08-24 09:28:16Z kohm $
 \KOMA@key{footnotes}{%
   \ifx\@footnotemark\scr@saved@footnotemark
@@ -812,8 +819,8 @@
   \csname FN@mf@prepare\endcsname
   \ifhmode\spacefactor\@x@sf\fi
   \relax}
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2028 2015-03-23 12:19:51Z kohm $
-%%% From File: $Id: scrkernel-notepaper.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
 \KOMA@ifkey{firsthead}{@firsthead}
 \KOMAExecuteOptions{firsthead=true}
 \newcommand*{\@alignfrom}{0}
@@ -1342,11 +1349,19 @@
         \fi
       \endgroup
     \else
-      \ifstr{\@currname.\@currext}{\KOMAClassFileName}{%
-        \expandafter\AtEndOfClass
-      }{%
+      \ifx\@fileswith@pti@ns\@badrequireerror
+        \ifstr{\@currext}{\@clsextension}{%
+          \expandafter\AtEndOfClass
+        }{%
+          \ifstr{\@currext}{\@pksextension}{%
+            \expandafter\AtEndOfPackage
+          }{%
+            \expandafter\AtBeginDocument
+          }%
+        }%
+      \else
         \expandafter\@firstofone
-      }%
+      \fi
       {\RequirePackage{marvosym}}%
     \fi
   \fi
@@ -1355,12 +1370,12 @@
   \KOMAClassFileName
 }{symbolicnames}{false}%
 %%% From File: $Id: scrkernel-circularletters.dtx 2001 2015-03-12 11:29:57Z kohm $
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \KOMAExecuteOptions{%
   parskip=false,%
 }
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrkernel-compatibility.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
 \expandafter\ifnum \@nameuse{scr@v@2.95}>\scr@compatibility\relax
   \newcommand*{\@setif}[2][]{%
     \begingroup
@@ -1372,7 +1387,7 @@
     \expandafter\endgroup\@tempa
   }%
 \fi
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*\scr@setlength[4]{%
   \expandafter\ifnum\scr@v@is@lt{3.12}\relax
     \setlength{#1}{#2 \@plus#3 \@minus#4}%
@@ -1762,42 +1777,78 @@
   }%
 }
 \newcommand*{\scr@DeclareOldFontCommand}[3]{%
-  \DeclareRobustCommand #1{\@fontswitch {%
-      \ClassWarning{\KOMAClassName}{%
-        Usage of deprecated font command `\string#1'!\MessageBreak
-        You should note, that in 1994 font command `\string#1' has\MessageBreak
-        been defined for compatiblitiy to Script 2.0 only.\MessageBreak
-        Now, after two decades of LaTeX2e and NFSS2, you\MessageBreak
-        shouldn't use such commands any longer and within\MessageBreak
-        KOMA-Script usage of `\string#1' is definitely deprecated.\MessageBreak
-        See `fntguide.pdf' for more information about\MessageBreak
-        recommended font commands.\MessageBreak
-        Note also, that KOMA-Script will remove the definition\MessageBreak
-        of `\string#1' anytime until release of about version 3.20.\MessageBreak
-        But for now, KOMA-Script will replace deprecated
-        `\string#1'\MessageBreak
-        by `\detokenize{#2}'%
+  \ifnum\scr@defineobsoletefonts<\z@\else
+    \ifnum\scr@defineobsoletefonts>\tw@
+      \DeclareOldFontCommand{#1}{#2}{#3}%
+    \else
+      \DeclareOldFontCommand{#1}{%
+        \scr@ErrorWarningInfo{#1}{#2}#2%
+      }{%
+        \scr@ErrorWarningInfo{#1}{#3}#3%
       }%
-      #2%
-    }{%
-      \ClassWarning{\KOMAClassName}{%
-        Usage of deprecated font command `\string#1'!\MessageBreak
-        You should note, that in 1994 font command `\string#1' has\MessageBreak
-        been defined for compatiblitiy to Script 2.0 only.\MessageBreak
-        Now, after two decades of LaTeX2e and NFSS2, you\MessageBreak
-        shouldn't use such commands any longer and within\MessageBreak
-        KOMA-Script usage of `\string#1' is definitely deprecated.\MessageBreak
-        See `fntguide.pdf' for more information about\MessageBreak
-        recommended font commands.\MessageBreak
-        Note also, that KOMA-Script will remove the definition\MessageBreak
-        of `\string#1' anytime until release of about version 3.20.\MessageBreak
-        But for now, KOMA-Script will replace deprecated
-        `\string#1'\MessageBreak
-        by `\detokenize{#3}'%
-      }%
-      #3%
+    \fi
+  \fi
+}
+\DeclareRobustCommand*{\scr@ErrorWarningInfo}[2]{%
+  \ifnum \scr@defineobsoletefonts=\z@
+    \ClassError{\KOMAClassName}{undefined old font command `\string#1'}{%
+      You should note that since 1994 LaTeX2e provides a new font selection
+      scheme\MessageBreak
+      called NFSS2 with several new, combinable font commands. New
+      KOMA-Script\MessageBreak
+      classes have defined the old font commands like `\string#1'
+      only for compatibility\MessageBreak
+      with old LaTeX 2.09 document styles of Script 2.0. Nevertheless,
+      these\MessageBreak
+      commands are deprecated and undocumented at least since
+      2003. Since 2013\MessageBreak
+      KOMA-Script classes warn abouts soon removement of these deprecated
+      commands.\MessageBreak
+      Now, after two decades of LaTeX2e and NFSS2, these commands will not
+      work any\MessageBreak
+      more. If loading a package results in this error message, you should
+      contact\MessageBreak
+      the author of that package and ask him to replace the deprecated font
+      command\MessageBreak
+      `\string#1', e.g., by `\detokenize{#2}`. Otherwise you should
+      reconfigure\MessageBreak
+      or replace the package. If you have used the old font command
+      `\string#1' yourself,\MessageBreak
+      you should replace it, e.g., by `\detokenize{#2}'.\MessageBreak
+      To make it work for now, you can use the already also deprecated class
+      option\MessageBreak
+      `enabledeprecatedfontcommands'.%
     }%
-  }%
+  \else
+    \ifcase \scr@defineobsoletefonts
+    \or
+      \expandafter\ClassWarning
+    \or
+      \expandafter\ClassInfo
+    \else
+      \expandafter\@gobbletwo
+    \fi
+    {\KOMAClassName}{deprecated old font command `\string#1' used.\MessageBreak
+      You should note, that since 1994 LaTeX2e provides a\MessageBreak
+      new font selection scheme called NFSS2 with several\MessageBreak
+      new, combinable font commands. New KOMA-Script classes\MessageBreak
+      have defined the old font commands like `\string#1' only for\MessageBreak
+      compatibility with LaTeX 2.09 document styles of\MessageBreak
+      Script 2.0. These commands are deprecated and\MessageBreak
+      undocumented at least since 2003. Since 2013,\MessageBreak
+      KOMA-Script classes warn about soon removement of\MessageBreak
+      these deprecated commands. Now, after two decades of\MessageBreak
+      LaTeX2e, NFSS2, and KOMA-Script these commands will\MessageBreak
+      not work any longer. If loading a package results in\MessageBreak
+      this message you should contact the author of that\MessageBreak
+      package and ask him to replace the depracted font\MessageBreak
+      command `\string#1', e.g., by `\detokenize{#2}'.\MessageBreak
+      Otherwise you should reconfigure or replace the\MessageBreak
+      package. If you have used the old font command\MessageBreak
+      `\string #1' yourself you should replace it, e.g., by\MessageBreak
+      `\detokenize{#2}'%
+    }%
+  \fi
 }
 \scr@DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 \scr@DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
@@ -1810,11 +1861,18 @@
   \@nomath\sfb}
 \DeclareRobustCommand*{\cal}{\@fontswitch\relax\mathcal}
 \DeclareRobustCommand*{\mit}{\@fontswitch\relax\mathnormal}
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
 \setlength{\skip\@mpfootins}{\skip\footins}
 \setlength\fboxsep{3\p@}
 \setlength\fboxrule{.4\p@}
 \newcommand*{\new@tpo@label}{\@newl@bel{tpo}}
+\AtBeginDocument{%
+  \if@filesw
+    \immediate\write\@auxout{%
+      \string\providecommand*\string\new@tpo@label[2]{}%
+    }%
+  \fi
+}
 \newcommand*{\scr@tpo}{0}
 \newcommand*{\is@thispageodd}[1][\is@thispageodd@setlabel]{%
   \@bsphack
@@ -1837,9 +1895,11 @@
     \fi
   \endgroup
   \edef\is@thispageodd@setlabel{%
-    \unexpanded{\protected@write\@auxout{\let\arabic\relax}}{%
-      \noexpand\string
-      \noexpand\new@tpo@label{\scr@tpo}{\noexpand\arabic{page}}}%
+    \if@filesw
+      \unexpanded{\protected@write\@auxout{\let\arabic\relax}}{%
+        \noexpand\string
+        \noexpand\new@tpo@label{\scr@tpo}{\noexpand\arabic{page}}}%
+    \fi
   }%
   #1%
   \@esphack
@@ -1891,7 +1951,7 @@
   commands}
 \scr@package@not@recommended{titleps}{%
   package `scrlayer-scrpage`}
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2122 2015-06-03 08:05:35Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
 \newcommand*{\LoadLetterOption}[1]{%
   \@ifundefined{@restore@catcode@level}%
     {\let\@restore@catcode@level=\z@}{}%
@@ -2054,7 +2114,7 @@
 \newcommand*{\LetterOptionNeedsPapersize}[2]{%
   \edef\LOPNP@size{#2}\edef\LOPNP@option{#1}%
 }
-%%% From File: $Id: scrkernel-language.dtx 2151 2015-07-03 09:25:42Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newcommand*{\g@addnumerical@date}[2]{%
   \@ifundefined{date#1}{%
     \ClassInfo{scrlttr2%
@@ -2594,9 +2654,9 @@
     \fi
   \fi
 }
-%%% From File: $Id: scrkernel-variables.dtx 2001 2015-03-12 11:29:57Z kohm $
+%%% From File: $Id: scrkernel-variables.dtx 2429 2016-04-12 12:10:19Z kohm $
 \newcommand*{\newkomavar}{%
-  \@ifstar {\@tempswatrue\@newkomavar}{\@tempswafalse\@newkomavar}}
+  \kernel@ifstar {\@tempswatrue\@newkomavar}{\@tempswafalse\@newkomavar}}
 \newcommand*{\@newkomavar}[2][\relax]{%
   \@ifundefined{scr@#2@name}{%
     \@ifundefined{scr@#2@var}{%
@@ -2628,9 +2688,9 @@
   }%
 }
 \newcommand*{\setkomavar}{%
-  \@ifstar {\@setkomaname}{\@setkomavar}}
+  \kernel@ifstar {\@setkomaname}{\@setkomavar}}
 \newcommand*{\@setkomavar}[1]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
   {\@@setkomavar{#1}}{\@@setkomavar{#1}[\relax]}}
 \newcommand*{\@setkomaname}[2]{%
   \@ifundefined{scr@#1@var}{%
@@ -2668,7 +2728,7 @@
   }%
 }
 \DeclareRobustCommand*{\usekomavar}{%
-  \@ifstar {\@usekomaname}{\@usekomavar}}
+  \kernel@ifstar {\@usekomaname}{\@usekomavar}}
 \newcommand*{\@usekomavar}[2][\@firstofone]{%
   \@ifundefined{scr@#2@var}{%
     \@komavar@err{use}{#2}%
@@ -2692,8 +2752,8 @@
 }
 \DeclareRobustCommand*{\ifkomavarempty}{%
   \begingroup
-  \@ifstar {\@tempswatrue\@ifkomavarempty}%
-           {\@tempswafalse\@ifkomavarempty}%
+  \kernel@ifstar {\@tempswatrue\@ifkomavarempty}%
+                 {\@tempswafalse\@ifkomavarempty}%
 }
 \newcommand{\@ifkomavarempty}[1]{%
     \ifkomavar{#1}{%
@@ -2775,7 +2835,7 @@
       }%
     \@tempa%
   }
-%%% From File: $Id: scrkernel-typearea.dtx 2166 2015-07-26 08:15:44Z kohm $
+%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
 \let\@BCOR                =\relax
 \let\@@BCOR               =\relax
 \let\@DIV                 =\relax
@@ -2786,7 +2846,8 @@
 \let\x@@paper             =\relax
 \let\scr@pti@nerr@r       =\relax
 \RequirePackage{typearea}[\KOMAScriptVersion]
-%%% From File: $Id: scrkernel-paragraphs.dtx 2179 2015-08-22 06:36:48Z kohm $
+%%% From File: $Id: scrkernel-paragraphs.dtx 2351 2016-02-22 08:20:29Z kohm $
+%%%            run: body
 \setlength{\lineskip}{\p@}
 \setlength{\normallineskip}{\p@}
 \newcommand*{\scr@selectfont}{}
@@ -2912,7 +2973,7 @@
 \@lowpenalty  = 51
 \@medpenalty  =151
 \@highpenalty =301
-%%% From File: $Id: scrkernel-pagestyles.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
 \newcommand*{\set@tempdima@hw}{%
   \setlength{\@tempdima}{\textwidth}%
   \if@mincl
@@ -3008,7 +3069,7 @@
 }
 \pagestyle{plain}
 \pagenumbering{arabic}
-%%% From File: $Id: scrkernel-floats.dtx 2002 2015-03-12 12:06:17Z kohm $
+%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
 \newcommand\marginline[1]{%
   \marginpar[\raggedleft{#1}]{\raggedright #1}%
 }
@@ -3149,7 +3210,7 @@
   \endgroup
   \@footnotemark
 }
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2028 2015-03-23 12:19:51Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
   \setlength{\leftmargini}{2.5em}
 \setlength{\leftmarginii}{2.2em}
 \setlength{\leftmarginiii}{1.87em}
@@ -3287,11 +3348,11 @@
   }%
   \item\is@thispageodd@setlabel\nobreak\ignorespaces
 }
-\newcommand*\descfont{\sffamily\bfseries}
+\newcommand*\descfont{\@gr@gsffamily\bfseries}
 \newcommand*{\scr@fnt@descriptionlabel}{\descfont}
 \newkomafont{labelinglabel}{}
 \newkomafont{labelingseparator}{}
-%%% From File: $Id: scrkernel-notepaper.dtx 2162 2015-07-15 07:30:52Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
 \newcommand*{\@firsthead}{%
   \ClassWarning{scrlttr2}{%
     Deprecated usage of \string\@firsthead.\MessageBreak
@@ -3473,7 +3534,7 @@
 \newkomafont{fromname}{}
 \newkomafont{fromaddress}{}
 \newkomafont{fromrule}{}
-\newkomafont{backaddress}{\sffamily}
+\newkomafont{backaddress}{\@gr@gsffamily}
 \newkomafont{specialmail}{}
 \newkomafont{priority}{\fontsize{10pt}{10pt}\sffamily\bfseries}
 \newkomafont{prioritykey}{\fontsize{24.88pt}{24.88pt}\selectfont}
@@ -3482,14 +3543,14 @@
 \newkomafont{addressee}{}
 \newkomafont{toname}{}
 \newkomafont{toaddress}{}
-\newkomafont{refname}{\sffamily\scriptsize}
+\newkomafont{refname}{\@gr@gsffamily\scriptsize}
 \ifnum\scr@compatibility=\@nameuse{scr@v@2.97}\relax
   \newkomafont{refvalue}{\sffamily\scriptsize}
 \else
   \newkomafont{refvalue}{}
 \fi
 \newkomafont{placeanddate}{}
-\newkomafont{lettertitle}{\normalcolor\sffamily\bfseries}
+\newkomafont{lettertitle}{\normalcolor\@gr@gsffamily\bfseries}
   \aliaskomafont{title}{lettertitle}%
 \newkomafont{lettersubject}{\normalfont\bfseries}
   \aliaskomafont{subject}{lettersubject}%
@@ -4457,11 +4518,11 @@
  \def\par{\@@par\nobreak}\let\\=\@nobreakcr
  \let\vspace\@nobreakvspace}
 \newcommand*{\@nobreakvspace}{%
-  \@ifstar{\@nobreakvspacex}{\@nobreakvspacex}}
+  \kernel@ifstar{\@nobreakvspacex}{\@nobreakvspacex}}
 \newcommand*{\@nobreakvspacex}[1]{\ifvmode\nobreak\vskip #1\relax\else
  \@bsphack\vadjust{\nobreak\vskip #1}\@esphack\fi}
 \newcommand*{\@nobreakcr}{%
-  \vadjust{\penalty\@M}\@ifstar{\@xnewline}{\@xnewline}}
+  \vadjust{\penalty\@M}\kernel@ifstar{\@xnewline}{\@xnewline}}
 \newcommand*{\startbreaks}{\let\\=\@normalcr
  \interlinepenalty 200\def\par{\@@par\penalty 200}}
 \newcommand{\opening}[1]{%
@@ -4496,7 +4557,8 @@
     \ifdim\@tempdima>\@tempdimb\setlength{\@tempdima}{\@tempdimb}\fi
     \hspace{\useplength{sigindent}}%
     \parbox{\@tempdima}{\raggedsignature\strut\ignorespaces
-      #1\ifhmode\unskip\strut\fi\\[\useplength{sigbeforevskip}]
+      #1\ifhmode\unskip\strut\\[\useplength{sigbeforevskip}]
+        \else\vskip \useplength{sigbeforevskip}\fi
       \strut\ignorespaces
       \usekomavar{signature}\ifhmode\unskip\strut\fi}}\par
   \nobreak\vskip\baselineskip

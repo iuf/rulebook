@@ -7,7 +7,7 @@
 %% scrlfile.dtx  (with options: `scrlfile')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2002-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2002-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -39,9 +39,9 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlfile.dtx 1525 2013-11-22 12:57:29Z mjk $
+%%% From File: $Id: scrlfile.dtx 2429 2016-04-12 12:10:19Z kohm $
 \ProvidesPackage{scrlfile}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package (loading files)]
 \typeout{Package scrlfile, \csname ver@scrlfile.sty\endcsname%
   ^^J\@spaces\@spaces\@spaces\@spaces\space\space
@@ -155,9 +155,9 @@
 \newcommand*{\BeforeClass}[1]{%
   \scr@set@load@hook{before}{#1.\@clsextension}}
 \newcommand*{\AfterClass}{%
-  \@ifstar {\@sAfterClass}{%
-    \@ifnextchar +\@@AfterClass{%
-      \@ifnextchar !\@@@AfterClass\@AfterClass
+  \kernel@ifstar {\@sAfterClass}{%
+    \kernel@ifnextchar +\@@AfterClass{%
+      \kernel@ifnextchar !\@@@AfterClass\@AfterClass
     }%
   }%
 }
@@ -195,9 +195,9 @@
 \newcommand*{\BeforePackage}[1]{%
   \scr@set@load@hook{before}{#1.\@pkgextension}}
 \newcommand*{\AfterPackage}{%
-  \@ifstar {\@sAfterPackage}{%
-    \@ifnextchar +\@@AfterPackage{%
-      \@ifnextchar !\@@@AfterPackage\@AfterPackage
+  \kernel@ifstar {\@sAfterPackage}{%
+    \kernel@ifnextchar +\@@AfterPackage{%
+      \kernel@ifnextchar !\@@@AfterPackage\@AfterPackage
     }%
   }%
 }
@@ -236,11 +236,11 @@
 \let\scrlfile@excludedpackages\@empty
 \newcommand*{\scrlfile@saved@RequirePackage}{}
 \newcommand*{\PreventPackageFromLoading}{%
-  \@ifstar{\@PreventPackageFromLoading\PackageInfo}%
+  \kernel@ifstar{\@PreventPackageFromLoading\PackageInfo}%
           {\@PreventPackageFromLoading\PackageWarning}%
 }
 \newcommand*{\@PreventPackageFromLoading}[1]{%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
     {\@@PreventPackageFromLoading#1}{\@@PreventPackageFromLoading#1[]}%
 }
 \newcommand*{\@@PreventPackageFromLoading}{}
@@ -326,7 +326,7 @@
 }
 \@onlypreamble\StorePreventPackageFromLoading
 \newcommand*{\UnPreventPackageFromLoading}{%
-  \@ifstar {\@tempswatrue\@UnPreventPackageFromLoading}%
+  \kernel@ifstar {\@tempswatrue\@UnPreventPackageFromLoading}%
            {\@tempswafalse\@UnPreventPackageFromLoading}%
 }
 \newcommand*{\@UnPreventPackageFromLoading}[1]{%
@@ -399,6 +399,7 @@
   \reserved@a
 }
 \newcommand{\scr@gobbleopt}[1][]{}
+\providecommand*\kernel@ifstar[1]{\kernel@ifnextchar*{\@firstoftwo{#1}}}
 \AtEndDocument{%
   \let\scr@saved@checkend=\@checkend
   \renewcommand*{\@checkend}[1]{%

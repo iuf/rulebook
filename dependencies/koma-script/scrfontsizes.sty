@@ -10,7 +10,7 @@
 %% scrkernel-fonts.dtx  (with options: `package,generator,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -42,7 +42,7 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2213 2015-10-03 12:59:03Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -64,19 +64,19 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2015/10/03 v3.19a KOMA-Script}%
+  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \ProvidesPackage{scrfontsizes}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package (font size file generator)]
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \ProcessOptions\relax
-%%% From File: $Id: scrkernel-fonts.dtx 2181 2015-08-24 09:30:25Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
 \@ifundefined{changefontsizes}{\RequirePackage{scrextend}}{}
 \newcommand*{\generatefontfile}[1]{%
   \ifstr{#1}{scrsize}{%
@@ -94,7 +94,7 @@
       class.}%
     \@@@generatefontfile
   }{%
-    \@ifnextchar [{\@generatefontfile{#1}}{\@@generatefontfile{#1}}%
+    \kernel@ifnextchar [{\@generatefontfile{#1}}{\@@generatefontfile{#1}}%
   }%
 }
 \newcommand*{\@generatefontfile}{}

@@ -11,7 +11,7 @@
 %% scrlayer.dtx  (with options: `package,trace,scrlayer,final')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2012-2014 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2012-2016 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -43,13 +43,13 @@
 %% find a complete unmodified copy of LaTeX2e at
 %% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (identify)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (identify)
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{scrlayer}[%
-  2015/10/03 v3.19a KOMA-Script
+  2016/06/14 v3.21 KOMA-Script
   package
   (defining layers and page styles)]
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (init)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
 \RequirePackage{scrkbase}[2013/03/05]
 \scr@ifundefinedorrelax{scrlayer@AtEndOfPackage}{%
   \AtEndOfPackage{\let\scrlayer@AtEndOfPackage\@firstofone}%
@@ -113,7 +113,7 @@
     \setlength{\footheight}{\baselineskip}
   \fi
 }
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (options)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
 \KOMA@key{markcase}{%
   \begingroup
     \KOMA@set@ncmdkey{markcase}{reserved@a}{%
@@ -265,7 +265,7 @@
 \KOMA@ifkey{draft}{scrlayer@draft}
 \KOMA@ifkey{forceoverwrite}{scrlayer@forceoverwrite}
 \KOMA@ifkey{autoremoveinterfaces}{scrlayer@autoremoveinterfaces}
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (body)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
 \KOMAProcessOptions\relax
 \newcommand*{\rightfirstmark}{\expandafter\@rightmark\firstmark\@empty\@empty}
 \newcommand*{\rightbotmark}{\expandafter\@rightmark\botmark\@empty\@empty}
@@ -386,7 +386,7 @@
   \let\@mkboth\@gobbletwo
 }
 \newcommand*{\automark}{%
-  \@ifstar{\@automark}{\manualmark\@automark}%
+  \kernel@ifstar{\@automark}{\manualmark\@automark}%
 }
 \newcommand*{\@automark}[2][]{%
   \ifstr{#2}{}{%
@@ -1393,7 +1393,7 @@
   }%
 }
 \newcommand*{\ForEachLayerOfPageStyle}{%
-  \@ifstar {\@s@ForEachLayerOfPageStyle}{\@ForEachLayerOfPageStyle}%
+  \kernel@ifstar {\@s@ForEachLayerOfPageStyle}{\@ForEachLayerOfPageStyle}%
 }
 \newcommand*{\@ForEachLayerOfPageStyle}[2]{%
   \begingroup
@@ -1449,7 +1449,7 @@
   \endgroup
 }
 \def\scr@layerbox(#1,#2)(#3,#4){%
-  \@ifnextchar [%]
+  \kernel@ifnextchar [%]
   {\scr@@layerbox(#1,#2)(#3,#4)}{\scr@@layerbox(#1,#2)(#3,#4)[]}%
 }
 \def\scr@@layerbox(#1,#2)(#3,#4)[#5]#6{%
@@ -2150,7 +2150,7 @@
   \@ifundefined{scrlayer@#1@onremove}{\@namedef{scrlayer@#1@onremove}{}}{}%
   \expandafter\l@addto@macro\csname scrlayer@#1@onremove\endcsname{#2}%
 }
-%%% From File: $Id: scrlayer.dtx 2172 2015-07-30 09:39:05Z kohm $ (final)
+%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (final)
 \DeclareNewPageStyleByLayers{@everystyle@}{}
 \RedeclarePageStyleByLayers{empty}{}
 %%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $

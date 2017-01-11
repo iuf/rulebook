@@ -7,10 +7,7 @@
 %% tocstyle.dtx  (with options: `package,trace,tocstyle')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2007-2013 by Markus Kohm <komascript(at)gmx.info>
-%% 
-%% Copyright (c) 1994-2007
-%% Markus Kohm and any individual authors listed elsewhere in this file.
+%% Copyright (c) 2007-2016 by Markus Kohm <komascript(at)gmx.info>
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -35,7 +32,7 @@
 %% English and German manuals are part of KOMA-Script bundle.
 %% ----------------------------------------------------------
 %% 
-%% The english manual is at `tocstyle.dtx', too.
+%% The english manual is in `tocstyle.dtx', too.
 %% 
 %% The KOMA-Script bundle (but not this file) was based upon the LaTeX2.09
 %% Script family created by Frank Neukam 1993 and the LaTeX2e standard
@@ -47,10 +44,10 @@
 %% EVERYTHING MAY CHANGE IN FUTURE!
 %% THERE IS NO SUPPORT, IF YOU USE THIS PACKAGE!
 %% 
-%%% From File: $Id: tocstyle.dtx 1977 2015-03-09 08:17:29Z kohm $
+%%% From File: $Id: tocstyle.dtx 2428 2016-04-12 10:31:07Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{tocstyle}
-  [2013/08/11 v0.2e-alpha KOMA-Script package (versatile toc styles)]
+  [2016/04/12 v0.2h-alpha KOMA-Script package (versatile toc styles)]
 \PackageWarningNoLine{tocstyle}{%
   THIS IS AN ALPHA VERSION!\MessageBreak
   USAGE OF THIS VERSION IS ON YOUR OWN RISK!\MessageBreak
@@ -312,42 +309,138 @@
   #1\csname autodot\endcsname
 }
 \AtBeginDocument{%
-  \ifcsname l@part\endcsname
+  \@ifpackageloaded{tocbasic}{%
+    \@ifpackagelater{tocbasic}{2016/03/01}{%
+      \PackageWarningNoLine{tocstyle}{%
+        Usage of `tocstyle' with new `tocbasic' detected.\MessageBreak
+        This is not an error! You can do this.\MessageBreak
+        Nevertheless, you should note, combining `tocstyle'\MessageBreak
+        with this version of `tocbasic' will break several\MessageBreak
+        features of `tocbasic'. You should use `tocstyle'\MessageBreak
+        features instead of `tocbasic' attributes for all\MessageBreak
+        entry changes you want.\MessageBreak
+        You may also get additional warnings because of\MessageBreak
+        redefined `\string\numberline'. Ignore them}%
+    }{}%
+  }{}%
+  \@ifpackageloaded{etoc}{%
+    \PackageWarningNoLine{tocstyle}{%
+      Usage of `tocstyle' with `etoc' detected.\MessageBreak
+      I suggest to use either `tocstyle' or `etoc'\MessageBreak
+      but not both of them together}%
+  }{}%
+  \@ifpackageloaded{titletoc}{%
+    \PackageWarningNoLine{tocstyle}{%
+      Usage of `tocstyle' with `titletoc' detected.\MessageBreak
+      I suggest to use either `tocstyle' or `titletoc'\MessageBreak
+      but not both of them together. I expect even\MessageBreak
+      error messages because of this combination}%
+  }{}%
+  \def\tocstyle@test@level{-1}%
+  \def\tocstyle@test@levelname{part}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@part{\tocstyle@l@define{part}{-1}}{}}%
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
+  \ifnum\tocstyle@test@level<\z@
+    \def\tocstyle@test@level{0}%
   \fi
-  \ifcsname l@chapter\endcsname
+  \def\tocstyle@test@levelname{chapter}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@chapter{\tocstyle@l@define{chapter}{0}}{}}%
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
+  \ifnum\tocstyle@test@level<\@ne
+    \def\tocstyle@test@level{1}%
   \fi
-  \ifcsname l@section\endcsname
+  \def\tocstyle@test@levelname{section}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@section{\tocstyle@l@define{section}{1}}{}}%
-  \fi
-  \ifcsname l@subsection\endcsname
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
+  \def\tocstyle@test@levelname{paragraph}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@subsection{\tocstyle@l@define{subsection}{2}}{}}%
-  \fi
-  \ifcsname l@subsubsection\endcsname
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
+  \def\tocstyle@test@level{1}%
+  \def\tocstyle@test@levelname{table}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@subsubsection{\tocstyle@l@define{subsubsection}{3}}{}}%
-  \fi
-  \ifcsname l@paragraph\endcsname
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
+  \def\tocstyle@test@level{1}%
+  \def\tocstyle@test@levelname{figure}%
+  \@whilesw\ifcsname l@\tocstyle@test@levelname\endcsname\fi{%
     \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@paragraph{\tocstyle@l@define{paragraph}{4}}{}}%
-  \fi
-  \ifcsname l@subparagraph\endcsname
-    \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@subparagraph{\tocstyle@l@define{subparagraph}{5}}{}}%
-  \fi
-  \ifcsname l@table\endcsname
-    \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@table{\tocstyle@l@define{table}{1}}{}}%
-  \fi
-  \ifcsname l@figure\endcsname
-    \setbox\@tempboxa\vbox{\hsize\maxdimen
-      \l@figure{\tocstyle@l@define{figure}{1}}{}}%
-  \fi
+      \let\normalcolor\relax
+      \let\color\@gobble
+      \edef\reserved@a{%
+        \expandafter\noexpand\csname l@\tocstyle@test@levelname\endcsname{%
+          \noexpand\tocstyle@l@define{\tocstyle@test@levelname}%
+                                     {\tocstyle@test@level}%
+        }{}%
+      }%
+      \reserved@a
+    }%
+    \edef\tocstyle@test@levelname{sub\tocstyle@test@levelname}%
+    \edef\tocstyle@test@level{\the\numexpr\tocstyle@test@level+1}%
+  }%
   \def\@tempa#1#2#3#4#5{%
     \ifnum #1>\c@tocdepth \else
       \vskip \z@ \@plus.2\p@
@@ -526,6 +619,13 @@
     \fi
   \fi
 }
+\AtBeginDocument{%
+  \if@filesw
+    \immediate\write\@auxout{%
+      \string\providecommand*\string\tocstyle@set@width[4]{}%
+    }%
+  \fi
+}
 \newcommand*{\tocstyleTOC}{}
 \newcommand*{\tocstyleAliasTOC}{}
 \newcommand*{\tocstyledepth}{}
@@ -535,7 +635,7 @@
 \newcommand*{\reactivatetocstyle}[1][]{%
   \expandafter\let\csname tocstyle@deactivated@#1\endcsname\relax}
 \newcommand*{\@settocfeature}[1][]{%
-  \@ifnextchar[ {\@@settocfeature[{#1}]}{\@@settocfeature[{#1}][]}
+  \kernel@ifnextchar[ {\@@settocfeature[{#1}]}{\@@settocfeature[{#1}][]}
 }
 \def\@@settocfeature[#1][#2]#3#4{%
   \typeout{exclude: \tocstyle@feature@excludelist}%
@@ -576,7 +676,7 @@
   \edef#1{\unexpanded\expandafter{#1#2}}%
 }%
 \newcommand*{\@settocstylefeature}{%
-  \@ifnextchar[ {\@settocfeature[]}{\@settocfeature[][]}%
+  \kernel@ifnextchar[ {\@settocfeature[]}{\@settocfeature[][]}%
 }
 \newcommand*{\settocstylefeature}{}
 \let\settocstylefeature\@settocstylefeature
@@ -624,10 +724,10 @@
   }%
 }
 \newcommand*{\newtocstyle}{%
-  \@ifnextchar [{\@newtocstyle}{\@newtocstyle[]}}
+  \kernel@ifnextchar [{\@newtocstyle}{\@newtocstyle[]}}
 \newcommand*{\@newtocstyle}{}
 \def\@newtocstyle[#1]{%
-  \@ifnextchar [{\@@newtocstyle[{#1}]}{\@newtocstyle[{#1}][]}}
+  \kernel@ifnextchar [{\@@newtocstyle[{#1}]}{\@newtocstyle[{#1}][]}}
 \newcommand*{\@@newtocstyle}{}
 \def\@@newtocstyle[#1][#2]#3#4{%
   \@ifundefined{tocstyle@style@#3}{%
@@ -664,7 +764,7 @@
         but there's no TOC style `#2' defined.}%
     }{%
       \def\settocfeature{%
-        \@ifnextchar[ %]
+        \kernel@ifnextchar[ %]
         {\@@settocfeature[{#1}]}{\@@settocfeature[{#1}][]}%
       }%
       \let\settocstylefeature\settocfeature
