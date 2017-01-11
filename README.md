@@ -1,5 +1,7 @@
 # IUF Rulebook
 
+[![Build Status](https://travis-ci.org/iuf/rulebook.svg?branch=2016_reorg_travis)](https://travis-ci.org/iuf/rulebook)
+
 The rulebook is written in LaTeX and version controlled with git. Find out more about the [Technology](https://github.com/iuf/rulebook/wiki/Technology).
 
 We also have some [Working Guidelines](https://github.com/iuf/rulebook/wiki).
@@ -46,3 +48,21 @@ Do this with **./install_hooks**. Build the document again and the information s
 
 To produce a PDF highlighting the changes, type **make diff OLDCOMMIT=2012 NEWCOMMIT=master**.
 OLDCOMMIT and NEWCOMMIT can be any git references. This will generate **out/diff.pdf**.
+
+# How to compile with Travis
+Simply push a commit with a tag. This creates a release at github and then travis automatically compiles the PDF(s) and publishes them with the release.
+
+For example:
+
+    git add -A
+    git commit -m "My commit message"
+    git tag "test-1"
+    git push && git push --tags
+
+The finished released and build can then be found at `https://github.com/iuf/latex-travis-ci/releases/tag/test-1`
+
+
+Please tag your build with the date and time. For example: `git tag "build-2015.09.05-18.24`
+
+# Gitinfo package  
+If the build is failing because the gitinfo2 package cannot be found, copy the `gitinfo2.sty` from `dependencies` into the `src` directory.

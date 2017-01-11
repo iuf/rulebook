@@ -1,13 +1,15 @@
-/out
-/po
-/src/iuf-rulebook-*
+/tmp
+/pdf
+/.tx/config
+gitHeadInfo.gin
+/.transifexrc
+!src/img/*.pdf
 
 *.texnicle
 *.aux
 *.toc
 *.ptc*
 *.pdf
-!src/img/*.pdf
 *.out
 *.blg
 *.bbl
@@ -16,5 +18,3 @@
 *.mtc*
 *.synctex.gz*
 *.DS_Store
-gitHeadInfo.gin
-

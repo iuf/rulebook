@@ -1,58 +1,79 @@
-PROJECT=iuf-rulebook
-TRANSIFEXPROJECT=rulebook.master
-IGNOREFORTRANSLATION=preamble
+SRCFILES=$(shell find src -type f)
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
-REPO=.
-
-SRCDIR=$(REPO)/src
-OUTDIR=$(REPO)/out
-PODIR=$(REPO)/po
-
-SRCFILES=$(shell find $(SRCDIR) -type f)
-
-OLDCOMMIT=2012
-NEWCOMMIT=master
-DIFFNAME=$(PROJECT)-diff-$(OLDCOMMIT)-$(NEWCOMMIT)
-
-PO4ACHARSETS=-M Utf-8 -L Utf-8
-LATEXARGS= -output-directory=$(OUTDIR) -interaction=nonstopmode -file-line-error
-
-.DELETE_ON_ERROR:
-
-pdf: $(OUTDIR)/$(PROJECT).pdf
-
-$(OUTDIR)/%.pdf $(OUTDIR)/%.aux $(OUTDIR)/%.idx: $(SRCDIR)/%.tex $(SRCFILES) | $(OUTDIR) 
-	TEXDIR=$(SRCDIR); \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS) -draftmode $< 2>&1 | tee $(OUTDIR)/`basename $<`.log && \
-	TEXINPUTS=$$TEXDIR: pdflatex $(LATEXARGS)            $< 2>&1 | tee $(OUTDIR)/`basename $<`.log; \
-
-diff: | $(OUTDIR)
-	rcs-latexdiff --no-pdf --no-open -vo $(SRCDIR)/$(DIFFNAME).tex src/$(PROJECT).tex $(OLDCOMMIT) $(NEWCOMMIT)
-	$(MAKE) $(OUTDIR)/$(DIFFNAME).pdf
-
-translated: update-translation | $(OUTDIR)
-	for file in `find $(SRCDIR)/$(PROJECT)-*.tex`; do \
-		$(MAKE) $(OUTDIR)/`basename $$file | sed 's/\.tex$$/\.pdf/'`; \
-	done
-
-update-translation: $(PODIR)/template.pot
-	tx push --source
-	tx pull --all
-	TEXINPUTS=$(SRCDIR): po4a --variable repo=$(REPO) $(PO4ACHARSETS) $(REPO)/po4a.cfg
-
-$(PODIR)/template.pot: $(SRCFILES) po4a.cfg | $(PODIR)
-	TEXINPUTS=$(SRCDIR): po4a-gettextize -f latex -m $(SRCDIR)/$(PROJECT).tex $(PO4ACHARSETS) -o 'exclude_include=$(IGNOREFORTRANSLATION)' -p $(PODIR)/template.pot
+# Help
+# target : normal-prerequesites | order-only-prerequesites
+# 	command
+#
+# updates in order-only-prerequesites do not trigger rebuilds
+#
+# target variable: $@
+# wildcard in target: $*
+# dependency variable: $<
 
 
-$(OUTDIR):
-	mkdir -p $(OUTDIR)
 
-$(PODIR):
-	mkdir -p $(PODIR)
 
+#
+# PUBLIC API
+#
+# See: https://github.com/iuf/rulebook/wiki/Build-&-Deploy
+#
+################################################################################
+
+
+#
+# make rulebook
+#
+# build the rulebook pdf
+rulebook: pdf/iuf-rulebook-$(BRANCH).pdf
+
+
+#
+# make diff
+#
+# output: pdf/iuf-rulebook-<version>-diff-<branch>.pdf
+#
+
+diff:
+	scripts/build/diff-all.sh
+
+#
+# make translation
+#
+# Generates a translated version of the rulebook
+#
+# Parameters:
+#   LOCALE = the language-tag for the translated version
+#
+# TODO: change translated to translation ?
+# TODO: make translation-all task
+translation: setup
+	scripts/build/translation.sh
+# TODO
+# make tailored
+#
+# Parameters:
+#   AUDIENCE = Takes a comma separated list of arguments. Valid items: competitor, organizer
+#   PART = Takes a comma separated list of arguments. Valid items: TODO !
+#   LOCALE = the language-tag for a translated version of the above
+#
+
+
+#
+# PRIVATE API
+#
+# tasks used internally by public tasks
+#
+################################################################################
+
+#
+# make rulebook
+#
+# output: iuf-rulebook-<version>.pdf
+#
+pdf/iuf-rulebook-$(BRANCH).pdf: $(SRCFILES)
+	scripts/build/pdf.sh src $(BRANCH)
 
 clean:
-	rm -rf $(OUTDIR)
-	rm -rf $(PODIR)
-	rm -rf $(SRCDIR)/$(PROJECT)-*
-
+	rm -rf pdf tmp

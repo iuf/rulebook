@@ -1,52 +1,34 @@
+% when po4a (translation) fails, because of unknown environment, add it here:
 % po4a: environment longtable {}
+% po4a: environment judging_items {}
 % po4a: separator longtable "(?:&|\\\\\\\\|\\\\hline)"
-
 
 \input{preamble}
 
 \begin{document}
-\begin{titlepage}
-\centering
-\ \\
-\vspace{5cm}
-{\Huge 2013 Competition Rulebook}
-\vspace{5mm}
-
-\includegraphics{iuf-logo}
-
-\vspace{5mm}
-{\huge International Unicycling Federation}
-
-\vspace{5mm}
-{\Large Final Version \quad September, 2013}
-
-\vspace{3mm}
-{\large with Cyclocross addition \quad June, 2014}
-
-\vspace{45mm}
-Prepared by the IUF Rulebook Committee.
-
-\vspace{5mm}
-{\small Copyright \copyright\ 2013 by the International Unicycling Federation, Inc. All rights reserved.}
-\small{Revision: \gitHash, \gitCommitterDate}
-
-\end{titlepage}
+\input{titlepage}
 
 \doparttoc
+\thispagestyle{empty}
 \tableofcontents
 
 \mainmatter
-\include{01_general}
-\include{02_track_field}
-\include{03_road_racing}
-\include{04_muni}
-\include{05_freestyle}
-\include{06_flatland_street}
-\include{07_trials}
-\include{08_hockey}
-\include{09_basketball}
-\include{10_skill_levels}
-\backmatter
-\include{credits}
+\input{chapters/01_general}
+\input{chapters/02_track_races}
+\input{chapters/03_track_other}
+\input{chapters/04_road_races}
+\input{chapters/05_muni_races}
+\input{chapters/06_muni_cyclocross}
+\input{chapters/07_freestyle_artistic}
+\input{chapters/08_freestyle_standards}
+\input{chapters/09_freestyle_xstyle}
+\input{chapters/10_urban_flatland}
+\input{chapters/11_urban_street}
+\input{chapters/12_urban_trials}
+\input{chapters/13_urban_jumps}
+\input{chapters/14_team_hockey}
+\input{chapters/15_team_basketball}
 
-\end{document} % Have to typset (ctrl-t) twice (or three times) to get everything to work
+\backmatter
+\input{credits}
+\end{document}

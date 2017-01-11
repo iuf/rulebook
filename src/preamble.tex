@@ -1,64 +1,132 @@
 \documentclass[a4paper,oneside,parskip=half,numbers=noenddot]{scrbook}
-\textwidth=14.7cm
-\textheight=22.1cm
-%\hoffset=5.8754pt % enable if using letterpaper
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+
+%%% Page Layout %%%
+\textwidth=14.7cm % these two commands make the page fit in a box 
+\textheight=22.1cm % ... that works on both letter and A4 paper
+%\hoffset=5.8754pt % enable if using letterpaper to center document on page
+
+
+%%% Preamble things that must happen first %%%
+
+
+%%% Basic Setup %%%
+\pdfminorversion=7 % use a more current pdf version to support better graphics inclusions
+
+
+%%% Language support %%%
+\usepackage[utf8]{inputenc} % use utf-8 encoding for better language support
+\usepackage[T1]{fontenc} % uses 8-bit font encoding for better character support
+\usepackage{lmodern} % use lmodern font for better character support and a prettier font
+
+
+%%% Additional Simple Packages %%%
+\usepackage{color} % for latexdiff
+\usepackage[normalem]{ulem} % for latexdiff
+
+
+%%% Graphics Packages %%%
+\usepackage{graphicx}
+\graphicspath{{img/}}
+\usepackage{wrapfig}
+\usepackage{pict2e}
+
+
+%%% User defined commands and associated packages %%%
+\usepackage{comment}
+\excludecomment{comment-2016}
+
+\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use \unit{km} in math mode for better units
+
+\usepackage{framed}
+\newcommand{\oldrule}[1]{} % don't display oldrule (next line is displayed oldrule)
+%\newcommand{\oldrule}[1]{\framebox{#1}} % displays oldrule references in a nice box
+
+
+%%% GitInfo %%%
+\usepackage{gitinfo2}
+% gitinfo2 package can be found in the dependencies directory
+% git hooks must also be installed and these are found in the scripts directory
+
+
+%%% Tabular environment changes and packages %%%
+\usepackage{array} % basic table package, "a must use"
 \usepackage{longtable}
 \usepackage{multicol}
-\usepackage[shortlabels]{enumitem}
-\setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt}
-% \usepackage[nenglish]{babel}
+\usepackage{multirow}
+
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}} % use column type 'P' instead of 'p' for non-justified paragraph text in a table - used primarily in the freestyle judging sections
 
 
-% turning off part numbering in the backmatter
-% parts will still go to the TOC
-\makeatletter
-\g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
-\makeatother
-
-
-
-% Numberings, table of Contents, bookmarks
-\usepackage{hyperref} % clickable table of contents, index in pdf files (must be loaded before minitoc)
-\usepackage{minitoc} % for table of contents per part
-\usepackage{remreset} % for removal of counter resets
-\usepackage[numbered]{bookmark} % customize PDF bookmarks
-\renewcommand{\mtcgapbeforeheads}{0pt}
-\renewcommand{\mtcgapafterheads}{0pt}
-
-
-%TOC customization
-\usepackage{tocstyle} % prettier TOC
-\usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
-\settocstylefeature [-1] {entryvskip} {15pt}
-\settocstylefeature [0] {entryvskip} {10pt}
-\settocstylefeature [0] {entryhook} {\hspace{18pt} }
-\mtcsettitle{parttoc}{Contents} %renames the part TOC to match main TOC
-\usepackage[nouppercase]{scrpage2} %better headings without uppercase TOC heading
-\pagestyle{scrheadings}
-
-\newcommand\singlechapter[1]{%if a part only has a single chapter in it use \singlechapter{} otherwise use the normal \chapter{}
-\begin{mtchideinmaintoc}
-\addstarredchapter{#1}
-\chapter*{#1}
-\markright{\thepart\ #1}
-\end{mtchideinmaintoc}}
-
-
-\setcounter{tocdepth}{0} % only includes parts and chapters (not sections) in main TOC
-\mtcsetdepth{parttoc}{1} % only includes chapters and sections (not sub or subsubsections) in part TOCs
-\setcounter{secnumdepth}{3} % makes subsubsections numbered
+%%% Additional basic custimizations %%%
 \renewcommand{\thepart}{\arabic{part}} % arabic part numbering
-\renewcommand{\thechapter}{\arabic{part}\alph{chapter}} % make chapters numbered with part and then letter
-\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections
+\renewcommand{\thechapter}{\arabic{part}\Alph{chapter}} % make chapters numbered with part and then letter
+%\renewcommand{\thesection}{\arabic{part}.\arabic{section}} % replace chapter number with part number in sections %% used prior to reorg
+
+\setcounter{secnumdepth}{3} % makes subsubsections numbered
+
+\usepackage[shortlabels]{enumitem} % allows list customization here below
+\setlist{itemsep=-1mm, topsep=-1pt, partopsep=0pt} % customize spacing around lists
+
+\newlist{judging_items}{itemize}{1} %redefine itemize for the freestyle judging grid to fit
+\setlist[judging_items]{label=\textbullet,leftmargin=*, labelsep=0.7mm,itemsep=-1mm, topsep=-6pt, partopsep=-5pt}
+
+
+\RedeclareSectionCommands[
+  beforeskip=-\baselineskip,
+  afterskip=.5\baselineskip]{section,subsection,subsubsection}
+% this command is supposed to replace titlesec's titlespacing option
+% the desired before/after spacing was {12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+
+
+
+%%% Customize Part/Chapter/Section/Page numbering %%%
+\usepackage{remreset} % allows the resets here below
 \makeatletter
 \@addtoreset{chapter}{part} % reset chapter numbering for each part
 \@addtoreset{section}{part} % reset section numbering for each part
-\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
+%\@removefromreset{section}{chapter} % don't reset section numbering in new chapters
 \makeatother
+
+% % turning off part numbering in the backmatter
+% % parts will still go to the TOC
+% \makeatletter
+% \g@addto@macro\backmatter{\setcounter{secnumdepth}{-2}}
+% \makeatother
+
+%don't reset page numbers ever (specifically not after frontmatter)
+\makeatletter
+\def\pagenumbering#1{%
+  \gdef\thepage{\csname @#1\endcsname \c@page}}
+\makeatother
+
+
+%%% Headings %%%
+\usepackage[markcase=ignoreuppercase,autooneside]{scrlayer-scrpage} %better headings without uppercase TOC heading
+\pagestyle{scrheadings}
+\clearscrheadfoot %clear all header and footer styles to allow custimization
+\cfoot[\pagemark]{\pagemark} %pagenumbers in footer
+\makeatletter
+\let\Oldpart\part
+\newcommand{\parttitle}{}
+\renewcommand{\part}[1]{\Oldpart{#1}\renewcommand{\parttitle}{#1}}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand*{\chapterpagestyle}{headings} %display headers on first page of chapters
+
+\chead[]{
+  \ifnum\value{chapter}>0
+    \thepart \ \parttitle -- \leftmark
+  \else
+    \thepart \ \parttitle 
+  \fi
+  }
+\makeatother
+
+
+%%% Hyperref %%%
+% must be loaded as late as possible in preamble, with a few things after
+\usepackage{hyperref} % clickable table of contents, index in pdf files 
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -66,25 +134,27 @@
     linkcolor=black,
     urlcolor=black
 }
-% If you get the error: "Argument of \contentsline has an extra }"
-% This is because hyperref and minitoc don't work perfectly together.
-% Just continue to typeset ignoring all errors.
-% Un-commenting the following line should supress errors.
-% \batchmode
-% Make sure to re-comment this line after typeseting to see future errors.
-% Then typeset again and the error should be gone.
-% This has to be done for each tex file (chapter) that contains a TOC.
 
 
+%%% Must be loaded after hyperref %%%
+\usepackage[numbered]{bookmark} % customize PDF bookmarks 
+\usepackage{minitoc} % for table of contents per part
 
-\newcommand{\unit}[1]{\ensuremath{\, \mathrm{#1}}} % use \unit{km} in math mode for better units
 
-\usepackage{graphicx}
-\graphicspath{{img/}}
-\usepackage{wrapfig}
-\usepackage{pict2e}
+%%% TOC custimization %%%
+%% all of this comes after minitoc is loaded %%
+\setcounter{tocdepth}{-1} % only includes parts and chapters (not sections) in main TOC
+\mtcsetdepth{parttoc}{1} % only includes chapters and sections (not subsections) in part TOCs
 
-% Documentation of gitinfo:
-% http://ftp.fernuni-hagen.de/ftp-dir/pub/mirrors/www.ctan.org/macros/latex/contrib/gitinfo/gitinfo.pdf
-%Simple instructions: copy "hooks" directory into ".git" directory
-\usepackage{gitinfo}
+\usepackage[tocindentauto]{tocstyle} % prettier TOC
+\usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
+\settocstylefeature [-1] {entryvskip} {15pt}
+\settocstylefeature [0] {entryvskip} {10pt}
+\settocstylefeature [0] {entryhook} {\hspace{18pt} }
+
+\renewcommand{\mtcgapbeforeheads}{0pt}
+\renewcommand{\mtcgapafterheads}{0pt}
+\mtcsettitle{parttoc}{Contents} %renames the part TOC to match main TOC
+
+\usepackage{tocloft} % package for below command
+\renewcommand{\cftsecnumwidth}{3em} %changes spacing between number and name on sections in TOC (and minitocs) to help with long section numbers (i.e. 1C.14)
