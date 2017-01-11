@@ -1,6 +1,6 @@
 # IUF Rulebook
 
-[![Build Status](https://travis-ci.org/iuf/rulebook.svg?branch=travis)](https://travis-ci.org/iuf/rulebook)
+[![Build Status](https://travis-ci.org/iuf/rulebook.svg?branch=2016_reorg_travis)](https://travis-ci.org/iuf/rulebook)
 
 The rulebook is written in LaTeX and version controlled with git. Find out more about the [Technology](https://github.com/iuf/rulebook/wiki/Technology).
 
