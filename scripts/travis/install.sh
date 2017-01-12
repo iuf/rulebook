@@ -22,8 +22,7 @@ install_latexdiff() {
     current=`pwd`
     mkdir -p $HOME/local/latexdiff/bin
     mkdir -p $HOME/local/latexdiff/man/man1
-    git clone --depth 1 https://github.com/ftilmann/latexdiff.git
-    cp latexdiff/latexdiff-vc $HOME/local/latexdiff
+    cp -a dependencies/latexdiff/* $HOME/local/latexdiff/bin
     cd $current
 }
 
