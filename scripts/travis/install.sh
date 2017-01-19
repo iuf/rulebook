@@ -28,11 +28,13 @@ install_latexdiff() {
 
 install_gitinfo() {
     cp -a dependencies/gitinfo2/* src
+    cp -a dependencies/gitinfo2/* .
     ./scripts/install-git-hooks.sh
 }
 
 install_koma-script() {
     cp -a dependencies/koma-script/* src
+    cp -a dependencies/koma-script/* .
 }
 
 install_transifex_client() {
