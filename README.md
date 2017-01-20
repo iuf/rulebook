@@ -13,8 +13,11 @@ The output files can be found at **unicycling.org/files/temp/upload/iuf-rulebook
 The `$$$` varies depending on the branch and diff-branches specified.
 
 The current 2017_draft branch produces outputs at:
+
 https://unicycling.org/files/temp/upload/iuf-rulebook-2017_draft.pdf
+
 With the most recent diff at:
+
 https://unicycling.org/files/temp/upload/iuf-rulebook-2017_draft-diff-2016_reorg_diff.pdf
 
 
