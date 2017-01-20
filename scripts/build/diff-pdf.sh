@@ -10,10 +10,7 @@ mkdir -p $OUT
 mkdir -p pdf
 
 LATEXARGS=" -output-directory=$OUT -file-line-error -halt-on-error"
-# LATEXARGS=" -output-directory=$OUT -interaction=batchmode -file-line-error -halt-on-error"
 
-echo 'LaTeX PDF DIFF Build Starts below' && echo -en 'travis_fold:start:latex_diff\\r'
-TEXINPUTS=$SRC: openout_any=a pdflatex $LATEXARGS -draftmode $SRC/$FILE_NAME.tex
-TEXINPUTS=$SRC: openout_any=a pdflatex $LATEXARGS            $SRC/$FILE_NAME.tex
+TEXINPUTS=$SRC: openout_any=a latexmk -pdf -quiet $LATEXARGS $SRC/$FILE_NAME.tex #latemk 4.24 available
+# remove -quiet if the build is failing to figure out where
 mv $OUT/$FILE_NAME.pdf pdf/$FILE_NAME.pdf;
-echo -en 'travis_fold:end:latex_diff\\r'

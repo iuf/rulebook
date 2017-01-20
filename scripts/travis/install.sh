@@ -14,6 +14,9 @@ install() {
     # latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
     install_latexdiff
 
+    # La­texmk com­pletely au­to­mates the pro­cess of gen­er­at­ing a LaTeX doc­u­ment
+    install_latexmk
+
     # handles online translations on transifex.com
     install_transifex_client
 }
@@ -23,6 +26,15 @@ install_latexdiff() {
     mkdir -p $HOME/local/latexdiff/bin
     mkdir -p $HOME/local/latexdiff/man/man1
     cp -a dependencies/latexdiff/* $HOME/local/latexdiff/bin
+    cd $current
+}
+
+install_latexmk() {
+    current=`pwd`
+    mkdir -p $HOME/local/latexmk/bin
+    mv dependencies/latexmk/latexmk.pl $HOME/local/latexmk/bin/latexmk
+    cd $HOME/local/latexmk/bin/
+    chmod +x latexmk
     cd $current
 }
 

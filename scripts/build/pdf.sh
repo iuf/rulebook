@@ -10,10 +10,7 @@ mkdir -p $OUT
 mkdir -p pdf
 
 LATEXARGS=" -output-directory=$OUT -file-line-error -halt-on-error"
-# LATEXARGS=" -output-directory=$OUT -interaction=batchmode -file-line-error -halt-on-error"
 
-echo 'LaTeX PDF DIFF Build Starts below' && echo -en 'travis_fold:start:latex\\r'
-TEXINPUTS=$SRC: openout_any=a pdflatex $LATEXARGS -draftmode $SRC/iuf-rulebook.tex
-TEXINPUTS=$SRC: openout_any=a pdflatex $LATEXARGS            $SRC/iuf-rulebook.tex
+TEXINPUTS=$SRC: openout_any=a latexmk -pdf -quiet $LATEXARGS $SRC/iuf-rulebook.tex #latemk 4.24 available
+# remove -quiet if the build is failing to figure out where
 mv $OUT/iuf-rulebook.pdf pdf/iuf-rulebook-$FILE_SUFFIX.pdf;
-echo -en 'travis_fold:end:latex\\r'

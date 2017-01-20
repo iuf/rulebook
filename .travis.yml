@@ -34,7 +34,7 @@ before_install:
 install:
   - git checkout $TRAVIS_BRANCH # check out current branch - Else we are in detached HEAD
   - scripts/travis/install.sh
-  - export PATH=$PATH:$HOME/local/latexdiff/bin
+  - export PATH=$PATH:$HOME/local/latexdiff/bin:$HOME/local/latexmk/bin
 
 script:
   - scripts/travis/script.sh
