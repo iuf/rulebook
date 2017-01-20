@@ -1,6 +1,6 @@
 #!/bin/bash -e
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-CHAPTERDIR=src
+CHAPTERDIR=src/chapters
 CHAPTERS=$(ls $CHAPTERDIR | grep -P "^\\d\\d_.*\\.tex$")
 
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
