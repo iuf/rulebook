@@ -44,7 +44,7 @@ done
 for LANG in $LANGUAGES; do
     mkdir -p tmp/out_$LANG
 
-    TEXINPUTS=tmp/src_$LANG: latexmk -pdf $LATEXARGS -output-directory=./tmp/out_$LANG tmp/src_$LANG/iuf-rulebook.tex
+    TEXINPUTS=tmp/src_$LANG: latexmk -pdf -quiet $LATEXARGS -output-directory=./tmp/out_$LANG tmp/src_$LANG/iuf-rulebook.tex
     # remove -quiet if the build is failing to figure out where
     mv tmp/out_$LANG/iuf-rulebook.pdf pdf/iuf-rulebook-$BRANCH-$LANG.pdf
 done
