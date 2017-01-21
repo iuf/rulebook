@@ -8,7 +8,9 @@
 
 
 %%% Preamble things that must happen first %%%
-
+\input{toggle/setup} % setup toggles for conditional building
+\input{toggle/toggles} % input toggles from makefile
+\input{toggle/logic} % logic for toggles, this must come after the input of toggles so that latexmk change change the defaults if needed.
 
 %%% Basic Setup %%%
 \pdfminorversion=7 % use a more current pdf version to support better graphics inclusions
@@ -18,7 +20,6 @@
 \usepackage[utf8]{inputenc} % use utf-8 encoding for better language support
 \usepackage[T1]{fontenc} % uses 8-bit font encoding for better character support
 \usepackage{lmodern} % use lmodern font for better character support and a prettier font
-
 
 %%% Additional Simple Packages %%%
 \usepackage{color} % for latexdiff

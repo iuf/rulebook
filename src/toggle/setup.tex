@@ -1,0 +1,33 @@
+\usepackage{etoolbox}
+\newtoggle{competitor}
+\newtoggle{officials}
+\newtoggle{organizer}
+
+\newtoggle{competitor_files}
+\newtoggle{official_files}
+\newtoggle{organizer_files}
+
+\newtoggle{std_skills_list}
+
+\newtoggle{general}
+\newtoggle{track}
+\newtoggle{road}
+\newtoggle{muni}
+\newtoggle{freestyle}
+\newtoggle{urban}
+\newtoggle{team_sports}
+
+% defaults:
+\togglefalse{competitor}
+\togglefalse{officials}
+\toggletrue{organizer} % default include all chapters
+
+\togglefalse{std_skills_list} % exclude the full skills list by default
+
+\toggletrue{general}
+\toggletrue{track}
+\toggletrue{road}
+\toggletrue{muni}
+\toggletrue{freestyle}
+\toggletrue{urban}
+\toggletrue{team_sports}
