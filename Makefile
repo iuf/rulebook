@@ -11,7 +11,9 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # wildcard in target: $*
 # dependency variable: $<
 
+.DEFAULT_GOAL := help # make help is default
 
+.PHONY: help # required for the built-in documentation provided by make help
 
 
 #
@@ -26,7 +28,7 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # make rulebook
 #
 # build the rulebook pdf
-rulebook: pdf/iuf-rulebook-$(BRANCH).pdf
+rulebook: pdf/iuf-rulebook-$(BRANCH).pdf ## The most basic option: Creates the IUF Rulebook with the current branch name amended to the filename.
 
 
 #
@@ -35,7 +37,7 @@ rulebook: pdf/iuf-rulebook-$(BRANCH).pdf
 # output: pdf/iuf-rulebook-<version>-diff-<branch>.pdf
 #
 
-diff:
+diff: ## Creates an output pdf that compares the current rulebook with the branches listed in the diff-branches file
 	scripts/build/diff-all.sh
 
 #
@@ -48,7 +50,7 @@ diff:
 #
 # TODO: change translated to translation ?
 # TODO: make translation-all task
-translation: setup
+translation: setup ## Creates translated versions of the current rulebook using translations from Transifex
 	scripts/build/translation.sh
 # TODO
 # make tailored
@@ -75,5 +77,13 @@ translation: setup
 pdf/iuf-rulebook-$(BRANCH).pdf: $(SRCFILES)
 	scripts/build/pdf.sh src $(BRANCH)
 
-clean:
+clean: ## Removes all files created by the build process, except any output pdfs
+	rm -rf tmp
+
+clean-all: ## Removes all files created by the build process, including the output pdfs
 	rm -rf pdf tmp
+
+# Adds documentation text for any target
+# Use on the line where the target is declared with double hash (##)
+help: ## Shows this documentation
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
