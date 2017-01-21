@@ -114,24 +114,8 @@
 \makeatother
 
 
-%%% Hyperref %%%
-% must be loaded as late as possible in preamble, with a few things after
-\usepackage{hyperref} % clickable table of contents, index in pdf files 
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
-}
-
-
-%%% Must be loaded after hyperref %%%
-\usepackage[numbered]{bookmark} % customize PDF bookmarks 
-\usepackage{minitoc} % for table of contents per part
-
-
 %%% TOC custimization %%%
+\usepackage[tight,k-tight]{minitoc} % for table of contents per part
 %% all of this comes after minitoc is loaded %%
 \setcounter{tocdepth}{-1} % only includes parts and chapters (not sections) in main TOC
 \mtcsetdepth{parttoc}{1} % only includes chapters and sections (not subsections) in part TOCs
@@ -149,3 +133,19 @@
 \usepackage{tocloft} % package for below command
 \renewcommand{\cftchapnumwidth}{1.8em} %changes spacing between number and name on chapters in TOC (and minitocs) to help with long chapers numbers
 \renewcommand{\cftsecnumwidth}{3em} %changes spacing between number and name on sections in TOC (and minitocs) to help with long section numbers (i.e. 1C.14)
+
+
+%%% Hyperref %%%
+% must be loaded as late as possible in preamble, with a few things after
+\usepackage[hypertexnames=false]{hyperref} % clickable table of contents, index in pdf files, the package option hypertexnames=false is required because we reset chapter counts for every part
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+
+%%% Must be loaded after hyperref %%%
+\usepackage[numbered]{bookmark} % customize PDF bookmarks 
