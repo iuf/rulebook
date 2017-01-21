@@ -1,6 +1,6 @@
 # IUF Rulebook
 
-[![Build Status](https://travis-ci.org/iuf/rulebook.svg?branch=2017_draft)](https://travis-ci.org/iuf/rulebook)
+[![Build Status](https://travis-ci.org/iuf/rulebook.svg?branch=2017)](https://travis-ci.org/iuf/rulebook)
 
 The rulebook is written in LaTeX and version controlled with git. Find out more about the [Technology](https://github.com/iuf/rulebook/wiki/Technology).
 
@@ -12,11 +12,11 @@ All commits push to Github are automatically complied with [Travis CI](https://t
 The output files can be found at **unicycling.org/files/temp/upload/iuf-rulebook-$$$.pdf**.
 The `$$$` varies depending on the branch and diff-branches specified.
 
-The current 2017_draft branch produces outputs at: 
-https://unicycling.org/files/temp/upload/iuf-rulebook-2017_draft.pdf
+The current 2017_draft branch produces outputs at:
+https://unicycling.org/files/temp/upload/iuf-rulebook-2017.pdf
 
 With the most recent diff at: 
-https://unicycling.org/files/temp/upload/iuf-rulebook-2017_draft-diff-2016_reorg_diff.pdf
+https://unicycling.org/files/temp/upload/iuf-rulebook-2017-diff-2016_reorg_diff.pdf
 
 
 
