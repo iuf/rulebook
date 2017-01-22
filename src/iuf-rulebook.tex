@@ -14,39 +14,39 @@
 
 \mainmatter
 \iftoggle{general}{
-  \input{chapters/01_general}
+  \subimport{chapters/}{01_general}
 }{}
 
 \iftoggle{track}{
-  \input{chapters/02_track_races}
-  \input{chapters/03_track_other}
+  \subimport{chapters/}{02_track_races}
+  \subimport{chapters/}{03_track_other}
 }{}
 
 \iftoggle{road}{
-  \input{chapters/04_road_races}
+  \subimport{chapters/}{04_road_races}
 }{}
 
 \iftoggle{muni}{
-  \input{chapters/05_muni_races}
-  \input{chapters/06_muni_cyclocross}
+  \subimport{chapters/}{05_muni_races}
+  \subimport{chapters/}{06_muni_cyclocross}
 }{}
 
 \iftoggle{freestyle}{
-  \input{chapters/07_freestyle_artistic}
-  \input{chapters/08_freestyle_standards}
-  \input{chapters/09_freestyle_xstyle}
+  \subimport{chapters/}{07_freestyle_artistic}
+  \subimport{chapters/}{08_freestyle_standards}
+  \subimport{chapters/}{09_freestyle_xstyle}
 }{}
 
 \iftoggle{urban}{
-  \input{chapters/10_urban_flatland}
-  \input{chapters/11_urban_street}
-  \input{chapters/12_urban_trials}
-  \input{chapters/13_urban_jumps}
+  \subimport{chapters/}{10_urban_flatland}
+  \subimport{chapters/}{11_urban_street}
+  \subimport{chapters/}{12_urban_trials}
+  \subimport{chapters/}{13_urban_jumps}
 }{}
 
 \iftoggle{team_sports}{
-\input{chapters/14_team_hockey}
-\input{chapters/15_team_basketball}
+\subimport{chapters/}{14_team_hockey}
+\subimport{chapters/}{15_team_basketball}
 }{}
 
 \backmatter
