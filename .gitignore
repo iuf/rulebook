@@ -4,6 +4,8 @@
 gitHeadInfo.gin
 /.transifexrc
 !src/img/*.pdf
+src/*/*diff*.tex
+src/*diff*.tex
 
 *.texnicle
 *.aux
