@@ -1,0 +1,18 @@
+
+\iftoggle{competitor}{ % if competitor, only include competitor files
+  \toggletrue{competitor_files}
+  \togglefalse{official_files}
+  \togglefalse{organizer_files}
+}{}
+
+\iftoggle{officials}{ %if officials, inclue competitor and officials files
+  \toggletrue{competitor_files}
+  \toggletrue{official_files}
+  \togglefalse{organizer_files}
+}{}
+
+\iftoggle{organizer}{ %if organizer, inclue all files
+  \toggletrue{competitor_files}
+  \toggletrue{official_files}
+  \toggletrue{organizer_files}
+}{}
