@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+set -e # POSIX version of bash -e
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 CHAPTERDIR=src/chapters
 CHAPTERS=$(ls $CHAPTERDIR | grep -P "^\\d\\d_.*\\.tex$")

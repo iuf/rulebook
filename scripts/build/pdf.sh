@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+set -e # POSIX version of bash -e
 
 SRC=$1
 FILE_SUFFIX=$2

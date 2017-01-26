@@ -1,4 +1,5 @@
-#/bin/bash -e
+#!/usr/bin/env bash
+set -e # POSIX version of bash -e
 
 DIFFBRANCH=$1
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
