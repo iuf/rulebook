@@ -15,7 +15,7 @@ function clean_up {
   # Perform program exit housekeeping
   if [ -d "tmp/src_original" ]; then
    rsync -a  tmp/src_original/ src #put back original on completion or error
-   echo 
+   echo
    echo "Cleaning up..."
    rm -rf tmp/src_original
   fi
@@ -35,6 +35,7 @@ mkdir -p tmp/src_original/
 mkdir -p tmp/src_diff_$DIFFBRANCH/$SHORTCHAPTERDIR
 mkdir -p tmp/out_diff_$DIFFBRANCH
 
+#TODO: cp
 rsync -a  src/ tmp/src_original # copy original source before starting changes
 
 echo "Starting find and replace changes for diff..."
@@ -69,6 +70,9 @@ rm -rf $SRC/titlepage-old* # remove tmp files created with latexdiff
 # copy all source files to tmp except chapters (because they're already there):
 rsync -az --ignore-existing --exclude $SHORTCHAPTERDIR src/ tmp/src_diff_$DIFFBRANCH/
 # --ignore-existing because the diff'ed titlepage is already in the tmp diff directory
+
+# add latexdiff preamble code to existing preamble:
+cat dependencies/latexdiff-preamble.tex >> tmp/src_diff_"$DIFFBRANCH"/preamble.tex
 
 # compile the actual pdf and put it in the pdf dir:
 TEXINPUTS=tmp/src_diff_$DIFFBRANCH: latexmk -pdf -quiet $LATEXARGS -output-directory=tmp/out_diff_$DIFFBRANCH tmp/src_diff_$DIFFBRANCH/iuf-rulebook.tex
