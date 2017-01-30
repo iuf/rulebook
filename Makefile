@@ -50,7 +50,7 @@ diff: ## Creates an output pdf that compares the current rulebook with the branc
 #
 # TODO: change translated to translation ?
 # TODO: make translation-all task
-translation: setup ## Creates translated versions of the current rulebook using translations from Transifex
+translation: ## Creates translated versions of the current rulebook using translations from Transifex
 	scripts/build/translation.sh
 # TODO
 # make tailored
@@ -87,3 +87,8 @@ clean-all: ## Removes all files created by the build process, including the outp
 # Use on the line where the target is declared with double hash (##)
 help: ## Shows this documentation
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+
+# put this somewhere when we're ready
+#echo -n "" > toggles.tex #empties the toggles file, so that new things can be added
+#echo "\\\\togglefalse{long}" > toggles.tex
