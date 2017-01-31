@@ -34,6 +34,7 @@ for CHAPTER in $CHAPTERS; do
     SLUG=$(echo $CHAPTER | sed -e "s/[0-9][0-9]_\(.*\)\.tex/\1/")
     echo $SLUG
     echo $CHAPTERDIR/$CHAPTER
+    echo -e '0r config/po4a-escape.tex\nw' | ed $CHAPTERDIR/$CHAPTER # add po4a escape commands to the beginning of each chapter
     TEXINPUTS=$CHAPTERDIR po4a-gettextize --format latex --master $CHAPTERDIR/$CHAPTER --po tmp/po/${SLUG}/template.pot $PO4ACHARSETS
 
     tx set --auto-local --resource=rulebook-$BRANCH.$SLUG "tmp/po/${SLUG}/<lang>.po" --type PO --source-lang en --source-file tmp/po/${SLUG}/template.pot --execute
