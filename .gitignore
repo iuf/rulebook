@@ -3,15 +3,16 @@
 /.tx/config
 gitHeadInfo.gin
 /.transifexrc
-!src/img/*.pdf
 src/*/*diff*.tex
 src/*diff*.tex
+
+*.pdf
+!src/img/*.pdf
 
 *.texnicle
 *.aux
 *.toc
 *.ptc*
-*.pdf
 *.out
 *.blg
 *.bbl
