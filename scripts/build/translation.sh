@@ -62,7 +62,6 @@ ls tmp/src_translation/chapters
 for CHAPTER in $CHAPTERS; do
     SLUG=$(echo $CHAPTER | sed -e "s/[0-9][0-9]_\(.*\)\.tex/\1/")
 
-    #TODO what's this texinput for?
     TEXINPUTS=./tmp/src_translation/chapters po4a --variable chapter_file=$CHAPTER --variable chapter_slug=$SLUG $PO4ACHARSETS config/po4a.cfg
 done
 
