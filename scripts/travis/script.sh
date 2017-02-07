@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
-make rulebook
+echo -en 'travis_fold:start:build_rulebook\\r'
+scripts/build/rulebook.sh
+echo -en 'travis_fold:end:build_rulebook\\r'
 echo # insert blank line in travis output
 echo -en 'travis_fold:start:build_diffs\\r'
 scripts/build/diff-all.sh

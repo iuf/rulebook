@@ -28,7 +28,8 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 # make rulebook
 #
 # build the rulebook pdf
-rulebook: pdf/iuf-rulebook-$(BRANCH).pdf ## The most basic option: Creates the IUF Rulebook with the current branch name amended to the filename.
+rulebook: ## The most basic option: Creates the IUF Rulebook with the current branch name amended to the filename.
+		scripts/build/rulebook.sh
 
 
 #
@@ -68,14 +69,6 @@ translation: ## Creates translated versions of the current rulebook using transl
 # tasks used internally by public tasks
 #
 ################################################################################
-
-#
-# make rulebook
-#
-# output: iuf-rulebook-<version>.pdf
-#
-pdf/iuf-rulebook-$(BRANCH).pdf: $(SRCFILES)
-	scripts/build/pdf.sh src $(BRANCH)
 
 clean: ## Removes all files created by the build process, except any output pdfs
 	rm -rf tmp
