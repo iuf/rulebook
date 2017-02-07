@@ -37,6 +37,8 @@ for CHAPTER in $CHAPTERS; do
     echo -e '0r config/po4a-escape.tex\nw' | ed -s $CHAPTERDIR/$CHAPTER # add po4a escape commands to the beginning of each chapter
     TEXINPUTS=$CHAPTERDIR po4a-gettextize --format latex --master $CHAPTERDIR/$CHAPTER --po tmp/po/${SLUG}/template.pot $PO4ACHARSETS
 
+    sed -i.bak 's~charset=CHARSET~charset=UTF-8~' tmp/po/${SLUG}/template.pot # fix charset because po4a isn't setting it correctly
+
     tx set --auto-local --resource=rulebook-$BRANCH.$SLUG "tmp/po/${SLUG}/<lang>.po" --type PO --source-lang en --source-file tmp/po/${SLUG}/template.pot --execute
 done
 
@@ -70,7 +72,7 @@ done
 for LANG in $LANGUAGES; do
     mkdir -p tmp/out_$LANG
 
-    TEXINPUTS=tmp/src_$LANG: latexmk -pdf -quiet $LATEXARGS -output-directory=./tmp/out_$LANG tmp/src_$LANG/iuf-rulebook.tex
+    TEXINPUTS=tmp/src_$LANG: latexmk -pdf -quiet $LATEXARGS -output-directory=tmp/out_$LANG tmp/src_$LANG/iuf-rulebook.tex
     # remove -quiet if the build is failing, to figure out why
     mv tmp/out_$LANG/iuf-rulebook.pdf pdf/iuf-rulebook-$BRANCH-$LANG.pdf
 done
