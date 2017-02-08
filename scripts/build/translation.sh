@@ -21,9 +21,9 @@ EOF
 }
 
 # Defaults variables:
-
-VERBOSE="" # Defaults to not verbose script
-CLEAN=""
+VERBOSE_FLAG="" # Defaults to not verbose script
+VERBOSE=1
+CLEAN_FLAG=""
 DEBUG=1
 
 
@@ -34,9 +34,10 @@ while getopts :hvcd opt; do
         show_help
         exit 0
         ;;
-    v)  VERBOSE="-v" # If verbose, give me some more information when I run this script
+    v)  VERBOSE_FLAG="-v" # If verbose, give me some more information when I run this script
+        VERBOSE=0
         ;;
-    c)  CLEAN="-c" 
+    c)  CLEAN_FLAG="-c" 
         ;;
     d)  DEBUG=0 
         ;;
@@ -49,7 +50,7 @@ done
 shift "$((OPTIND-1))" # Shift off the options and optional --.
 
 if [[ $DEBUG -eq 0 ]]; then
-    rm -rf tmp/po # remove all po files incase other chapters are there
+    rm -rf tmp # clean up tmp dir incase the problem is there
     CHAPTERS="01_general.tex" # only translate the first chater
 fi
 
@@ -115,5 +116,5 @@ done
 #TODO: language specific titlepage
 
 for LANG in $LANGUAGES; do
-    scripts/build/pdf.sh $VERBOSE $CLEAN -s tmp/src_$LANG -o iuf-rulebook-$BRANCH-$LANG.pdf iuf-rulebook.tex
+    scripts/build/pdf.sh $VERBOSE_FLAG $CLEAN_FLAG -s tmp/src_$LANG -o iuf-rulebook-$BRANCH-$LANG.pdf iuf-rulebook.tex
 done
