@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
+echo "Building translation pdf(s)"
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 CHAPTERDIR=src/chapters # set this first so we can create the chapters list
 CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")

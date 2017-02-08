@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
+echo "Building rulebook pdf"
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Usage info
