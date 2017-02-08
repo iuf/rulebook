@@ -5,19 +5,18 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 CHAPTERDIR=src/chapters # set this first so we can create the chapters list
 CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")
 
-CHAPTERS="01_general.tex" # enable when debugging to only translate first chapter (requires 'make clean' before running 'make translation')
-
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
 
 # Usage info
 show_help() {
 cat << EOF
-Usage: ${0##*/} [-hvc]
+Usage: ${0##*/} [-hvcd]
 Build the translated IUF Rulebook for the current branch with traslation from Transifex.
 
     -h          display this help and exit
     -v          verbose (do not run latexmk quietly)
     -c          clean mode: clean up all latex temp files before building pdf
+    -d          debug mode: only translate the first chapter, because its faster
 EOF
 }
 
@@ -25,10 +24,11 @@ EOF
 
 VERBOSE="" # Defaults to not verbose script
 CLEAN=""
+DEBUG=1
 
 
 OPTIND=1 # Safe code
-while getopts :hvc opt; do
+while getopts :hvcd opt; do
   case $opt in
     h)
         show_help
@@ -38,6 +38,8 @@ while getopts :hvc opt; do
         ;;
     c)  CLEAN="-c" 
         ;;
+    d)  DEBUG=0 
+        ;;
     \?)
         show_help >&2
         exit 1
@@ -45,6 +47,11 @@ while getopts :hvc opt; do
   esac
 done
 shift "$((OPTIND-1))" # Shift off the options and optional --.
+
+if [[ $DEBUG -eq 0 ]]; then
+    rm -rf tmp/po # remove all po files incase other chapters are there
+    CHAPTERS="01_general.tex" # only translate the first chater
+fi
 
 rm -rf .tx
 tx init --host=https://www.transifex.com
