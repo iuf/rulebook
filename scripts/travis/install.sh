@@ -59,7 +59,7 @@ git_fetch_all_branches() {
     current_branch=$(git rev-parse --abbrev-ref HEAD)
 
     git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-    git fetch
+    git fetch --depth=3
 
     # track all remote branches
     for remote in `git branch -r | grep -v /HEAD`; do

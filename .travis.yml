@@ -3,6 +3,9 @@ branches:
     - road_racing_rewrite
     - 2016_reorg_diff
 
+git:
+  depth: 3
+
 notifications:
   email: false
 
