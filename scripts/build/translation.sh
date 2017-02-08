@@ -4,8 +4,6 @@ set -e # POSIX version of bash -e
 echo "Building translation pdf(s)"
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-CHAPTERDIR=src/chapters # set this first so we can create the chapters list
-CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")
 
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
 
@@ -62,7 +60,6 @@ verbose_cmd() {
 
 if [[ $DEBUG -eq 0 ]]; then
     rm -rf tmp # clean up tmp dir incase the problem is there
-    CHAPTERS="01_general.tex" # only translate the first chater
 fi
 
 rm -rf .tx
@@ -76,7 +73,13 @@ mkdir -p tmp/src_translation
 
 rsync -az src/ tmp/src_translation/
 
-CHAPTERDIR=tmp/src_translation/chapters # now update the chapter dir to the new location
+CHAPTERDIR=tmp/src_translation/chapters
+cp config/base_strings.tex $CHAPTERDIR/00_base_strings.tex # copy the basic strings to the tmp dir too, so we can upload it
+CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")
+
+if [[ $DEBUG -eq 0 ]]; then
+    CHAPTERS="01_general.tex" # only translate the first chater
+fi
 
 # replace iftoggles that have a true and a false option
 sed -i.bak 's~^[[:blank:]]*\\iftoggle{[[:alnum:]_][[:alnum:]_]*}{\\input{\([[:alnum:]_\/][[:alnum:]_\/]*\)}}{\\input{\([[:alnum:]_\/][[:alnum:]_\/]*\)}}~\\input{\1}\\input{\2}~' $CHAPTERDIR/*.tex
