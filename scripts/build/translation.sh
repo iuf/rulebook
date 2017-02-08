@@ -5,8 +5,46 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 CHAPTERDIR=src/chapters # set this first so we can create the chapters list
 CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")
 
+CHAPTERS="01_general.tex" # enable when debugging to only translate first chapter (requires 'make clean' before running 'make translation')
+
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
-LATEXARGS="-file-line-error -halt-on-error"
+
+# Usage info
+show_help() {
+cat << EOF
+Usage: ${0##*/} [-hvc]
+Build the translated IUF Rulebook for the current branch with traslation from Transifex.
+
+    -h          display this help and exit
+    -v          verbose (do not run latexmk quietly)
+    -c          clean mode: clean up all latex temp files before building pdf
+EOF
+}
+
+# Defaults variables:
+
+VERBOSE="" # Defaults to not verbose script
+CLEAN=""
+
+
+OPTIND=1 # Safe code
+while getopts :hvc opt; do
+  case $opt in
+    h)
+        show_help
+        exit 0
+        ;;
+    v)  VERBOSE="-v" # If verbose, give me some more information when I run this script
+        ;;
+    c)  CLEAN="-c" 
+        ;;
+    \?)
+        show_help >&2
+        exit 1
+        ;;
+  esac
+done
+shift "$((OPTIND-1))" # Shift off the options and optional --.
 
 rm -rf .tx
 tx init --host=https://www.transifex.com
@@ -70,9 +108,5 @@ done
 #TODO: language specific titlepage
 
 for LANG in $LANGUAGES; do
-    mkdir -p tmp/out_$LANG
-
-    TEXINPUTS=tmp/src_$LANG: latexmk -pdf -quiet $LATEXARGS -output-directory=tmp/out_$LANG tmp/src_$LANG/iuf-rulebook.tex
-    # remove -quiet if the build is failing, to figure out why
-    mv tmp/out_$LANG/iuf-rulebook.pdf pdf/iuf-rulebook-$BRANCH-$LANG.pdf
+    scripts/build/pdf.sh $VERBOSE $CLEAN -s tmp/src_$LANG -o iuf-rulebook-$BRANCH-$LANG.pdf iuf-rulebook.tex
 done
