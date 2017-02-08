@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
-echo "Building rulebook pdf"
-
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # Usage info
@@ -41,5 +39,7 @@ while getopts :hvc opt; do
   esac
 done
 shift "$((OPTIND-1))" # Shift off the options and optional --.
+
+echo "Building rulebook pdf" # for travis
 
 scripts/build/pdf.sh $VERBOSE $CLEAN -o iuf-rulebook-$BRANCH.pdf -s src iuf-rulebook.tex

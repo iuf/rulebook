@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
-echo "Building diff pdf(s)"
-
 show_help() {
 cat << EOF
 Usage: ${0##*/} [-hvcd]
