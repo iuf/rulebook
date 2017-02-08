@@ -74,6 +74,17 @@ verbose_cmd() {
     fi
 }
 
+function clean_up {
+  # Perform program exit housekeeping
+  mkdir -p tmp/latexmk
+  rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf 
+  echo
+  echo "Cleaning up..."
+  exit
+}
+
+trap clean_up INT TERM SIGHUP SIGINT SIGTERM
+
 OUT=$(echo $OUT | sed -e "s~\(.*\)\.pdf~\1~") # remove pdf extention from output file name if it's there, so that latexmk can use it as the basename
 
 mkdir -p $OUTDIR # make outdir (default: pdf/) if it doesn't exist
@@ -99,5 +110,4 @@ fi
 
 TEXINPUTS=$SRC: openout_any=a verbose_cmd latexmk -pdf $QUIET $CLEAN -file-line-error -halt-on-error $OUTARG $SRC/$IN
 
-mkdir -p tmp/latexmk
-rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf out of the output dir and to a tmp dir
+clean_up
