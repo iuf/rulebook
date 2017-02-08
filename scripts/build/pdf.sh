@@ -65,6 +65,14 @@ else
   exit 1
 fi
 
+verbose_cmd() {
+    # append 'verbose_cmd' before any command and it's output is silenced unless verbose is true
+    if [[ $VERBOSE -eq 1 ]]; then
+        "$@" > /dev/null
+    else
+        "$@"
+    fi
+}
 
 OUT=$(echo $OUT | sed -e "s~\(.*\)\.pdf~\1~") # remove pdf extention from output file name if it's there, so that latexmk can use it as the basename
 
@@ -89,7 +97,7 @@ if [[ $VERBOSE -eq 0 ]]; then
   echo "Starting LaTeX Make:"
 fi
 
-TEXINPUTS=$SRC: openout_any=a latexmk -pdf $QUIET $CLEAN -file-line-error -halt-on-error $OUTARG $SRC/$IN
+TEXINPUTS=$SRC: openout_any=a verbose_cmd latexmk -pdf $QUIET $CLEAN -file-line-error -halt-on-error $OUTARG $SRC/$IN
 
 mkdir -p tmp/latexmk
 rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf out of the output dir and to a tmp dir
