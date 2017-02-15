@@ -30,7 +30,7 @@ while getopts :hvc opt; do
         ;;
     v)  VERBOSE="-v" # If verbose, give me some more information when I run this script
         ;;
-    c)  CLEAN="-c" 
+    c)  CLEAN="-c"
         ;;
     \?)
         show_help >&2

@@ -53,7 +53,7 @@ while getopts :hvcd opt; do
     v)  VERBOSE_FLAG="-v"
         VERBOSE=0
         ;;
-    c)  CLEAN_FLAG="-c" 
+    c)  CLEAN_FLAG="-c"
         ;;
     d)  DEBUG_FLAG="-d"
         DEBUG=0
@@ -144,4 +144,3 @@ cat dependencies/latexdiff-preamble.tex >> tmp/src_diff_"$DIFFBRANCH"/preamble.t
 scripts/build/pdf.sh $VERBOSE_FLAG $CLEAN_FLAG -s tmp/src_diff_$DIFFBRANCH -o iuf-rulebook-$BRANCH-diff-$DIFFBRANCH.pdf iuf-rulebook.tex
 
 clean_up
-

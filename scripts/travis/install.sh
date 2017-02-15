@@ -71,4 +71,3 @@ git_fetch_all_branches() {
 }
 
 install
-

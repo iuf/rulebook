@@ -37,9 +37,9 @@ while getopts :hvcd opt; do
     v)  VERBOSE_FLAG="-v" # If verbose, give me some more information when I run this script
         VERBOSE=0
         ;;
-    c)  CLEAN_FLAG="-c" 
+    c)  CLEAN_FLAG="-c"
         ;;
-    d)  DEBUG=0 
+    d)  DEBUG=0
         ;;
     \?)
         show_help >&2

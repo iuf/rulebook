@@ -36,7 +36,7 @@ while getopts :hvcs:o: opt; do
     v)  QUIET="" # If verbose, don't print quiet in latexmk args
         VERBOSE=0 # If verbose, give me some more information when I run this script
         ;;
-    c)  CLEAN="-gg" 
+    c)  CLEAN="-gg"
         ;;
     o)  OUT=$OPTARG
         ;;
@@ -53,14 +53,14 @@ shift "$((OPTIND-1))" # Shift off the options and optional --.
 #Set input variable, with good error logic:
 if [[ $# -eq 0 ]]; then
   echo "Error: Input file not supplied"
-  echo 
+  echo
   show_help
   exit 1
 elif [[ $# -eq 1 ]]; then
   IN=$1
 else
   echo "Error: Too many arguments"
-  echo 
+  echo
   show_help
   exit 1
 fi
@@ -77,7 +77,7 @@ verbose_cmd() {
 function clean_up {
   # Perform program exit housekeeping
   mkdir -p tmp/latexmk
-  rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf 
+  rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf
   echo
   echo "Cleaning up..."
   exit

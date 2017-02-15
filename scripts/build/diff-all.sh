@@ -32,7 +32,7 @@ while getopts :hvcd opt; do
     v)  VERBOSE_FLAG="-v"
         VERBOSE=0
         ;;
-    c)  CLEAN_FLAG="-c" 
+    c)  CLEAN_FLAG="-c"
         ;;
     d)  DEBUG_FLAG="-d"
         DEBUG=0
