@@ -43,8 +43,8 @@ install:
 script:
   - scripts/travis/script.sh
 
-after_success:
-  - scripts/travis/after-success.sh
+after_script:
+  - scripts/travis/after.sh
 
 env:
   global:
