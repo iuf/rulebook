@@ -1,6 +1,7 @@
 branches:
   except:
     - road_racing_rewrite
+    - 2016_reorg_diff
 
 notifications:
   email: false
