@@ -112,7 +112,7 @@ verbose_cmd tx push --source
 echo "Done."
 # download all translated strings from transifex
 echo "Pulling from transifex..."
-verbose_cmd tx pull --all
+verbose_cmd tx pull --all #TODO: -- mode reviewed
 echo "Done."
 
 # extracts the list of languages by looking at one chapter's po-files
@@ -135,7 +135,7 @@ for CHAPTER in $CHAPTERS; do
     TEXINPUTS=./tmp/src_translation/chapters po4a --variable chapter_file=$CHAPTER --variable chapter_slug=$SLUG $PO4ACHARSETS config/po4a.cfg
 done > /dev/null
 
-#TODO: language specific titlepage
+#TODO: language specific titlepage and preamble
 
 for LANG in $LANGUAGES; do
     echo "Building pdf for $LANG"
