@@ -83,6 +83,8 @@ fi
 
 # replace iftoggles that have a true and a false option
 sed -i.bak 's~^[[:blank:]]*\\iftoggle{[[:alnum:]_][[:alnum:]_]*}{\\input{\([[:alnum:]_\/][[:alnum:]_\/]*\)}}{\\input{\([[:alnum:]_\/][[:alnum:]_\/]*\)}}~\\input{\1}\\input{\2}~' $CHAPTERDIR/*.tex
+# replace iftoggles for standard skills list and only include the empty list
+sed -i.bak 's~\\input{[[:alnum:]_][[:alnum:]_]*\/std_skills_list}~ ~' $CHAPTERDIR/*.tex
 #replace iftoggles that only have a true option
 sed -i.bak 's~^[[:blank:]]*\\iftoggle{[[:alnum:]_][[:alnum:]_]*}{\\input{\([[:alnum:]_\/][[:alnum:]_\/]*\)}}{}~\\input{\1}~' $CHAPTERDIR/*.tex
 
