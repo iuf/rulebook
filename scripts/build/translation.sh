@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e # POSIX version of bash -e
 
-echo "Building translation pdf(s)"
-
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
@@ -10,13 +8,14 @@ PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
 # Usage info
 show_help() {
 cat << EOF
-Usage: ${0##*/} [-hvcd]
+Usage: ${0##*/} [-hvcdt]
 Build the translated IUF Rulebook for the current branch with traslation from Transifex.
 
     -h          display this help and exit
     -v          verbose (do not run latexmk quietly)
     -c          clean mode: clean up all latex temp files before building pdf
     -d          debug mode: only translate the first chapter, because its faster
+    -t          travis mode: do some things if running on travis ci
 EOF
 }
 
@@ -25,10 +24,11 @@ VERBOSE_FLAG="" # Defaults to not verbose script
 VERBOSE=1
 CLEAN_FLAG=""
 DEBUG=1
+TRAVIS=1
 
 
 OPTIND=1 # Safe code
-while getopts :hvcd opt; do
+while getopts :hvcdt opt; do
   case $opt in
     h)
         show_help
@@ -41,6 +41,8 @@ while getopts :hvcd opt; do
         ;;
     d)  DEBUG=0
         ;;
+    t)  TRAVIS=0
+        ;;
     \?)
         show_help >&2
         exit 1
@@ -48,6 +50,15 @@ while getopts :hvcd opt; do
   esac
 done
 shift "$((OPTIND-1))" # Shift off the options and optional --.
+
+function finish_script {
+  if [[ $TRAVIS -eq 0 ]]; then
+      echo -en 'travis_fold:end:build_translations\\r'
+  fi
+  exit
+}
+
+trap finish_script INT TERM SIGHUP SIGINT SIGTERM
 
 verbose_cmd() {
     # append 'verbose_cmd' before any command and it's output is silenced unless verbose is true
@@ -60,6 +71,12 @@ verbose_cmd() {
 
 if [[ $DEBUG -eq 0 ]]; then
     rm -rf tmp # clean up tmp dir incase the problem is there
+fi
+
+if [[ $TRAVIS -eq 0 ]]; then
+    echo -en 'travis_fold:start:build_translations\\r'
+    echo ""
+    echo "Building translation pdf(s)"
 fi
 
 rm -rf .tx
@@ -143,3 +160,5 @@ for LANG in $LANGUAGES; do
     echo "Building pdf for $LANG"
     scripts/build/pdf.sh $VERBOSE_FLAG $CLEAN_FLAG -s tmp/src_$LANG -o iuf-rulebook-$BRANCH-$LANG.pdf iuf-rulebook.tex
 done
+
+finish_script

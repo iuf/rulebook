@@ -101,8 +101,6 @@ mkdir -p tmp/out_diff_$DIFFBRANCH
 #TODO: cp
 rsync -a  src/ tmp/src_original # copy original source before starting changes
 
-echo "Building diff pdf(s)" # for travis
-
 verbose_cmd echo "Starting find and replace changes for diff..."
 
 # replace iftoggles that have a true and a false option with only the true option

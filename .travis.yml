@@ -41,7 +41,9 @@ install:
   - export PATH=$PATH:$HOME/local/latexdiff/bin:$HOME/local/latexmk/bin
 
 script:
-  - scripts/travis/script.sh
+  - scripts/build/rulebook.sh -t
+  - scripts/build/diff-all.sh -t
+  - scripts/build/translation.sh -t
 
 after_script:
   - scripts/travis/after.sh
