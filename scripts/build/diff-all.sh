@@ -51,6 +51,12 @@ else
   DIFFBRANCHES=$(cat diff-branches)
 fi
 
+if [ -z "$DIFFBRANCHES" ]; then
+    echo "There are no branches to diff agaist."
+    exit 1
+fi
+
+
 if [[ $VERBOSE -eq 0 ]]; then
   echo "Diffing on branches:"
   echo $DIFFBRANCHES
