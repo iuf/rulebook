@@ -11,35 +11,35 @@ Some organizational and administrative rule changes have been omitted from this 
 
 The changes below are listed by chapter in the rulebook.
 
-##1 General
+## 1 General
 #### Awards
 Equitable awards
 
-##2 and 3 Track: Racing and Other
+## 2 & 3 Track: Racing and Other
 
-##4 Road Racing
+## 4 Road Racing
 
-##5 and 6 Mountain Unicycling: Races and Cyclocross
+## 5 & 6 Mountain Unicycling: Races and Cyclocross
 
-##7 Artistic Freestyle
+## 7 Artistic Freestyle
 
-##8 and 9 Freestyle: Standard Skill and X-Style
-No substantial changes were made.
+## 8 & 9 Freestyle: Standard Skill and X-Style
+No substantial rule changes were made.
 
-##10 Flatland
+## 10 Flatland
 
-##11 Street
-Edits only
+## 11 Street
+Street and Flatland share many rules. Thus, many of the similar Street rules underwent a content edit. No substantial rule changes were made.
 
-##12 Trials
+## 12 Trials
 
-##13 Jumps
+## 13 Jumps
 
-##14 Hockey
-Here's a list of changes
+## 14 Hockey
+Here's a list of changes:
 - 1
 - 2
 - 3
 
-##15 Basketball
-No substantial changes were made. The rules have not changed but it has been updated to list a 24+ Class unicycle.
+## 15 Basketball
+No substantial rule changes were made. The definition of allowable unicycles for Basketball has been updated to match the new unicycle class rules in chapter 1, defined as 24+ Class.
