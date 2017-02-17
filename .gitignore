@@ -9,6 +9,18 @@ src/*diff*.tex
 *.pdf
 !src/img/*.pdf
 
+/*.lco
+/*.sty
+/*.hak
+/*.cls
+/*.clo
+
+src/*.lco
+src/*.sty
+src/*.hak
+src/*.cls
+src/*.clo
+
 *.texnicle
 *.aux
 *.toc
