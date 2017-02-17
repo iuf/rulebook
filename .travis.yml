@@ -22,13 +22,10 @@ addons:
   apt:
     packages:
       - ncftp
-      - dvipng # TODO: do we need this?
-      - lmodern
       - texlive-latex-base
       - texlive-latex-recommended
       - texlive-latex-extra
-      - texlive-fonts-recommended
-      - texlive-fonts-extra
+      - lmodern
       - po4a
       # - texlive-extra-utils # texfot
 
