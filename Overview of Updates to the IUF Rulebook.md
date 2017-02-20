@@ -36,10 +36,35 @@ Street and Flatland share many rules. Thus, many of the similar Street rules und
 ## 13 Jumps
 
 ## 14 Hockey
-Here's a list of changes:
-- 1
-- 2
-- 3
+Here is the summary of the most important changes:
+- The maximum outer diameter of the wheel is 640 mm (24+ Class) which should allow the use of virtually any commercially available 24 inch tire and rim combination.
+
+- When executing a free shot or a 6.5 m, the ball shall be hit with the
+   stick, not dragged, flicked or lifted on the stick.
+
+- A 6.5 m is awarded if an attacking player is fouled in the opposition
+   goal area while in a strong position to score and is also awarded if an attacking
+   player is fouled when moving towards the opposition goal with a single
+   opponent in front.
+
+- A 6.5 m awarded at the end of, or after a time period has ended, is
+   still executed but play does not continue after an unsuccessful shot.
+
+- Guidelines are now provided explaining when to send a player off the
+   field for two minutes, five minutes or for the remainder of the game.
+
+- If a team starts to play before the Referee’s whistle, the previous
+   Referee ruling is repeated.
+
+- High stick: The blade of the stick must always be below the players own hips and
+   the hips of all players in the vicinity who might be endangered.
+
+- If a referee is hit by the ball, the game is only interrupted if the
+   contact has changed the course of play to benefit either team. In this
+   case, the game is resumed with a face-off.
+
+- New referee hand signs are included for "SUB and SIB", "obstacle" and
+   "body contact".
 
 ## 15 Basketball
 No substantial rule changes were made. The definition of allowable unicycles for Basketball has been updated to match the new unicycle class rules in chapter 1, defined as 24+ Class.
