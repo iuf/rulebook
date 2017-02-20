@@ -79,7 +79,7 @@ function clean_up {
   mkdir -p tmp/latexmk
   rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf
   echo
-  echo "Cleaning up..."
+  echo "Cleaning up after latexmk..."
   exit
 }
 
