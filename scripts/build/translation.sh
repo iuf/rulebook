@@ -79,6 +79,8 @@ if [[ $TRAVIS -eq 0 ]]; then
     echo "Building translation pdf(s)"
 fi
 
+rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be left over from the diff build
+
 rm -rf .tx
 echo "Configuring Transifex..."
 verbose_cmd tx init --host=https://www.transifex.com

@@ -71,10 +71,10 @@ translation: ## Creates translated versions of the current rulebook using transl
 ################################################################################
 
 clean: ## Removes all files created by the build process, except any output pdfs
-	rm -rf tmp
+	rm -rf tmp src/*/*diff*.tex src/*diff*.tex
 
 clean-all: ## Removes all files created by the build process, including the output pdfs
-	rm -rf pdf tmp
+	rm -rf pdf tmp src/*/*diff*.tex src/*diff*.tex
 
 # Adds documentation text for any target
 # Use on the line where the target is declared with double hash (##)

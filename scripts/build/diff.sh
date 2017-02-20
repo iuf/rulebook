@@ -11,12 +11,13 @@ EXCLUDE_TEXTCMDS="part,chapter,section,subsection,subsubsection,iftoggle,comment
 
 function clean_up {
   # Perform program exit housekeeping
+  echo
+  echo "Cleaning up after $DIFFBRANCH diff build..."
   if [ -d "tmp/src_original" ]; then
    rsync -a  tmp/src_original/ src #put back original on completion or error
-   echo
-   echo "Cleaning up..."
    rm -rf tmp/src_original
   fi
+  rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be left over from the diff build
   exit
 }
 
