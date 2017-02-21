@@ -14,7 +14,7 @@ function clean_up {
   echo
   echo "Cleaning up after $DIFFBRANCH diff build..."
   if [ -d "tmp/src_original" ]; then
-   rsync -a  tmp/src_original/ src #put back original on completion or error
+   rsync -ua  tmp/src_original/ src #put back original on completion or error
    rm -rf tmp/src_original
   fi
   rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be left over from the diff build

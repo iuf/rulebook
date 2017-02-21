@@ -82,6 +82,11 @@ if [[ $VERBOSE -eq 0 ]]; then
 fi
 
 for DIFFBRANCH in $DIFFBRANCHES; do
+    if [[ $TRAVIS -eq 1 ]]; then
+      echo "Checking if diff branch exists locally and fetching if not..."
+      git fetch origin $DIFFBRANCH:$DIFFBRANCH # make sure diffbranch is available locally if we're not on travis
+      echo "Done."
+    fi
     scripts/build/diff.sh $VERBOSE_FLAG $CLEAN_FLAG $DEBUG_FLAG $DIFFBRANCH
 done
 
