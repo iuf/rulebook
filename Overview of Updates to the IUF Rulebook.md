@@ -158,6 +158,9 @@ Competitors must provide their music in a type that is supported, and has been a
 #### Minimum Judge Age
 The minimum required age for judges is now 14 (instead of 15).
 
+#### Acoustic Signals
+The only acoustic signal made as part of a Freestyle performance will be at the end of the routine, if a routine exceed the time limit.
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
