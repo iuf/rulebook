@@ -5,43 +5,44 @@ After publication of the 2017 rulebook, on the [IUF Publications webpage](https:
 
 As always, as stated in *1B.3 Knowing The Rules*, you are obligated to know the updated IUF rules and reading this document does not serve as a replacement for reading the new rulebook. This document simply wishes to give a quick but thorough list of the differences.
 
-TODO Talk about the reorg.
+Prior to changes made by the 2016 IUF Rulebook Committee, the whole rulebook has been reorganzied. In the reorganization process, no rules were changed. A [full write-up](https://unicycling.org/2016/10/07/iuf-rulebook-reorganization/) of the proccess and the new structure can be found on the IUF Blog. A very simple explanation of the reorganization processes is that each chapter is now split up into four subchapters:  
+Overview  
+Competitor Rules  
+Judges and Officials Rules  
+Event Organizer Rules  
 
 Some organizational and administrative rule changes have been omitted from this document.
 
-The changes below are listed by chapter in the rulebook.
+The changes below are listed by chapter in the reorganized rulebook.
 
 ## 1 General
 #### Awards
-Conditions have been added to ensure equitable awards between genders (male and female), classes (e.g. Standard and Unlimited), and events (e.g. Trials and Road Racing). The host must also provide a "Personal Certificate" to each competitor with a summary of their results.
+Conditions have been added to ensure equitable awards between genders (male and female), classes (e.g. Standard and Unlimited), and events (e.g. Trials and Road Racing). The host must also make a "Personal Certificate" available to each competitor with a summary of their results.
 
 #### Protests
-The rules around allowable evidence for protests has been updated and clarified. Specifically, the rules around official and unofficial video sources has been changed. The Chief Referee can now choose to use private photos and videos as evidence in the case of a protest.
+The rules around allowable evidence for protests have been updated and clarified. Specifically, the rules about official and unofficial video sources has been changed. The Chief Referee can now choose to use private photos and videos as evidence in the case of a protest.
 
-#### Gender
-TODO
-
-### Wheel Size Classes Definition
+#### Wheel Size Classes Definition
 A new system for describing wheel sizes for all IUF events has been created. This definition is used throughout the rulebook. The definitions of "Standard Unicycle" and "Unlimited Unicycle" have also been edited slightly for clarity and consistency with this definition. In addition, if an unlimited unicycle has multiple wheels, it must not be possible to ride the unicycle if more than one of the wheels are touching the ground.
 
 
-| Unicycle Class  	| Max Diameter 	| Min Crank Length 	| Transmission 	|
-|-----------------	|--------------	|------------------	|--------------	|
-| 16  Class        	| 418mm        	| 89mm             	| standard     	|
-| 20  Class        	| 518mm        	| 100mm             | standard     	|
-| 24  Class        	| 618mm        	| 125mm             | standard     	|
-| 24+ Class        	| 640mm        	| No limit          | standard     	|
-| 29  Class        	| 778mm        	| No limit          | standard     	|
-| Unlimited Class 	| No limit     	| No limit         	| unlimited    	|
+| Unicycle Class  	| Max Diameter 	| Min Crank Length | Transmission |
+|-----------------	|--------------	|------------------|--------------|
+| 16  Class        	| 418mm        	| 89mm             | standard     |
+| 20  Class        	| 518mm        	| 100mm            | standard     |
+| 24  Class        	| 618mm        	| 125mm            | standard     |
+| 24+ Class        	| 640mm        	| No limit         | standard     |
+| 29  Class        	| 778mm        	| No limit         | standard     |
+| Unlimited Class 	| No limit     	| No limit         | unlimited    |
 
 #### Wheel Walking Definition
 This definition has been clarified. Wheel walking can be always be done with one or both feet.
 
-## 2 & 3 Track: Racing and Other
-The new unicycle class definitions have been applied to these chapters. However no requirements on wheel sizes or crank lengths have changed.
+## 2 Track Racing
+The new unicycle class definitions have been applied to this chapter. However no requirements for wheel sizes or crank lengths have changed.
 
 #### Protests
-The rules around protests have been update. Specifically details around the timing of submitting and responding to a protest have been updated.
+The rules around protests have been updated. Specifically details around the timing of submitting and responding to a protest have been updated.
 
 #### Wheel Walk Race
 Consistent with Chapter 1, wheel walking can be done with one or both feet.
@@ -56,11 +57,14 @@ Secondly, an option is added that not only the hindered rider, but also other ri
 
 #### Finishes
 Apart from a few edits for clarity, the essential changes are two-fold:
-1.  The judgement of "in control" is exercised when the front (as opposed to the rear) of the wheel crosses the finish line.
+ 
+1. The judgement of "in control" is exercised when the front (as opposed to the rear) of the wheel crosses the finish line.  
 2. "In control" in wheel walking is no longer defined as having one foot on the wheel, rather, the new criterion is that wheel walking is still occurring when crossing the finish.
 
+## 3 Track: Other
+
 #### Slow Races: Penalty Rules
-The host can now choose to make the penalty rules optional. This is particularly relevant when using a reliable objective detection system.
+The host can now choose to make the penalty rules optional. This is particularly relevant when using a reliable objective (i.e. digital) detection system.
 
 #### Slow Races: Qualification and Final Rounds, and Age Group
 The rules have been updated to allow for more flexibility in the setup of the competition rounds and age groups for non-Unicon events.
@@ -100,7 +104,7 @@ There are now minimum course requirements for an Uphill race at Unicon.
 No changes.
 
 #### Course Requirements: Cross Country
-The minimum course requirements for Cross Country at Unicon has been updated. The required muni elite course should be 15-25km and last 1 hour 30 minutes for the fastest riders.
+The minimum course requirements for Cross Country at Unicon have been updated. The required muni elite course should be 15-25km and last about 1 hour 30 minutes for the fastest riders.
 
 #### Publishing Course Details
 A GPS track of courses must be published at least one month prior to the competition.
@@ -108,7 +112,7 @@ A GPS track of courses must be published at least one month prior to the competi
 #### Route Signaling
 Specific rules about how and when courses must be marked have been added to the rulebook. There are three options for marking courses:
 
-1. Pointing or chalk marking
+1. Painting or chalk marking
 2. Using bands (barrier tape)
 3. Any other clear signaling method
 
@@ -124,7 +128,7 @@ The first and second heats should be devoted to the fastest males and females, r
 #### Wheel Sizes
 The new unicycle class definitions have been applied to this chapter. The 700c class is now "29 Class" which allows a maximum wheel diameter of 778mm. This should allow the use of virtually any commercially available 28/29 inch tire and rim combination. As such, virtually any unicycle that conformed to the old 700c class will also work for 29 Class unicycles.
 
-#### Classes
+#### Updated Classes
 * Limited: Ungeared unicycles up to and including 29 Class wheels.
 * Unlimited: Ungeared unicycles greater than 29 Class and geared unicycles.
 
@@ -132,7 +136,7 @@ The new unicycle class definitions have been applied to this chapter. The 700c c
 In the case of a rider being lapped, the passing rider no longer has the right-of-way.
 
 #### Finishes
-Riders can now cross the finish line mounted, as well as walking or running.
+Riders can now cross the finish line walking or running, as well as mounted.
 
 #### Course Design
 The course should be designed to avoid bottlenecks and give riders enough room to pass each other, especially after the start.
@@ -145,11 +149,17 @@ As of the latest update to this document (2017-03-09), the following changes hav
 #### Time Limit for Jr. Small Group
 Junior Small Group now has a time limit of 4 minutes compared to the normal Small Group time limit of 5 minutes.
 
-## 8 & 9 Freestyle: Standard Skill and X-Style
+#### Changing Routine Participants
+As specificed in "Deadline For Signing Up", groups can now specify alternates and, in the case of injury or illness, the group may substitute riders up until the start of the routine. The Chief Judge must be notified of any changes or substitutions to be made.
+
+## 8 Freestyle: Standard Skill
+No substantial rule changes were made.
+
+## 9 Freestyle: X-Style
 No substantial rule changes were made.
 
 ## 10 Flatland
-The Flatland chapter underwent a large edit for content and clarity. Along with that, here are the important changes:
+Along with rule changes, the Flatland chapter underwent a large edit for content and clarity. Here is a summary of the important changes:
 
 #### Last Trick in Prelims
 A rider now only has two attempts to perform a last trick in the preliminary round. They still have three attempts during the battles.
@@ -157,31 +167,29 @@ A rider now only has two attempts to perform a last trick in the preliminary rou
 #### Judging Combos
 A rider should only be scored for a combo if it is completed successfully. A fall mid-combo no longer results in a partial score.
 
-#### Flatland Judging and Scoring
-The new judging and scoring rules are:
-
+#### Updated Flatland Judging and Scoring Rules
 Preliminary rounds and battles are judged using the following criteria.
 The rider's total score is out of 40 points:
 
-**Difficulty** (0 to 10 points):
+- **Difficulty** (0 to 10 points):  
 Score is given for technical difficulty of the tricks and combos landed during the battle/preliminary.
 
-**Consistency** (0 to 10 points):
+- **Consistency** (0 to 10 points):  
 Score is given for number of landed trick/combos on total of number of tricks/combos attempted during the battle/preliminary.
 
-**Variety** (0 to 10 points):
+- **Variety** (0 to 10 points):  
 Score is given for variation in the types of tricks done during the battle/preliminary.
 
-**Flow** (0 to 5 points):
+- **Flow** (0 to 5 points):  
 Score is given for cleanliness and style of rider during the battle/preliminary.
 
-**Last Trick** (0 to 5 points)
+- **Last Trick** (0 to 5 points)
 
 #### Advanced Category
-The Advanced Category is now optional for all competitions and not allowed at Unicon.
+The Advanced Category is now optional in general and not allowed at Unicon.
 
 ## 11 Street
-Street and Flatland share many rules. Thus, many of the similar Street rules underwent a content edit. No substantial rule changes were made.
+Street and Flatland share many rules. Thus, many of the similar Street rules underwent a content edit identical to the Flatland chapter. No substantial rule changes were made.
 
 ## 12 Trials
 
@@ -205,7 +213,7 @@ If there are fewer than 6 competitors in the highest level category, no final is
 For prelims, the number of attempts for any one distance is now three. There is still the limit of 12 total attempts for prelims.
 
 #### Long Jump on Platform Setup
-The required dimensions for the run-up and landing platforms have been made shorter to encourage a more "static" style of long jump.
+The prescribed dimensions for the run-up and landing platforms have been made shorter to encourage a more "static" style of long jump.
 
 #### Landing Surface for Platform High Jump
 The landing surface for platform high jump has now been standardized to the size of a Euro pallet (120 * 80 cm) for all Platform High Jump comptetitions.
@@ -213,8 +221,9 @@ The landing surface for platform high jump has now been standardized to the size
 ## 14 Hockey
 
 In addition to a number of edits and clarifications, here is the summary of the most important changes made to the hockey chapter:
-- The new unicycle class definitions have been applied to this chapters.
-   Also, allowable unicycle class for Hockey has been changed to 24+ Class unicycles.
+
+- The new unicycle class definitions have been applied to this chapter.
+   Also, the allowable unicycle class for Hockey has been changed to 24+ Class unicycles.
    This means that the maximum outer diameter of the wheel is now 640 mm (24+ Class).
     This should allow the use of virtually any commercially available 24 inch tire and
     rim combination.
