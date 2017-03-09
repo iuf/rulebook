@@ -140,7 +140,7 @@ The course should be designed to avoid bottlenecks and give riders enough room t
 ## 7 Artistic Freestyle
 The IUF Freestyle Development Committee is still in session, thus the changes for this chapter are not final.
 
-As of the latest update to this document (2017-02-17), the following changes have passed the Committee:
+As of the latest update to this document (2017-03-09), the following changes have passed the Committee:
 
 #### Time Limit for Jr. Small Group
 Junior Small Group now has a time limit of 4 minutes compared to the normal Small Group time limit of 5 minutes.
@@ -149,17 +149,70 @@ Junior Small Group now has a time limit of 4 minutes compared to the normal Smal
 No substantial rule changes were made.
 
 ## 10 Flatland
+The Flatland chapter underwent a large edit for content and clarity. Along with that, here are the important changes:
+
+#### Last Trick in Prelims
+A rider now only has two attempts to perform a last trick in the preliminary round. They still have three attempts during the battles.
+
+#### Judging Combos
+A rider should only be scored for a combo if it is completed successfully. A fall mid-combo no longer results in a partial score.
+
+#### Flatland Judging and Scoring
+The new judging and scoring rules are:
+
+Preliminary rounds and battles are judged using the following criteria.
+The rider's total score is out of 40 points:
+
+**Difficulty** (0 to 10 points):
+Score is given for technical difficulty of the tricks and combos landed during the battle/preliminary.
+
+**Consistency** (0 to 10 points):
+Score is given for number of landed trick/combos on total of number of tricks/combos attempted during the battle/preliminary.
+
+**Variety** (0 to 10 points):
+Score is given for variation in the types of tricks done during the battle/preliminary.
+
+**Flow** (0 to 5 points):
+Score is given for cleanliness and style of rider during the battle/preliminary.
+
+**Last Trick** (0 to 5 points)
+
+#### Advanced Category
+The Advanced Category is now optional for all competitions and not allowed at Unicon.
 
 ## 11 Street
 Street and Flatland share many rules. Thus, many of the similar Street rules underwent a content edit. No substantial rule changes were made.
 
 ## 12 Trials
 
+
+#### Scoring
+
+The course is divided in different sections of easy, medium and hard lines, worth different amounts of points.
+
+| Difficulty | Points   |
+|------------|----------|
+| Easy       | 1 point  |
+| Medium     | 3 points |
+| Hard       | 7 points |
+
+#### Finals with Few Competitors
+If there are fewer than 6 competitors in the highest level category, no final is necessary. The results from the prelims will be taken as the final results and the top rider will be declared the champion.
+
 ## 13 Jumps
+
+#### Number of Attempts
+For prelims, the number of attempts for any one distance is now three. There is still the limit of 12 total attempts for prelims.
+
+#### Long Jump on Platform Setup
+The required dimensions for the run-up and landing platforms have been made shorter to encourage a more "static" style of long jump.
+
+#### Landing Surface for Platform High Jump
+The landing surface for platform high jump has now been standardized to the size of a Euro pallet (120 * 80 cm) for all Platform High Jump comptetitions.
 
 ## 14 Hockey
 
-Here is the summary of the most important changes:
+In addition to a number of edits and clarifications, here is the summary of the most important changes made to the hockey chapter:
 - The new unicycle class definitions have been applied to this chapters.
    Also, allowable unicycle class for Hockey has been changed to 24+ Class unicycles.
    This means that the maximum outer diameter of the wheel is now 640 mm (24+ Class).
@@ -196,4 +249,4 @@ Here is the summary of the most important changes:
 ## 15 Basketball
 No substantial rule changes were made.
 
-The new unicycle class definitions have been applied to this chapters. Specifically, allowable unicycles for Basketball are 24+ Class unicycles. However no requirements on wheel sizes or crank lengths have changed.
+The new unicycle class definitions have been applied to this chapter. Specifically, allowable unicycles for Basketball are 24+ Class unicycles. However no requirements for wheel sizes or crank lengths have changed.
