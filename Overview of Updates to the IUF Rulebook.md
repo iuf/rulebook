@@ -152,6 +152,9 @@ Junior Small Group now has a time limit of 4 minutes compared to the normal Smal
 #### Changing Routine Participants
 As specificed in "Deadline For Signing Up", groups can now specify alternates and, in the case of injury or illness, the group may substitute riders up until the start of the routine. The Chief Judge must be notified of any changes or substitutions to be made.
 
+#### Music and Media Types
+Competitors must provide their music in a type that is supported, and has been announced by the Artistic Director. CDs are no longer required to be supported.
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
