@@ -155,6 +155,9 @@ As specificed in "Deadline For Signing Up", groups can now specify alternates an
 #### Music and Media Types
 Competitors must provide their music in a type that is supported, and has been announced by the Artistic Director. CDs are no longer required to be supported.
 
+#### Minimum Judge Age
+The minimum required age for judges is now 14 (instead of 15).
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
