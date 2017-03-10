@@ -23,6 +23,9 @@ BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 #
 ################################################################################
 
+# make PARA1=1 PARA2=ABC.c
+# FOO ?= bar #sets FOO to bar only if FOO has not been set yet
+
 
 #
 # make rulebook
