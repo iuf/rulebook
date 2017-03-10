@@ -1,5 +1,5 @@
-# Overview of Updates to the IUF Rulebook
-This document wishes to serve as a simple overview of the changes that were passed in the 2016 IUF Rulebook Committee. These changes can be found in the 2017 IUF Rulebook (draft).
+## Overview of Updates to the IUF Rulebook (2015 to 2017)
+This document wishes to serve as a simple overview of the changes that were passed in the 2016 IUF Rulebook Committee. These are the changes between the 2015 IUF Rulebook and the 2017 IUF Rulebook (draft).
 
 After publication of the 2017 rulebook, on the [IUF Publications webpage](https://unicycling.org/publications/) you will also be able to find a comprehensive, automatically generated PDF that contains all of the changes.
 
