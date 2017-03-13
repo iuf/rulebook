@@ -167,6 +167,17 @@ At Unicon, at least four judges are required to count dismounts. Smaller events 
 #### Minimum Number of Judges at Smaller Events
 Smaller events now only need a minimum of three judges each for Technical and Performance for all categories. Five is still required for Unicon and continental championships.
 
+#### Artistic Freestyle Scoring
+A rider's Dismount score is now split from their Performance score, and the three categories are weighted as follows:
+
+| Category    | Weight |
+|-------------|--------|
+| Technical   | 45%    |
+| Performance | 45%    |
+| Dismounts   | 10%    |
+
+Additionally, all of the judging subcategories for Technical and Performance are now judged out of 10 points, for ease of judging. However, these subcategories are weighted such that they are worth exactly the same as in the previous rulebook.
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
