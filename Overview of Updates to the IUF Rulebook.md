@@ -144,7 +144,7 @@ The course should be designed to avoid bottlenecks and give riders enough room t
 ## 7 Artistic Freestyle
 The IUF Freestyle Development Committee is still in session, thus the changes for this chapter are not final.
 
-As of the latest update to this document (2017-03-09), the following changes have passed the Committee:
+As of the latest update to this document (2017-03-13), the following changes have passed the Committee:
 
 #### Time Limit for Jr. Small Group
 Junior Small Group now has a time limit of 4 minutes compared to the normal Small Group time limit of 5 minutes.
@@ -180,6 +180,9 @@ Additionally, all of the judging subcategories for Technical and Performance are
 
 #### Announcing Of Results: Results Sheets
 Results sheets should be published after the competition and should be of a similar format to the [results sheets used at Unicon 2016](https://uniregistration.s3-us-west-2.amazonaws.com/unicon2016/uploads/competition_result/results_file/173/i_f_0-12.pdf).
+
+#### Privacy
+Anything that happens in the course of the judging process (including, but not limited to, judge scores and discussions with the Chief Judge) is confidential and should not be discussed or shared.
 
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
