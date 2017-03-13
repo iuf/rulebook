@@ -5,11 +5,7 @@ After publication of the 2017 rulebook, on the [IUF Publications webpage](https:
 
 As always, as stated in *1B.3 Knowing The Rules*, you are obligated to know the updated IUF rules and reading this document does not serve as a replacement for reading the new rulebook. This document simply wishes to give a quick but thorough list of the differences.
 
-Prior to changes made by the 2016 IUF Rulebook Committee, the whole rulebook has been reorganzied. In the reorganization process, no rules were changed. A [full write-up](https://unicycling.org/2016/10/07/iuf-rulebook-reorganization/) of the proccess and the new structure can be found on the IUF Blog. A very simple explanation of the reorganization processes is that each chapter is now split up into four subchapters:
-Overview
-Competitor Rules
-Judges and Officials Rules
-Event Organizer Rules
+Prior to changes made by the 2016 IUF Rulebook Committee, the whole rulebook has been reorganzied. In the reorganization process, no rules were changed. A [full write-up](https://unicycling.org/2016/10/07/iuf-rulebook-reorganization/) of the proccess and the new structure can be found on the IUF Blog. A very simple explanation of the reorganization processes is that each chapter is now split up into four subchapters: *Overview*, *Competitor Rules*, *Judges and Officials Rules*, and *Event Organizer Rules*.
 
 Some organizational and administrative rule changes have been omitted from this document.
 
