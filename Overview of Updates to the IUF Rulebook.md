@@ -159,7 +159,7 @@ Competitors must provide their music in a type that is supported, and has been a
 The minimum required age for judges is now 14 (instead of 15).
 
 #### Acoustic Signals
-The only acoustic signal made as part of a Freestyle performance will be at the end of the routine, if a routine exceed the time limit.
+The only acoustic signal made as part of a Freestyle performance will be at the end of the routine, if a routine exceeds the time limit, and the acoustic signal must be clearly audible to the competitor(s), judges, and officials.
 
 #### Dismount Judges for Group
 At Unicon, at least four judges are required to count dismounts. Smaller events should have at least two dismount judges.
