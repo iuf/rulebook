@@ -178,6 +178,9 @@ A rider's Dismount score is now split from their Performance score, and the thre
 
 Additionally, all of the judging subcategories for Technical and Performance are now judged out of 10 points, for ease of judging. However, these subcategories are weighted such that they are worth exactly the same as in the previous rulebook.
 
+#### Announcing Of Results: Results Sheets
+Results sheets should be published after the competition and should be of a similar format to the [results sheets used at Unicon 2016](https://uniregistration.s3-us-west-2.amazonaws.com/unicon2016/uploads/competition_result/results_file/173/i_f_0-12.pdf).
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
