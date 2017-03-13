@@ -5,11 +5,11 @@ After publication of the 2017 rulebook, on the [IUF Publications webpage](https:
 
 As always, as stated in *1B.3 Knowing The Rules*, you are obligated to know the updated IUF rules and reading this document does not serve as a replacement for reading the new rulebook. This document simply wishes to give a quick but thorough list of the differences.
 
-Prior to changes made by the 2016 IUF Rulebook Committee, the whole rulebook has been reorganzied. In the reorganization process, no rules were changed. A [full write-up](https://unicycling.org/2016/10/07/iuf-rulebook-reorganization/) of the proccess and the new structure can be found on the IUF Blog. A very simple explanation of the reorganization processes is that each chapter is now split up into four subchapters:  
-Overview  
-Competitor Rules  
-Judges and Officials Rules  
-Event Organizer Rules  
+Prior to changes made by the 2016 IUF Rulebook Committee, the whole rulebook has been reorganzied. In the reorganization process, no rules were changed. A [full write-up](https://unicycling.org/2016/10/07/iuf-rulebook-reorganization/) of the proccess and the new structure can be found on the IUF Blog. A very simple explanation of the reorganization processes is that each chapter is now split up into four subchapters:
+Overview
+Competitor Rules
+Judges and Officials Rules
+Event Organizer Rules
 
 Some organizational and administrative rule changes have been omitted from this document.
 
@@ -57,8 +57,8 @@ Secondly, an option is added that not only the hindered rider, but also other ri
 
 #### Finishes
 Apart from a few edits for clarity, the essential changes are two-fold:
- 
-1. The judgement of "in control" is exercised when the front (as opposed to the rear) of the wheel crosses the finish line.  
+
+1. The judgement of "in control" is exercised when the front (as opposed to the rear) of the wheel crosses the finish line.
 2. "In control" in wheel walking is no longer defined as having one foot on the wheel, rather, the new criterion is that wheel walking is still occurring when crossing the finish.
 
 ## 3 Track: Other
@@ -164,6 +164,9 @@ The only acoustic signal made as part of a Freestyle performance will be at the 
 #### Dismount Judges for Group
 At Unicon, at least four judges are required to count dismounts. Smaller events should have at least two dismount judges.
 
+#### Minimum Number of Judges at Smaller Events
+Smaller events now only need a minimum of three judges each for Technical and Performance for all categories. Five is still required for Unicon and continental championships.
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
@@ -183,16 +186,16 @@ A rider should only be scored for a combo if it is completed successfully. A fal
 Preliminary rounds and battles are judged using the following criteria.
 The rider's total score is out of 40 points:
 
-- **Difficulty** (0 to 10 points):  
+- **Difficulty** (0 to 10 points):
 Score is given for technical difficulty of the tricks and combos landed during the battle/preliminary.
 
-- **Consistency** (0 to 10 points):  
+- **Consistency** (0 to 10 points):
 Score is given for number of landed trick/combos on total of number of tricks/combos attempted during the battle/preliminary.
 
-- **Variety** (0 to 10 points):  
+- **Variety** (0 to 10 points):
 Score is given for variation in the types of tricks done during the battle/preliminary.
 
-- **Flow** (0 to 5 points):  
+- **Flow** (0 to 5 points):
 Score is given for cleanliness and style of rider during the battle/preliminary.
 
 - **Last Trick** (0 to 5 points)
