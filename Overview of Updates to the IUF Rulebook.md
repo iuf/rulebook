@@ -140,7 +140,7 @@ The course should be designed to avoid bottlenecks and give riders enough room t
 ## 7 Artistic Freestyle
 The IUF Freestyle Development Committee is still in session, thus the changes for this chapter are not final.
 
-As of the latest update to this document (2017-03-13), the following changes have passed the Committee:
+As of the latest update to this document (2017-03-25), the following changes have passed the Committee:
 
 #### Time Limit for Jr. Small Group
 Junior Small Group now has a time limit of 4 minutes compared to the normal Small Group time limit of 5 minutes.
