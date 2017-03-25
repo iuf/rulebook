@@ -180,6 +180,9 @@ Results sheets must be published after the competition and be of a similar forma
 #### Privacy
 Anything that happens in the course of the judging process (including, but not limited to, judge scores and discussions with the Chief Judge) is confidential and must not be discussed or shared.
 
+#### Age Groups
+The following age groups are now required for Individual and Pairs events at Unicon: 0-14, 15-UP, Jr. Expert, and Expert.
+
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.
 
