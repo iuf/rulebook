@@ -138,9 +138,6 @@ Riders can now cross the finish line walking or running, as well as mounted.
 The course should be designed to avoid bottlenecks and give riders enough room to pass each other, especially after the start.
 
 ## 7 Artistic Freestyle
-The IUF Freestyle Development Committee is still in session, thus the changes for this chapter are not final.
-
-As of the latest update to this document (2017-03-25), the following changes have passed the Committee:
 
 #### Time Limit for Jr. Small Group
 Junior Small Group now has a time limit of 4 minutes compared to the normal Small Group time limit of 5 minutes.
@@ -182,6 +179,9 @@ Anything that happens in the course of the judging process (including, but not l
 
 #### Age Groups
 The following age groups are now required for Individual and Pairs events at Unicon: 0-14, 15-UP, Jr. Expert, and Expert.
+
+#### Group Freestyle: Dismount Score
+This formula has been updated to calculate the dismount score for groups of all sizes to give more consistent results.
 
 ## 8 Freestyle: Standard Skill
 No substantial rule changes were made.

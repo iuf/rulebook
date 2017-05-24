@@ -463,11 +463,14 @@ The counts from each judge should be averaged to create the dismount score for a
 The number of dismounts should be weighted by the number of riders in the group.
 The following formula is used:
 
-\makebox{Mistake Score = \ $1.0\ \cdot$ (number of major dismount(s))} \\
-\makebox[\textwidth][r]{\hfill$+ 0.5\ \cdot$ (number of minor dismount(s))}
+\[
+\textrm{Mistake Score} = 1.0 \cdot \textrm{\small{number of major dismounts}} + 0.5 \cdot \textrm{\small{number of minor dismounts}}
+\]
+\[
+\textrm{Final Dismount Score} = 10 - \frac{\textrm{mistake score}}{\sqrt{\textrm{number of riders}}}
+\]
 
-Final Dismount Score $= 10 \, -$ mistake score/number of riders.
-This score cannot be lower than 0.
+The Final Dismount Score cannot be lower than 0.
 
 \subsubsection{Group Freestyle: Presence/Execution}
 In addition to the description for Individual Freestyle (section \ref{subsec:freestyle_individual-performance-score_presence-execution}), judges are looking for teamwork and cooperation.
