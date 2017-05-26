@@ -1,7 +1,9 @@
 ## Overview of Updates to the IUF Rulebook (2015 to 2017)
-This document wishes to serve as a simple overview of the changes that were passed in the 2016 IUF Rulebook Committee. These are the changes between the 2015 IUF Rulebook and the 2017 IUF Rulebook (draft).
+This document wishes to serve as a simple overview of the changes that were passed in the 2016 IUF Rulebook Committee. These are the changes between the 2015 IUF Rulebook and the 2017 IUF Rulebook.
 
-After publication of the 2017 rulebook, on the [IUF Publications webpage](https://unicycling.org/publications/) you will also be able to find a comprehensive, automatically generated PDF that contains all of the changes.
+The IUF Rulebook 2017 can be found [here](https://unicycling.org/files/iuf-rulebook-2017.pdf).
+
+On the [IUF Publications webpage](https://unicycling.org/publications/) you will also be able to find a comprehensive, automatically generated PDF that contains all of the changes.
 
 As always, as stated in *1B.3 Knowing The Rules*, you are obligated to know the updated IUF rules and reading this document does not serve as a replacement for reading the new rulebook. This document simply wishes to give a quick but thorough list of the differences.
 
