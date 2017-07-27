@@ -78,12 +78,22 @@ function clean_up {
   # Perform program exit housekeeping
   mkdir -p tmp/latexmk
   rsync -az --remove-source-files --exclude '*.pdf' $OUTDIR/ tmp/latexmk/ # move anything that's not a pdf
+
+  rm src/gitinfo2.sty
+  rm src/gitexinfo.sty
+  rm ./gitinfo2.sty
+  rm ./gitexinfo.sty
   echo
   echo "Cleaning up after latexmk..."
   exit
 }
 
 trap clean_up INT TERM SIGHUP SIGINT SIGTERM
+
+# install gitinfo for local builds
+cp -a dependencies/gitinfo2/* src
+cp -a dependencies/gitinfo2/* .
+./scripts/install-git-hooks.sh > /dev/null
 
 OUT=$(echo $OUT | sed -e "s~\(.*\)\.pdf~\1~") # remove pdf extention from output file name if it's there, so that latexmk can use it as the basename
 
