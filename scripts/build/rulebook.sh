@@ -59,6 +59,12 @@ if [[ $TRAVIS -eq 0 ]]; then
     echo "Building rulebook pdf"
 fi
 
-scripts/build/pdf.sh $VERBOSE $CLEAN -o iuf-rulebook-$BRANCH.pdf -s src iuf-rulebook.tex
+
+if [ $BRANCH = "master" ]; then
+  scripts/build/pdf.sh $VERBOSE $CLEAN -o iuf-rulebook.pdf -s src iuf-rulebook.tex
+else
+  scripts/build/pdf.sh $VERBOSE $CLEAN -o iuf-rulebook-$BRANCH.pdf -s src iuf-rulebook.tex
+fi
+
 
 finish_script
