@@ -87,7 +87,7 @@ rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be
 
 rm -rf .tx
 echo "Configuring Transifex..."
-verbose_cmd tx init --host=https://www.transifex.com
+tx init --host=https://www.transifex.com
 echo "Done."
 
 mkdir -p tmp
