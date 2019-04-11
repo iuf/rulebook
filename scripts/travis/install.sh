@@ -12,6 +12,9 @@ install() {
     # koma-script is a latex package
     install_koma-script
 
+    # koma-script is a latex package
+    install_ulem
+
     # latexdiff can generate a tex file highlighting the changes between two similar tex files. It can extract the two versions from git references.
     install_latexdiff
 
@@ -48,6 +51,11 @@ install_gitinfo() {
 install_koma-script() {
     cp -a dependencies/koma-script/* src
     cp -a dependencies/koma-script/* .
+}
+
+install_ulem() {
+    cp -a dependencies/ulem.sty src
+    cp -a dependencies/ulem.sty .
 }
 
 install_transifex_client() {
