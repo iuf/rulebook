@@ -37,7 +37,7 @@ install:
 
 script:
   - scripts/build/rulebook.sh -t
-  # - scripts/build/diff-all.sh -t
+  - scripts/build/diff-all.sh -t
   # - scripts/build/translation.sh -t
 
 after_script:
