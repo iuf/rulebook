@@ -19,18 +19,18 @@
 }{}
 
 \iftoggle{road}{
-  \subimport{chapters/}{04_road_races}
+  \subimport{chapters/}{03_road_races}
 }{}
 
 \iftoggle{muni}{
-  \subimport{chapters/}{05_muni_races}
-  \subimport{chapters/}{06_muni_cyclocross}
+  \subimport{chapters/}{04_muni_races}
+  \subimport{chapters/}{05_muni_cyclocross}
 }{}
 
 \iftoggle{freestyle}{
-  \subimport{chapters/}{07_freestyle_artistic}
-  \subimport{chapters/}{08_freestyle_standards}
-  \subimport{chapters/}{09_freestyle_xstyle}
+  \subimport{chapters/}{06_freestyle_artistic}
+  \subimport{chapters/}{07_freestyle_standards}
+  \subimport{chapters/}{08_freestyle_xstyle}
 }{}
 
 \renewcommand{\cftsecnumwidth}{3.4em}
@@ -38,9 +38,10 @@
 \renewcommand{\cftsubsubsecnumwidth}{4.5em} %update spacing between number and name for sections in Part-TOCshelp with long section numbers with two digit chapter numbers (i.e. 14B.10)
 
 \iftoggle{urban}{
-  \subimport{chapters/}{10_urban_flatland}
-  \subimport{chapters/}{11_urban_street}
-  \subimport{chapters/}{12_urban_trials}
+  \subimport{chapters/}{09_urban_flatland}
+  \subimport{chapters/}{10_urban_street}
+  \subimport{chapters/}{11_urban_trials}
+  \subimport{chapters/}{12_urban_speedtrials}
   \subimport{chapters/}{13_urban_jumps}
 }{}
 
