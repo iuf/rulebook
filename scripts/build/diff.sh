@@ -121,7 +121,7 @@ verbose_cmd echo "Done"
 for CHAPTER in $CHAPTERS; do
     verbose_cmd echo "Diffing on chapter file: $CHAPTER"
     SLUG=$(echo $CHAPTER | cut -f 1 -d '.')
-    verbose_cmd latexdiff-vc --git --so --flatten  --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
+    verbose_cmd latexdiff-vc --git --so --flatten --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
     # --exclude-textcmd=$EXCLUDE_TEXTCMDS
     verbose_cmd mv -v $CHAPTERDIR/$SLUG-diff$DIFFBRANCH.tex tmp/src_diff_$DIFFBRANCH/$SHORTCHAPTERDIR/$SLUG.tex
 done
