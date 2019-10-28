@@ -8,7 +8,7 @@
 %% scrkernel-fonts.dtx  (with options: `clo,10pt')
 %% scrkernel-paragraphs.dtx  (with options: `clo,10pt')
 %% 
-%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -36,11 +36,11 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -62,9 +62,10 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: 10pt)
 \ProvidesFile{%
   scrsize10pt.clo%
 }[\KOMAScriptVersion\space font size class option %
@@ -149,7 +150,7 @@
 \def\@listvi {\leftmargin\leftmarginvi
               \labelwidth\leftmarginvi
               \advance\labelwidth-\labelsep}
-%%% From File: $Id: scrkernel-paragraphs.dtx 2351 2016-02-22 08:20:29Z kohm $
+%%% From File: $Id: scrkernel-paragraphs.dtx 3262 2019-10-10 08:25:29Z kohm $
 \@ifundefined{@list@extra}{}{%
   \expandafter\ifnum\scr@v@is@ge{3.17}\par@updaterelative\fi
   \l@addto@macro{\@listi}{\@list@extra}%

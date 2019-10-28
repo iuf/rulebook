@@ -16,11 +16,12 @@
 %% scrkernel-tocstyle.dtx  (with options: `package,style,undottedtocline')
 %% scrkernel-tocstyle.dtx  (with options: `package,style,largetocline')
 %% scrkernel-tocstyle.dtx  (with options: `package,style,tocline')
+%% scrkernel-tocstyle.dtx  (with options: `package,style,toctext')
 %% scrkernel-tocstyle.dtx  (with options: `package,style,default')
 %% tocbasic.dtx  (with options: `package,exit')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2008-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2008-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -48,30 +49,53 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: tocbasic.dtx 3256 2019-10-10 07:06:49Z kohm $
 %%%            (run: identify)
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{tocbasic}[%
-  2016/06/14 v3.21 KOMA-Script
+  2019/10/12 v3.27 KOMA-Script
   package
   (handling toc-files)%
 ]
-%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: tocbasic.dtx 3256 2019-10-10 07:06:49Z kohm $
 %%%            (run: prepare)
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: prepare)
-%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: tocbasic.dtx 3256 2019-10-10 07:06:49Z kohm $
 %%%            (run: option)
 \ProcessOptions\relax
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: option)
-%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: tocbasic.dtx 3256 2019-10-10 07:06:49Z kohm $
 %%%            (run: body)
 \RequirePackage{scrbase}
+\AfterPackage*{multitoc}{%
+  \@ifpackagelater{multitoc}{2018/08/31}{}{%
+    \PackageWarningNoLine{tocbasic}{%
+      Usage of package `multitoc' is not recommended!\MessageBreak
+      Note, this package generally results in empty ToCs\MessageBreak
+      for all extension but `toc', `lof' and `lot' and\MessageBreak
+      even for these extensions if you do not use the\MessageBreak
+      corresponding multitoc options.\MessageBreak
+      It is recommended to use:\MessageBreak
+      \space\space\string\usepackage{multicol}\MessageBreak
+      \space\space\string\BeforeStartingTOC{\string\begin{multicols}{2}}%
+      \MessageBreak
+      \space\space\string\AfterStartingTOC{\string\end{multicols}}%
+      \MessageBreak
+      instead of loading package `multitoc'.\MessageBreak
+      See the KOMA-Script manual for more information\MessageBreak
+      about using \string\BeforeStartingTOC\space and
+      \string\AfterStartingTOC\MessageBreak
+      and the multicol manual for more information\MessageBreak
+      about the `multicols' environment%
+    }%
+  }%
+}
 \newcommand*{\tb@listoftocs}{}
 \newcommand{\ifattoclist}[1]{%
   \begingroup
@@ -129,6 +153,14 @@
     }\reserved@a
   }%
 }
+\newcommand*{\owneroftoc}[2][\@firstofone]{%
+  \begingroup
+    \let\reserved@a\endgroup
+    \def\do##1##2{\ifstr{#2}{##1}{\def\reserved@a{\endgroup#1{##2}}}{}}%
+    \tb@listoftocs
+  \reserved@a
+}
+\newcommand*{\categoryoftoc}{\owneroftoc}
 \newcommand*{\AtAddToTocList}{%
   \kernel@ifnextchar [%]
     \@@AtAddToTocList\@AtAddToTocList
@@ -155,11 +187,24 @@
         because of feature `nobabel' available\MessageBreak
         for `#1'}%
     }{%
-      \PackageInfo{tocbasic}{setting babel extension for `#1'}%
-      \expandafter\gdef\expandafter\bbl@set@language\expandafter##\expandafter1%
-      \expandafter{%
-        \bbl@set@language{##1}%
-        \addtocontents{#1}{\xstring\select@language{\languagename}}%
+      \scr@ifundefinedorrelax{BabelContentsFiles}{%
+        \PackageInfo{tocbasic}{setting babel extension for `#1'}%
+        \expandafter\gdef\expandafter\bbl@set@language
+        \expandafter##\expandafter1%
+        \expandafter{%
+          \bbl@set@language{##1}%
+          \addtocontents{#1}{\xstring\select@language{\languagename}}%
+        }%
+      }{%
+        \@expandtwoargs\in@{,#1,}{,\BabelContentsFiles,}%
+        \ifin@
+          \PackageInfo{tocbasic}{omitting babel extension for
+            `#1'\MessageBreak
+            because it is already in \string\BabelContentsFiles}%
+        \else
+          \PackageInfo{tocbasic}{setting babel extension for `#1'}%
+          \xdef\BabelContentsFiles{\BabelContentsFiles,#1}%
+        \fi
       }%
     }%
   }%
@@ -176,9 +221,10 @@
       \edef\reserved@a{##1}%
       \ifx\reserved@a\reserved@b
         \begingroup
-          \edef\reserved@a{##2}%
+          \edef\@currext{##2}%
           \edef\reserved@b{#1}%
-          \ifx\reserved@a\reserved@b\else
+          \ifx\@currext\reserved@b
+          \else
             \g@addto@macro\tb@listoftocs{\do{##1}{##2}}%
           \fi
         \endgroup
@@ -186,7 +232,7 @@
         \g@addto@macro\tb@listoftocs{\do{##1}{##2}}%
       \fi
     }%
-    \edef\reserved@b{#2}\let\tb@listoftocs\@empty
+    \edef\reserved@b{#2}\global\let\tb@listoftocs\@empty
     \tb@oldlist
   \endgroup
 }
@@ -195,11 +241,12 @@
     \let\tb@oldlist\tb@listoftocs
     \def\do##1##2{%
       \edef\reserved@a{##1}%
-      \ifx\reserved@a\reserved@b\else
+      \ifx\reserved@a\reserved@b
+      \else
         \g@addto@macro\tb@listoftocs{\do{##1}{##2}}%
       \fi
     }%
-    \edef\reserved@b{#1}\let\tb@listoftocs\@empty
+    \edef\reserved@b{#1}\global\let\tb@listoftocs\@empty
     \tb@oldlist
   \endgroup
 }
@@ -308,6 +355,10 @@
     \setlength{\parfillskip}{\z@\@plus 1fil}%
     \csname tocbasic@@before@hook\endcsname
     \csname tb@#1@before@hook\endcsname
+    \let\tocbasic@saved@input\@input
+    \def\@input##1{%
+      \let\@input\tocbasic@saved@input\@input{##1}\par
+    }%
     \@starttoc{#1}%
     \csname tb@#1@after@hook\endcsname
     \csname tocbasic@@after@hook\endcsname
@@ -320,7 +371,6 @@
     \g@addto@macro\tocbasic@@before@hook{#2}%
   \else
     \@ifundefined{tb@#1@before@hook}{%
-      \PackageInfo{tocbasic}{defining new hook before starting `#1'}%
       \expandafter\global\expandafter\let\csname tb@#1@before@hook\endcsname
       \@empty
     }{}%
@@ -332,7 +382,6 @@
     \g@addto@macro\tocbasic@@after@hook{#2}%
   \else
     \@ifundefined{tb@#1@after@hook}{%
-      \PackageInfo{tocbasic}{defining new hook after starting `#1'}%
       \expandafter\global\expandafter\let\csname tb@#1@after@hook\endcsname
       \@empty
     }{}%
@@ -378,6 +427,32 @@
     \tocbasic@starttoc{#2}%
   \endgroup
 }
+\@ifpackageloaded{tocbibind}{}{%
+  \AtBeginDocument{%
+    \@ifpackageloaded{tocbibind}{%
+      \PackageInfo{tocbasic}{usage of `tocbibind' detected}%
+      \newcommand*{\tb@tocbibindpatch}[3]{%
+        \long\def\reserved@a{\tocfile{#2}{#1} }%
+        \ifx #3\reserved@a
+          \PackageWarningNoLine{tocbasic}{%
+            `tocbibind' redefinition of `\string#3'\MessageBreak
+            detected.\MessageBreak
+            Note: Loading `tocbibind' without option `not#1'\MessageBreak
+            can break several features of `tocbasic'%
+            \scr@ifundefinedorrelax{KOMAClassName}{%
+              .\MessageBreak
+              Loading `tocbibind' before `tocbasic' would avoid\MessageBreak
+              this warning message%
+            }{}%
+          }%
+        \fi
+      }%
+      \tb@tocbibindpatch{toc}{\contentsname}{\tableofcontents}%
+      \tb@tocbibindpatch{lof}{\listfigurename}{\listoffigures}%
+      \tb@tocbibindpatch{lot}{\listtablename}{\listoftables}%
+    }{}%
+  }%
+}
 \newcommand*{\listofname}{List of}
 \newcommand*{\listofeachtoc}{%
   \kernel@ifnextchar [%]
@@ -389,6 +464,7 @@
 \newcommand{\@@listofeachtoc}[1]{%
   \doforeachtocfile{\listoftoc{\@currext}}%
 }
+\providecommand*{\ext@toc}{toc}
 \newcommand*{\tocbasic@listhead}[1]{%
   \@ifundefined{tocbasic@listhead@\@currext}{%
     \scr@ifundefinedorrelax{chapter}{%
@@ -401,13 +477,11 @@
             \ifvmode\@tempcnta\lastpenalty\@tempskipa\lastskip\unskip\fi
             \begingroup
               \iftocfeature{\@currext}{totoc}{%
-                \addxcontentsline{toc}{subsection}{##1}%
+                \expandafter\addxcontentsline\expandafter{\ext@toc}%
+                {subsection}{##1}%
               }{}%
-              \@ifundefined{@mkright}{%
-                \ifx\@mkboth\@gobbletwo\else\markright{\MakeMarkcase{##1}}\fi
-              }{%
-                \@mkright{\MakeMarkcase{##1}}%
-              }%
+              \c@secnumdepth=-\maxdimen
+              \subsectionmark{##1}%
             \endgroup
             \ifvmode\penalty\@tempcnta\vskip\@tempskipa\fi
           }%
@@ -419,7 +493,8 @@
             \ifvmode\@tempcnta\lastpenalty\@tempskipa\lastskip\unskip\fi
             \begingroup
               \iftocfeature{\@currext}{totoc}{%
-                \addxcontentsline{toc}{section}{##1}%
+                \expandafter\addxcontentsline\expandafter{\ext@toc}%
+                {section}{##1}%
               }{}%
               \@ifundefined{@mkdouble}{%
                 \@mkboth{\MakeMarkcase{##1}}{\MakeMarkcase{##1}}%
@@ -438,33 +513,31 @@
             \section{##1}%
           }{%
             \iftocfeature{\@currext}{totoc}{%
-              \begingroup
-                \@ifundefined{addsec}{%
-                  \section*{##1}%
-                  \ifvmode\@tempcnta\lastpenalty\@tempskipa\lastskip\unskip\fi
-                  \begingroup
-                    \@ifundefined{@mkright}{%
-                      \ifx\@mkboth\@gobbletwo
-                      \else\markright{\MakeMarkcase{##1}}\fi
-                    }{%
-                      \@mkright{\MakeMarkcase{##1}}%
-                    }%
-                    \addxcontentsline{toc}{section}{##1}%
-                  \endgroup
-                  \ifvmode\penalty\@tempcnta\vskip\@tempskipa\fi
-                }{%
-                  \addsec{##1}%
-                }%
-              \endgroup
+              \@ifundefined{addsec}{%
+                \section*{##1}%
+                \ifvmode\@tempcnta\lastpenalty\@tempskipa\lastskip\unskip\fi
+                \begingroup
+                  \@ifundefined{@mkright}{%
+                    \IfActiveMkBoth{\markright{\MakeMarkcase{##1}}}{}%
+                  }{%
+                    \@mkright{\MakeMarkcase{##1}}%
+                  }%
+                  \expandafter\addxcontentsline\expandafter{\ext@toc}%
+                  {section}{##1}%
+                \endgroup
+                \ifvmode\penalty\@tempcnta\vskip\@tempskipa\fi
+              }{%
+                \addsec{##1}%
+              }%
             }{%
               \section*{##1}%
               \ifvmode\@tempcnta\lastpenalty\@tempskipa\lastskip\unskip\fi
               \begingroup
-                \@ifundefined{@mkright}{%
-                  \ifx\@mkboth\@gobbletwo
-                  \else\markright{\MakeMarkcase{##1}}\fi
+                \@ifundefined{addsecmark}{%
+                  \c@secnumdepth=-\maxdimen
+                  \sectionmark{##1}%
                 }{%
-                  \@mkright{\MakeMarkcase{##1}}%
+                  \addsecmark{##1}%
                 }%
               \endgroup
               \ifvmode\penalty\@tempcnta\vskip\@tempskipa\fi
@@ -483,7 +556,8 @@
                 \@mkdouble{\MakeMarkcase{##1}}%
               }%
               \iftocfeature{\@currext}{totoc}{%
-                \addxcontentsline{toc}{chapter}{##1}%
+                \expandafter\addxcontentsline\expandafter{\ext@toc}%
+                {chapter}{##1}%
               }{}%
             \endgroup
             \ifvmode\penalty\@tempcnta\vskip\@tempskipa\fi
@@ -500,7 +574,6 @@
 }
 \newcommand{\BeforeTOCHead}[2][]{%
   \@ifundefined{tb@#1@beforehead@hook}{%
-    \PackageInfo{tocbasic}{defining new hook before heading of `#1'}%
     \expandafter\global\expandafter\let\csname tb@#1@beforehead@hook\endcsname
     \@empty
   }{}%
@@ -508,7 +581,6 @@
 }
 \newcommand{\AfterTOCHead}[2][]{%
   \@ifundefined{tb@#1@afterhead@hook}{%
-    \PackageInfo{tocbasic}{defining new hook after heading of `#1'}%
     \expandafter\global\expandafter\let\csname tb@#1@afterhead@hook\endcsname
     \@empty
   }{}%
@@ -518,29 +590,16 @@
   \@namedef{tocbasic@listhead@#1}##1}
 \newcommand*{\setuptoc}[2]{%
   \@for\@tempa:=#2\do{%
-    \expandafter\tb@@sp@def\expandafter\@tempa\expandafter{\@tempa}%
+    \scr@trim@spaces\@tempa
     \@namedef{tocbasic@#1@feature@\@tempa}{}%
   }%
 }
 \newcommand*{\unsettoc}[2]{%
   \@for\@tempa:=#2\do{%
-    \expandafter\tb@@sp@def\expandafter\@tempa\expandafter{\@tempa}%
+    \scr@trim@spaces\@tempa
     \expandafter\let\csname tocbasic@#1@feature@\@tempa\endcsname\relax
   }%
 }
-\def\@tempa#1{%
-  \def\tb@@sp@def##1##2{%
-    \futurelet\tb@sp@tempa\tb@@sp@d##2\@nil\@nil#1\@nil\relax##1}%
-  \def\tb@@sp@d{%
-    \ifx\tb@sp@tempa\@sptoken
-      \expandafter\tb@@sp@b
-    \else
-      \expandafter\tb@@sp@b\expandafter#1%
-    \fi}%
-  \def\tb@@sp@b#1##1 \@nil{\tb@@sp@c##1}%
-}
-\@tempa{ }
-\def\tb@@sp@c#1\@nil#2\relax#3{\@temptokena{#1}\edef#3{\the\@temptokena}}
 \setuptoc{toc}{nobabel}
 \setuptoc{lof}{nobabel}
 \setuptoc{lot}{nobabel}
@@ -622,11 +681,27 @@
         }%
       }%
     }%
+    \DefineFamilyKey[.toc]{KOMAarg}{extension}{%
+      \tb@ifvalueisnotempty{##1}{\edef\tb@nt@ext{##1}}%
+    }%
+    \DefineFamilyKey[.toc]{KOMAarg}{owner}{%
+      \tb@ifvalueisnotempty{##1}{\edef\tb@nt@owner{##1}}%
+    }%
+    \DefineFamilyKey[.toc]{KOMAarg}{category}{%
+      \tb@ifvalueisnotempty{##1}{\edef\tb@nt@owner{##1}}%
+    }%
     \DefineFamilyKey[.toc]{KOMAarg}{@else@}{\FamilyKeyStateProcessed}%
     \FamilyExecuteOptions[.toc]{KOMAarg}{#1}%
     \RelaxFamilyKey[.toc]{KOMAarg}{@else@}%
+  }%
+  \expandafter\newcommand\csname ext@\tb@nt@type\endcsname{}%
+  \expandafter\let\csname ext@\tb@nt@type\endcsname\tb@nt@ext
+  \addtotoclist[\tb@nt@owner]{\csname ext@\tb@nt@type\endcsname}%
+  \IfArgIsEmpty{#1}{}{%
     \DefineFamilyKey[.toc]{KOMAarg}{type}{\FamilyKeyStateProcessed}%
     \DefineFamilyKey[.toc]{KOMAarg}{tocentrystyle}{\FamilyKeyStateProcessed}%
+    \DefineFamilyKey[.toc]{KOMAarg}{extension}{\FamilyKeyStateProcessed}%
+    \DefineFamilyKey[.toc]{KOMAarg}{category}{\FamilyKeyStateProcessed}%
     \ifstr{\tb@nt@tocentrystyle}{}{}{%
       \begingroup
         \let\scr@dte@current\tb@nt@type
@@ -637,6 +712,7 @@
             \l@addto@macro\tb@nt@extra@relax@opts{%
               \RelaxFamilyKey[.toc]{KOMAarg}{toc##1}%
               \RelaxFamilyKey[.toc]{KOMAarg}{tocentry##1}%
+              \RelaxFamilyKey[.toc]{KOMAarg}{tocentry##1:}%
             }%
           }%
           \kernel@ifnextchar[%]
@@ -656,6 +732,9 @@
               \l@addto@macro{\tb@nt@tocstyle@options}{,##1={####1}}%
               \FamilyKeyStateProcessed
             }%
+            \DefineFamilyKey[.toc]{KOMAarg}{tocentry##1:}{%
+              \l@addto@macro{\tb@nt@tocstyle@options}{,##1:={####1}}%
+            }%
           }%
         }%
         \def\@dodefault##1[##2]{%
@@ -671,6 +750,9 @@
               \l@addto@macro{\tb@nt@tocstyle@options}{,##1={####1}}%
               \FamilyKeyStateProcessed
             }%
+            \DefineFamilyKey[.toc]{KOMAarg}{tocentry##1:}{%
+              \l@addto@macro{\tb@nt@tocstyle@options}{,##1:={####1}}%
+            }%
           }%
         }%
         \scr@dte@doopts
@@ -680,9 +762,6 @@
     \FamilyStringKey[.toc]{KOMAarg}{atend}{\tb@nt@atend}%
     \DefineFamilyKey[.toc]{KOMAarg}{counterwithin}{%
       \edef\tb@nt@counterwithin{##1}\FamilyKeyStateProcessed
-    }%
-    \DefineFamilyKey[.toc]{KOMAarg}{extension}{%
-      \tb@ifvalueisnotempty{##1}{\edef\tb@nt@ext{##1}}%
     }%
     \FamilyBoolKey[.toc]{KOMAarg}{float}{tb@nt@float}%
     \DefineFamilyKey[.toc]{KOMAarg}{floatpos}{%
@@ -756,16 +835,20 @@
       \tb@ifvalueisnotempty{##1}{\edef\tb@nt@name{##1}}%
     }%
     \FamilyBoolKey[.toc]{KOMAarg}{nonfloat}{tb@nt@nonfloat}%
-    \DefineFamilyKey[.toc]{KOMAarg}{owner}{%
-      \tb@ifvalueisnotempty{##1}{\edef\tb@nt@owner{##1}}%
-    }%
     \DefineFamilyKey[.toc]{KOMAarg}{types}{%
       \tb@ifvalueisnotempty{##1}{\edef\tb@nt@types{##1}}%
     }%
+    \DefineFamilyKey[.toc]{KOMAarg}{setup}{%
+      \setuptoc\tb@nt@ext{##1}%
+    }%
+    \DefineFamilyKey[.toc]{KOMAarg}{unset}{%
+      \unsettoc\tb@nt@ext{##1}%
+    }%
     \FamilyExecuteOptions[.toc]{KOMAarg}{#1}%
+    \RelaxFamilyKey[.toc]{KOMAarg}{unset}%
+    \RelaxFamilyKey[.toc]{KOMAarg}{setup}%
     \RelaxFamilyKey[.toc]{KOMAarg}{types}%
-    \RelaxFamilyKey[.toc]{KOMAarg}{owner}%
-    \RelaxFamilyKey[.toc]{KOMAarg}{nonfload}%
+    \RelaxFamilyKey[.toc]{KOMAarg}{nonfloat}%
     \RelaxFamilyKey[.toc]{KOMAarg}{name}%
     \RelaxFamilyKey[.toc]{KOMAarg}{listname}%
     \RelaxFamilyKey[.toc]{KOMAarg}{level}%
@@ -774,17 +857,17 @@
     \RelaxFamilyKey[.toc]{KOMAarg}{forcenames}%
     \RelaxFamilyKey[.toc]{KOMAarg}{floatpos}%
     \RelaxFamilyKey[.toc]{KOMAarg}{float}%
-    \RelaxFamilyKey[.toc]{KOMAarg}{extension}%
     \RelaxFamilyKey[.toc]{KOMAarg}{counterwithin}%
     \RelaxFamilyKey[.toc]{KOMAarg}{atend}%
     \RelaxFamilyKey[.toc]{KOMAarg}{atbegin}%
     \tb@nt@extra@relax@opts
+    \RelaxFamilyKey[.toc]{KOMAarg}{category}%
+    \RelaxFamilyKey[.toc]{KOMAarg}{owner}%
+    \RelaxFamilyKey[.toc]{KOMAarg}{extension}%
     \RelaxFamilyKey[.toc]{KOMAarg}{tocentrystyle}%
     \RelaxFamilyKey[.toc]{KOMAarg}{type}%
   }%
-  \expandafter\newcommand\csname ext@\tb@nt@type\endcsname{}%
-  \expandafter\let\csname ext@\tb@nt@type\endcsname\tb@nt@ext
-  \addtotoclist[\tb@nt@owner]{\csname ext@\tb@nt@type\endcsname}%
+  \expandafter\let\csname tb@nt@type@\tb@nt@ext\endcsname\tb@nt@type
   \scr@ifundefinedorrelax{tb@nt@types}{%
     \edef\tb@nt@types{\tb@nt@type s}%
   }{}%
@@ -810,7 +893,8 @@
     \expandafter{\csname list\tb@nt@type name\endcsname}%
   \begingroup\edef\@tempa{\endgroup
     \noexpand\newcommand*\csname listof\tb@nt@types\endcsname{%
-      \noexpand\listoftoc{\tb@nt@ext}%
+      \noexpand\listoftoc{%
+        \expandafter\noexpand\csname ext@\tb@nt@type\endcsname}%
     }%
   }\@tempa
   \ifstr{\tb@nt@tocentrystyle}{}{%
@@ -949,7 +1033,7 @@
   }%
 }
 \newcommand*{\tb@nt@autofloattype}{16}
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: body)
 \newcommand*{\scr@numberline}[1]{%
   \numberline@box{%
@@ -1001,7 +1085,9 @@
   \begingroup
     \def\do@endgroup{\endgroup}%
     \def\do##1{%
-      \l@addto@macro\do@endgroup{\RelaxFamilyKey[.dte]{KOMAarg}{##1}}%
+      \l@addto@macro\do@endgroup{%
+        \RelaxFamilyKey[.dte]{KOMAarg}{##1}%
+      }%
       \scr@dte@gobbleopt
     }%
     \scr@dte@doopts
@@ -1018,12 +1104,42 @@
   \@DefineTOCEntryOption{#1}{#2}{%
     \@DefineTOCEntryLengthOptionMacro{#2}{#3}{#4}{##1}%
   }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{#3##1#4}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname #3\scr@dte@current#4\expandafter\endcsname
+      \csname #3##1#4\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2+}{%
+    \@DefineTOCEntryAddLengthOptionMacro{#2+}{#3}{#4}{##1}%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}%
+    \noexpand\do{#2:}\noexpand\do{#2+}%
+  }%
 }
 \newcommand*{\@DefineTOCEntryLengthOptionWithDefault}{}
 \def\@DefineTOCEntryLengthOptionWithDefault#1#2[#3]#4#5#6{%
   \@TOCEntryStyleNeedsCommandByOption{#1}{#4}{#5}{#2}{#6}%
   \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
     \@DefineTOCEntryLengthOptionMacro{#2}{#4}{#5}{##1}%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{#4##1#5}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname #4\scr@dte@current#5\expandafter\endcsname
+      \csname #4##1#5\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2+}{%
+    \@DefineTOCEntryAddLengthOptionMacro{#2+}{#4}{#5}{##1}%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}%
+    \noexpand\do{#2:}\noexpand\do{#2+}%
   }%
 }
 \newcommand*{\@DefineTOCEntryLengthOptionMacro}[4]{%
@@ -1039,6 +1155,26 @@
     \fi
   \fi
 }
+\newcommand*{\@DefineTOCEntryAddLengthOptionMacro}[4]{%
+  \@ifundefined{#2\scr@dte@current#3}{%
+    \FamilyKeyStateUnknownValue
+  }{%
+    \protected@edef\reserved@a{%
+      \noexpand\FamilySetLength{KOMAarg}{#1}{\noexpand\@tempskipa}{#4}%
+    }\reserved@a
+    \ifx\FamilyKeyState\FamilyKeyStateProcessed
+      \ifscr@dte@expandtopt
+        \expandafter\edef\csname #2\scr@dte@current#3\endcsname{%
+          \the\glueexpr\@tempskipa
+          +\csname #2\scr@dte@current#3\endcsname\relax}%
+      \else
+        \expandafter\protected@edef\csname #2\scr@dte@current#3\endcsname{%
+          \the\glueexpr #4%
+            +\csname #2\scr@dte@current#3\endcsname\relax}%
+      \fi
+    \fi
+  }%
+}
 \newcommand*{\@DefineTOCEntryNumberOption}[2]{%
   \kernel@ifnextchar [%]
     {\@DefineTOCEntryNumberOptionWithDefault{#1}{#2}}
@@ -1049,12 +1185,42 @@
   \@DefineTOCEntryOption{#1}{#2}{%
     \@DefineTOCEntryNumberOptionMacro{#2}{#3}{#4}{##1}%
   }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{#3##1#4}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname #3\scr@dte@current#4\expandafter\endcsname
+      \csname #3##1#4\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2+}{%
+    \@DefineTOCEntryAddNumberOptionMacro{#2+}{#3}{#4}{##1}%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}%
+    \noexpand\do{#2:}\noexpand\do{#2+}%
+  }%
 }
 \newcommand*{\@DefineTOCEntryNumberOptionWithDefault}{}
 \def\@DefineTOCEntryNumberOptionWithDefault#1#2[#3]#4#5#6{%
   \@TOCEntryStyleNeedsCommandByOption{#1}{#4}{#5}{#2}{#6}%
   \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
     \@DefineTOCEntryNumberOptionMacro{#2}{#4}{#5}{##1}%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{#4##1#5}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname #4\scr@dte@current#5\expandafter\endcsname
+      \csname #4##1#5\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2+}{%
+    \@DefineTOCEntryAddNumberOptionMacro{#2+}{#4}{#5}{##1}%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}%
+    \noexpand\do{#2:}\noexpand\do{#2+}%
   }%
 }
 \newcommand*{\@DefineTOCEntryNumberOptionMacro}[4]{%
@@ -1063,6 +1229,20 @@
       \expandafter\noexpand\csname #2\scr@dte@current#3\endcsname
     }{#4}%
   }\reserved@a
+}
+\newcommand*{\@DefineTOCEntryAddNumberOptionMacro}[4]{%
+  \@ifundefined{#2\scr@dte@current#3}{%
+    \FamilyKeyStateUnknownValue
+  }{%
+    \FamilySetCounterMacro{KOMAarg}{#1}{%
+      \reserved@a
+    }{#4}%
+    \ifx\FamilyKeyState\FamilyKeyStateProcessed
+      \expandafter\edef\csname #2\scr@dte@current#3\endcsname{%
+        \the\numexpr \reserved@a+\csname #2\scr@dte@current#3\endcsname\relax
+      }%
+    \fi
+  }%
 }
 \newcommand*{\@DefineTOCEntryBooleanOption}[2]{%
   \kernel@ifnextchar [%]
@@ -1076,6 +1256,17 @@
   \@DefineTOCEntryOption{#1}{#2}[true]{%
     \@DefineTOCEntryBoolOptionMacro{#2}{#3}{#4}{##1}%
   }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{if#3##1#4}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname if#3\scr@dte@current#4\expandafter\endcsname
+      \csname if#3##1#4\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
+  }%
 }
 \newcommand*{\@DefineTOCEntryBoolOptionWithDefault}{}
 \def\@DefineTOCEntryBoolOptionWithDefault#1#2[#3]#4#5#6{%
@@ -1084,6 +1275,17 @@
   \@TOCEntryStyleNeedsCommandByOption{#1}{#4}{#5false}{#2}{#6}%
   \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
     \@DefineTOCEntryBoolOptionMacro{#2}{#4}{#5}{##1}%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{if#4##1#5}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname if#4\scr@dte@current#5\expandafter\endcsname
+      \csname if#4##1#5\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
   }%
 }
 \newcommand*{\@DefineTOCEntryBoolOptionMacro}[4]{%
@@ -1102,12 +1304,34 @@
   \@DefineTOCEntryOption{#1}{#2}[true]{%
     \@DefineTOCEntryIfOptionMacro{#2}{#3}{#4}{##1}%
   }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{If#3##1#4}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname If#3\scr@dte@current#4\expandafter\endcsname
+      \csname If#3##1#4\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
+  }%
 }
 \newcommand*{\@DefineTOCEntryIfOptionWithDefault}{}
 \def\@DefineTOCEntryIfOptionWithDefault#1#2[#3]#4#5#6{%
   \@TOCEntryStyleNeedsCommandByOption{#1}{If#4}{#5}{#2}{#6}%
   \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
     \@DefineTOCEntryIfOptionMacro{#2}{#4}{#5}{##1}%
+  }%
+  \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+    \scr@ifundefinedorrelax{If#4##1#5}{\FamilyKeyStateUnknownValue}{%
+      \expandafter\let
+      \csname If#4\scr@dte@current#5\expandafter\endcsname
+      \csname If#4##1#5\endcsname
+      \FamilyKeyStateProcessed
+    }%
+  }%
+  \edef\scr@dte@doopts{%
+    \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
   }%
 }
 \newcommand*{\@DefineTOCEntryIfOptionMacro}[4]{%
@@ -1135,9 +1359,31 @@
     \@DefineTOCEntryOption{#1}{#2}{%
       \@DefineTOCEntryCommandOptionMacro{#2}{#3}{#4}[#5]{##1}%
     }%
+    \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+      \scr@ifundefinedorrelax{#3##1#4}{\FamilyKeyStateUnknownValue}{%
+        \expandafter\let
+        \csname #3\scr@dte@current#4\expandafter\endcsname
+        \csname #3##1#4\endcsname
+        \FamilyKeyStateProcessed
+      }%
+    }%
+    \edef\scr@dte@doopts{%
+      \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
+    }%
   \or
     \@DefineTOCEntryOption{#1}{#2}{%
       \@DefineTOCEntryCommandOptionMacro{#2}{#3}{#4}[#5]{##1{####1}}%
+    }%
+    \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+      \scr@ifundefinedorrelax{#3##1#4}{\FamilyKeyStateUnknownValue}{%
+        \expandafter\let
+        \csname #3\scr@dte@current#4\expandafter\endcsname
+        \csname #3##1#4\endcsname
+        \FamilyKeyStateProcessed
+      }%
+    }%
+    \edef\scr@dte@doopts{%
+      \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
     }%
   \else
     \PackageError{tocbasic%
@@ -1157,13 +1403,46 @@
     \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
       \@DefineTOCEntryCommandOptionMacro{#2}{#4}{#5}[#6]{##1}%
     }%
+    \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+      \scr@ifundefinedorrelax{#4##1#5}{\FamilyKeyStateUnknownValue}{%
+        \expandafter\let
+        \csname #4\scr@dte@current#5\expandafter\endcsname
+        \csname #4##1#5\endcsname
+        \FamilyKeyStateProcessed
+      }%
+    }%
+    \edef\scr@dte@doopts{%
+      \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
+    }%
   \or
     \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
       \@DefineTOCEntryCommandOptionMacro{#2}{#4}{#5}[#6]{##1{####1}}%
     }%
+    \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+      \scr@ifundefinedorrelax{#4##1#5}{\FamilyKeyStateUnknownValue}{%
+        \expandafter\let
+        \csname #4\scr@dte@current#5\expandafter\endcsname
+        \csname #4##1#5\endcsname
+        \FamilyKeyStateProcessed
+      }%
+    }%
+    \edef\scr@dte@doopts{%
+      \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
+    }%
   \or
     \@DefineTOCEntryOption{#1}{#2}[{#3}]{%
       \@DefineTOCEntryCommandOptionMacro{#2}{#4}{#5}[#6]{##1{####1}{####2}}%
+    }%
+    \DefineFamilyKey[.dte]{KOMAarg}{#2:}{%
+      \scr@ifundefinedorrelax{#4##1#5}{\FamilyKeyStateUnknownValue}{%
+        \expandafter\let
+        \csname #4\scr@dte@current#5\expandafter\endcsname
+        \csname #4##1#5\endcsname
+        \FamilyKeyStateProcessed
+      }%
+    }%
+    \edef\scr@dte@doopts{%
+      \unexpanded\expandafter{\scr@dte@doopts}\noexpand\do{#2:}%
     }%
   \else
     \PackageError{tocbasic%
@@ -1214,6 +1493,7 @@
 }
 \newcommand*{\@ExecuteTOCEntryStyleInitCode}[2]{%
   \let\scr@dte@doopts\@empty
+  \expandafter\let\csname scr@dte@#1@needs\endcsname\relax
   \scr@ifundefinedorrelax{scr@dte@#1@init}{}{%
     \def\DefineTOCEntryBooleanOption{\@DefineTOCEntryBooleanOption{#1}}%
     \def\DefineTOCEntryCommandOption{\@DefineTOCEntryCommandOption{#1}}%
@@ -1291,6 +1571,7 @@
     \if@tempswa
       \@nameuse{scr@dte@def@l@#2}{#3}%
       \expandafter\edef\csname scr@dte@#3@style\endcsname{#2}%
+      \expandafter\edef\csname scr@tso@#3@style\endcsname{#2}%
       \expandafter\let\csname toclevel@#3\expandafter\endcsname
       \csname #3tocdepth\endcsname
       \if@atdocument\else
@@ -1304,6 +1585,22 @@
           \csname #3tocdepth\endcsname
         }%
       \fi
+    \fi
+  }%
+}
+\newcommand*{\DeclareTOCStyleEntries}[3][]{%
+  \edef\reserved@a{#3}%
+  \@for \reserved@a:=\reserved@a \do {%
+    \scr@trim@spaces\reserved@a
+    \ifx\reserved@a\@empty\else
+      \IfArgIsEmpty{#1}{%
+        \edef\reserved@a{%
+          \unexpanded{\DeclareTOCStyleEntry{#2}}{\reserved@a}}%
+      }{%
+        \edef\reserved@a{%
+          \unexpanded{\DeclareTOCStyleEntry[{#1}]{#2}}{\reserved@a}}%
+      }%
+      \reserved@a
     \fi
   }%
 }
@@ -1334,10 +1631,13 @@
   \expandafter\let\csname scr@dte@#2@init\expandafter\endcsname
   \csname scr@dte@#1@init\endcsname
 }
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+\providecommand*\@pnumwidth{1.55em}
+\providecommand*\@tocrmarg {2.55em}
+\providecommand*\@dotsep   {4.5}
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style,gobble)
 \DeclareTOCEntryStyle{gobble}{}%
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style,dottedtocline)
 \DeclareTOCEntryStyle{dottedtocline}[{%
   \DefineTOCEntryLengthOption{indent}%
@@ -1463,10 +1763,15 @@
     }%
   }{}%
 }]{%
-  \@dottedtocline{\@nameuse{#1tocdepth}}{\@nameuse{scr@tso@#1@indent}}%
-                 {\@nameuse{scr@tso@#1@numwidth}}{##1}{##2}%
+  \iftocfeature{\@currext}{noindent}{%
+    \@dottedtocline{\@nameuse{#1tocdepth}}{\z@}%
+                   {\@nameuse{scr@tso@#1@numwidth}}{##1}{##2}%
+  }{%
+    \@dottedtocline{\@nameuse{#1tocdepth}}{\@nameuse{scr@tso@#1@indent}}%
+                   {\@nameuse{scr@tso@#1@numwidth}}{##1}{##2}%
+  }%
 }
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style,undottedtocline)
 \DeclareTOCEntryStyle{undottedtocline}[{%
   \DefineTOCEntryLengthOption{indent}%
@@ -1612,8 +1917,12 @@
       \leavevmode
       \bfseries
       \advance\leftskip\@tempdima
-      \advance\leftskip\@nameuse{scr@tso@#1@indent}%
-      \hskip -\dimexpr \leftskip-\@nameuse{scr@tso@#1@indent}\relax
+      \iftocfeature{\@currext}{noindent}{%
+        \hskip -\leftskip
+      }{%
+        \advance\leftskip\@nameuse{scr@tso@#1@indent}%
+        \hskip -\dimexpr \leftskip-\@nameuse{scr@tso@#1@indent}\relax
+      }%
       ##1%
       \nobreak
       \hfil \nobreak\hb@xt@\@pnumwidth{\hss ##2}%
@@ -1622,7 +1931,7 @@
     \endgroup
   \fi
 }
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style, largetocline)
 \DeclareTOCEntryStyle{largetocline}[{%
   \DefineTOCEntryLengthOption{indent}%
@@ -1719,7 +2028,10 @@
       \leavevmode
       \large
       \bfseries
-      \advance\leftskip\@nameuse{scr@tso@#1@indent}%
+      \iftocfeature{\@currext}{noindent}{%
+      }{%
+        \advance\leftskip\@nameuse{scr@tso@#1@indent}%
+      }%
       ##1%
       \hfil \nobreak\hb@xt@\@pnumwidth{\hss ##2}%
       \par
@@ -1732,7 +2044,7 @@
     \endgroup
   \fi
 }
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style,tocline)
 \DeclareTOCEntryStyle{tocline}[{%
   \DefineTOCEntryLengthOption{beforeskip}%
@@ -1759,6 +2071,10 @@
     {scr@tso@}{@pagenumberbox}[1]{page number box}%
   \DefineTOCEntryCommandOption{pagenumberformat}%
     {scr@tso@}{@pagenumberformat}[1]{page number format}%
+  \DefineTOCEntryLengthOption{pagenumberwidth}%
+    {scr@tso@}{@pagenumberwidth}{width of page number box}%
+  \DefineTOCEntryLengthOption{rightindent}%
+    {scr@tso@}{@rightindent}{entry's text right indent}%
   \DefineTOCEntryOption{raggedentrytext}[true]{%
     \FamilySetBool{KOMAarg}{raggedentrytext}{@tempswa}{##1}%
     \ifx\FamilyKeyState\FamilyKeyStateProcessed
@@ -1835,6 +2151,32 @@
       }{}%
     }{%
       \@namedef{scr@tso@#1@indent}{\@nameuse{scr@#1@tocindent}}%
+    }%
+  }{}%
+  \scr@ifundefinedorrelax{scr@tso@#1@pagenumberwidth}{%
+    \ifstrstart{#1}{sub}{%
+      \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@pagenumberwidth}{%
+        \@namedef{scr@tso@#1@pagenumberwidth}{\@pnumwidth}%
+      }{%
+        \expandafter\let
+        \csname scr@tso@#1@pagenumberwidth\expandafter\endcsname
+        \csname scr@tso@\scr@dte@nosub{#1}@pagenumberwidth\endcsname
+      }%
+    }{%
+      \@namedef{scr@tso@#1@pagenumberwidth}{\@pnumwidth}%
+    }%
+  }{}%
+  \scr@ifundefinedorrelax{scr@tso@#1@rightindent}{%
+    \ifstrstart{#1}{sub}{%
+      \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@rightindent}{%
+        \@namedef{scr@tso@#1@rightindent}{\@tocrmarg}%
+      }{%
+        \expandafter\let
+        \csname scr@tso@#1@rightindent\expandafter\endcsname
+        \csname scr@tso@\scr@dte@nosub{#1}@rightindent\endcsname
+      }%
+    }{%
+      \@namedef{scr@tso@#1@rightindent}{\@tocrmarg}%
     }%
   }{}%
   \@ifundefined{scr@tso@#1@indent}{%
@@ -2003,8 +2345,8 @@
         \scr@ifundefinedorrelax{l@chapter}{%
           \ifstr{#1}{section}{%
             \@namedef{scr@tso@#1@linefill}{\hfill}%
-          }{}
-        }{}
+          }{}%
+        }{}%
         \expandafter\providecommand%
         \csname scr@tso@#1@linefill\endcsname{\TOCLineLeaderFill\relax}%
       }%
@@ -2015,13 +2357,24 @@
     \expandafter\providecommand%
     \csname scr@tso@#1@pagenumberformat\endcsname[1]{\large\bfseries ##1}%
   }{%
-    \expandafter\providecommand%
-    \csname scr@tso@#1@pagenumberformat\endcsname[1]{%
-      \normalfont\normalcolor ##1}%
+    \ifstr{#1}{chapter}{%
+      \expandafter\providecommand%
+      \csname scr@tso@#1@pagenumberformat\endcsname[1]{\bfseries ##1}%
+    }{%
+      \scr@ifundefinedorrelax{l@chapter}{%
+        \ifstr{#1}{section}{%
+          \expandafter\providecommand%
+          \csname scr@tso@#1@pagenumberformat\endcsname[1]{\bfseries ##1}%
+        }{}%
+      }{}%
+      \expandafter\providecommand%
+      \csname scr@tso@#1@pagenumberformat\endcsname[1]{%
+        \normalfont\normalcolor ##1}%
+    }%
   }%
   \expandafter\providecommand%
   \csname scr@tso@#1@pagenumberbox\endcsname[1]{%
-    \hb@xt@\@pnumwidth{\hfil ##1}}%
+    \hb@xt@\@nameuse{scr@dte@pagenumberwidth}{\hfil ##1}}%
   \expandafter\providecommand\csname Ifscr@tso@#1@dynnumwidth\endcsname[2]{##2}%
 }]{%
   \scr@dte@tocline{#1}{##1}{##2}%
@@ -2057,13 +2410,21 @@
     \tocbasic@DependOnPenaltyAndTOCLevel{#1}%
     \addvspace{\@nameuse{scr@tso@#1@beforeskip}}\relax
     {%
-      \leftskip \@nameuse{scr@tso@#1@indent}\relax
-      \rightskip \@tocrmarg
+      \iftocfeature{\@currext}{noindent}{%
+        \leftskip \z@
+      }{%
+        \leftskip \@nameuse{scr@tso@#1@indent}\relax
+      }%
+      \rightskip \@nameuse{scr@tso@#1@rightindent}\relax
       \parfillskip -\rightskip
       \@nameuse{Ifscr@tso@#1@raggedpage}{%
         \addtolength{\parfillskip}{\z@ \@plus 1fil}%
       }{}%
-      \parindent \@nameuse{scr@tso@#1@indent}\relax
+      \iftocfeature{\@currext}{noindent}{%
+        \parindent \z@
+      }{%
+        \parindent \@nameuse{scr@tso@#1@indent}\relax
+      }%
       \@afterindenttrue
       \interlinepenalty\@M
       \expandafter\ifx\csname ragged#1entry\endcsname\raggedright
@@ -2097,6 +2458,7 @@
           \sbox\scr@dte@tocline@numbox{\@nameuse{scr@tso@#1@numberformat}{##1}}%
           \global\scr@dte@tocline@numberwidth
           \dimexpr\wd\scr@dte@tocline@numbox+\@nameuse{scr@tso@#1@numsep}\relax
+          \relax
           \ifdim \scr@dte@tocline@numberwidth
                 >\@nameuse{scr@dte@#1@maxnumwidth}\relax
             \global\@nameuse{scr@dte@#1@maxnumwidth}\scr@dte@tocline@numberwidth
@@ -2104,7 +2466,7 @@
           \@nameuse{Ifscr@tso@#1@dynnumwidth}{}{%
             \ifdim \scr@dte@tocline@numberwidth
                   >\dimexpr \@nameuse{scr@tso@#1@numwidth}%
-                           +\@nameuse{scr@tso@#1@numsep}\relax
+                           +\@nameuse{scr@tso@#1@numsep}\relax\relax
               \PackageWarning{tocbasic%
               }{%
                 number width of #1 toc entries should be
@@ -2130,6 +2492,8 @@
           {%
             \normalfont\normalsize\@nameuse{scr@tso@#1@linefill}%
             \nobreak
+            \expandafter\let\expandafter\scr@dte@pagenumberwidth
+            \csname scr@tso@#1@pagenumberwidth\endcsname
             \@nameuse{scr@tso@#1@pagenumberbox}{%
               \@nameuse{scr@tso@#1@pagenumberformat}{#3}%
             }%
@@ -2163,10 +2527,240 @@
     \mkern \@dotsep mu\hbox{#1}\mkern \@dotsep
     mu$}\hfill
 }
-%%% From File: $Id: scrkernel-tocstyle.dtx 2475 2016-06-09 07:51:01Z kohm $
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: style,toctext)
+\DeclareTOCEntryStyle{toctext}[{%
+  \DefineTOCEntryCommandOption{entryformat}%
+    {scr@tso@}{@entryformat}[1]{entry format}%
+  \DefineTOCEntryCommandOption{entrynumberformat}%
+    {scr@tso@}{@numberformat}[1]{entry number format}%
+  \DefineTOCEntryCommandOption{prepagenumber}%
+    {scr@tso@}{@prepagenumber}{separator between text and page number}%
+  \DefineTOCEntryLengthOption{numsep}%
+    {scr@tso@}{@numsep}{entry number separation}%
+  \DefineTOCEntryCommandOption{onstartfirstentry}%
+    {scr@tso@}{@onstartfirstentry}{output at start of paragraph}%
+  \DefineTOCEntryCommandOption{onstartentry}%
+    {scr@tso@}{@onstartentry}{output at start of all entries but the first}%
+  \DefineTOCEntryCommandOption{onendlastentry}%
+    {scr@tso@}{@onendlastentry}{output at end of paragraph}%
+  \DefineTOCEntryCommandOption{afterpar}%
+    {scr@tso@}{@afterpar}{settings after end of paragraph}%
+  \DefineTOCEntryCommandOption{onendentry}%
+    {scr@tso@}{@onendentry}{output at end of all entries but the last}%
+  \DefineTOCEntryCommandOption{pagenumberformat}%
+    {scr@tso@}{@pagenumberformat}[1]{page number format}%
+  \DefineTOCEntryLengthOption{rightindent}%
+    {scr@tso@}{@rightindent}{entry's text right indent}%
+  \DefineTOCEntryIfOption{raggedright}%
+    {scr@tso@}{@raggedright}{use raggedright for the whole paragraph}%
+  \DefineTOCEntryLengthOption{indent}%
+    {scr@tso@}{@indent}{entry indent}%
+  \scr@ifundefinedorrelax{#1tocdepth}{%
+    \ifstrstart{#1}{sub}{%
+      \scr@ifundefinedorrelax{\scr@dte@nosub{#1}tocdepth}{}{%
+        \expandafter\edef\csname #1tocdepth\endcsname{%
+          \the\numexpr \noexpand\@nameuse{\scr@dte@nosub{#1}tocdepth}+\@ne\relax
+        }%
+      }%
+    }{}%
+  }{}%
+  \@ifundefined{#1tocdepth}{%
+    \ifstr{#1}{part}{\@namedef{#1tocdepth}{-1}}{%
+      \ifstr{#1}{chapter}{\@namedef{#1tocdepth}{0}}{%
+        \ifstr{#1}{section}{\@namedef{#1tocdepth}{1}}{%
+          \ifstr{#1}{subsection}{\@namedef{#1tocdepth}{2}}{%
+            \ifstr{#1}{subsubsection}{\@namedef{#1tocdepth}{3}}{%
+              \ifstr{#1}{paragraph}{\@namedef{#1tocdepth}{4}}{%
+                \ifstr{#1}{subparagraph}{\@namedef{#1tocdepth}{5}}{%
+                  \ifstr{#1}{figure}{\@namedef{#1tocdepth}{1}}{%
+                    \ifstr{#1}{table}{\@namedef{#1tocdepth}{1}}{%
+                      \expandafter\let\csname #1tocdepth\expandafter\endcsname
+                      \csname #1numdepth\endcsname
+                    }%
+                  }%
+                }%
+              }%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }{}%
+  \scr@ifundefinedorrelax{scr@tso@#1@indent}{%
+    \@ifundefined{scr@#1@tocindent}{%
+      \ifstrstart{#1}{sub}{%
+        \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@indent}{%
+          \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@numwidth}{}{%
+            \expandafter\edef\csname scr@tso@#1@indent\endcsname{%
+              \glueexpr \noexpand\@nameuse{scr@tso@\scr@dte@nosub{#1}@numwidth}%
+              \relax
+            }%
+          }%
+        }{%
+          \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@numwidth}{%
+            \expandafter\edef\csname scr@tso@#1@indent\endcsname{%
+              \glueexpr \noexpand\@nameuse{scr@tso@\scr@dte@nosub{#1}@indent}%
+              \relax
+            }%
+          }{%
+            \expandafter\edef\csname scr@tso@#1@indent\endcsname{%
+              \glueexpr \noexpand\@nameuse{scr@tso@\scr@dte@nosub{#1}@indent}%
+                       +\noexpand\@nameuse{scr@tso@\scr@dte@nosub{#1}@numwidth}%
+              \relax
+            }%
+          }%
+        }%
+      }{}%
+    }{%
+      \@namedef{scr@tso@#1@indent}{\@nameuse{scr@#1@tocindent}}%
+    }%
+  }{}%
+  \scr@ifundefinedorrelax{scr@tso@#1@rightindent}{%
+    \ifstrstart{#1}{sub}{%
+      \scr@ifundefinedorrelax{scr@tso@\scr@dte@nosub{#1}@rightindent}{%
+        \@namedef{scr@tso@#1@rightindent}{\@tocrmarg}%
+      }{%
+        \expandafter\let
+        \csname scr@tso@#1@rightindent\expandafter\endcsname
+        \csname scr@tso@\scr@dte@nosub{#1}@rightindent\endcsname
+      }%
+    }{%
+      \@namedef{scr@tso@#1@rightindent}{\@tocrmarg}%
+    }%
+  }{}%
+  \@ifundefined{scr@tso@#1@indent}{%
+      \ifstr{#1}{figure}{\@namedef{scr@tso@#1@indent}{1.5em}}{%
+        \ifstr{#1}{table}{\@namedef{scr@tso@#1@indent}{1.5em}}{%
+          \ifstr{#1}{part}{\@namedef{scr@tso@#1@indent}{0em}}{%
+            \ifstr{#1}{chapter}{\@namedef{scr@tso@#1@indent}{0em}}{%
+              \scr@ifundefinedorrelax{l@chapter}{%
+                \ifstr{#1}{section}{\@namedef{scr@tso@#1@indent}{0pt}}{%
+                  \ifstr{#1}{subsection}{\@namedef{scr@tso@#1@indent}{1.5em}}{%
+                    \ifstr{#1}{subsubsection}{%
+                      \@namedef{scr@tso@#1@indent}{3.8em}%
+                    }{%
+                      \ifstr{#1}{paragraph}{%
+                        \@namedef{scr@tso@#1@indent}{7em}%
+                      }{%
+                        \ifstr{#1}{subparagraph}{%
+                          \@namedef{scr@tso@#1@indent}{10em}%
+                        }{%
+                        }%
+                      }%
+                    }%
+                  }%
+                }%
+              }{%
+                \ifstr{#1}{section}{\@namedef{scr@tso@#1@indent}{1.5em}}{%
+                  \ifstr{#1}{subsection}{\@namedef{scr@tso@#1@indent}{3.8em}}{%
+                    \ifstr{#1}{subsubsection}{%
+                      \@namedef{scr@tso@#1@indent}{7.0em}%
+                    }{%
+                      \ifstr{#1}{paragraph}{%
+                        \@namedef{scr@tso@#1@indent}{10em}%
+                      }{%
+                        \ifstr{#1}{subparagraph}{%
+                          \@namedef{scr@tso@#1@indent}{12em}%
+                        }{%
+                        }%
+                      }%
+                    }%
+                  }%
+                }%
+              }%
+            }%
+          }%
+        }%
+      }%
+  }{}%
+  \expandafter\providecommand\expandafter*%
+  \csname scr@tso@#1@numsep\endcsname{.4em}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@onstartfirstentry\endcsname{}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@onstartentry\endcsname{}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@onendlastentry\endcsname{}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@onendentry\endcsname{\quad}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@afterpar\endcsname{}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@numberformat\endcsname[1]{##1}%
+      \expandafter\providecommand%
+      \csname scr@tso@#1@entryformat\endcsname[1]{##1}%
+  \expandafter\providecommand%
+  \csname Ifscr@tso@#1@raggedright\endcsname[2]{##2}%
+  \expandafter\providecommand%
+  \csname scr@tso@#1@prepagenumber\endcsname{\nobreakspace}%
+}]{%
+  \scr@dte@toctext{#1}{##1}{##2}%
+}
+\newcommand*{\scr@dte@toctext}[3]{%
+  \ifnum \@nameuse{#1tocdepth}>\c@tocdepth
+  \else
+    \ifhmode
+      \scr@dte@toctext@lastend
+      \@nameuse{scr@tso@#1@onstartentry}%
+    \else
+      \leavevmode
+      \def\par{%
+        \scr@dte@toctext@raggedright
+        \scr@dte@toctext@parend
+        \@par
+        \scr@dte@toctext@afterpar
+        \global\let\scr@dte@toctext@afterpar\relax
+        \global\let\scr@dte@toctext@parend\relax
+        \global\let\scr@dte@toctext@raggedright\relax
+      }%
+      \global\let\scr@dte@toctext@afterpar\@empty
+      \iftocfeature{\@currext}{noindent}{%
+        \leftskip \z@
+      }{%
+        \leftskip \@nameuse{scr@tso@#1@indent}\relax
+      }%
+      \rightskip \@nameuse{scr@tso@#1@rightindent}\relax
+      \parfillskip \z@ \@plus 1fill\relax
+      \edef\@noitemerr{\unexpanded{\par\def\@noitemerr}%
+        {\unexpanded\expandafter{\@noitemerr}}}%
+      \@nameuse{scr@tso@#1@onstartfirstentry}%
+    \fi
+    \@nameuse{Ifscr@tso@#1@raggedright}{%
+      \let\\\@centercr
+      \gdef\scr@dte@toctext@raggedright{%
+        \@rightskip\@flushglue
+        \addtolength\rightskip\@rightskip
+      }%
+    }{}%
+    \l@addto@macro\scr@dte@toctext@afterpar{\@nameuse{scr@tso@#1@afterpar}}%
+    \expandafter\global\expandafter\let\expandafter\scr@dte@toctext@lastend
+    \csname scr@tso@#1@onendentry\endcsname
+    \expandafter\global\expandafter\let\expandafter\scr@dte@toctext@parend
+    \csname scr@tso@#1@onendlastentry\endcsname
+    {%
+      \usetocbasicnumberline
+      \def\numberline@box##1{%
+        \mbox{%
+          \@nameuse{scr@tso@#1@numberformat}{\ignorespaces ##1\unskip}%
+          \hskip\@nameuse{scr@tso@#1@numsep}\relax
+        }%
+      }%
+      \@nameuse{scr@tso@#1@entryformat}{%
+        \ignorespaces#2\unskip
+        \@nameuse{scr@tso@#1@prepagenumber}%
+        \@nameuse{scr@tso@#1@pagenumberformat}{\ignorespaces #3\unskip}%
+      }%
+    }%
+  \fi
+}
+\newcommand*{\scr@dte@toctext@raggedright}{}
+\newcommand*{\scr@dte@toctext@parend}{}
+\newcommand*{\scr@dte@toctext@lastend}{}
+%%% From File: $Id: scrkernel-tocstyle.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: style,dottedtocline)
 \CloneTOCEntryStyle{dottedtocline}{default}
-%%% From File: $Id: tocbasic.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: tocbasic.dtx 3256 2019-10-10 07:06:49Z kohm $
 %%%            (run: exit)
 \AtBeginDocument{%
   \@ifundefined{MakeMarkcase}{%
@@ -2177,7 +2771,7 @@
     }%
   }{}%
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

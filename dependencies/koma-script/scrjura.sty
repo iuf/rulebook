@@ -4,10 +4,15 @@
 %%
 %% The original source files were:
 %%
-%% scrjura.dtx  (with options: `package')
+%% scrjura.dtx  (with options: `package,identify')
+%% scrjura.dtx  (with options: `package,init')
+%% scrjura.dtx  (with options: `package,options')
+%% scrjura.dtx  (with options: `package,postoptions')
+%% scrjura.dtx  (with options: `package,body')
+%% scrjura.dtx  (with options: `package,final')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2007-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2007-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -35,17 +40,20 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrjura.dtx 2448 2016-05-06 09:06:19Z kohm $
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: identify)
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{scrjura}[%
-  2016/05/06 v0.9h KOMA-Script 
-  for jurists
-  (package)%
+  2019/10/12 v3.27 KOMA-Script
+  package
+  (for jurists)
 ]
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: init)
 \@ifpackageloaded{hyperref}{%
   \PackageError{scrjura}{Package hyperref already loaded}{%
     If you want to use package scrjura with package hyperref, you have to
@@ -57,44 +65,42 @@
 }
 \RequirePackage{scrkbase}[2013/03/26]
 \RequirePackage{tocbasic}
+\DeclareTOCStyleEntry[%
+  indent=1.5em,
+  numwidth=2em,
+  level=\maxdimen
+]{default}{cpar}
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: options)
 \DeclareOption{contract}{%
   \g@addto@macro\document\contract%
 }
-\newcounter{juratoclevel}\setcounter{juratoclevel}{\@M}
 \KOMA@key{juratotoc}[true]{%
-  \begingroup
-    \KOMA@set@ifkey{juratoclevel}{@tempswa}{#1}%
-    \ifx\FamilyKeyState\FamilyKeyStateProcessed
-      \if@tempswa
-        \setcounter{juratoclevel}{2}%
-      \else
-        \setcounter{juratoclevel}{\@M}%
-      \fi
+  \KOMA@set@ifkey{juratotoc}{@tempswa}{#1}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \if@tempswa
+      \DeclareTOCStyleEntry[level=2]{default}{cpar}%
     \else
-      \setcounter{juratoclevel}{#1}%
+      \DeclareTOCStyleEntry[level=\maxdimen]{default}{cpar}%
     \fi
-  \endgroup
-  \FamilyKeyStateProcessed
-  \KOMA@kav@xreplacevalue{.scrjura.sty}{juratotoc}{\value{juratoclevel}}%
+  \else
+    \DeclareTOCStyleEntry[level=#1]{default}{cpar}%
+  \fi
+  \KOMA@kav@xreplacevalue{.scrjura.sty}{juratotoc}{\cpartocdepth}%
 }
-\KOMA@kav@xadd{.scrjura.sty}{juratotoc}{\value{juratoclevel}}%
-\providecommand*{\toclevel@cpar}{\arabic{juratoclevel}}
-\newcommand*{\cpar@numberwidth}{2em}
-\newcommand*{\cpar@indent}{1.5em}
+\KOMA@kav@xadd{.scrjura.sty}{juratotoc}{\cpartocdepth}%
 \KOMA@key{juratocnumberwidth}{%
-  \begingroup\setlength{\@tempdima}{#1}\endgroup
-  \renewcommand*{\cpar@numberwidth}{#1}%
+  \DeclareTOCStyleEntry[numwidth=#1]{default}{cpar}%
   \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.scrjura.sty}{juratocnumberwidth}{\cpar@numberwidth}%
+  \KOMA@kav@replacevalue{.scrjura.sty}{juratocnumberwidth}{#1}%
 }
-\KOMA@kav@add{.scrjura.sty}{juratocnumberwidth}{\cpar@numberwidth}
+\KOMA@kav@add{.scrjura.sty}{juratocnumberwidth}{2em}
 \KOMA@key{juratocindent}{%
-  \begingroup\setlength{\@tempdima}{#1}\endgroup
-  \renewcommand*{\cpar@indent}{#1}%
+  \DeclareTOCStyleEntry[indent=#1]{default}{cpar}%
   \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.scrjura.sty}{juratocindent}{\cpar@indent}%
+  \KOMA@kav@replacevalue{.scrjura.sty}{juratocindent}{#1}%
 }
-\KOMA@kav@add{.scrjura.sty}{juratocindent}{\cpar@indent}%
+\KOMA@kav@add{.scrjura.sty}{juratocindent}{1.5em}%
 \KOMA@ifkey{juratitlepagebreak}{@juratitlepagebreak}
 \newif\ifparnumber
 \KOMA@key{parnumber}[true]{%
@@ -262,7 +268,11 @@
 \KOMA@kav@add{.scrjura.sty}{ref}{sentencelong}%
 \KOMA@DeclareDeprecatedOption[scrjura]{parcitename}{ref=parlong}
 \KOMA@DeclareDeprecatedOption[scrjura]{sentencecitename}{ref=sentencelong}
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: postoptions)
 \KOMAProcessOptions\relax
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \providecommand*{\DeprecatedParagraph}{%
   \PackageError{scrjura}{modification of old document needed}{%
     It seem that this document was made for scrjura up to version
@@ -382,32 +392,38 @@
 \@onlypreamble\DeclareNewJuraEnvironment
 \DefineFamily{KOMAarg}
 \DefineFamilyMember{KOMAarg}
-\DefineFamilyKey{KOMAarg}{Clause}{%
-  \expandafter\gdef\csname \scrjura@env@type @Clause\endcsname{#1}%
-}
-\DefineFamilyKey{KOMAarg}{SubClause}{%
-  \expandafter\gdef\csname \scrjura@env@type @SubClause\endcsname{#1}%
-}
-\DefineFamilyKey{KOMAarg}{Sentence}{%
-  \expandafter\gdef\csname \scrjura@env@type @Sentence\endcsname{#1}%
-}
-\DefineFamilyKey{KOMAarg}{ClauseNumberFormat}{%
-  \expandafter\gdef\csname \scrjura@env@type @Clauseformat \endcsname
-  ##1{#1{##1}}
-  \expandafter\xdef\csname \scrjura@env@type @Clauseformat\endcsname{%
-    \noexpand\protect\expandafter\noexpand
-    \csname \scrjura@env@type @Clauseformat \endcsname
-  }%
-}
 \newcommand{\@defjuraenvironment}{}
 \long\def\@defjuraenvironment#1[#2]#3#4{%
+  \let\reserved@defjuraenvironment\relax
   \newcounter{#1Clause}%
   \newcounter{#1AbsoluteClause}%
   \newcounter{#1SubClause}%
-  \begingroup
-    \edef\scrjura@env@type{#1}%
-    \FamilyExecuteOptions[.scrjura.sty]{KOMAarg}{#2}%
-  \endgroup
+  \FamilyCSKey[.scrjura.sty]{KOMAarg}{Clause}{#1@Clause}%
+  \FamilyCSKey[.scrjura.sty]{KOMAarg}{SubClause}{#1@SubClause}%
+  \FamilyCSKey[.scrjura.sty]{KOMAarg}{Sentence}{#1@Sentence}%
+  \DefineFamilyKey[.scrjura.sty]{KOMAarg}{ClauseNumberFormat}{%
+    \expandafter\def\csname #1@Clauseformat \endcsname####1{##1{####1}}%
+    \expandafter\edef\csname #1@Clauseformat\endcsname{%
+      \noexpand\protect\expandafter\noexpand\csname #1@Clauseformat \endcsname
+    }%
+    \FamilyKeyStateProcessed
+  }
+  \DefineFamilyKey[.scrjura.sty]{KOMAarg}{ClauseFont}{%
+    \IfExistskomafont{#1.Clause}{%
+      \IfIsAliaskomafont{#1.Clause}{%
+        \expandafter\let\csname scr@fnt@instead@#1.Clause\endcsname\relax
+        \newkomafont{#1.Clause}{##1}%
+      }{\setkomafont{#1.Clause}{##1}}%
+    }{%
+      \newkomafont{#1.Clause}{##1}%
+    }%
+  }
+  \FamilyExecuteOptions[.scrjura.sty]{KOMAarg}{#2}%
+  \RelaxFamilyKey[.scrjura.sty]{KOMAarg}{ClauseFont}%
+  \RelaxFamilyKey[.scrjura.sty]{KOMAarg}{ClauseNumberFormat}%
+  \RelaxFamilyKey[.scrjura.sty]{KOMAarg}{Sentence}%
+  \RelaxFamilyKey[.scrjura.sty]{KOMAarg}{SubClause}%
+  \RelaxFamilyKey[.scrjura.sty]{KOMAarg}{Clause}%
   \@ifundefined{#1@Clauseformat}{%
     \expandafter\DeclareRobustCommand\expandafter*%
     \csname #1@Clauseformat\endcsname[1]{\Clauseformat{##1}}%
@@ -447,11 +463,11 @@
         \csname \scrjura@env@type @everypar\endcsname
         \contract@everypar
       }{}%
-      \@ifundefined{scr@fnt@#1}{%
-        \@ifundefined{scr@fnt@instead@#1}{%
-          \aliaskomafont{Clause}{contract.Clause}%
+      \IfExistskomafont{#1.Clause}{%
+        \IfIsAliaskomafont{#1.Clause}{%
+          \aliaskomafont{Clause}{\csname scr@fnt@instead@#1.Clause\endcsname}%
         }{%
-          \aliaskomafont{Clause}{\csname scr@fnt@instead@#1\endcsname}%
+          \aliaskomafont{Clause}{#1.Clause}%
         }%
       }{%
         \aliaskomafont{Clause}{contract.Clause}%
@@ -497,7 +513,7 @@
 \newif\ifcontract@dummy
 \define@key{contract}{dummy}[true]{\csname contract@dummy#1\endcsname}
 \newkomafont{contract.Clause}{\sffamily\bfseries\large}
-\newcommand*{\contract@paragraph@font}{\usekomafont{contract.Clause}%
+\newcommand*{\contract@paragraph@font}{\usekomafont{Clause}%
   \@hangfrom}
 \newcounter{@AbsClause}
 \newcommand*{\theH@AbsClause}{P-\arabic{@AbsClause}}
@@ -551,7 +567,8 @@
         \ifx\contract@title\relax\else\enskip\fi}%
       \contract@title
       \ifx\contract@entry\relax\else
-        \addxcontentsline{toc}{cpar}[\theClause]\contract@entry
+        \expandafter\addxcontentsline\expandafter{\ext@toc}%
+        {cpar}[\theClause]\contract@entry
         \addxcontentsline{cpa}{cpar}[\theClause]\contract@entry
       \fi
       \ifx\contract@head\relax\else
@@ -607,7 +624,8 @@
         \ifx\contract@title\relax\else\enskip\fi}%
       \contract@title
       \ifx\contract@entry\relax\else
-        \addxcontentsline{toc}{cpar}[\theSubClause]\contract@entry
+        \expandafter\addxcontentsline\expandafter{\ext@toc}%
+        {cpar}[\theSubClause]\contract@entry
         \addxcontentsline{cpa}{cpar}[\theSubClause]\contract@entry
       \fi
       \ifx\contract@head\relax\else
@@ -626,6 +644,20 @@
 }
 \newcommand*{\ManualPar}{%
   \let\scrjura@everypar\relax
+}
+\CheckCommand*{\@afterheading}{%
+  \@nobreaktrue
+  \everypar{%
+    \if@nobreak
+      \@nobreakfalse
+      \clubpenalty \@M
+      \if@afterindent \else
+        {\setbox\z@\lastbox}%
+      \fi
+    \else
+      \clubpenalty \@clubpenalty
+      \everypar{}%
+    \fi}%
 }
 \newcommand*{\scrjura@afterheading}{%
   \@nobreaktrue
@@ -705,15 +737,6 @@
   }%
 }
 \EndIncludeInRelease
-\newcommand*{\l@cpar}[2]{%
-  \ifnum\value{juratoclevel}>\value{tocdepth}\else
-    \scr@ifundefinedorrelax{bprot@dottedtocline}{%
-      \@dottedtocline
-    }{%
-      \bprot@dottedtocline
-    }{\value{juratoclevel}}{\cpar@indent}{\cpar@numberwidth}{#1}{#2}%
-  \fi
-}
 \DeclareRobustCommand*{\scrjura@separator}[1]{#1}
 \DeclareRobustCommand*{\scrjura@usetype}[1]{\scrjura@@usetype{#1}}
 \newcommand*{\scrjura@@usetype}[1]{}
@@ -726,6 +749,7 @@
 \renewcommand*\p@par{{\scrjura@usetype{\scrjura@env@type}\theSubClause\scrjura@separator{\nobreakspace}}}
 \@addtoreset{par}{Clause}
 \@addtoreset{par}{SubClause}
+\newcommand*{\withoutparnumber}{}
 \newcommand*{\contract@everypar}{%
   \ifparnumber
     \ifx\scrjura@special@par\relax
@@ -765,12 +789,14 @@
       \else
         \def\reserved@a{\relax}%
         \ifx\@tempa\reserved@a
+          \withoutparnumber
         \else
           {\usekomafont{parnumber}{\parformat\parformatseparation}}%
         \fi
       \fi
     \endgroup
   \else
+    \begingroup\withoutparnumber\endgroup
     \setcounter{sentence}{-1}\refstepcounter{sentence}%
   \fi
 }
@@ -962,9 +988,14 @@
 \newcounter{sentence}[par]
 \renewcommand*{\thesentence}{\arabic{sentence}}
 \newcommand*{\theHsentence}{\theHpar-\arabic{sentence}}
-\renewcommand*{\p@sentence}{\expandafter\p@@sentence}
-\newcommand*{\p@@sentence}[1]{\p@par{{\par@cite{\thepar}}%
-    \scrjura@separator{\nobreakspace}}{\sentence@cite{#1}}}
+\scr@ifundefinedorrelax{labelformat}{%
+  \renewcommand*{\p@sentence}{\expandafter\p@@sentence}
+  \newcommand*{\p@@sentence}[1]{\p@par{{\par@cite{\thepar}}%
+      \scrjura@separator{\nobreakspace}}{\sentence@cite{#1}}}%
+}{%
+  \labelformat{sentence}{\p@par{{\par@cite{\thepar}}%
+      \scrjura@separator{\nobreakspace}}{\sentence@cite{#1}}}%
+}
 \newcommand*{\contract@sentence}{%
   \ifvmode
     \if@endpe
@@ -975,8 +1006,11 @@
   \else
     \refstepcounter{sentence}%
   \fi
-  \textsuperscript{\thesentence}\nobreak\hskip\z@
+  {\usekomafont{sentencenumber}{\sentencenumberformat}}%
+  \nobreak\hskip\z@
 }
+\newkomafont{sentencenumber}{}
+\newcommand*{\sentencenumberformat}{\textsuperscript{\thesentence}}
 \DeclareRobustCommand*{\par@cite}[1]{\parciteformat{#1}}
 \newcommand*{\parciteformat}[1]{%
   \ifcase \parcite@format
@@ -1015,10 +1049,14 @@
   \providecaptionname{german,ngerman,austrian,naustrian}\parshortname{Abs.}%
   \providecaptionname{german,ngerman,austrian,naustrian}\sentencename{Satz}%
   \providecaptionname{german,ngerman,austrian,naustrian}\sentenceshortname{S.}%
-  \providecaptionname{english,american,british,canadian,USenglish,UKenglish}\parname{paragraph}%
-  \providecaptionname{english,american,british,canadian,USenglish,UKenglish}\parshortname{par.}%
-  \providecaptionname{english,american,british,canadian,USenglish,UKenglish}\sentencename{sentence}%
-  \providecaptionname{english,american,british,canadian,USenglish,UKenglish}\sentenceshortname{sent.}%
+  \providecaptionname{english,american,british,canadian,%
+    USenglish,UKenglish,usenglish,ukenglish}\parname{paragraph}%
+  \providecaptionname{english,american,british,canadian,%
+    USenglish,UKenglish,usenglish,ukenglish}\parshortname{par.}%
+  \providecaptionname{english,american,british,canadian,%
+    USenglish,UKenglish,usenglish,ukenglish}\sentencename{sentence}%
+  \providecaptionname{english,american,british,canadian,%
+    USenglish,UKenglish,usenglish,ukenglish}\sentenceshortname{sent.}%
 }
 \providecommand*{\parname}{\scrjura@lang@error{\parname}}
 \providecommand*{\parshortname}{\scrjura@lang@error{\parshortname}}
@@ -1030,9 +1068,9 @@
   }{%
     Currently scrjura only supports languages `german', `ngerman',
     `austrian',\MessageBreak
-    `naustrian', `english', `american', `british', `canadian', `USenglish',
-    and\MessageBreak
-    `UKenglish'.\MessageBreak
+    `naustrian', `english', `american', `british', `canadian',
+    `USenglish',\MessageBreak
+    `UKenglish', `usenglish`, and `ukenglish'.\MessageBreak
     It seems, that you are using another language (maybe `\languagename') or
     that\MessageBreak
     your language selection isn't compatible to package `babel'.\MessageBreak
@@ -1068,7 +1106,9 @@
     }%
   \fi
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrjura.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: final)
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

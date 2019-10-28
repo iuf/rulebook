@@ -13,7 +13,7 @@
 %% scrlayer-scrpage.dtx  (with options: `interface,trace,scrpage,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2012-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2012-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -41,17 +41,19 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (identify)
+%%% From File: $Id: scrlayer-scrpage.dtx 3141 2019-04-05 07:52:27Z kohm $
+%%%            (run: identify)
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{scrlayer-scrpage}[%
-  2016/06/14 v3.21 KOMA-Script
+  2019/10/12 v3.27 KOMA-Script
   package
   (end user interface for scrlayer)]
-%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
+%%% From File: $Id: scrlayer.dtx 3196 2019-08-26 09:20:16Z kohm $
+%%%            (run: init)
 \RequirePackage{scrlayer}
 \scr@ifundefinedorrelax{scrlayer@AtEndOfPackage}{%
   \AtEndOfPackage{\let\scrlayer@AtEndOfPackage\@firstofone}%
@@ -62,7 +64,8 @@
 }
 \let\scrlayer@AtEndOfPackage\AtEndOfPackage
 \scrlayerInitInterface
-%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (init)
+%%% From File: $Id: scrlayer-scrpage.dtx 3141 2019-04-05 07:52:27Z kohm $
+%%%            (run: init)
 \AtEndOfPackage{%
   \sls@auto@pagestyleset%
 }
@@ -78,7 +81,8 @@
     {pagestyleset=KOMA-Script}%
   }%
 }
-%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
+%%% From File: $Id: scrlayer.dtx 3196 2019-08-26 09:20:16Z kohm $
+%%%            (run: options)
 \KOMA@key{markcase}{%
 \scrlayer@AtEndOfPackage{%
   \begingroup
@@ -123,9 +127,21 @@
   \scrlayer@testunexpectedarg{automark}{#1}%
   \scrlayer@AtEndOfPackage{%
     \if@chapter
-      \automark[section]{chapter}%
+      \scr@ifundefinedorrelax{section}{%
+        \automark{chapter}%
+      }{%
+        \automark[section]{chapter}%
+      }%
     \else
-      \automark[subsection]{section}%
+      \scr@ifundefinedorrelax{section}{%
+        \automark{}%
+      }{%
+        \scr@ifundefinedorrelax{subsection}{%
+          \automark{section}%
+        }{%
+          \automark[subsection]{section}%
+        }
+      }%
     \fi
   }%
   \FamilyKeyStateProcessed
@@ -191,6 +207,7 @@
   \FamilyKeyStateProcessed
   \KOMA@kav@add{.scrlayer.sty}{onpsforeground}{#1}%
 }
+\KOMA@ifkey{singlespacing}{@ps@singlespacing}
 \KOMA@key{deactivatepagestylelayers}[true]{%
   \KOMA@set@ifkey{deactivatepagestylelayers}{scrlayer@deactivate@layers}{#1}%
   \KOMA@kav@replacebool{.scrlayer.sty}{deactivatepagestylelayers}
@@ -209,7 +226,8 @@
   \KOMA@kav@replacebool{.scrlayer.sty}{autoremoveinterfaces}
                        {scrlayer@autoremoveinterfaces}%
 }
-%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (options)
+%%% From File: $Id: scrlayer-scrpage.dtx 3141 2019-04-05 07:52:27Z kohm $
+%%%            (run: options)
 \KOMA@key{headwidth}{%
   \begingroup
     \sls@split@at@iicolons#1:::\@nil
@@ -690,11 +708,19 @@
   markcase=ignoreuppercase%
 }
 \KOMA@ifkey{hmode}{sls@leavevmode}
-\scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@hmode}%
-\scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@hmode@default}%
+\scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@hmode}
+\scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@hmode@default}
 \scrlayer@AddCsToInterface{sls@leavevmode@linetrue}
 \scrlayer@AddCsToInterface{sls@leavevmode@linefalse}
-%%% From File: $Id: scrlayer.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
+\KOMA@ifkey{autoenlargeheadfoot}{sls@autoenlarge}
+\KOMAExecuteOptions{autoenlargeheadfoot=true}
+\scrlayer@AddCsToInterface{KV@KOMA.scrlayer-scrpage.sty@autoenlargeheadfoot}
+\scrlayer@AddCsToInterface{%
+  KV@KOMA.scrlayer-scrpage.sty@autoenlargeheadfoot@default}
+\scrlayer@AddCsToInterface{sls@autoenlargetrue}
+\scrlayer@AddCsToInterface{sls@autoenlargefalse}
+%%% From File: $Id: scrlayer.dtx 3196 2019-08-26 09:20:16Z kohm $
+%%%            (run: body)
 \KOMAProcessOptions\relax
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @markcase\endcsname\relax
@@ -765,7 +791,8 @@
 \expandafter\let
   \csname KV@KOMA.\@currname.\@currext @autoremoveinterfaces@default\endcsname
   \relax
-%%% From File: $Id: scrlayer-scrpage.dtx 2429 2016-04-12 12:10:19Z kohm $ (body)
+%%% From File: $Id: scrlayer-scrpage.dtx 3141 2019-04-05 07:52:27Z kohm $
+%%%            (run: body)
 \scrlayerAddToInterface\setheadwidth{%
   \newcommand*{\setheadwidth}[2][]{%
     \KOMAoptions{headwidth=#2:#1}%
@@ -889,28 +916,67 @@
   \scrlayer@AddCsToInterface{scr@fnt@footbotline}%
 }{}
 \AtBeginDocument{%
-  \ifdim \headheight <\baselineskip
+  \ifdim \headheight
+         <\if@ps@singlespacing\f@baselineskip\else\baselineskip\fi\relax
     \PackageWarningNoLine{scrlayer-scrpage}{Very small head height
       detected!\MessageBreak
       Using scrlayer-scrpage the head height\MessageBreak
       should be at least \string\baselineskip, which is\MessageBreak
-      \the\baselineskip\space currently.\MessageBreak
+      \if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi\space
+      currently.\MessageBreak
       But head height is currently
       \the\headheight\space only.\MessageBreak
       You may use\MessageBreak
       \@ifpackageloaded{geometry}{%
-        geometry option `head=\the\baselineskip'%
+        geometry option
+        `head=\if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi'%
       }{%
         \@ifpackageloaded{typearea}{%
-          typearea option `headheight=\the\baselineskip'%
+          typearea option `headheight=%
+          \if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi'%
         }{%
-          \string\setlength{\string\headheight}{\the\baselineskip}%
+          \string\setlength{\string\headheight}%
+          {\if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi}%
         }%
       }\MessageBreak
+      \if@ps@singlespacing\else\ifdim \headheight<\f@baselineskip\else
+        or load package `scrlayer-scrpage' with\MessageBreak
+        option `singlespacing=true'\MessageBreak
+      \fi\fi
       to avoid this warning%
     }%
+  \else
+    \ifdim \footheight
+           <\if@ps@singlespacing\f@baselineskip\else\baselineskip\fi\relax
+      \PackageWarningNoLine{scrlayer-scrpage}{Very small foot height
+        detected!\MessageBreak
+        Using scrlayer-scrpage the foot height\MessageBreak
+        should be at least \string\baselineskip, which is\MessageBreak
+        \if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi\space
+        currently.\MessageBreak
+        But foot height is currently
+        \the\footheight\space only.\MessageBreak
+        You may use\MessageBreak
+        \@ifpackageloaded{typearea}{%
+          typearea option `footheight=%
+          \if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi'%
+        }{%
+          \string\setlength{\string\footheight}%
+          {\if@ps@singlespacing\f@baselineskip\else\the\baselineskip\fi}%
+        }%
+        \MessageBreak
+        \if@ps@singlespacing\else\ifdim \footheight<\f@baselineskip\else
+          or load package `scrlayer-scrpage' with\MessageBreak
+          option `singlespacing=true'\MessageBreak
+        \fi\fi
+        to avoid this warning%
+      }%
+    \fi
   \fi
 }
+\@ifundefined{LaTeXcentering}{\let\LaTeXcentering\centering}{}
+\@ifundefined{LaTeXraggedleft}{\let\LaTeXraggedleft\raggedleft}{}
+\@ifundefined{LaTeXraggedright}{\let\LaTeXraggedright\raggedright}{}
 \scrlayerAddToInterface\defpagestyle{%
   \newcommand*{\defpagestyle}[3]{%
     \sls@defhead{#1}#2\@empty\@empty\@empty
@@ -1111,8 +1177,12 @@
           \string#1 to low.\MessageBreak
           At least \the\dimexpr \ht\z@+\dp\z@\relax\space needed,\MessageBreak
           but only \the#1 found.\MessageBreak
-          I'll enlarge \string#1, for further\MessageBreak
-          processing, but you should do this yourself,\MessageBreak
+          \ifsls@autoenlarge
+            I'll enlarge \string#1, for further\MessageBreak
+            processing, but you should do this yourself,\MessageBreak
+          \else
+            You should enlarge \string#1,\MessageBreak
+          \fi
           e.g.,
           \scr@ifundefinedorrelax{geometry}{%
             \scr@ifundefinedorrelax{typearea}{%
@@ -1135,32 +1205,42 @@
               in your preamble%
             \fi
           }%
-          .\MessageBreak
-          I'll also
-          \ifx #1\headheight decrease \string\topmargin
-          \else increase \string\footskip\fi
+          \ifsls@autoenlarge
+            .\MessageBreak
+            I'll also
+            \ifx #1\headheight decrease \string\topmargin
+            \else increase \string\footskip\fi
+          \fi
         }%
-        \@tempdima\dimexpr \ht\z@+\dp\z@\relax
-        \ifx #1\headheight
-          \global\advance\topmargin by \dimexpr #1-(\ht\z@+\dp\z@)\relax
-          \dp\z@\dimexpr \dp\z@+\ht\z@+\dp\z@-\headheight\relax
-        \else
-          \global\advance\footskip by \dimexpr \ht\z@+\dp\z@-#1\relax
+        \ifsls@autoenlarge
+          \@tempdima\dimexpr \ht\z@+\dp\z@\relax
+          \ifx #1\headheight
+            \global\advance\topmargin by \dimexpr #1-(\ht\z@+\dp\z@)\relax
+            \dp\z@\dimexpr \dp\z@+\ht\z@+\dp\z@-\headheight\relax
+          \else
+            \global\advance\footskip by \dimexpr \ht\z@+\dp\z@-#1\relax
+          \fi
+          \global#1\@tempdima
         \fi
-        \global#1\@tempdima
       \fi
       \usebox\z@
     \endgroup
   }%
 }
 \@ifundefined{scr@fnt@pagehead}{%
+  \scr@ifundefinedorrelax{scr@fnt@instead@pagehead}{}{%
+    \PackageInfo{scrlayer-scrpage}{%
+      Makeing stand-alone element `pagehead' from\MessageBreak
+      alias to `pageheadfoot'%
+    }%
+    \let\scr@fnt@instead@pagehead\relax
+  }%
   \scrlayer@AddCsToInterface{scr@fnt@pagehead}%
   \@ifundefined{@pageheadfont}{%
-    \newkomafont{pagehead}{}%
+    \newcommand*{\@pageheadfont}{}%
     \scrlayer@AddCsToInterface{@pageheadfont}%
-  }{%
-    \newcommand*{\scr@fnt@pagehead}{\@pageheadfont}%
-  }%
+  }{}%
+  \newcommand*{\scr@fnt@pagehead}{\@pageheadfont}%
 }{}
 \@ifundefined{scr@fnt@pageheadfoot}{%
   \newcommand*{\scr@fnt@pageheadfoot}{\headfont}%
@@ -1534,48 +1614,48 @@
   \newcommand*{\sls@def@pair@page@style@member}[1]{%
     \defpagestyle{#1}{%
       {%
-        \makebox[0pt][l]{\parbox{\sls@headwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@headwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@even@left@head}\strut}}%
-        \parbox{\sls@headwidth}{\centering
+        \parbox{\sls@headwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@even@middle@head}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@headwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@headwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@even@right@head}\strut}}%
       }{%
-        \makebox[0pt][l]{\parbox{\sls@headwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@headwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@odd@left@head}\strut}}%
-        \parbox{\sls@headwidth}{\centering
+        \parbox{\sls@headwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@odd@middle@head}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@headwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@headwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@odd@right@head}\strut}}%
       }{%
-        \makebox[0pt][l]{\parbox{\sls@headwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@headwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@odd@left@head}\strut}}%
-        \parbox{\sls@headwidth}{\centering
+        \parbox{\sls@headwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@odd@middle@head}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@headwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@headwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@odd@right@head}\strut}}%
       }%
     }{%
       {%
-        \makebox[0pt][l]{\parbox{\sls@footwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@footwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@even@left@foot}\strut}}%
-        \parbox{\sls@footwidth}{\centering
+        \parbox{\sls@footwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@even@middle@foot}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@footwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@footwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@even@right@foot}\strut}}%
       }{%
-        \makebox[0pt][l]{\parbox{\sls@footwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@footwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@odd@left@foot}\strut}}%
-        \parbox{\sls@footwidth}{\centering
+        \parbox{\sls@footwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@odd@middle@foot}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@footwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@footwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@odd@right@foot}\strut}}%
       }{%
-        \makebox[0pt][l]{\parbox{\sls@footwidth}{\raggedright
+        \makebox[0pt][\IfRTL{r}{l}]{\parbox{\sls@footwidth}{\LaTeXraggedright
             \strut\@nameuse{sls@ps@#1@odd@left@foot}\strut}}%
-        \parbox{\sls@footwidth}{\centering
+        \parbox{\sls@footwidth}{\LaTeXcentering
           \strut\@nameuse{sls@ps@#1@odd@middle@foot}\strut}%
-        \makebox[0pt][r]{\parbox{\sls@footwidth}{\raggedleft
+        \makebox[0pt][\IfRTL{l}{r}]{\parbox{\sls@footwidth}{\LaTeXraggedleft
             \strut\@nameuse{sls@ps@#1@odd@right@foot}\strut}}%
       }%
     }%
@@ -1664,10 +1744,10 @@
   \newcommand*{\@ihead}{\kernel@ifnextchar[{\@@@ihead}{\@@ihead}}%
 }
 \scrlayerAddToInterface\@@ihead{%
-  \newcommand*{\@@ihead}[1]{\rehead{#1}\lohead{#1}}%
+  \newcommand{\@@ihead}[1]{\rehead{#1}\lohead{#1}}%
 }
 \scrlayerAddToInterface\@@@ihead{%
-  \newcommand*{\@@@ihead}[2][]{\rehead[{#1}]{#2}\lohead[{#1}]{#2}}%
+  \newcommand{\@@@ihead}[2][]{\rehead[{#1}]{#2}\lohead[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\ohead{%
   \newcommand*{\ohead}{\kernel@ifstar {\@dblarg\@@@ohead}{\@ohead}}%
@@ -1676,10 +1756,10 @@
   \newcommand*{\@ohead}{\kernel@ifnextchar[{\@@@ohead}{\@@ohead}}%
 }
 \scrlayerAddToInterface\@@ohead{%
-  \newcommand*{\@@ohead}[1]{\lehead{#1}\rohead{#1}}%
+  \newcommand{\@@ohead}[1]{\lehead{#1}\rohead{#1}}%
 }
 \scrlayerAddToInterface\@@@ohead{%
-  \newcommand*{\@@@ohead}[2][]{\lehead[{#1}]{#2}\rohead[{#1}]{#2}}%
+  \newcommand{\@@@ohead}[2][]{\lehead[{#1}]{#2}\rohead[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\chead{%
   \newcommand*{\chead}{\kernel@ifstar {\@dblarg\@@@chead}{\@chead}}%
@@ -1688,10 +1768,10 @@
   \newcommand*{\@chead}{\kernel@ifnextchar[{\@@@chead}{\@@chead}}%
 }
 \scrlayerAddToInterface\@@chead{%
-  \newcommand*{\@@chead}[1]{\cehead{#1}\cohead{#1}}%
+  \newcommand{\@@chead}[1]{\cehead{#1}\cohead{#1}}%
 }
 \scrlayerAddToInterface\@@@chead{%
-  \newcommand*{\@@@chead}[2][]{\cehead[{#1}]{#2}\cohead[{#1}]{#2}}%
+  \newcommand{\@@@chead}[2][]{\cehead[{#1}]{#2}\cohead[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\lehead{%
   \newcommand*{\lehead}{\sls@renewelement{even}{left}{head}}%
@@ -1718,10 +1798,10 @@
   \newcommand*{\@ifoot}{\kernel@ifnextchar[{\@@@ifoot}{\@@ifoot}}%
 }
 \scrlayerAddToInterface\@@ifoot{%
-  \newcommand*{\@@ifoot}[1]{\refoot{#1}\lofoot{#1}}%
+  \newcommand{\@@ifoot}[1]{\refoot{#1}\lofoot{#1}}%
 }
 \scrlayerAddToInterface\@@@ifoot{%
-  \newcommand*{\@@@ifoot}[2][]{\refoot[{#1}]{#2}\lofoot[{#1}]{#2}}%
+  \newcommand{\@@@ifoot}[2][]{\refoot[{#1}]{#2}\lofoot[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\ofoot{%
   \newcommand*{\ofoot}{\kernel@ifstar {\@dblarg\@@@ofoot}{\@ofoot}}%
@@ -1730,10 +1810,10 @@
   \newcommand*{\@ofoot}{\kernel@ifnextchar[{\@@@ofoot}{\@@ofoot}}%
 }
 \scrlayerAddToInterface\@@ofoot{%
-  \newcommand*{\@@ofoot}[1]{\lefoot{#1}\rofoot{#1}}%
+  \newcommand{\@@ofoot}[1]{\lefoot{#1}\rofoot{#1}}%
 }
 \scrlayerAddToInterface\@@@ofoot{%
-  \newcommand*{\@@@ofoot}[2][]{\lefoot[{#1}]{#2}\rofoot[{#1}]{#2}}%
+  \newcommand{\@@@ofoot}[2][]{\lefoot[{#1}]{#2}\rofoot[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\cfoot{%
   \newcommand*{\cfoot}{\kernel@ifstar {\@dblarg\@@@cfoot}{\@cfoot}}%
@@ -1742,10 +1822,10 @@
   \newcommand*{\@cfoot}{\kernel@ifnextchar[{\@@@cfoot}{\@@cfoot}}%
 }
 \scrlayerAddToInterface\@@cfoot{%
-  \newcommand*{\@@cfoot}[1]{\cefoot{#1}\cofoot{#1}}%
+  \newcommand{\@@cfoot}[1]{\cefoot{#1}\cofoot{#1}}%
 }
 \scrlayerAddToInterface\@@@cfoot{%
-  \newcommand*{\@@@cfoot}[2][]{\cefoot[{#1}]{#2}\cofoot[{#1}]{#2}}%
+  \newcommand{\@@@cfoot}[2][]{\cefoot[{#1}]{#2}\cofoot[{#1}]{#2}}%
 }
 \scrlayerAddToInterface\lefoot{%
   \newcommand*{\lefoot}{\sls@renewelement{even}{left}{foot}}%
@@ -1779,7 +1859,7 @@
   }%
 }
 \scrlayerAddToInterface\sls@@@renewelement{%
-  \newcommand*{\sls@@@renewelement}[4]{%
+  \newcommand{\sls@@@renewelement}[4]{%
     \scr@ifundefinedorrelax{sls@ps@\sls@currentheadings @#1@#2@#3}{%
       \@namedef{sls@ps@scrheadings@#1@#2@#3}{#4}%
     }{%
@@ -1788,13 +1868,13 @@
   }%
 }
 \scrlayerAddToInterface\sls@@@@renewelement{%
-  \def\sls@@@@renewelement#1#2#3[#4]#5{%
+  \long\def\sls@@@@renewelement#1#2#3[#4]#5{%
     \sls@@renewplainelement{#1}{#2}{#3}{#4}%
     \sls@@@renewelement{#1}{#2}{#3}{#5}%
   }%
 }
 \scrlayerAddToInterface\sls@@renewplainelement{%
-  \newcommand*{\sls@@renewplainelement}[4]{%
+  \newcommand{\sls@@renewplainelement}[4]{%
     \scr@ifundefinedorrelax{sls@ps@\sls@currentplain @#1@#2@#3}{%
       \@namedef{sls@ps@plain.scrheadings@#1@#2@#3}{#4}%
     }{%
@@ -1855,7 +1935,7 @@
 \scrlayerAddCsToInterface{ps@plain.useheadings}{%
   \@namedef{ps@plain.useheadings}{\@nameuse{ps@plain.scrheadings}}%
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

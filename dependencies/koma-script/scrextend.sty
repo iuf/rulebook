@@ -9,6 +9,7 @@
 %% scrextend.dtx  (with options: `package,extend,identify,prepare')
 %% scrkernel-basics.dtx  (with options: `load')
 %% scrkernel-sections.dtx  (with options: `package,extend,prepare')
+%% scrkernel-compatibility.dtx  (with options: `package,extend,init')
 %% scrextend.dtx  (with options: `package,extend,option')
 %% scrkernel-compatibility.dtx  (with options: `package,extend,option')
 %% scrkernel-miscellaneous.dtx  (with options: `package,extend,option')
@@ -32,7 +33,7 @@
 %% scrkernel-listsandtabulars.dtx  (with options: `package,extend,body')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -60,11 +61,12 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrextend.dtx 1980 2015-03-09 12:46:05Z kohm $
+%%% From File: $Id: scrextend.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: preidentify)
 \begingroup\expandafter\expandafter\expandafter\endgroup
 \expandafter\ifx\csname KOMAClassName\endcsname\relax\else
   \PackageWarning{scrextend}{%
@@ -76,7 +78,7 @@
   }%
   \expandafter\endinput
 \fi
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -98,15 +100,16 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrextend.dtx 1980 2015-03-09 12:46:05Z kohm $
+%%% From File: $Id: scrextend.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: prepare)
 \ProvidesPackage{scrextend}[%
-  2016/06/14 v3.21 KOMA-Script
+  2019/10/12 v3.27 KOMA-Script
   package (extend other classes with features of KOMA-Script classes)%
 ]
 \newcommand*{\scr@ext@activate}[1]{%
@@ -130,78 +133,16 @@
     \expandafter\g@addto@macro\csname scr@ext@activate@#1\endcsname
   }%
 }
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: load)
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: scrkernel-sections.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: prepare)
 \newcommand*{\sectfont}{\normalcolor\@gr@gsffamily\bfseries}
-%%% From File: $Id: scrextend.dtx 1980 2015-03-09 12:46:05Z kohm $
-\KOMA@key{extendedfeature}{%
-  \scr@ext@activate{#1}%
-  \AtEndOfPackage{%
-    \scr@ifundefinedorrelax{scr@ext@immediate@#1}{}{%
-      \PackageWarningNoLine{unkown extended feature `#1'\MessageBreak
-        You have used option `extendedfeature' to\MessageBreak
-        activate an extended feature `#1',\MessageBreak
-        but there is no such extended feature.\MessageBreak
-        See the KOMA-Script manual for more\MessageBreak
-        information about known activatable\MessageBreak
-        extended features%
-      }%
-    }%
-  }%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@xadd{.scrextend.sty}{extendedfeature}{#1}%
-}
-\AtEndOfPackage{%
-  \KOMA@key{extendedfeature}{%
-    \def\FamilyKeyState{Option `extendedfeature' too late}%
-  }%
-}
-%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: init)
 \providecommand*
   {\scr@compatibility}{\scr@v@last}
-\KOMA@key{version}[last]{%
-  \scr@ifundefinedorrelax{scr@v@#1}{%
-    \def\scr@compatibility{0}%
-    \PackageWarningNoLine{%
-      scrextend%
-    }{%
-      You have set option `version' to value `#1', but\MessageBreak
-      this value of version is not supported.\MessageBreak
-      Because of this, version was set to `first'%
-    }%
-    \FamilyKeyStateProcessed
-    \KOMA@kav@replacevalue{.%
-      scrextend.\scr@pkgextension
-    }{version}{first}%
-  }{%
-    \PackageInfoNoLine{%
-      scrextend%
-    }{%
-      Switching compatibility level to `#1'%
-    }%
-    \edef\scr@compatibility{\@nameuse{scr@v@#1}}%
-    \FamilyKeyStateProcessed
-    \KOMA@kav@xreplacevalue{.%
-      scrextend.\scr@pkgextension
-    }{version}{#1}%
-  }%
-}
-\AtEndOfPackage{%
-  \KOMA@key{version}[]{%
-    \PackageError{%
-      scrextend%
-    }{%
-      Option `version' too late%
-    }{%
-      Option `version' may be set only while loading the
-      package.\MessageBreak
-      But you've tried to set it up later.%
-    }%
-    \FamilyKeyStateProcessed
-  }%
-}
 \@namedef{scr@v@first}{0}
 \@namedef{scr@v@2.9}{0}
 \@namedef{scr@v@2.9t}{0}
@@ -264,7 +205,82 @@
 \@namedef{scr@v@3.19a}{15}
 \@namedef{scr@v@3.20}{15}
 \@namedef{scr@v@3.21}{15}
-\@namedef{scr@v@last}{15}
+\@namedef{scr@v@3.22}{16}
+\@namedef{scr@v@3.23}{16}
+\@namedef{scr@v@3.24}{16}
+\@namedef{scr@v@3.25}{17}
+\@namedef{scr@v@3.26}{17}
+\@namedef{scr@v@3.26a}{17}
+\@namedef{scr@v@3.26b}{17}
+\@namedef{scr@v@3.27}{17}
+\@namedef{scr@v@last}{17}
+%%% From File: $Id: scrextend.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+\KOMA@key{extendedfeature}{%
+  \scr@ext@activate{#1}%
+  \AtEndOfPackage{%
+    \scr@ifundefinedorrelax{scr@ext@immediate@#1}{}{%
+      \PackageWarningNoLine{unkown extended feature `#1'\MessageBreak
+        You have used option `extendedfeature' to\MessageBreak
+        activate an extended feature `#1',\MessageBreak
+        but there is no such extended feature.\MessageBreak
+        See the KOMA-Script manual for more\MessageBreak
+        information about known activatable\MessageBreak
+        extended features%
+      }%
+    }%
+  }%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@xadd{.scrextend.sty}{extendedfeature}{#1}%
+}
+\AtEndOfPackage{%
+  \KOMA@key{extendedfeature}{%
+    \def\FamilyKeyState{Option `extendedfeature' too late}%
+  }%
+}
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+\KOMA@key{version}[last]{%
+  \scr@ifundefinedorrelax{scr@v@#1}{%
+    \def\scr@compatibility{0}%
+    \PackageWarningNoLine{%
+      scrextend%
+    }{%
+      You have set option `version' to value `#1', but\MessageBreak
+      this value of version is not supported.\MessageBreak
+      Because of this, version was set to `first'%
+    }%
+    \FamilyKeyStateProcessed
+    \KOMA@kav@replacevalue{.%
+      scrextend.\scr@pkgextension
+    }{version}{first}%
+  }{%
+    \PackageInfoNoLine{%
+      scrextend%
+    }{%
+      Switching compatibility level to `#1'%
+    }%
+    \edef\scr@compatibility{\@nameuse{scr@v@#1}}%
+    \FamilyKeyStateProcessed
+    \KOMA@kav@xreplacevalue{.%
+      scrextend.\scr@pkgextension
+    }{version}{#1}%
+  }%
+}
+\AtEndOfPackage{%
+  \KOMA@key{version}[]{%
+    \PackageError{%
+      scrextend%
+    }{%
+      Option `version' too late%
+    }{%
+      Option `version' may be set only while loading the
+      package.\MessageBreak
+      But you've tried to set it up later.%
+    }%
+    \FamilyKeyStateProcessed
+  }%
+}
 \newcommand*{\scr@v@is@lt}[1]{%
   \scr@compatibility<\@nameuse{scr@v@#1}
 }
@@ -277,7 +293,8 @@
 \newcommand*{\scr@v@is@ge}[1]{%
   \numexpr\scr@compatibility+\@ne\relax>\@nameuse{scr@v@#1}
 }
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \KOMA@key{draft}[true]{%
   \KOMA@set@ifkey{draft}{@tempswa}{#1}%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed
@@ -285,11 +302,17 @@
       \KOMA@kav@replacebool{.%
         scrextend.\scr@pkgextension
       }{draft}{@tempswa}%
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{overfullrule}{@tempswa}%
       \setlength{\overfullrule}{5pt}%
     \else
       \KOMA@kav@replacebool{.%
         scrextend.\scr@pkgextension
       }{draft}{@tempswa}%
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{overfullrule}{@tempswa}%
       \setlength{\overfullrule}{\z@}%
     \fi
   \fi
@@ -300,11 +323,37 @@
 \KOMA@DeclareStandardOption
 [scrextend]
 {final}{draft=false}
+\KOMA@key{overfullrule}[true]{%
+  \KOMA@set@ifkey{overfullrule}{@tempswa}{#1}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \if@tempswa
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{draft}{@tempswa}%
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{overfullrule}{@tempswa}%
+      \setlength{\overfullrule}{5pt}%
+    \else
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{draft}{@tempswa}%
+      \KOMA@kav@replacebool{.%
+        scrextend.\scr@pkgextension
+      }{overfullrule}{@tempswa}%
+      \setlength{\overfullrule}{\z@}%
+    \fi
+  \fi
+}
+\KOMA@kav@xadd{.scrextend.\scr@pkgextension}{overfullrule}{%
+  \ifdim\overfullrule>\z@ true\else false\fi
+}
 \KOMA@ifkey{egregdoesnotlikesansseriftitles}{@egregdoesnotlikesansseriftitles}
 \newcommand*{\@gr@gsffamily}{%
   \if@egregdoesnotlikesansseriftitles\else\sffamily\fi
 }
-%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \providecommand*{\@fontsizefilebase}{scrsize}
 \KOMA@key{fontsize}{%
     \expandafter\@defaultunits\expandafter\@tempdima#1 pt\relax\@nnil
@@ -340,7 +389,8 @@
     scrextend.\scr@pkgextension
   }{fontsize}{#1}%
 }
-%%% From File: $Id: scrkernel-title.dtx 2227 2015-10-14 14:31:04Z kohm $
+%%% From File: $Id: scrkernel-title.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \scr@ext@activateable{title}{%
   \scr@ifundefinedorrelax{if@titlepage}{%
     \expandafter\newif\csname if@titlepage\endcsname
@@ -383,9 +433,10 @@
 \KOMA@DeclareStandardOption%
   [scrextend]%
   {notitlepage}{titlepage=false}
-%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: scrkernel-sections.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: option)
-%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
+%%% From File: $Id: scrkernel-pagestyles.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \KOMA@key{cleardoublepage}{%
   \begingroup%
     \def\@tempc{%
@@ -466,8 +517,10 @@
   {\pagestyle{#1}\cleardoublestandardpage}}
 \newcommand*{\cleardoubleemptypage}{\cleardoublepageusingstyle{empty}}
 \newcommand*{\cleardoubleplainpage}{\cleardoublepageusingstyle{plain}}
-%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
-%%% From File: $Id: scrkernel-footnotes.dtx 2180 2015-08-24 09:28:16Z kohm $
+%%% From File: $Id: scrkernel-floats.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+%%% From File: $Id: scrkernel-footnotes.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \KOMA@key{footnotes}{%
   \ifx\@footnotemark\scr@saved@footnotemark
   \else
@@ -537,13 +590,17 @@
   \csname FN@mf@prepare\endcsname
   \ifhmode\spacefactor\@x@sf\fi
   \relax}
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
-%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+%%% From File: $Id: scrkernel-sections.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: execoption)
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: execoption)
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
-%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
+%%% From File: $Id: scrkernel-fonts.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand*\scr@setlength[4]{%
   \expandafter\ifnum\scr@v@is@lt{3.12}\relax
     \setlength{#1}{#2 \@plus#3 \@minus#4}%
@@ -899,10 +956,15 @@
     because I do not change it%
   }%
 }
-%%% From File: $Id: scrkernel-title.dtx 2227 2015-10-14 14:31:04Z kohm $
+%%% From File: $Id: scrkernel-title.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \scr@ext@addto@activateable{title}{%
 \newcommand*{\@extratitle}{}%
 \newcommand{\extratitle}[1]{\gdef\@extratitle{%
+    ##1%
+}}%
+\newcommand*{\@frontispiece}{}%
+\newcommand{\frontispiece}[1]{\gdef\@frontispiece{%
     ##1%
 }}%
 \newcommand*{\@titlehead}{}%
@@ -995,8 +1057,20 @@
       \renewcommand*\thefootnote{\@fnsymbol\c@footnote}%
       \let\@oldmakefnmark\@makefnmark
       \renewcommand*{\@makefnmark}{\rlap\@oldmakefnmark}%
-      \ifx\@extratitle\@empty \else
-        \noindent\@extratitle\next@tdpage
+      \ifx\@extratitle\@empty
+        \ifx\@frontispiece\@empty
+        \else
+          \if@twoside\mbox{}\next@tpage\fi
+          \noindent\@frontispiece\next@tdpage
+        \fi
+      \else
+        \noindent\@extratitle
+        \ifx\@frontispiece\@empty
+        \else
+          \next@tpage
+          \noindent\@frontispiece
+        \fi
+        \next@tdpage
       \fi
       \parskip\z@ \parindent\z@ \parfillskip\z@\@plus 1fil
       \ifx\@titlehead\@empty \else
@@ -1028,7 +1102,7 @@
         {\usekomafont{publishers}{\@publishers \par}}%
         \vskip 3em
       \end{center}\par
-      \@thanks\let\@thanks\@empty
+      \@thanks\global\let\@thanks\@empty
       \vfill\null
       \if@twoside
         \@tempswatrue
@@ -1047,7 +1121,22 @@
           \begin{minipage}[b]{\textwidth}
             \@lowertitleback
           \end{minipage}\par
-          \@thanks\let\@thanks\@empty
+          \@thanks\global\let\@thanks\@empty
+        \fi
+      \else
+        \ifx\@uppertitleback\@empty\else
+          \PackageWarning{scrextend}{%
+            non empty \string\uppertitleback\space ignored
+            by \string\maketitle\MessageBreak
+            in `twoside=false' mode%
+          }%
+        \fi
+        \ifx\@lowertitleback\@empty\else
+          \PackageWarning{scrextend}{%
+            non empty \string\lowertitleback\space ignored
+            by \string\maketitle\MessageBreak
+            in `twoside=false' mode%
+          }%
         \fi
       \fi
       \ifx\@dedication\@empty
@@ -1055,7 +1144,7 @@
         \next@tdpage\null\vfill
         {\centering\usekomafont{dedication}{\@dedication \par}}%
         \vskip \z@ \@plus3fill
-        \@thanks\let\@thanks\@empty
+        \@thanks\global\let\@thanks\@empty
         \cleardoubleemptypage
       \fi
       \ifx\titlepage@restore\relax\else\clearpage\titlepage@restore\fi
@@ -1066,9 +1155,22 @@
     ##1%
     \relax\ifnum\@tempcnta=1\else
       \PackageWarning{scrextend}{%
-        Optional argument of \string\maketitle\space ignored
-        at\MessageBreak
-        notitlepage-mode%
+        Optional argument of \string\maketitle\space ignored\MessageBreak
+        in `titlepage=false' mode%
+      }%
+    \fi
+    \ifx\@uppertitleback\@empty\else
+     \PackageWarning{scrextend}{%
+        non empty \string\uppertitleback\space ignored
+        by \string\maketitle\MessageBreak
+        in `titlepage=false' mode%
+      }%
+    \fi
+    \ifx\@lowertitleback\@empty\else
+      \PackageWarning{scrextend}{%
+        non empty \string\lowertitleback\space ignored
+        by \string\maketitle\MessageBreak
+        in `titlepage=false' mode%
       }%
     \fi
     \begingroup
@@ -1079,25 +1181,51 @@
       \next@tdpage
       \if@twocolumn
         \ifnum \col@number=\@ne
-          \ifx\@extratitle\@empty\else
+          \ifx\@extratitle\@empty
+            \ifx\@frontispiece\@empty\else\if@twoside\mbox{}\fi\fi
+          \else
             \@makeextratitle
+          \fi
+          \ifx\@frontispiece\@empty
+            \ifx\@extratitle\@empty\else\next@tdpage\fi
+          \else
+            \next@tpage
+            \@makefrontispiece
             \next@tdpage
           \fi
           \@maketitle
         \else
-          \ifx\@extratitle\@empty\else
-            \twocolumn[\@makeextratitle]\next@tdpage
+          \ifx\@extratitle\@empty
+            \ifx\@frontispiece\@empty\else\if@twoside\mbox{}\fi\fi
+          \else
+            \twocolumn[\@makeextratitle]%
+          \fi
+          \ifx\@frontispiece\@empty
+            \ifx\@extratitle\@empty\else\next@tdpage\fi
+          \else
+            \next@tpage
+            \twocolumn[\@makefrontispiece]%
+            \next@tdpage
           \fi
           \twocolumn[\@maketitle]%
         \fi
       \else
-        \ifx\@extratitle\@empty\else
-          \@makeextratitle\next@tdpage
+        \ifx\@extratitle\@empty
+          \ifx\@frontispiece\@empty\else \mbox{}\fi
+        \else
+          \@makeextratitle
+        \fi
+        \ifx\@frontispiece\@empty
+          \ifx\@extratitle\@empty\else\next@tdpage\fi
+        \else
+          \next@tpage
+          \@makefrontispiece
+          \next@tdpage
         \fi
         \@maketitle
       \fi
       \ifx\titlepagestyle\@empty\else\thispagestyle{\titlepagestyle}\fi
-      \@thanks
+      \@thanks\global\let\@thanks\@empty
     \endgroup
   \fi
   \setcounter{footnote}{0}%
@@ -1111,6 +1239,7 @@
     \global\let\@title\@empty
     \global\let\@subtitle\@empty
     \global\let\@extratitle\@empty
+    \global\let\@frontispiece\@empty
     \global\let\@titlehead\@empty
     \global\let\@subject\@empty
     \global\let\@publishers\@empty
@@ -1133,6 +1262,11 @@
 \newcommand*{\@makeextratitle}{%
   \ifx\@extratitle\@empty \else
     \noindent\@extratitle\par
+  \fi
+}
+\newcommand*{\@makefrontispiece}{%
+  \ifx\@frontispiece\@empty \else
+    \noindent\@frontispiece\par
   \fi
 }
 \newcommand*{\@maketitle}{%
@@ -1210,11 +1344,12 @@
 \newkomafont{dedication}{\Large}
 \newcommand*{\scr@fnt@title}{\titlefont}%
 \newcommand*{\scr@fnt@subject}{\subject@font}%
-%%% From File: $Id: scrkernel-sections.dtx 2477 2016-06-12 09:52:43Z kohm $
+%%% From File: $Id: scrkernel-sections.dtx 3262 2019-10-10 08:25:29Z kohm $
 %%%            (run: body)
 \newcommand*{\scr@fnt@disposition}{\sectfont}
 \aliaskomafont{sectioning}{disposition}
-%%% From File: $Id: scrkernel-miscellaneous.dtx 2463 2016-05-19 07:27:47Z kohm $
+%%% From File: $Id: scrkernel-miscellaneous.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \scr@ifundefinedorrelax{if@restonecol}{%
   \expandafter\newif\csname if@restonecol\endcsname
   \@restonecolfalse
@@ -1276,6 +1411,8 @@
         \noexpand\string
         \noexpand\new@tpo@label{\scr@tpo}{\noexpand\arabic{page}}}%
     \fi
+    \noexpand\def\noexpand\is@thispageodd@setlabel
+    {\unexpanded\expandafter{\is@thispageodd@setlabel}}%
   }%
   #1%
   \@esphack
@@ -1290,43 +1427,75 @@
     \expandafter\@secondoftwo
   \fi
 }
-\DeclareRobustCommand*\textsubscript[1]{%
-  \@textsubscript{\selectfont#1}%
+\scr@ifundefinedorrelax{textsubscript}{%
+  \DeclareRobustCommand*\textsubscript[1]{%
+    \@textsubscript{\selectfont#1}%
+  }%
+}{%
+  \scr@ifundefinedorrelax{textsubscript }{%
+    \DeclareRobustCommand*\textsubscript[1]{%
+      \@textsubscript{\selectfont#1}%
+    }%
+  }{}%
 }
 \providecommand*{\@textsubscript}[1]{%
   {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}%
 }
-%%% From File: $Id: scrkernel-pagestyles.dtx 2304 2015-12-12 08:55:47Z kohm $
-%%% From File: $Id: scrkernel-floats.dtx 2468 2016-05-31 11:27:28Z kohm $
+\providecommand*{\scr@endstrut}{\unskip\ifhmode\nobreak\strut\fi}
+%%% From File: $Id: scrkernel-pagestyles.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
+%%% From File: $Id: scrkernel-floats.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand\marginline[1]{%
   \marginpar[\raggedleft{#1}]{\raggedright #1}%
 }
-%%% From File: $Id: scrkernel-footnotes.dtx 2180 2015-08-24 09:28:16Z kohm $
+%%% From File: $Id: scrkernel-footnotes.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand\deffootnote[4][]{%
-  \long\def\@makefntext##1{%
-    \setlength{\@tempdimc}{#3}%
-    \def\@tempa{#1}\ifx\@tempa\@empty
-      \@setpar{\@@par
-        \@tempdima = \hsize
-        \addtolength{\@tempdima}{-#2}%
-        \parshape \@ne #2 \@tempdima}%
-    \else
-      \addtolength{\@tempdimc}{#2}%
-      \addtolength{\@tempdimc}{-#1}%
-      \@setpar{\@@par
-        \@tempdima = \hsize
-        \addtolength{\@tempdima}{-#1}%
-        \@tempdimb = \hsize
-        \addtolength{\@tempdimb}{-#2}%
-        \parshape \tw@ #1 \@tempdima #2 \@tempdimb
+  \expandafter\ifnum\scr@v@is@ge{3.22}\relax
+    \long\def\@makefntext##1{%
+      \raggedfootnote
+      \leftskip #2
+      \l@addto@macro\@trivlist{%
+        \ifnum\@listdepth=\@ne\advance\leftmargin #2\relax\fi
       }%
-    \fi
-    \par
-    \parindent\@tempdimc\noindent
-    \ftn@font\hbox to \z@{\hss\@@makefnmark}##1%
-  }%
+      \parindent #3\noindent
+      \IfArgIsEmpty{#1}{}{%
+        \hskip \dimexpr #1-#2\relax
+      }%
+      \ftn@font\hbox to \z@{\hss\@@makefnmark}##1%
+    }%
+  \else
+    \PackageInfo{scrextend}{%
+      Using old \string\@makefntext\space due to compatibility
+      level\MessageBreak
+      less than 3.22}%
+    \long\def\@makefntext##1{%
+      \setlength{\@tempdimc}{#3}%
+      \def\@tempa{#1}\ifx\@tempa\@empty
+        \@setpar{\@@par
+          \@tempdima = \hsize
+          \addtolength{\@tempdima}{-#2}%
+          \parshape \@ne #2 \@tempdima}%
+      \else
+        \addtolength{\@tempdimc}{#2}%
+        \addtolength{\@tempdimc}{-#1}%
+        \@setpar{\@@par
+          \@tempdima = \hsize
+          \addtolength{\@tempdima}{-#1}%
+          \@tempdimb = \hsize
+          \addtolength{\@tempdimb}{-#2}%
+          \parshape \tw@ #1 \@tempdima #2 \@tempdimb
+        }%
+      \fi
+      \par
+      \parindent\@tempdimc\noindent
+      \ftn@font\hbox to \z@{\hss\@@makefnmark}##1%
+    }%
+  \fi
   \def\@@makefnmark{\hbox{\ftnm@font{#4}}}%
 }
+\newcommand*{\raggedfootnote}{}
 \newcommand*{\ftn@font}{\normalfont}
 \newcommand*{\scr@fnt@footnote}{\ftn@font}
 \newcommand*{\ftnm@font}{}
@@ -1350,7 +1519,7 @@
   \kern-\multiplefootnotemarker
   \kern\multiplefootnotemarker\relax
 }
-\@ifundefined{FN@mf@prepare}{}{}
+\@ifundefined{FN@mf@prepare}{\let\FN@mf@prepare\relax}{}
 \newcommand{\scr@saved@footnotetext}{}
 \let\scr@saved@footnotetext\@footnotetext
 \renewcommand{\@footnotetext}[1]{%
@@ -1412,7 +1581,8 @@
   \endgroup
   \@footnotemark
 }
-%%% From File: $Id: scrkernel-listsandtabulars.dtx 2318 2016-01-29 11:40:15Z kohm $
+%%% From File: $Id: scrkernel-listsandtabulars.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newenvironment{labeling}[2][]{%
   \def\sc@septext{#1}%
   \list{}{\settowidth{\labelwidth}{{%
@@ -1437,22 +1607,24 @@
 }
 \newenvironment{addmargin*}{%
   \@tempswafalse
-  \if@twoside\is@thispageodd[]\ifthispagewasodd\else\@tempswatrue\fi\fi
-  \edef\scr@addmargin@startpage{\csname tpo@\scr@tpo\endcsname}%
+  \if@twoside\is@thispageodd[]\ifthispagewasodd\else\@tempswatrue\fi
+    \edef\scr@addmargin@startpage{\csname tpo@\scr@tpo\endcsname}\fi
   \@addmargin
 }{%
-  \unskip\nobreak\ifthispageodd{}{}%
-  \expandafter\ifx\csname tpo@\scr@tpo\endcsname\scr@addmargin@startpage\else
-  \PackageWarning{scrextend}{%
-      page break inside `addmargin*' environment.\MessageBreak
-      A `addmargin*' environment starting on page
-      \scr@addmargin@startpage\MessageBreak
-      ends on page \csname tpo@\scr@tpo\endcsname.\MessageBreak
-      This will result in potential wrong margins on\MessageBreak
-      every other page.\MessageBreak
-      So maybe you should change the `addmargin*'\MessageBreak
-      environment, that ends%
-    }%
+  \if@twoside
+    \unskip\nobreak\ifthispageodd{}{}%
+    \expandafter\ifx\csname tpo@\scr@tpo\endcsname\scr@addmargin@startpage\else
+    \PackageWarning{scrextend}{%
+        page break inside `addmargin*' environment.\MessageBreak
+        A `addmargin*' environment starting on page
+        \scr@addmargin@startpage\MessageBreak
+        ends on page \csname tpo@\scr@tpo\endcsname.\MessageBreak
+        This will result in potential wrong margins on\MessageBreak
+        every other page.\MessageBreak
+        So maybe you should change the `addmargin*'\MessageBreak
+        environment, that ends%
+      }%
+    \fi
   \fi
   \advance\@listdepth\@ne
   \endlist
@@ -1471,18 +1643,24 @@
     \setlength{\listparindent}{\parindent}%
     \setlength{\itemsep}{\parskip}%
     \setlength{\itemindent}{\z@}%
+    \setlength{\@tempskipa}{\topsep}%
     \setlength{\topsep}{\z@}%
     \setlength{\parsep}{\parskip}%
+    \setlength{\@tempskipb}{\partopsep}%
     \setlength{\partopsep}{\z@}%
     \let\makelabel\@gobble
     \setlength{\labelwidth}{\z@}%
     \advance\@listdepth\m@ne
   }%
+  \expandafter\ifnum\scr@v@is@ge{3.22}%
+    \setlength{\topsep}{\@tempskipa}%
+    \setlength{\partopsep}{\@tempskipb}%
+  \fi
   \item\is@thispageodd@setlabel\nobreak\ignorespaces
 }
 \newkomafont{labelinglabel}{}
 \newkomafont{labelingseparator}{}
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

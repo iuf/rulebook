@@ -5,15 +5,18 @@
 %% The original source files were:
 %%
 %% scrkernel-version.dtx  (with options: `package,typearea')
-%% scrkernel-typearea.dtx  (with options: `package,identify')
+%% scrkernel-typearea.dtx  (with options: `package,typearea,identify')
 %% scrkernel-basics.dtx  (with options: `load')
-%% scrkernel-typearea.dtx  (with options: `package,option')
+%% scrkernel-compatibility.dtx  (with options: `package,typearea,init')
+%% scrkernel-typearea.dtx  (with options: `package,typearea,init')
 %% scrkernel-compatibility.dtx  (with options: `package,typearea,option')
-%% scrkernel-typearea.dtx  (with options: `package,body')
+%% scrkernel-typearea.dtx  (with options: `package,typearea,options')
 %% scrkernel-compatibility.dtx  (with options: `package,typearea,body')
+%% scrkernel-typearea.dtx  (with options: `package,typearea,body')
+%% scrkernel-typearea.dtx  (with options: `package,typearea,final')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -41,11 +44,11 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -67,311 +70,433 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
+%%% From File: $Id: scrkernel-typearea.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: identify)
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{typearea}[%
-  2016/06/14 v3.21 KOMA-Script
-  package (type area)]
-\typeout{%
-  Package typearea, \csname ver@typearea.\@pkgextension\endcsname^^J%
-  \@spaces\@spaces\@spaces\@spaces\space\space
-  Copyright (C) Frank Neukam, 1992-1994^^J%
-  \@spaces\@spaces\@spaces\@spaces\space\space
-  Copyright (C) Markus Kohm, 1994-^^J%
-}
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+  2019/10/12 v3.27 KOMA-Script
+  package
+  (type area)]
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: load)
 \RequirePackage{scrkbase}[\KOMAScriptVersion]
-%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
-\newcommand*\SetDIVList[1]{\def\ta@divlist{{}{}{}{}{}{}{}{}{}#1}}
-\newcommand*\SetXDIVList[1]{\def\ta@divlist{#1}}
-\newlength{\ta@bcor}
-\newcount\ta@div
-\newcommand*{\@BCOR}{\expandafter\@@BCOR\CurrentOption BCORBCOR\@@BCOR}
-\newcommand*{\@@BCOR}{}
-\def\@@BCOR #1BCOR#2BCOR#3\@@BCOR{%
-  \ifstr{#1}{}{%
-    \ifstr{#3}{BCOR}{%
-      \ifdimen{#2}{\setlength{\ta@bcor}{#2}}{\scr@pti@nerr@r}%
-    }{\scr@pti@nerr@r}%
-  }{\scr@pti@nerr@r}%
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: init)
+\providecommand*
+  {\scr@compatibility}{\scr@v@last}
+\newcommand*{\scr@ta@compatibility}{\scr@compatibility}
+\@namedef{scr@v@first}{0}
+\@namedef{scr@v@2.9}{0}
+\@namedef{scr@v@2.9t}{0}
+\@namedef{scr@v@2.9u}{1}
+\@namedef{scr@v@2.95}{2}
+\@namedef{scr@v@2.95a}{2}
+\@namedef{scr@v@2.95b}{2}
+\@namedef{scr@v@2.96}{2}
+\@namedef{scr@v@2.96a}{3}
+\@namedef{scr@v@2.97}{3}
+\@namedef{scr@v@2.97a}{3}
+\@namedef{scr@v@2.97b}{3}
+\@namedef{scr@v@2.97c}{4}
+\@namedef{scr@v@2.97d}{5}
+\@namedef{scr@v@2.97e}{6}
+\@namedef{scr@v@2.98}{6}
+\@namedef{scr@v@2.98a}{6}
+\@namedef{scr@v@2.98b}{6}
+\@namedef{scr@v@2.98c}{7}
+\@namedef{scr@v@3.00}{8}
+\@namedef{scr@v@3.01}{8}
+\@namedef{scr@v@3.01a}{8}
+\@namedef{scr@v@3.01b}{9}
+\@namedef{scr@v@3.01c}{9}
+\@namedef{scr@v@3.02}{9}
+\@namedef{scr@v@3.02b}{9}
+\@namedef{scr@v@3.02c}{10}
+\@namedef{scr@v@3.03}{10}
+\@namedef{scr@v@3.03a}{10}
+\@namedef{scr@v@3.03b}{10}
+\@namedef{scr@v@3.04}{10}
+\@namedef{scr@v@3.04a}{10}
+\@namedef{scr@v@3.05}{10}
+\@namedef{scr@v@3.05a}{10}
+\@namedef{scr@v@3.06}{10}
+\@namedef{scr@v@3.07}{10}
+\@namedef{scr@v@3.08}{10}
+\@namedef{scr@v@3.08a}{10}
+\@namedef{scr@v@3.08b}{10}
+\@namedef{scr@v@3.09}{10}
+\@namedef{scr@v@3.09a}{10}
+\@namedef{scr@v@3.10}{10}
+\@namedef{scr@v@3.10a}{10}
+\@namedef{scr@v@3.10b}{10}
+\@namedef{scr@v@3.11}{10}
+\@namedef{scr@v@3.11a}{10}
+\@namedef{scr@v@3.11b}{10}
+\@namedef{scr@v@3.12}{11}
+\@namedef{scr@v@3.13}{12}
+\@namedef{scr@v@3.13a}{13}
+\@namedef{scr@v@3.14}{13}
+\@namedef{scr@v@3.15}{14}
+\@namedef{scr@v@3.16}{14}
+\@namedef{scr@v@3.17}{15}
+\@namedef{scr@v@3.17a}{15}
+\@namedef{scr@v@3.17c}{15}
+\@namedef{scr@v@3.18}{15}
+\@namedef{scr@v@3.18a}{15}
+\@namedef{scr@v@3.19}{15}
+\@namedef{scr@v@3.19a}{15}
+\@namedef{scr@v@3.20}{15}
+\@namedef{scr@v@3.21}{15}
+\@namedef{scr@v@3.22}{16}
+\@namedef{scr@v@3.23}{16}
+\@namedef{scr@v@3.24}{16}
+\@namedef{scr@v@3.25}{17}
+\@namedef{scr@v@3.26}{17}
+\@namedef{scr@v@3.26a}{17}
+\@namedef{scr@v@3.26b}{17}
+\@namedef{scr@v@3.27}{17}
+\@namedef{scr@v@last}{17}
+%%% From File: $Id: scrkernel-typearea.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: init)
+\providecommand\ta@divlist{{}{}{}{}{}{}{}{}{}{8}{10}{12}}
+\providecommand\ta@divlistelse{1}
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+\KOMA@key{version}[last]{%
+  \scr@ifundefinedorrelax{scr@v@#1}{%
+    \def\scr@compatibility{0}%
+    \PackageWarningNoLine{%
+      typearea%
+    }{%
+      You have set option `version' to value `#1', but\MessageBreak
+      this value of version is not supported.\MessageBreak
+      Because of this, version was set to `first'%
+    }%
+    \FamilyKeyStateProcessed
+    \KOMA@kav@replacevalue{.%
+      typearea.\scr@pkgextension
+    }{version}{first}%
+  }{%
+    \PackageInfoNoLine{%
+      typearea%
+    }{%
+      Switching compatibility level to `#1'%
+    }%
+    \edef\scr@ta@compatibility{\@nameuse{scr@v@#1}}%
+    \FamilyKeyStateProcessed
+    \KOMA@kav@xreplacevalue{.%
+      typearea.\scr@pkgextension
+    }{version}{#1}%
+  }%
 }
-\newcommand*{\@DIV}{\expandafter\@@DIV\CurrentOption DIVDIV\@@DIV}
-\newcommand*{\@@DIV}{}
-\def\@@DIV #1DIV#2DIV#3\@@DIV{%
-  \edef\@tempa{#1}\ifx\@tempa\@empty
-    \edef\@tempa{#3}\def\@tempb{DIV}\ifx\@tempa\@tempb
-      \ifnumber{#2}{\ta@div=#2\relax}{\scr@pti@nerr@r}%
-    \else\scr@pti@nerr@r\fi
-  \else\@BCOR\fi
+\AtEndOfPackage{%
+  \KOMA@key{version}[]{%
+    \PackageError{%
+      typearea%
+    }{%
+      Option `version' too late%
+    }{%
+      Option `version' may be set only while loading the
+      package.\MessageBreak
+      But you've tried to set it up later.%
+    }%
+    \FamilyKeyStateProcessed
+  }%
 }
-\newcommand{\@headlines}{%
-  \expandafter\@@headlines\CurrentOption headlines\@@headlines%
+\newcommand*{\scr@ta@v@is@lt}[1]{%
+  \scr@ta@compatibility<\@nameuse{scr@v@#1}
 }
-\newcommand*{\@@headlines}{}
-\def\@@headlines #1headlines#2\@@headlines{
-  \edef\@tempa{#2}\edef\@tempb{headlines}\ifx\@tempa\@tempb
-    \setlength{\@tempdima}{#1\baselineskip}%
-    \def\ta@hh{#1\baselineskip}%
-  \else\@DIV\fi
+\newcommand*{\scr@ta@v@is@gt}[1]{%
+  \scr@ta@compatibility>\@nameuse{scr@v@#1}
 }
-\newcommand\isopaper[2][a]{%
-  \ifx a#1
-    \setlength{\paperwidth}{841sp}%
-    \setlength{\paperheight}{1189sp}%
-  \else\ifx A#1
-      \setlength{\paperwidth}{841sp}%
-      \setlength{\paperheight}{1189sp}%
-    \else\ifx b#1
-        \setlength{\paperwidth}{1000sp}%
-        \setlength{\paperheight}{1414sp}%
-      \else\ifx B#1
+\newcommand*{\scr@ta@v@is@le}[1]{%
+  \numexpr\scr@ta@compatibility-\@ne <\@nameuse{scr@v@#1}
+}
+\newcommand*{\scr@ta@v@is@ge}[1]{%
+  \numexpr\scr@ta@compatibility+\@ne >\@nameuse{scr@v@#1}
+}
+%%% From File: $Id: scrkernel-typearea.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: options)
+\providecommand*{\PaperNameToSize}[2][warning]{%
+  \ifstr{#2}{letter}{%
+    \setlength\paperheight{11in}%
+    \setlength\paperwidth {8.5in}%
+  }{%
+    \ifstr{#2}{legal}{%
+      \setlength\paperheight{14in}%
+      \setlength\paperwidth {8.5in}%
+    }{%
+      \ifstr{#2}{executive}{%
+        \setlength\paperheight{10.5in}%
+        \setlength\paperwidth {7.25in}%
+      }{%
+        \ifstr{#2}{}{%
+          \ISO@PaperNameToSize[#1]{}{}\@nil
+        }{%
+          \edef\reserved@a{\noexpand\ISO@PaperNameToSize[#1]#2 \noexpand\@nil}%
+          \reserved@a
+        }%
+      }%
+    }%
+  }%
+}
+\scr@ifundefinedorrelax{ISO@PaperNameToSize}{%
+  \def\ISO@PaperNameToSize[#1]#2#3\@nil{%
+    \lowercase{\edef\reserved@a{#2}}%
+    \@tempswafalse
+    \if \reserved@a a%
+      \ifnumber{#3}{%
+        \setlength{\paperwidth}{841sp}%
+        \setlength{\paperheight}{1189sp}%
+        \@tempswatrue
+      }{}%
+    \else
+      \if \reserved@a b%
+        \ifnumber{#3}{%
           \setlength{\paperwidth}{1000sp}%
           \setlength{\paperheight}{1414sp}%
-        \else\ifx c#1
+          \@tempswatrue
+        }{}%
+      \else
+        \if \reserved@a c%
+          \ifnumber{#3}{%
             \setlength{\paperwidth}{917sp}%
             \setlength{\paperheight}{1297sp}%
-          \else\ifx C#1
-              \setlength{\paperwidth}{917sp}%
-              \setlength{\paperheight}{1297sp}%
-            \else\ifx d#1
-                \setlength{\paperwidth}{771sp}%
-                \setlength{\paperheight}{1090sp}%
-              \else\ifx D#1
-                  \setlength{\paperwidth}{771sp}%
-                  \setlength{\paperheight}{1090sp}%
-                \else
-                  \PackageError{typearea}{%
-                    Unknown ISO/DIN-papersize-letter #1%
-                  }{%
-                    There are only four defined paper scalings:\MessageBreak
-                    a = ISO/DIN-A, b = ISO/DIN-B, c = ISO/DIN-C,
-                    d = ISO/DIN-D\MessageBreak
-                    Read KOMA-Script-documentation for further information.%
-                  }%
-                  \setlength{\paperwidth}{841sp}%
-                  \setlength{\paperheight}{1189sp}%
-                \fi
-              \fi
-            \fi
+            \@tempswatrue
+          }{}%
+        \else
+          \if \reserved@a d%
+            \ifnumber{#3}{%
+              \setlength{\paperwidth}{771sp}%
+              \setlength{\paperheight}{1090sp}%
+              \@tempswatrue
+            }{}%
           \fi
         \fi
       \fi
     \fi
-  \fi
-  \@tempcnta=#2\relax
-  \@whilenum\@tempcnta>0
-  \do{\setlength{\@tempdima}{\paperwidth}
-    \setlength{\paperwidth}{.5\paperheight}
-    \setlength{\paperheight}{\@tempdima}
-    \advance\@tempcnta by\m@ne
-  }
-  \multiply\paperwidth by186468
-  \multiply\paperheight by186468
-  \if@landscape
-    \setlength{\@tempdima}{\paperwidth}%
-    \setlength{\paperwidth}{\paperheight}%
-    \setlength{\paperheight}{\@tempdima}%
-  \fi
-}
-\newcommand*{\iso@paper}[1]{\expandafter\iso@@paper#1\@nil}
-\newcommand*{\iso@@paper}{}
-\def\iso@@paper#1#2\@nil{%
-  \@tempswafalse
-  \if #1a\@tempswatrue
-  \else\if #1A\@tempswatrue
-    \else\if #1b\@tempswatrue
-      \else\if #1B\@tempswatrue
-        \else\if #1c\@tempswatrue
-          \else\if #1C\@tempswatrue
-            \else\if #1d\@tempswatrue
-              \else\if #1D\@tempswatrue
-  \fi\fi\fi\fi\fi\fi\fi\fi
-  \if@tempswa
-    \ifnumber{#2}{\isopaper[#1]{#2}}{\@tempswafalse}%
-  \fi
-}
-\newcommand*{\x@paper}{%
-  \expandafter\x@@paper\CurrentOption paper\x@@paper%
-}
-\newcommand*{\x@@paper}{}
-\def\x@@paper #1#2paper#3\x@@paper{%
-  \ifstr{#3}{paper}{%
-    \ifnumber{#2}{%
-      \ifstr{#1}{a}{%
-        \isopaper[a]{#2}%
+    \if@tempswa
+      \@tempcnta=#3\relax
+      \@whilenum\@tempcnta>\z@
+      \do{\setlength{\@tempdima}{\paperwidth}%
+        \setlength{\paperwidth}{.5\paperheight}%
+        \setlength{\paperheight}{\@tempdima}%
+        \advance\@tempcnta by\m@ne
+      }%
+      \multiply\paperwidth by186468
+      \multiply\paperheight by186468
+    \else
+      \scr@ifundefinedorrelax{scr@UnknownPaperSize@#1}{%
+        \scr@UnknownPaperSize@error{#2#3}%
       }{%
-        \ifstr{#1}{b}{%
-          \isopaper[b]{#2}%
+        \@nameuse{scr@UnknownPaperSize@#1}{#2#3}%
+      }%
+    \fi
+  }%
+}{}
+\providecommand*{\ProvideUnknownPaperSizeError}[1]{%
+  \expandafter\providecommand\expandafter*%
+  \csname scr@UnknownPaperSize@#1\endcsname[1]%
+}
+\ProvideUnknownPaperSizeError{error}{%
+  \PackageError{%
+    typearea%
+  }{Unknown paper size #1}{%
+    \string\paperwidth\space and \string\paperheight\space stay unchanged,
+    because of unknown paper size.%
+  }%
+}
+\ProvideUnknownPaperSizeError{warning}{%
+  \PackageWarning{%
+    typearea%
+  }{%
+    \string\paperwidth\space and \string\paperheight\space stay
+    unchanged, because\MessageBreak
+    of unknown paper size #1%
+  }%
+}
+\ProvideUnknownPaperSizeError{info}{%
+  \PackageInfo{%
+    typearea
+  }{%
+    \string\paperwidth\space and \string\paperheight\space stay
+    unchanged, because\MessageBreak
+    of unknown paper size #1%
+  }%
+}
+\ProvideUnknownPaperSizeError{ignore}{}
+\KOMA@DeclareStandardOption[typearea]{a4paper}{paper=a4}
+\KOMA@DeclareStandardOption[typearea]{a5paper}{paper=a5}
+\KOMA@DeclareStandardOption[typearea]{b5paper}{paper=b5}
+\KOMA@DeclareStandardOption[typearea]{letterpaper}{paper=letter}
+\KOMA@DeclareStandardOption[typearea]{legalpaper}{paper=legal}
+\KOMA@DeclareStandardOption[typearea]{executivepaper}{paper=executive}
+\KOMA@DeclareStandardOption[typearea]{landscape}{paper=landscape}
+\KOMA@DeclareStandardOption[typearea]{portrait}{paper=portrait}
+\KOMA@key{paper}{%
+  \ifstr{#1}{seascape}{%
+    \@seascapetrue
+    \expandafter\ifnum\scr@ta@v@is@ge{3.22}\relax
+      \@landscapetrue
+      \scr@setpaperorientation
+    \else
+      \if@landscape\else\scr@switchpapersizes\@landscapetrue\fi
+    \fi
+    \FamilyKeyStateProcessed
+    \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{landscape}%
+    \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{portrait}%
+    \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{seascape}%
+    \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{seascape}%
+  }{%
+    \ifstr{#1}{landscape}{%
+      \@seascapefalse
+      \expandafter\ifnum\scr@ta@v@is@ge{3.22}\relax
+        \@landscapetrue
+        \scr@setpaperorientation
+      \else
+        \if@landscape\else\scr@switchpapersizes\@landscapetrue\fi
+      \fi
+      \FamilyKeyStateProcessed
+      \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{landscape}%
+      \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{portrait}%
+      \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{seascape}%
+      \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{landscape}%
+    }{%
+      \ifstr{#1}{portrait}{%
+        \expandafter\ifnum\scr@ta@v@is@ge{3.22}\relax
+          \@landscapefalse
+          \scr@setpaperorientation
+        \else
+          \if@landscape\scr@switchpapersizes\@landscapefalse\fi
+        \fi
+        \FamilyKeyStateProcessed
+        \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{landscape}%
+        \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{portrait}%
+        \KOMA@kav@remove{.typearea.\scr@pkgextension}{paper}{seascape}%
+        \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{portrait}%
+      }{%
+        \ifstr{#1}{letter}{%
+          \if@landscape
+            \setlength\paperheight{8.5in}%
+            \setlength\paperwidth {11in}%
+          \else
+            \setlength\paperheight{11in}%
+            \setlength\paperwidth {8.5in}%
+          \fi
+          \FamilyKeyStateProcessed
+          \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
+          \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{letter}%
+          \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+            \if@seascape seascape\else
+            \if@landscape landscape\else portrait\fi\fi
+          }%
         }{%
-          \ifstr{#1}{c}{%
-            \isopaper[c]{#2}%
+          \ifstr{#1}{legal}{%
+            \if@landscape
+              \setlength\paperheight{8.5in}%
+              \setlength\paperwidth {14in}%
+            \else
+              \setlength\paperheight{14in}%
+              \setlength\paperwidth {8.5in}%
+            \fi
+            \FamilyKeyStateProcessed
+            \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
+            \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{legal}%
+            \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+              \if@seascape seascape\else
+              \if@landscape landscape\else portrait\fi\fi
+            }%
           }{%
-            \ifstr{#1}{d}{%
-              \isopaper[d]{#2}%
-            }{\scr@pti@nerr@r}%
+            \ifstr{#1}{executive}{%
+              \if@landscape
+                \setlength\paperheight{7.25in}%
+                \setlength\paperwidth {10.5in}%
+              \else
+                \setlength\paperheight{10.5in}%
+                \setlength\paperwidth {7.25in}%
+              \fi
+              \FamilyKeyStateProcessed
+              \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
+              \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{executive}%
+              \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+                \if@seascape seascape\else
+                \if@landscape landscape\else portrait\fi\fi
+              }%
+            }{%
+              \iso@paper{#1}%
+              \if@tempswa
+                \FamilyKeyStateProcessed
+                \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
+                \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{#1}%
+                \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+                  \if@seascape seascape\else
+                  \if@landscape landscape\else portrait\fi\fi
+                }%
+              \else
+                \expandafter\maybe@pair#1::\@nil
+                \if@tempswa
+                  \FamilyKeyStateProcessed
+                  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
+                  \expandafter\ifnum \scr@ta@v@is@lt{3.01b}\relax
+                    \PackageWarningNoLine{typearea}{%
+                      You may have to exchange height and width!\MessageBreak
+                      Until KOMA-Script version 3.01b the semantic\MessageBreak
+                      of option `paper' was `paper=height:width'\MessageBreak
+                      instead of `paper=width:height'.\MessageBreak
+                      I've switched back to that old interpretation\MessageBreak
+                      because of the given compatiblity settings}%
+                    \setlength\paperwidth{\@tempb}%
+                    \setlength\paperheight{\@tempa}%
+                  \else
+                    \setlength\paperwidth{\@tempa}%
+                    \setlength\paperheight{\@tempb}%
+                  \fi
+                  \expandafter\ifnum \scr@ta@v@is@lt{3.22}\relax
+                    \if@landscape
+                      \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{\@tempa:\@tempb}%
+                    \else
+                      \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{\@tempb:\@tempa}%
+                    \fi
+                  \else
+                    \scr@setpaperorientation
+                    \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+                      \the\paperwidth:\the\paperheight}%
+                  \fi
+                  \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{%
+                    \if@seascape seascape\else
+                    \if@landscape landscape\else portrait\fi\fi
+                  }%
+                \else
+                  \KOMA@unknown@keyval{paper}{#1}{%
+                    `letter', `legal', `executive', `a'<nr>, `b'<nr>,
+                    `c'<nr>, `d'<nr>,\MessageBreak
+                    <width>`:'<height>, `landscape' and `portrait'%
+                  }%
+                \fi
+              \fi
+            }%
           }%
         }%
       }%
-    }{\scr@pti@nerr@r}%
-  }{%
-    \@headlines
+    }%
   }%
 }
-\newcommand*{\scr@pti@nerr@r}{
-  \@unknownoptionerror
-}
-\KOMA@key{headlines}{%
-  \begingroup
-    \setlength{\@tempdima}{#1\baselineskip}%
-  \endgroup
-  \def\ta@hh{#1\baselineskip}%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headlines}{#1}%
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headheight}{#1\baselineskip}%
-}
-\KOMA@key{footlines}{%
-  \begingroup
-    \setlength{\@tempdima}{#1\baselineskip}%
-  \endgroup
-  \def\ta@fh{#1\baselineskip}%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footlines}{#1}%
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footheight}{#1\baselineskip}%
-}
-\KOMA@key{headheight}{%
-  \begingroup
-    \setlength{\@tempdima}{#1}%
-  \endgroup
-  \def\ta@hh{#1}%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headheight}{#1}%
-  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{headlines}%
-}
-\KOMA@key{footheight}{%
-  \begingroup
-    \setlength{\@tempdima}{#1}%
-  \endgroup
-  \def\ta@fh{#1}%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footheight}{#1}%
-  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{footlines}%
-}
-\newif\if@hincl\@ifundefined{if@hsl}{}{\let\if@hincl\if@hsl}
-\KOMA@ifkey{headinclude}{@hincl}
-\KOMA@DeclareDeprecatedOption[typearea]{headexclude}{headinclude=false}
-\KOMA@key{headsepline}[true]{%
-  \KOMA@set@ifkey{headinclude}{@hincl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.typearea.\scr@pkgextension}{headinclude}{@hincl}%
+\newif\if@seascape
+\newif\if@landscape
+\newcommand*{\maybe@pair}{}
+\def\maybe@pair#1:#2:#3\@nil{%
+  \edef\@tempa{#1}\edef\@tempb{#2}%
+  \ifx\@tempa\@empty\@tempswafalse\else
+    \ifx\@tempb\@empty\@tempswafalse\else\@tempswatrue\fi
   \fi
 }
-\newif\if@fincl\@ifundefined{if@fsl}{}{\let\if@fincl\if@fsl}
-\KOMA@ifkey{footinclude}{@fincl}
-\KOMA@DeclareDeprecatedOption[typearea]{footexclude}{footinclude=false}
-\KOMA@key{footsepline}[true]{%
-  \KOMA@set@ifkey{footinclude}{@hincl}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.typearea.\scr@pkgextension}{footinclude}{@hincl}%
-  \fi
-}
-\KOMA@ifkey{mpinclude}{@mincl}
-\KOMA@DeclareDeprecatedOption[typearea]{mpexclude}{mpinclude=false}
-\KOMA@key{BCOR}{%
-  \ifstr{#1}{current}{}{%
-    \setlength{\ta@bcor}{#1}%
-  }%
-  \FamilyKeyStateProcessed
-  \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{BCOR}{#1}%
-}
-\AtEndOfPackage{%
-  \KOMA@key{BCOR}{\typearea[{#1}]{last}\FamilyKeyStateProcessed}%
-}
-\KOMA@key{DIV}[calc]{%
-  \edef\@tempa{#1}%
-  \def\@tempb{last}\ifx\@tempa\@tempb\let\@tempa=\@lastdiv\fi
-  \def\@tempb{current}\ifx\@tempa\@tempb\else
-    \def\@tempb{default}\ifx\@tempa\@tempb\ta@div=\z@ \else
-      \def\@tempb{calc}\ifx\@tempa\@tempb\ta@div=\tw@ \else
-        \def\@tempb{classic}\ifx\@tempa\@tempb\ta@div=\thr@@ \else
-          \ta@div=\@tempa
-        \fi
-      \fi
-    \fi
-  \fi
-  \FamilyKeyStateProcessed
-  \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{DIV}{#1}%
-}
-\AtEndOfPackage{%
-  \KOMA@key{DIV}{\typearea[current]{#1}\FamilyKeyStateProcessed}%
-}
-\KOMA@DeclareDeprecatedOption[typearea]{DIVcalc}{DIV=calc}
-\KOMA@DeclareDeprecatedOption[typearea]{DIVclassic}{DIV=classic}
-\KOMA@ifkey{areasetadvanced}{@areasetadvanced}
-\newif\if@semitwoside
-\g@addto@macro\@twosidetrue\@semitwosidefalse
-\g@addto@macro\@twosidefalse\@semitwosidefalse
-\KOMA@key{twoside}[true]{%
-  \if@atdocument\if@twoside
-      \scr@ifundefinedorrelax{cleardoubleoddpage}{%
-        \cleardoublepage
-      }{%
-        \cleardoubleoddpage
-      }%
-  \else\clearpage\fi\fi
-  \ifstr{#1}{semi}{%
-    \@twosidetrue
-    \@semitwosidetrue
-    \FamilyKeyStateProcessed
-  }{%
-    \def\FamilyElseValue{, `semi'}%
-    \KOMA@set@ifkey{twoside}{%
-      @twoside%
-    }{#1}%
-  }%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@xreplacevalue{.%
-      typearea.\scr@pkgextension
-    }{twoside}{#1}%
-    \if@twoside
-      \if@semitwoside
-        \@mparswitchfalse
-      \else
-        \@mparswitchtrue
-      \fi
-    \else
-      \@mparswitchfalse
-    \fi%
-    \csname recalctypearea\endcsname
-  \fi
-}
-\KOMA@kav@xadd{.typearea.\scr@pkgextension}{twoside}{%
-  \if@twoside true\else false\fi
-}
-\KOMA@DeclareStandardOption%
-  [typearea]%
-  {oneside}{twoside=false}
-\KOMA@key{twocolumn}[true]{%
-  \if@atdocument\clearpage\fi
-  \KOMA@set@ifkey{twocolumn}{@twocolumn}{#1}%
-  \ifx\FamilyKeyState\FamilyKeyStateProcessed
-    \KOMA@kav@replacebool{.%
-      typearea.\scr@pkgextension
-    }{twocolumn}{@twocolumn}%
-    \csname recalctypearea\endcsname
-  \fi
-}
-\KOMA@kav@xadd{.typearea.\scr@pkgextension}{twocolumn}{%
-  \if@twocolumn true\else false\fi
-}
-\KOMA@DeclareStandardOption%
-  [typearea]%
-  {onecolumn}{twocolumn=false}
+\KOMA@ifkey{usegeometry}{@ta@usegeometry}
 \KOMA@key{pagesize}[auto]{%
   \KOMA@set@ncmdkey{pagesize}{@pagesizelast}{%
     {off}{-1},{no}{-1},{false}{-1},%
@@ -474,7 +599,7 @@
     }{}%
   }%
 }
-\newcommand{\set@pdftexpagesize}{%
+\newcommand*{\set@pdftexpagesize}{%
   \scr@ifundefinedorrelax{pdfpagewidth}{%
     \scr@ifundefinedorrelax{pagewidth}{}{\pagewidth=\paperwidth}%
   }{\pdfpagewidth=\paperwidth}%
@@ -482,7 +607,7 @@
     \scr@ifundefinedorrelax{pageheight}{}{\pageheight=\paperheight}%
   }{\pdfpageheight=\paperheight}%
 }
-\newcommand{\set@dvipspagesize}{%
+\newcommand*{\set@dvipspagesize}{%
   \begingroup
     \@tempswafalse
     \scr@ifdvioutput{\@tempswatrue}{%
@@ -490,6 +615,16 @@
         \expandafter\let\csname if@tempswa\expandafter\endcsname
         \csname if@dvips\endcsname
       }{}%
+    }{}%
+    \scr@ifundefinedorrelax{pr@nextbb}{}{%
+      \expandafter\ifx\csname ifPreview\expandafter\endcsname
+                      \csname iftrue\endcsname
+        \PackageInfo{typearea}{%
+          package `preview' with option `tightpage' detected.\MessageBreak
+          initial page size special deactivated%
+        }%
+        \@tempswafalse
+      \fi
     }%
     \if@tempswa
       \endgroup
@@ -506,7 +641,7 @@
     \endgroup
   \fi
 }
-\newcommand{\setnot@dvipspagesize}{%
+\newcommand*{\setnot@dvipspagesize}{%
   \scr@ifdvioutput{%
     \PackageWarning{%
       typearea%
@@ -525,7 +660,7 @@
     }%
   }{}%
 }
-\newcommand{\set@vtexpagesize}{%
+\newcommand*{\set@vtexpagesize}{%
   \ifnotundefined{mediawith}{\mediawidth=\paperwidth}{}%
   \ifnotundefined{mediaheight}{\mediaheight=\paperheight}{}%
 }
@@ -548,268 +683,275 @@
 \KOMA@DeclareStandardOption[typearea]{pdftex}{%
   pagesize=pdftex%
 }
-\KOMA@DeclareStandardOption[typearea]{a4paper}{paper=a4}
-\KOMA@DeclareStandardOption[typearea]{a5paper}{paper=a5}
-\KOMA@DeclareStandardOption[typearea]{b5paper}{paper=b5}
-\KOMA@DeclareStandardOption[typearea]{letterpaper}{paper=letter}
-\KOMA@DeclareStandardOption[typearea]{legalpaper}{paper=legal}
-\KOMA@DeclareStandardOption[typearea]{executivepaper}{paper=executive}
-\KOMA@DeclareStandardOption[typearea]{landscape}{paper=landscape}
-\KOMA@DeclareStandardOption[typearea]{portrait}{paper=portrait}
-\KOMA@key{paper}{%
-  \ifstr{#1}{seascape}{%
-    \@seascapetrue
-    \if@landscape\else
-      \setlength{\@tempdima}{\paperwidth}%
-      \setlength{\paperwidth}{\paperheight}%
-      \setlength{\paperheight}{\@tempdima}%
-      \@landscapetrue
-    \fi
-    \FamilyKeyStateProcessed
-  }{%
-    \ifstr{#1}{landscape}{%
-      \@seascapefalse
-      \if@landscape\else
-        \setlength{\@tempdima}{\paperwidth}%
-        \setlength{\paperwidth}{\paperheight}%
-        \setlength{\paperheight}{\@tempdima}%
-        \@landscapetrue
-      \fi
-      \FamilyKeyStateProcessed
-    }{%
-      \ifstr{#1}{portrait}{%
-        \if@landscape
-          \setlength{\@tempdima}{\paperwidth}%
-          \setlength{\paperwidth}{\paperheight}%
-          \setlength{\paperheight}{\@tempdima}%
-          \@landscapefalse
-        \fi
-        \FamilyKeyStateProcessed
+\newif\if@semitwoside
+\g@addto@macro\@twosidetrue\@semitwosidefalse
+\g@addto@macro\@twosidefalse\@semitwosidefalse
+\KOMA@key{twoside}[true]{%
+  \if@atdocument\if@twoside
+      \scr@ifundefinedorrelax{cleardoubleoddpage}{%
+        \cleardoublepage
       }{%
-        \ifstr{#1}{letter}{%
-          \if@landscape
-            \setlength\paperheight{8.5in}%
-            \setlength\paperwidth {11in}%
-          \else
-            \setlength\paperheight{11in}%
-            \setlength\paperwidth {8.5in}%
-          \fi
-          \FamilyKeyStateProcessed
-          \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
-          \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{letter}%
-        }{%
-          \ifstr{#1}{legal}{%
-            \if@landscape
-              \setlength\paperheight{8.5in}%
-              \setlength\paperwidth {14in}%
-            \else
-              \setlength\paperheight{14in}%
-              \setlength\paperwidth {8.5in}%
-            \fi
-            \FamilyKeyStateProcessed
-            \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
-            \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{legal}%
-          }{%
-            \ifstr{#1}{executive}{%
-              \if@landscape
-                \setlength\paperheight{7.25in}%
-                \setlength\paperwidth {10.5in}%
-              \else
-                \setlength\paperheight{10.5in}%
-                \setlength\paperwidth {7.25in}%
-             \fi
-             \FamilyKeyStateProcessed
-             \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
-             \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{executive}%
-            }{%
-              \iso@paper{#1}%
-              \if@tempswa
-                \FamilyKeyStateProcessed
-                \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
-                \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{#1}%
-              \else
-                \expandafter\maybe@pair#1::\@nil
-                \if@tempswa
-                  \expandafter\ifnum \scr@ta@v@is@lt{3.01b}\relax
-                    \PackageWarningNoLine{typearea}{%
-                      You may have to exchange height and width!\MessageBreak
-                      Until KOMA-Script version 3.01b the semantic\MessageBreak
-                      of option `paper' was `paper=height:width'\MessageBreak
-                      instead of `paper=width:height'.\MessageBreak
-                      I've switched back to that old interpretation\MessageBreak
-                      because of the given compatiblity settings}%
-                    \setlength\paperheight{\@tempa}%
-                    \setlength\paperwidth{\@tempb}%
-                  \else
-                    \setlength\paperwidth{\@tempa}%
-                    \setlength\paperheight{\@tempb}%
-                  \fi
-                  \FamilyKeyStateProcessed
-                  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{paper}%
-                  \if@landscape
-                    \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{\@tempa:\@tempb}%
-                  \else
-                    \KOMA@kav@xadd{.typearea.\scr@pkgextension}{paper}{\@tempb:\@tempa}%
-                  \fi
-               \else
-                  \KOMA@unknown@keyval{paper}{#1}{%
-                    `letter', `legal', `executive', `a'<nr>, `b'<nr>,
-                    `c'<nr>, `d'<nr>,\MessageBreak
-                    <width>`:'<height>, `landscape' and `portrait'%
-                  }%
-                \fi
-              \fi
-            }%
-          }%
-        }%
-        \ifx\FamilyKeyState\FamilyKeyStateProcessed
-          \if@landscape
-            \if@seascape
-              \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{seascape}%
-            \else
-              \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{landscape}%
-            \fi
-          \else
-            \KOMA@kav@add{.typearea.\scr@pkgextension}{paper}{portrait}%
-          \fi
-        \fi
+        \cleardoubleoddpage
       }%
-    }%
-  }%
-}
-\newif\if@seascape
-\newif\if@landscape
-\newcommand*{\maybe@pair}{}
-\def\maybe@pair#1:#2:#3\@nil{%
-  \edef\@tempa{#1}\edef\@tempb{#2}%
-  \ifx\@tempa\@empty\@tempswafalse\else
-    \ifx\@tempb\@empty\@tempswafalse\else\@tempswatrue\fi
-  \fi
-}
-\KOMA@ifkey{usegeometry}{@ta@usegeometry}
-\DeclareOption*{%
-  \x@paper}
-%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
-\providecommand*
-  {\scr@compatibility}{\scr@v@last}
-\newcommand*{\scr@ta@compatibility}{\scr@compatibility}
-\KOMA@key{version}[last]{%
-  \scr@ifundefinedorrelax{scr@v@#1}{%
-    \def\scr@compatibility{0}%
-    \PackageWarningNoLine{%
-      typearea%
-    }{%
-      You have set option `version' to value `#1', but\MessageBreak
-      this value of version is not supported.\MessageBreak
-      Because of this, version was set to `first'%
-    }%
+  \else\clearpage\fi\fi
+  \ifstr{#1}{semi}{%
+    \@twosidetrue
+    \@semitwosidetrue
     \FamilyKeyStateProcessed
-    \KOMA@kav@replacevalue{.%
-      typearea.\scr@pkgextension
-    }{version}{first}%
   }{%
-    \PackageInfoNoLine{%
-      typearea%
-    }{%
-      Switching compatibility level to `#1'%
-    }%
-    \edef\scr@ta@compatibility{\@nameuse{scr@v@#1}}%
-    \FamilyKeyStateProcessed
+    \def\FamilyElseValue{, `semi'}%
+    \KOMA@set@ifkey{twoside}{%
+      @twoside%
+    }{#1}%
+  }%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
     \KOMA@kav@xreplacevalue{.%
       typearea.\scr@pkgextension
-    }{version}{#1}%
+    }{twoside}{#1}%
+    \if@twoside
+      \if@semitwoside
+        \@mparswitchfalse
+      \else
+        \@mparswitchtrue
+      \fi
+    \else
+      \@mparswitchfalse
+    \fi%
+    \csname recalctypearea\endcsname
+  \fi
+}
+\KOMA@kav@xadd{.typearea.\scr@pkgextension}{twoside}{%
+  \if@twoside true\else false\fi
+}
+\KOMA@DeclareStandardOption%
+  [typearea]%
+  {oneside}{twoside=false}
+\KOMA@key{twocolumn}[true]{%
+  \if@atdocument\clearpage\fi
+  \KOMA@set@ifkey{twocolumn}{@twocolumn}{#1}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \KOMA@kav@replacebool{.%
+      typearea.\scr@pkgextension
+    }{twocolumn}{@twocolumn}%
+    \csname recalctypearea\endcsname
+  \fi
+}
+\KOMA@kav@xadd{.typearea.\scr@pkgextension}{twocolumn}{%
+  \if@twocolumn true\else false\fi
+}
+\KOMA@DeclareStandardOption%
+  [typearea]%
+  {onecolumn}{twocolumn=false}
+\KOMA@key{headlines}{%
+  \begingroup
+    \setlength{\@tempdima}{#1\baselineskip}%
+  \endgroup
+  \def\ta@hh{#1\baselineskip}%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headlines}{#1}%
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headheight}{#1\baselineskip}%
+}
+\KOMA@key{footlines}{%
+  \begingroup
+    \setlength{\@tempdima}{#1\baselineskip}%
+  \endgroup
+  \def\ta@fh{#1\baselineskip}%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footlines}{#1}%
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footheight}{#1\baselineskip}%
+}
+\KOMA@key{headheight}{%
+  \begingroup
+    \setlength{\@tempdima}{#1}%
+  \endgroup
+  \def\ta@hh{#1}%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{headheight}{#1}%
+  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{headlines}%
+}
+\KOMA@key{footheight}{%
+  \begingroup
+    \setlength{\@tempdima}{#1}%
+  \endgroup
+  \def\ta@fh{#1}%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@replacevalue{.typearea.\scr@pkgextension}{footheight}{#1}%
+  \KOMA@kav@removekey{.typearea.\scr@pkgextension}{footlines}%
+}
+\newif\if@hincl\@ifundefined{if@hsl}{}{\let\if@hincl\if@hsl}
+\KOMA@ifkey{headinclude}{@hincl}
+\KOMA@DeclareDeprecatedOption[typearea]{headexclude}{headinclude=false}
+\KOMA@key{headsepline}[true]{%
+  \KOMA@set@ifkey{headinclude}{@hincl}{#1}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \KOMA@kav@replacebool{.typearea.\scr@pkgextension}{headinclude}{@hincl}%
+  \fi
+}
+\newif\if@fincl\@ifundefined{if@fsl}{}{\let\if@fincl\if@fsl}
+\KOMA@ifkey{footinclude}{@fincl}
+\KOMA@DeclareDeprecatedOption[typearea]{footexclude}{footinclude=false}
+\KOMA@key{footsepline}[true]{%
+  \KOMA@set@ifkey{footinclude}{@fincl}{#1}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \KOMA@kav@replacebool{.typearea.\scr@pkgextension}{footinclude}{@fincl}%
+  \fi
+}
+\KOMA@ifkey{mpinclude}{@mincl}
+\KOMA@DeclareDeprecatedOption[typearea]{mpexclude}{mpinclude=false}
+\newlength{\ta@bcor}
+\newcount\ta@div
+\KOMA@key{BCOR}{%
+  \ifstr{#1}{current}{}{%
+    \setlength{\ta@bcor}{#1}%
   }%
+  \FamilyKeyStateProcessed
+  \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{BCOR}{#1}%
 }
 \AtEndOfPackage{%
-  \KOMA@key{version}[]{%
-    \PackageError{%
-      typearea%
-    }{%
-      Option `version' too late%
-    }{%
-      Option `version' may be set only while loading the
-      package.\MessageBreak
-      But you've tried to set it up later.%
-    }%
+  \KOMA@key{BCOR}{%
+    \typearea[{#1}]{last}
     \FamilyKeyStateProcessed
+    \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{BCOR}{#1}%
   }%
 }
-\@namedef{scr@v@first}{0}
-\@namedef{scr@v@2.9}{0}
-\@namedef{scr@v@2.9t}{0}
-\@namedef{scr@v@2.9u}{1}
-\@namedef{scr@v@2.95}{2}
-\@namedef{scr@v@2.95a}{2}
-\@namedef{scr@v@2.95b}{2}
-\@namedef{scr@v@2.96}{2}
-\@namedef{scr@v@2.96a}{3}
-\@namedef{scr@v@2.97}{3}
-\@namedef{scr@v@2.97a}{3}
-\@namedef{scr@v@2.97b}{3}
-\@namedef{scr@v@2.97c}{4}
-\@namedef{scr@v@2.97d}{5}
-\@namedef{scr@v@2.97e}{6}
-\@namedef{scr@v@2.98}{6}
-\@namedef{scr@v@2.98a}{6}
-\@namedef{scr@v@2.98b}{6}
-\@namedef{scr@v@2.98c}{7}
-\@namedef{scr@v@3.00}{8}
-\@namedef{scr@v@3.01}{8}
-\@namedef{scr@v@3.01a}{8}
-\@namedef{scr@v@3.01b}{9}
-\@namedef{scr@v@3.01c}{9}
-\@namedef{scr@v@3.02}{9}
-\@namedef{scr@v@3.02b}{9}
-\@namedef{scr@v@3.02c}{10}
-\@namedef{scr@v@3.03}{10}
-\@namedef{scr@v@3.03a}{10}
-\@namedef{scr@v@3.03b}{10}
-\@namedef{scr@v@3.04}{10}
-\@namedef{scr@v@3.04a}{10}
-\@namedef{scr@v@3.05}{10}
-\@namedef{scr@v@3.05a}{10}
-\@namedef{scr@v@3.06}{10}
-\@namedef{scr@v@3.07}{10}
-\@namedef{scr@v@3.08}{10}
-\@namedef{scr@v@3.08a}{10}
-\@namedef{scr@v@3.08b}{10}
-\@namedef{scr@v@3.09}{10}
-\@namedef{scr@v@3.09a}{10}
-\@namedef{scr@v@3.10}{10}
-\@namedef{scr@v@3.10a}{10}
-\@namedef{scr@v@3.10b}{10}
-\@namedef{scr@v@3.11}{10}
-\@namedef{scr@v@3.11a}{10}
-\@namedef{scr@v@3.11b}{10}
-\@namedef{scr@v@3.12}{11}
-\@namedef{scr@v@3.13}{12}
-\@namedef{scr@v@3.13a}{13}
-\@namedef{scr@v@3.14}{13}
-\@namedef{scr@v@3.15}{14}
-\@namedef{scr@v@3.16}{14}
-\@namedef{scr@v@3.17}{15}
-\@namedef{scr@v@3.17a}{15}
-\@namedef{scr@v@3.17c}{15}
-\@namedef{scr@v@3.18}{15}
-\@namedef{scr@v@3.18a}{15}
-\@namedef{scr@v@3.19}{15}
-\@namedef{scr@v@3.19a}{15}
-\@namedef{scr@v@3.20}{15}
-\@namedef{scr@v@3.21}{15}
-\@namedef{scr@v@last}{15}
-\newcommand*{\scr@ta@v@is@lt}[1]{%
-  \scr@ta@compatibility<\@nameuse{scr@v@#1}
+\KOMA@key{DIV}[calc]{%
+  \edef\@tempa{#1}%
+  \def\@tempb{last}\ifx\@tempa\@tempb\let\@tempa=\@lastdiv\fi
+  \def\@tempb{current}\ifx\@tempa\@tempb\else
+    \def\@tempb{default}\ifx\@tempa\@tempb\ta@div=\z@ \else
+      \def\@tempb{calc}\ifx\@tempa\@tempb\ta@div=\tw@ \else
+        \def\@tempb{classic}\ifx\@tempa\@tempb\ta@div=\thr@@ \else
+          \ta@div=\@tempa
+        \fi
+      \fi
+    \fi
+  \fi
+  \FamilyKeyStateProcessed
+  \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{DIV}{#1}%
 }
-\newcommand*{\scr@ta@v@is@gt}[1]{%
-  \scr@ta@compatibility>\@nameuse{scr@v@#1}
+\AtEndOfPackage{%
+  \KOMA@key{DIV}{%
+    \typearea[current]{#1}%
+    \FamilyKeyStateProcessed
+    \KOMA@kav@xreplacevalue{.typearea.\scr@pkgextension}{DIV}{#1}%
+  }%
 }
-\newcommand*{\scr@ta@v@is@le}[1]{%
-  \numexpr\scr@ta@compatibility-\@ne <\@nameuse{scr@v@#1}
+\KOMA@ifkey{areasetadvanced}{@areasetadvanced}
+\KOMA@DeclareDeprecatedOption[typearea]{DIVcalc}{DIV=calc}
+\KOMA@DeclareDeprecatedOption[typearea]{DIVclassic}{DIV=classic}
+\newcommand\isopaper[2][a]{%
+  \ISO@PaperNameToSize[typearea]#1#2\@nil
+  \expandafter\ifnum\scr@ta@v@is@ge{3.22}\relax
+    \scr@setpaperorientation
+  \else
+    \if@landscape\scr@switchpapersizes\fi
+  \fi
 }
-\newcommand*{\scr@ta@v@is@ge}[1]{%
-  \numexpr\scr@ta@compatibility+\@ne >\@nameuse{scr@v@#1}
+\ProvideUnknownPaperSizeError{typearea}{%
+  \PackageError{typearea}{%
+    Unknown ISO/DIN-papersize-letter #1%
+  }{%
+    There are only four defined paper scalings:\MessageBreak
+    a = ISO/DIN-A, b = ISO/DIN-B, c = ISO/DIN-C,
+    d = ISO/DIN-D\MessageBreak
+    Read KOMA-Script-documentation for further information.%
+  }%
+  \setlength{\paperwidth}{841sp}%
+  \setlength{\paperheight}{1189sp}%
 }
-%%% From File: $Id: scrkernel-typearea.dtx 2464 2016-05-27 17:14:11Z kohm $
+\newcommand*\scr@setpaperorientation{%
+  \ifdim\paperheight>\paperwidth
+    \if@landscape\scr@switchpapersizes\fi
+  \else
+    \if@landscape\else\scr@switchpapersizes\fi
+  \fi
+}
+\newcommand*\scr@switchpapersizes{%
+  \@tempdima\paperwidth\paperwidth\paperheight\paperheight\@tempdima
+}
+\newcommand*{\iso@paper}[1]{\expandafter\iso@@paper#1\@nil}
+\newcommand*{\iso@@paper}{}
+\def\iso@@paper#1#2\@nil{%
+  \@tempswafalse
+  \if #1a\@tempswatrue
+  \else\if #1A\@tempswatrue
+    \else\if #1b\@tempswatrue
+      \else\if #1B\@tempswatrue
+        \else\if #1c\@tempswatrue
+          \else\if #1C\@tempswatrue
+            \else\if #1d\@tempswatrue
+              \else\if #1D\@tempswatrue
+  \fi\fi\fi\fi\fi\fi\fi\fi
+  \if@tempswa
+    \ifnumber{#2}{\isopaper[#1]{#2}}{\@tempswafalse}%
+  \fi
+}
+\newcommand*{\@BCOR}{\expandafter\@@BCOR\CurrentOption BCORBCOR\@@BCOR}
+\newcommand*{\@@BCOR}{}
+\def\@@BCOR #1BCOR#2BCOR#3\@@BCOR{%
+  \ifstr{#1}{}{%
+    \ifstr{#3}{BCOR}{%
+      \ifdimen{#2}{%
+        \KOMA@UseDeprecatedOption{%
+          \PackageWarningNoLine{typearea}}{BCOR#2}{BCOR=#2}%
+      }{\scr@pti@nerr@r}%
+    }{\scr@pti@nerr@r}%
+  }{\scr@pti@nerr@r}%
+}
+\newcommand*{\@DIV}{\expandafter\@@DIV\CurrentOption DIVDIV\@@DIV}
+\newcommand*{\@@DIV}{}
+\def\@@DIV #1DIV#2DIV#3\@@DIV{%
+  \edef\@tempa{#1}\ifx\@tempa\@empty
+    \edef\@tempa{#3}\def\@tempb{DIV}\ifx\@tempa\@tempb
+      \ifnumber{#2}{%
+        \KOMA@UseDeprecatedOption{%
+          \PackageWarningNoLine{typearea}}{DIV#2}{DIV=#2}%
+      }{\scr@pti@nerr@r}%
+    \else\scr@pti@nerr@r\fi
+  \else\@BCOR\fi
+}
+\newcommand{\@headlines}{%
+  \expandafter\@@headlines\CurrentOption headlines\@@headlines%
+}
+\newcommand*{\@@headlines}{}
+\def\@@headlines #1headlines#2\@@headlines{
+  \edef\@tempa{#2}\edef\@tempb{headlines}\ifx\@tempa\@tempb
+    \setlength{\@tempdima}{#1\baselineskip}%
+    \def\ta@hh{#1\baselineskip}%
+  \else\@DIV\fi
+}
+\newcommand*{\x@paper}{%
+  \expandafter\x@@paper\CurrentOption paper\x@@paper%
+}
+\newcommand*{\x@@paper}{}
+\def\x@@paper #1#2paper#3\x@@paper{%
+  \ifstr{#3}{paper}{%
+    \ifnumber{#2}{%
+      \ifstr{#1}{a}{%
+        \isopaper[a]{#2}%
+      }{%
+        \ifstr{#1}{b}{%
+          \isopaper[b]{#2}%
+        }{%
+          \ifstr{#1}{c}{%
+            \isopaper[c]{#2}%
+          }{%
+            \ifstr{#1}{d}{%
+              \isopaper[d]{#2}%
+            }{\scr@pti@nerr@r}%
+          }%
+        }%
+      }%
+    }{\scr@pti@nerr@r}%
+  }{%
+    \@headlines
+  }%
+}
+\newcommand*{\scr@pti@nerr@r}{
+  \@unknownoptionerror
+}
+\DeclareOption*{%
+  \x@paper}
 \InputIfFileExists{typearea.cfg}{%
   \typeout{%
     ***************************************^^J%
@@ -829,8 +971,91 @@
   \KOMAExecuteOptions{twoside=false}
 \fi
 \KOMAProcessOptions\relax
-\providecommand\ta@divlist{{}{}{}{}{}{}{}{}{}{8}{10}{12}}
-\providecommand\ta@divlistelse{1}
+%%% From File: $Id: scrkernel-compatibility.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
+%%% From File: $Id: scrkernel-typearea.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
+\newcommand*{\ta@divfor}[1]{%
+  \ta@div=\z@
+  \expandafter\ifnum\scr@ta@v@is@ge{3.25}\relax
+    \ifnum \z@=\ifdim \paperwidth<207mm \z@\else\ifdim \paperwidth>213mm \z@
+               \else\ifdim \paperheight<294mm \z@\else
+               \ifdim \paperheight>300mm \z@\else \@ne\fi\fi\fi\fi
+      \PackageInfoNoLine{typearea}{%
+        With paper sizes other than (almost) `A4' predefined\MessageBreak
+        DIV values do not exist. Using DIV calculation for good\MessageBreak
+        line width (unless using `version=3.24` or prior)%
+      }%
+      \ta@div=\tw@
+    \fi
+  \fi
+  \if@mincl
+    \PackageInfo{typearea}{%
+      With option `mpinclude' there are no predefined\MessageBreak
+      DIV values. Using DIV calculation for good line\MessageBreak
+      width%
+    }%
+    \ta@div=\tw@
+  \fi
+  \ifnum \ta@div=\z@
+    \xdef\@tempa{\ta@divlist{}}%
+    \@tempdima=#1pt
+    \addtolength{\@tempdima}{.5\p@}%
+    \divide\@tempdima by\p@
+    \setlength{\@tempdimb}{\@tempdima}%
+    \multiply\@tempdimb by\p@
+    \ifdim \@tempdimb=#1pt
+      \ta@div=#1\relax
+      \@whilenum \ta@div >-9 \do {%
+        \ifx\@tempa\empty
+        \else \xdef\@tempa{\expandafter\@cdr\@tempa\@nil}\fi
+        \advance\ta@div by-1
+      }%
+    \else
+      \let\@tempa\empty
+    \fi
+    \ifx\@tempa\empty
+      \setlength{\@tempdima}{#1\p@}%
+      \addtolength{\@tempdima}{10\p@}%
+      \PackageWarningNoLine{typearea}{%
+        DIV for \the\@tempdima\space and used papersize\MessageBreak
+        not defined!\MessageBreak
+        Using DIV=\ifnum\number\ta@divlistelse>\m@ne
+          \ifcase \ta@divlistelse default%
+          \or calc%
+          \or calc%
+          \or classic%
+          \else\ta@divlistelse\fi\else\ta@divlistelse\fi
+      }%
+      \ta@div=\ta@divlistelse\relax
+    \else
+      \xdef\@tempa{\expandafter\@car\@tempa\@nil}%
+      \ifx\@tempa\empty
+        \ta@div=\ta@divlistelse\relax
+      \else
+        \ta@div=\@tempa\relax
+      \fi
+    \fi
+  \fi
+}
+\newcommand*\SetDIVList[1]{%
+  \PackageWarning{typearea}{\string\SetDIVList\space is
+    deprecated!\MessageBreak
+    This command supports only integer font sizes\MessageBreak
+    in pt equal or greater than 10pt.\MessageBreak
+    Since version 2.6 the command is implemented\MessageBreak
+    for compatibility only. You should not use it\MessageBreak
+    any longer}%
+  \def\ta@divlist{{}{}{}{}{}{}{}{}{}#1}}
+\newcommand*\SetXDIVList[1]{%
+  \PackageWarning{typearea}{\string\SetXDIVList\space is
+    deprecated!\MessageBreak
+    This command supports only integer font sizes\MessageBreak
+    in pt equal or greater than 10pt.\MessageBreak
+    Since version 3.0 the command is implemented\MessageBreak
+    for compatibility only. You should not use it\MessageBreak
+    any longer}%
+  \def\ta@divlist{#1}}
 \newlength{\ta@hblk}
 \newlength{\ta@vblk}
 \newlength{\ta@temp}
@@ -966,18 +1191,12 @@
   \kernel@ifstar \l@addto@macro \g@addto@macro \@typearea@end
 }
 \newcommand*{\@typearea@end}{}
-\newcommand*{\AfterSettingArea}{%
-  \kernel@ifstar \l@addto@macro \g@addto@macro \@areaset@end
-}
-\newcommand*{\@areaset@end}{}
 \newcommand*{\activateareas}{%
   \if@atdocument
-    \PackageWarning{typearea}{%
-      Typearea changed!\MessageBreak
-      You should do this only at preamble, because only\MessageBreak
-      \protect\begin{document} calculates output dimensions!\MessageBreak
-      Trying to calculate new output dimensions, but\MessageBreak
-      this is only a dirty hack}%
+    \PackageInfo{typearea}{%
+      Using dirty hack to recalculate internal output\MessageBreak
+      dimensions of LaTeX%
+    }%
     \@colht=\textheight
     \@colroom=\textheight
     \vsize=\textheight
@@ -1049,125 +1268,6 @@
   \fi
 }
 \newcommand*{\scr@geometryargs}{}
-\newcommand*{\scr@grouplevel@test}[1]{%
-  \ifcase\currentgrouptype\else
-    \PackageWarning{typearea}{%
-      \string#1\space used at group level
-      \the\currentgrouplevel.\MessageBreak
-      Using \string#1\space inside any group, e.g.\MessageBreak
-      environments, math mode, boxes, etc. may result in\MessageBreak
-      many type setting problems.\MessageBreak
-      You should move the command \string#1\MessageBreak
-      outside all groups%
-    }%
-  \fi
-}
-\newcommand*{\storeareas}[1]{%
-  \edef\reserved@a{%
-    \noexpand\newcommand*{\unexpanded{#1}}{%
-      \noexpand\scr@grouplevel@test\unexpanded{#1}%
-      \noexpand\csname scr@storeareas@before@hook\noexpand\endcsname
-      \unexpanded\expandafter\expandafter\expandafter{%
-        \csname scr@storeareas@before@current@hook\endcsname}%
-      \noexpand\paperheight=\the\paperheight\space
-      \noexpand\paperwidth=\the\paperwidth\space
-      \noexpand\topmargin=\the\topmargin\space
-      \noexpand\headheight=\the\headheight\space
-      \noexpand\headsep=\the\headsep\space
-      \noexpand\textheight=\the\textheight\space
-      \noexpand\vsize=\the\vsize\space
-      \noexpand\footskip=\the\footskip\space
-      \noexpand\@colht=\the\@colht\space
-      \noexpand\@colroom=\the\@colroom\space
-      \noexpand\textwidth=\the\textwidth\space
-      \noexpand\columnwidth=\the\columnwidth\space
-      \noexpand\hsize=\the\hsize\space
-      \noexpand\oddsidemargin=\the\oddsidemargin\space
-      \noexpand\evensidemargin=\if@twoside
-        \the\evensidemargin
-      \else
-        \the\oddsidemargin
-      \fi\space
-      \noexpand\linewidth=\the\linewidth\space
-      \noexpand\maxdepth=\the\maxdepth\space
-      \scr@ifundefinedorrelax{@pagesizelast}{}{%
-        \noexpand\KOMAoptions{pagesize=\@pagesizelast}}%
-      \noexpand\ta@div=\the\ta@div\space
-      \noexpand\ta@bcor=\the\ta@bcor\space
-      \noexpand\def\noexpand\@lastdiv{\@lastdiv}%
-      \noexpand\marginparsep=\the\marginparsep\space
-      \noexpand\marginparwidth=\the\marginparwidth\space
-      \noexpand\def
-      \expandafter\noexpand\csname scr@kav@KOMA.typearea.\scr@pkgextension\endcsname{%
-        \unexpanded\expandafter\expandafter\expandafter{%
-          \csname scr@kav@KOMA.typearea.\scr@pkgextension\endcsname}%
-      }%
-      \unexpanded\expandafter\expandafter\expandafter{%
-        \csname scr@storeareas@after@current@hook\endcsname}%
-      \noexpand\csname scr@storeareas@after@hook\noexpand\endcsname
-    }%
-  }%
-  \reserved@a
-}
-\newcommand*{\BeforeRestoreareas}{%
-  \kernel@ifstar{\scr@storeareashook{before@current}}%
-                {\scr@storeareashook{before}}%
-}
-\newcommand*{\AfterRestoreareas}{%
-  \kernel@ifstar{\scr@storeareashook{after@current}}%
-                {\scr@storeareashook{after}}%
-}
-\newcommand*{\scr@storeareashook}[2]{%
-  \expandafter\l@addto@macro\csname scr@storeareas@#1@hook\endcsname{#2}%
-}
-\newcommand*{\scr@storeareas@before@hook}{}
-\newcommand*{\scr@storeareas@before@current@hook}{}
-\newcommand*{\scr@storeareas@after@hook}{}
-\newcommand*{\scr@storeareas@after@current@hook}{}
-\newcommand*{\ta@divfor}[1]{%
-  \if@mincl
-    \PackageInfo{typearea}{%
-      With option `mpinclude' there are no predefined\MessageBreak
-      DIV values. Using DIV calculation for good line\MessageBreak
-      width%
-    }%
-    \ta@div=\tw@
-  \else
-    \xdef\@tempa{\ta@divlist{}}%
-    \@tempdima=#1pt
-    \addtolength{\@tempdima}{.5\p@}%
-    \divide\@tempdima by\p@
-    \setlength{\@tempdimb}{\@tempdima}%
-    \multiply\@tempdimb by\p@
-    \ifdim \@tempdimb=#1pt
-      \ta@div=#1\relax
-      \@whilenum \ta@div >-9 \do {%
-        \ifx\@tempa\empty
-        \else \xdef\@tempa{\expandafter\@cdr\@tempa\@nil}\fi
-        \advance\ta@div by-1
-      }%
-    \else
-      \let\@tempa\empty
-    \fi
-    \ifx\@tempa\empty
-      \setlength{\@tempdima}{#1\p@}%
-      \addtolength{\@tempdima}{10\p@}%
-      \PackageWarningNoLine{typearea}{%
-        DIV for \the\@tempdima\space and used papersize\MessageBreak
-        not defined!\MessageBreak
-        Using DIV=\ta@divlistelse
-      }%
-      \ta@div=\ta@divlistelse\relax
-    \else
-      \xdef\@tempa{\expandafter\@car\@tempa\@nil}%
-      \ifx\@tempa\empty
-        \ta@div=\ta@divlistelse\relax
-      \else
-        \ta@div=\@tempa\relax
-      \fi
-    \fi
-  \fi
-}
 \newcommand*\typearea[2][\z@]{%
   \scr@grouplevel@test\typearea
   \edef\@tempa{#1}\edef\@tempb{current}\ifx\@tempa\@tempb\else
@@ -1315,21 +1415,27 @@
         Bad type area settings!\MessageBreak
         The detected line width is about
         \the\@tempcnta\@percentchar\MessageBreak
-        larger than the heuristically detected line width.\MessageBreak
-        You should e.g. decrease DIV, increase fontsize\MessageBreak
+        larger than the heuristically estimated maximum\MessageBreak
+        limit of typographical good line width.\MessageBreak
+        You should e.g.
+        \ifnum\ta@div >6 decrease DIV, \fi
+        \ifdim\f@size\p@<\@xiipt\p@ increase fontsize\else
+        (increase fontsize)\fi\MessageBreak
         or change papersize%
       }%
       \@tempcnta=-\@tempcnta
     \else
       \ifnum\@tempcnta>15
-        \PackageWarningNoLine{typearea}{%
+        \PackageInfoNoLine{typearea}{%
           Maybe no optimal type area settings!\MessageBreak
-          The maximum limit of line width is about
+          The detected line width is about
           \the\@tempcnta\@percentchar\MessageBreak
-          larger than the heuristically detected line width.\MessageBreak
-          You may e.g. increase DIV, decrease fontsize\MessageBreak
+          smaller than the heuristically estimated maximum\MessageBreak
+          limit of typographical good line width.\MessageBreak
+          You could e.g. increase DIV%
+          \ifdim\f@size\p@>\@xpt\p@, decrease fontsize\fi\MessageBreak
           or change the papersize%
-        }
+        }%
     \fi\fi
     \ifnum\ta@div <6
       \PackageWarningNoLine{typearea}{%
@@ -1397,6 +1503,81 @@
   }%
 }
 \AtEndOfPackage{\newcommand*{\recalctypearea}{\typearea[current]{last}}}
+\newcommand*{\scr@grouplevel@test}[1]{%
+  \ifcase\currentgrouptype\else
+    \PackageWarning{typearea}{%
+      \string#1\space used at group level
+      \the\currentgrouplevel.\MessageBreak
+      Using \string#1\space inside any group, e.g.\MessageBreak
+      environments, math mode, boxes, etc. may result in\MessageBreak
+      many type setting problems.\MessageBreak
+      You should move the command \string#1\MessageBreak
+      outside all groups%
+    }%
+  \fi
+}
+\newcommand*{\storeareas}[1]{%
+  \edef\reserved@a{%
+    \noexpand\newcommand*{\unexpanded{#1}}{%
+      \noexpand\scr@grouplevel@test\unexpanded{#1}%
+      \noexpand\csname scr@storeareas@before@hook\noexpand\endcsname
+      \unexpanded\expandafter\expandafter\expandafter{%
+        \csname scr@storeareas@before@current@hook\endcsname}%
+      \noexpand\paperheight=\the\paperheight\space
+      \noexpand\paperwidth=\the\paperwidth\space
+      \noexpand\topmargin=\the\topmargin\space
+      \noexpand\headheight=\the\headheight\space
+      \noexpand\headsep=\the\headsep\space
+      \noexpand\textheight=\the\textheight\space
+      \noexpand\vsize=\the\vsize\space
+      \noexpand\footskip=\the\footskip\space
+      \noexpand\@colht=\the\@colht\space
+      \noexpand\@colroom=\the\@colroom\space
+      \noexpand\textwidth=\the\textwidth\space
+      \noexpand\columnwidth=\the\columnwidth\space
+      \noexpand\hsize=\the\hsize\space
+      \noexpand\oddsidemargin=\the\oddsidemargin\space
+      \noexpand\evensidemargin=\if@twoside
+        \the\evensidemargin
+      \else
+        \the\oddsidemargin
+      \fi\space
+      \noexpand\linewidth=\the\linewidth\space
+      \noexpand\maxdepth=\the\maxdepth\space
+      \scr@ifundefinedorrelax{@pagesizelast}{}{%
+        \noexpand\KOMAoptions{pagesize=\@pagesizelast}}%
+      \noexpand\ta@div=\the\ta@div\space
+      \noexpand\ta@bcor=\the\ta@bcor\space
+      \noexpand\def\noexpand\@lastdiv{\@lastdiv}%
+      \noexpand\marginparsep=\the\marginparsep\space
+      \noexpand\marginparwidth=\the\marginparwidth\space
+      \noexpand\def
+      \expandafter\noexpand\csname scr@kav@KOMA.typearea.\scr@pkgextension\endcsname{%
+        \unexpanded\expandafter\expandafter\expandafter{%
+          \csname scr@kav@KOMA.typearea.\scr@pkgextension\endcsname}%
+      }%
+      \unexpanded\expandafter\expandafter\expandafter{%
+        \csname scr@storeareas@after@current@hook\endcsname}%
+      \noexpand\csname scr@storeareas@after@hook\noexpand\endcsname
+    }%
+  }%
+  \reserved@a
+}
+\newcommand*{\BeforeRestoreareas}{%
+  \kernel@ifstar{\scr@storeareashook{before@current}}%
+                {\scr@storeareashook{before}}%
+}
+\newcommand*{\AfterRestoreareas}{%
+  \kernel@ifstar{\scr@storeareashook{after@current}}%
+                {\scr@storeareashook{after}}%
+}
+\newcommand*{\scr@storeareashook}[2]{%
+  \expandafter\l@addto@macro\csname scr@storeareas@#1@hook\endcsname{#2}%
+}
+\newcommand*{\scr@storeareas@before@hook}{}
+\newcommand*{\scr@storeareas@before@current@hook}{}
+\newcommand*{\scr@storeareas@after@hook}{}
+\newcommand*{\scr@storeareas@after@current@hook}{}
 \newcommand*\areaset[3][\z@]{%
   \edef\@tempa{#1}\edef\@tempb{current}\ifx\@tempa\@tempb\else
     \setlength{\ta@bcor}{#1}%
@@ -1526,9 +1707,14 @@
     }%
   \fi
 }
+\newcommand*{\AfterSettingArea}{%
+  \kernel@ifstar \l@addto@macro \g@addto@macro \@areaset@end
+}
+\newcommand*{\@areaset@end}{}
+%%% From File: $Id: scrkernel-typearea.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: final)
 \typearea[current]{current}
-%%% From File: $Id: scrkernel-compatibility.dtx 2461 2016-05-19 07:17:15Z kohm $
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

@@ -1,0 +1,276 @@
+%%
+%% This is file `komamarks.sty',
+%% generated with the docstrip utility, extended by scrdocstrip.
+%%
+%% The original source files were:
+%%
+%% komamarks.dtx  (with options: `package,trace,identify')
+%% komamarks.dtx  (with options: `package,trace,init')
+%% komamarks.dtx  (with options: `package,trace,options')
+%% komamarks.dtx  (with options: `package,trace,processoptions')
+%% komamarks.dtx  (with options: `package,trace,body')
+%% komamarks.dtx  (with options: `package,trace,final')
+%% scrlogo.dtx  (with options: `logo')
+%% 
+%% Copyright (c) 2012-2019 Markus Kohm [komascript at gmx info]
+%% 
+%% This file was generated from file(s) of the KOMA-Script bundle.
+%% ---------------------------------------------------------------
+%% 
+%% It may be distributed under the conditions of the
+%% LaTeX Project Public License in the version distributed together
+%% with KOMA-Script, see file `lppl.txt' or `lppl-de.txt'.
+%% 
+%% This file may only be distributed together with a copy of the
+%% KOMA-Script bundle.  You may however distribute the
+%% KOMA-Script bundle without all such generated files.  See also
+%% `lppl.txt' or `lppl-de.txt' for additional information.
+%% 
+%% The list of files belonging to KOMA-Script distribution is given in
+%% the file `manifest.txt'.  See also `lppl.txt' or `lppl-de.txt' for
+%% additional information.
+%% 
+%% If this file is a beta version, you may not be allowed to distribute
+%% it.  Look at the comments below to see if this is the case.
+%% 
+%% English and German manuals are part of KOMA-Script bundle.
+%% ----------------------------------------------------------
+%% 
+%% See `README'.
+%% 
+%% The KOMA-Script bundle (but maybe not this file) was based upon the
+%% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
+%% find a complete unmodified copy of LaTeX2e at
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
+%% 
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: identify)
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{komamarks}[%
+  2018/05/03 v0.3199 KOMA-Script 
+  package
+  (providing extra marks)]
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: init)
+\RequirePackage{scrbase}
+\RequirePackage{scrlfile}
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: options)
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: processoptions)
+\ProcessOptions\relax
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: body)
+\newcommand*{\marksboth}[3]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \unrestored@protected@edef\@themark{{#2}{#3}}%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\def\unrestored@protected@edef{%
+   \let\protect\@unexpandable@protect
+   \edef
+}
+\newcommand*{\marksright}[2]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \@ifundefined{@themarks\the#1}{%
+      \def\@themark{{}{}}%
+    }{%
+      \expandafter\let\expandafter\@themark\csname @themarks\the#1\endcsname
+    }%
+    \expandafter\@marksright\@themark {#2}%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\newcommand*{\@marksright}[3]{%
+  \@temptokena {#1}%
+  \unrestored@protected@edef\@themark{{\the\@temptokena}{#3}}%
+}
+\newcommand*{\leftfirstmarks}[1]{%
+  \expandafter\@leftmark\firstmarks#1\@empty\@empty
+}
+\newcommand*{\lefttopmarks}[1]{%
+  \expandafter\@leftmark\topmarks#1\@empty\@empty
+}
+\newcommand*{\leftbotmarks}[1]{%
+  \expandafter\@leftmark\botmarks#1\@empty\@empty
+}
+\newcommand*{\leftmarks}{\leftbotmarks}
+\newcommand*{\rightfirstmarks}[1]{%
+  \expandafter\@rightmark\firstmarks#1\@empty\@empty
+}
+\newcommand*{\righttopmarks}[1]{%
+  \expandafter\@rightmark\topmarks#1\@empty\@empty
+}
+\newcommand*{\rightbotmarks}[1]{%
+  \expandafter\@rightmark\botmarks#1\@empty\@empty
+}
+\newcommand*{\rightmarks}{\rightfirstmarks}
+\AfterPackage*{multicol}{%
+  \PackageWarning{komamarks}{%
+    komamarks does not yet support multicols
+  }%
+}
+\newcommand*{\marksall}[2]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \unrestored@protected@edef\@themark{#2}%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\newcommand*{\marksnth}[3]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \@tempcnta=\z@
+    \let\@themark\@empty
+    \@ifundefined{@themarks\the#1}{}{%
+      \expandafter\expandafter\expandafter\@tfor
+      \expandafter\expandafter\expandafter\reserved@a
+      \expandafter\expandafter\expandafter:%
+      \expandafter\expandafter\expandafter=%
+      \csname @themarks\the#1\endcsname\do {%
+        \advance\@tempcnta \@ne
+        \ifnum \number #2=\@tempcnta
+          \unrestored@protected@edef\@themark{\@themark{#3}}%
+        \else
+          \unrestored@protected@edef\@themark{\@themark{\reserved@a}}%
+        \fi
+      }%
+    }%
+    \@whilenum \number #2>\@tempcnta\do {%
+      \advance\@tempcnta \@ne
+      \ifnum \number #2=\@tempcnta
+        \unrestored@protected@edef\@themark{\@themark{#3}}%
+      \else
+        \unrestored@protected@edef\@themark{\@themark{}}%
+      \fi
+    }%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\newcommand*{\marksnthplus}[4]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \@tempcnta=\z@
+    \let\@themark\@empty
+    \@ifundefined{@themarks\the#1}{}{%
+      \expandafter\expandafter\expandafter\@tfor
+      \expandafter\expandafter\expandafter\reserved@a
+      \expandafter\expandafter\expandafter:%
+      \expandafter\expandafter\expandafter=%
+      \csname @themarks\the#1\endcsname\do {%
+        \advance\@tempcnta \@ne
+        \ifnum \number #2=\@tempcnta
+          \unrestored@protected@edef\@themark{\@themark{#3}}%
+        \else
+          \ifnum \number #2>\@tempcnta
+            \unrestored@protected@edef\@themark{\@themark{\reserved@a}}%
+          \else
+            \unrestored@protected@edef\@themark{\@themark{#4}}%
+          \fi
+        \fi
+      }%
+    }%
+    \@whilenum \number #2>\@tempcnta\do {%
+      \advance\@tempcnta \@ne
+      \ifnum \number #2=\@tempcnta
+        \unrestored@protected@edef\@themark{\@themark{#3}}%
+      \else
+        \unrestored@protected@edef\@themark{\@themark{}}%
+      \fi
+    }%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\newcommand*{\marksnthcleartail}[3]{%
+  \begingroup
+    \let\label\relax \let\index\relax \let\glossary\relax
+    \ExecuteDoHook{marks/relax}%
+    \@tempcnta=\z@
+    \let\@themark\@empty
+    \@ifundefined{@themarks\the#1}{}{%
+      \expandafter\expandafter\expandafter\@tfor
+      \expandafter\expandafter\expandafter\reserved@a
+      \expandafter\expandafter\expandafter:%
+      \expandafter\expandafter\expandafter=%
+      \csname @themarks\the#1\endcsname\do {%
+        \advance\@tempcnta \@ne
+        \ifnum \number #2=\@tempcnta
+          \unrestored@protected@edef\@themark{\@themark{#3}}%
+        \else
+          \ifnum \number #2>\@tempcnta
+            \unrestored@protected@edef\@themark{\@themark{\reserved@a}}%
+          \fi
+        \fi
+      }%
+    }%
+    \@whilenum \number #2>\@tempcnta\do {%
+      \advance\@tempcnta \@ne
+      \ifnum \number #2=\@tempcnta
+        \unrestored@protected@edef\@themark{\@themark{#3}}%
+      \else
+        \unrestored@protected@edef\@themark{\@themark{}}%
+      \fi
+    }%
+    \global\expandafter\let\csname @themarks\the#1\endcsname\@themark
+    \@temptokena \expandafter{\@themark}%
+    \marks#1{\the\@temptokena}%
+  \endgroup
+  \if@nobreak\ifvmode\nobreak\fi\fi
+}
+\newcommand*{\nthmarknotdefined}{}
+\newcommand*{\nthtopmarks}[2]{%
+  \expandafter\@nthofm\expandafter{\topmarks#1}{#2}%
+}
+\newcommand*{\nthfirstmarks}[2]{%
+  \expandafter\@nthofm\expandafter{\firstmarks#1}{#2}%
+}
+\newcommand*{\nthbotmarks}[2]{%
+  \expandafter\@nthofm\expandafter{\botmarks#1}{#2}%
+}
+\newcommand{\@nthofm}[2]{%
+  \begingroup
+    \@tempcnta=\z@
+    \let\reserved@a\nthmarknotdefined
+    \@tfor\reserved@b:=#1\do{%
+      \advance\@tempcnta\@ne
+      \ifnum \number #2=\@tempcnta
+        \let\reserved@a\reserved@b
+      \fi
+    }%
+  \expandafter\def\expandafter\reserved@a\expandafter{\expandafter\endgroup
+    \reserved@a}%
+  \reserved@a
+}
+%%% From File: $Id: komamarks.dtx 3199 2019-08-26 10:04:56Z kohm $
+%%%            (run: final)
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
+\@ifundefined{KOMAScript}{%
+  \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
+      M\kern.05em A\kern.1em-\kern.1em Script}}}{}
+\endinput
+%%
+%% End of file `komamarks.sty'.

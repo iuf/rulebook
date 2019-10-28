@@ -5,6 +5,7 @@
 %% The original source files were:
 %%
 %% scrkernel-version.dtx  (with options: `package,scrbase')
+%% scrkernel-basics.dtx  (with options: `package,prepare,base')
 %% scrkernel-basics.dtx  (with options: `package,option,base')
 %% scrkernel-language.dtx  (with options: `package,option,base')
 %% scrlfile.dtx  (with options: `load')
@@ -12,7 +13,7 @@
 %% scrkernel-language.dtx  (with options: `package,body,base')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2002-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2002-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -40,11 +41,11 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -66,21 +67,23 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: prepare)
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{%
   scrbase%
 }[%
-  2016/06/14 v3.21 KOMA-Script
-  package (%
+  2019/10/12 v3.27 KOMA-Script
+  package
+  (%
     KOMA-Script-independent
- basics and keyval usage)]
+  basics and keyval usage)]
 \begingroup
   \def\reserved@b{}%
   \def\reserved@a#1{%
@@ -150,21 +153,25 @@
 }
 \newcommand*{\scr@if@familymember}[3]{%
   \scr@if@family{#2}{#3}{%
-    \edef\reserved@a{%
-      \noexpand\in@{#2#1,}{\csname #2@key@familylist\endcsname}}%
-    \reserved@a
-    \ifin@
-      \expandafter\@firstofone
-    \else
-      \PackageError{scrbase}{%
-        unknown member `#1' at family `#2'%
-      }{%
-        You've tried to #3 for member `#1' of family `#2'.\MessageBreak
-        This my be done only for previous defined family members.\MessageBreak
-        You should call `\string\DefineFamilyMember[{#1}]{#2}' first.%
-      }%
-      \expandafter\@gobble
-    \fi
+    \IfArgIsEmpty{#1}{%
+      \@firstofone
+    }{%
+      \edef\reserved@a{%
+        \noexpand\in@{#2#1,}{\csname #2@key@familylist\endcsname}}%
+      \reserved@a
+      \ifin@
+        \expandafter\@firstofone
+      \else
+        \PackageError{scrbase}{%
+          unknown member `#1' at family `#2'%
+        }{%
+          You've tried to #3 for member `#1' of family `#2'.\MessageBreak
+          This my be done only for previous defined family members.\MessageBreak
+          You should call `\string\DefineFamilyMember[{#1}]{#2}' first.%
+        }%
+        \expandafter\@gobble
+      \fi
+    }%
   }%
 }
 \newcommand*{\DefineFamilyKey}[3][.\@currname.\@currext]{%
@@ -249,8 +256,28 @@
     \expandafter\let\csname scr@before@process@options@#2#1@hook\endcsname
     \relax
   }%
-  \let\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions
-  \@namedef{scr@after@options@#1@hook}{\@namedef{scr@after@options@#1@hook}{}}%
+  \scr@ifundefinedorrelax{scr@after@options@#2@hook}{%
+    \@namedef{scr@after@options@#2@hook}{%
+      \@namedef{scr@after@options@#2@hook}{}%
+    }%
+  }{%
+    \expandafter\edef\csname scr@after@options@#2@hook\endcsname{%
+      \noexpand\@namedef{scr@after@options@#2@hook}{%
+        \unexpanded\expandafter\expandafter\expandafter
+        {\csname scr@after@options@#2@hook\endcsname}%
+      }%
+    }%
+  }%
+  \ifx\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions@immediate
+    \@namedef{scr@after@options@#2@hook@topmost}{%
+      \@namedef{scr@after@options@#2@hook@topmost}{}%
+    }%
+    \expandafter\l@addto@macro\csname scr@after@options@#2@hook\endcsname{%
+      \let\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions@immediate
+      \@nameuse{scr@after@options@#2@hook@topmost}%
+    }%
+    \let\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions
+  \fi
   \let\ds@\@empty
   \edef\@curroptions{\@ptionlist{\@currname.\@currext}}%
   \ifx\@currext\@clsextension\else
@@ -280,8 +307,10 @@
     }%
   \fi
   \@for\CurrentOption:=\@curroptions\do{%
-    \scr@ifundefinedorrelax{ds@\CurrentOption}{%
-      \@use@ption
+    \edef\reserved@a{\expandafter\detokenize\expandafter{\CurrentOption}}%
+    \scr@ifundefinedorrelax{ds@\reserved@a}{%
+      \@expandtwoargs\@removeelement\CurrentOption
+      \@unusedoptionlist\@unusedoptionlist
       \scr@ifprocess@curroption{#1}{#2}{}\default@ds
     }\@use@ption
   }%
@@ -290,8 +319,7 @@
   \let\CurrentOption\@empty
   \let\@fileswith@pti@ns\@@fileswith@pti@ns
   \AtEndOfPackage{\let\@unprocessedoptions\relax}%
-  \let\AtEndOfFamilyOptions\@firstofone
-  \@nameuse{scr@after@options@#1@hook}%
+  \@nameuse{scr@after@options@#2@hook}%
 }
 \@onlypreamble\FamilyProcessOptions
 \newcommand*{\BeforeFamilyProcessOptions}[3][.\@currname.\@currext]{%
@@ -303,13 +331,20 @@
   }%
 }
 \newcommand*{\scr@AtEndOfFamilyOptions}{%
+  \kernel@ifstar {\scr@@AtEndOfFamilyOptions{@topmost}}%
+                 {\scr@@AtEndOfFamilyOptions\@empty}%
+}
+\newcommand*{\scr@@AtEndOfFamilyOptions}[1]{%
   \expandafter
-  \l@addto@macro\csname scr@after@options@\FamilyOfKey @hook\endcsname
+  \l@addto@macro\csname scr@after@options@\FamilyOfKey @hook#1\endcsname
+}
+\newcommand*{\scr@AtEndOfFamilyOptions@immediate}{%
+  \kernel@ifstar {\@firstofone}{\@firstofone}%
 }
 \newcommand*{\AtEndOfFamilyOptions}{}
-\let\AtEndOfFamilyOptions\@firstofone
+\let\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions@immediate
 \newcommand*\scr@ifprocess@curroption[2]{%
-  \def\reserved@a##1=##2\@nil{\def\reserved@a{##1}}%
+  \def\reserved@a##1=##2\@nil{\scr@sp@def\reserved@a{##1}}%
   \expandafter\reserved@a\CurrentOption=\@nil
   \scr@ifundefinedorrelax{KV@#2@\reserved@a}{%
     \scr@ifundefinedorrelax{KV@#2#1@\reserved@a}{%
@@ -345,7 +380,7 @@
       }%
       \FamilyKeyStateProcessed
     \fi
-    \def\reserved@a##1=##2\@nil{\def\reserved@a{##1}}%
+    \def\reserved@a##1=##2\@nil{\scr@sp@def\reserved@a{##1}}%
     \expandafter\reserved@a\CurrentOption=\@nil
     \scr@ifundefinedorrelax{KV@#2#1@\reserved@a}{}{%
       \protected@edef\reserved@b{\noexpand\setkeys{#2#1}{{\CurrentOption}}%
@@ -374,6 +409,56 @@
     \expandafter\@secondoftwo
   \fi
 }
+\def\@tempa#1{%
+  \long\def\scr@sp@def##1##2{%
+    \futurelet\scr@sp@tempa\scr@sp@d##2\@nil\@nil#1\@nil\relax##1}%
+  \def\scr@sp@d{%
+    \ifx\scr@sp@tempa\@sptoken
+      \expandafter\scr@sp@b
+    \else
+      \expandafter\scr@sp@b\expandafter#1%
+    \fi}%
+  \long\def\scr@sp@b#1##1 \@nil{\scr@sp@c##1}%
+}
+\@tempa{ }
+\long\def\scr@sp@c#1\@nil#2\relax#3{\@temptokena{#1}\edef#3{\the\@temptokena}}
+\newcommand{\IfArgIsEmpty}[1]{%
+  \if\relax\detokenize{#1}\relax
+    \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi
+}
+\@ifundefined{l@addto@macro}{}{%
+  \begingroup
+    \long\def\reserved@a#1#2{%
+      \edef#1{\unexpanded\expandafter{#1#2}}%
+    }%
+    \ifx\reserved@a\l@addto@macro\else
+      \PackageWarning{scrbase}{%
+        Someone also uses macro name \string\l@addto@macro.\MessageBreak
+        When KOMA-Script author decided to use macro name\MessageBreak
+        \string\l@addto@macro\space first, there was no other
+        free\MessageBreak
+        LaTeX package using this macro name.\MessageBreak
+        In the meantime other package authers decided to use\MessageBreak
+        same macro name, but unfortunatly not all of those\MessageBreak
+        are compatible with KOMA-Script's definition, e.g.,\MessageBreak
+        while adding definitions with arguments to macros.\MessageBreak
+        Because of such potentially incompatible definitions,\MessageBreak
+        KOMA-Script will redefine the command now.\MessageBreak
+        Please ask the author of the other package to\MessageBreak
+        rename his macro, if a problem results in the\MessageBreak
+        redefinition%
+      }%
+    \fi
+  \endgroup
+}
+\long\def\l@addto@macro#1#2{%
+  \edef#1{\unexpanded\expandafter{#1#2}}%
+}%
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \newcommand*{\dont@let@as@internal@defined}{/}
 \newif\if@let@as@internalonly@defined\@let@as@internalonly@definedfalse
 \DefineFamily{KOMA}
@@ -390,17 +475,36 @@
   \fi
 }
 \FamilyProcessOptions{KOMA}\relax
-%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
-%%% From File: $Id: scrlfile.dtx 2429 2016-04-12 12:10:19Z kohm $
+%%% From File: $Id: scrkernel-language.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+%%% From File: $Id: scrlfile.dtx 3243 2019-10-07 13:32:53Z kohm $
 \RequirePackage{scrlfile}[%
-  2016/06/14 v3.21 KOMA-Script
+  2019/10/12 v3.27 KOMA-Script
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand*{\XdivY}[2]{%
   \numexpr ( #1 + #2 / 2 ) / #2 - 1\relax
 }
 \newcommand*{\XmodY}[2]{%
   \numexpr #1 - #2 * \XdivY{#1}{#2}\relax
+}
+\newcommand{\scr@ForEachTrimmedListElement}[2]{%
+  \begingroup
+    \def\reserved@a{\endgroup}%
+    \@for \reserved@b:=#1 \do {%
+      \scr@trim@spaces\reserved@b
+      \ifx\reserved@b\@empty\else
+        \edef\reserved@a{%
+          \unexpanded\expandafter{\reserved@a#2}%
+          {\unexpanded\expandafter{\reserved@b}}%
+        }%
+      \fi
+    }%
+  \reserved@a
+}
+\newcommand\scr@trim@spaces[1]{%
+  \expandafter\scr@sp@def\expandafter#1\expandafter{#1}%
 }
 \newif\if@atdocument
 \AtBeginDocument{\@atdocumenttrue}
@@ -495,13 +599,6 @@
     \fi
   }%
   \reserved@a#1#2\@nil
-}
-\newcommand*{\IfArgIsEmpty}[1]{%
-  \if\relax\detokenize{#1}\relax
-    \expandafter\@firstoftwo
-  \else
-    \expandafter\@secondoftwo
-  \fi
 }
 \newcommand*{\ifislengthprimitive}[1]{%
   \IfArgIsEmpty{#1}{\@secondoftwo}{\scr@ifislengthprimitive#1\@nil}%
@@ -964,7 +1061,7 @@
 }
 \newcommand\ifnumber[1]{%
   \begingroup\@tempswafalse\let\scr@next\test@number
-    \expandafter\scr@next#1\scr@next
+    \IfArgIsEmpty{#1}{}{\expandafter\scr@next#1\scr@next}%
     \if@tempswa
       \aftergroup\@firstoftwo
     \else
@@ -1139,13 +1236,21 @@
 \let@as@internal@defined{ifpsoutput}
 \newcommand*{\scr@ifdvioutput}{%
   \scr@ifundefinedorrelax{pdfoutput}{%
-    \scr@ifundefinedorrelax{OpMode}{%
-      \expandafter\@firstoftwo
-    }{%
-      \ifnum\OpMode=0
+    \scr@ifundefinedorrelax{outputmode}{%
+      \scr@ifundefinedorrelax{OpMode}{%
         \expandafter\@firstoftwo
-      \else
+      }{%
+        \ifnum\OpMode=0
+          \expandafter\@firstoftwo
+        \else
+          \expandafter\@secondoftwo
+        \fi
+      }%
+    }{%
+      \ifnum\outputmode>0
         \expandafter\@secondoftwo
+      \else
+        \expandafter\@firstoftwo
       \fi
     }%
   }{%
@@ -1168,6 +1273,26 @@
     {#1}%
   \endgroup
 }
+\newcommand*{\IfRTL}{%
+  \scr@ifundefinedorrelax{if@RTL}{\@secondoftwo}{%
+    \expandafter\ifx\csname if@RTL\expandafter\endcsname
+                    \csname iftrue\endcsname
+      \expandafter\@firstoftwo
+    \else
+      \expandafter\@secondoftwo
+    \fi
+  }
+}
+\newcommand*{\IfLTR}{%
+  \scr@ifundefinedorrelax{if@RTL}{\@firstoftwo}{%
+    \expandafter\ifx\csname if@RTL\expandafter\endcsname
+                    \csname iftrue\endcsname
+      \expandafter\@secondoftwo
+    \else
+      \expandafter\@firstoftwo
+    \fi
+  }
+}
 \providecommand*{\PackageInfoNoLine}[2]{%
   \PackageInfo{#1}{#2\@gobble}%
 }
@@ -1184,11 +1309,43 @@
     \expandafter\xdef\csname cl@#2\endcsname{\csname cl@#2\endcsname}%
   }%
 }
+\newif\ifscr@ActiveMkBoth
+\def\scr@ActiveMkBothfalse{\global\let\ifscr@ActiveMkBoth\iffalse}
+\def\scr@ActiveMkBothtrue {\global\let\ifscr@ActiveMkBoth\iftrue}
+\newcommand*{\IfActiveMkBoth}{%
+  \begingroup
+    \def\markboth##1##2{\scr@ActiveMkBothtrue}%
+    \def\markright##1{\scr@ActiveMkBothtrue}%
+    \def\markleft##1{\scr@ActiveMkBothtrue}%
+    \def\markboth##1{\scr@ActiveMkBothtrue}%
+    \def\markdouble##1{\scr@ActiveMkBothtrue}%
+    \def\mark##1{\scr@ActiveMkBothtrue}%
+    \def\marks##1##2{\scr@ActiveMkBothtrue}%
+    \scr@ActiveMkBothfalse
+    \setbox\@tempboxa\vbox{\@mkboth{}{}}%
+  \endgroup
+  \ifscr@ActiveMkBoth
+    \expandafter\@firstoftwo
+  \else
+    \expandafter\@secondoftwo
+  \fi
+}
 \newcommand*{\FamilyExecuteOptions}[2][.\@currname.\@currext]{%
   \@FamilyExecuteOptions[{#1}]{#2}%
 }
 \newcommand{\@FamilyExecuteOptions}[3][.\@currname.\@currext]{%
-  \@namedef{scr@after@options@#1@hook}{\@namedef{scr@after@options@#1@hook}{}}%
+  \scr@ifundefinedorrelax{scr@after@options@#2@hook}{%
+    \@namedef{scr@after@options@#2@hook}{%
+      \@namedef{scr@after@options@#2@hook}{}%
+    }%
+  }{%
+    \expandafter\edef\csname scr@after@options@#2@hook\endcsname{%
+      \noexpand\@namedef{scr@after@options@#2@hook}{%
+        \unexpanded\expandafter\expandafter\expandafter
+        {\csname scr@after@options@#2@hook\endcsname}%
+      }%
+    }%
+  }%
   \@for\scr@key@atlist:=#3\do{%
     \expandafter\scr@key@split@name@value\scr@key@atlist==\@nil
     \ifx\scr@key@name\@empty\else
@@ -1213,6 +1370,9 @@
               \ifx\FamilyKeyState\FamilyKeyStateProcessed\else
                 \PackageError{scrbase}{%
                   unknown option
+                  \ifx\FamilyKeyState\FamilyKeyStateUnknownValue
+                    value at
+                  \fi
                   `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
                 }{%
                   Member `#1' of family `#2'\MessageBreak
@@ -1249,12 +1409,15 @@
       \fi
     \fi
   }%
-  \@nameuse{scr@after@options@#1@hook}%
+  \@nameuse{scr@after@options@#2@hook}%
 }
 \newcommand*{\scr@show@key@state@error}{%
   \ifx\FamilyKeyState\FamilyKeyStateProcessed\else
     \PackageError{scrbase}{%
       unknown option
+      \ifx\FamilyKeyState\FamilyKeyStateUnknownValue
+        value at
+      \fi
       `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
     }{%
       Option
@@ -1282,16 +1445,48 @@
 }
 \newcommand{\FamilyOptions}[1]{\@FamilyOptions{#1}}
 \newcommand{\@FamilyOptions}[2]{%
-  \@namedef{scr@after@options@#1@hook}{\@namedef{scr@after@options@#1@hook}{}}%
+  \scr@ifundefinedorrelax{scr@after@options@#1@hook}{%
+    \@namedef{scr@after@options@#1@hook}{%
+      \@namedef{scr@after@options@#1@hook}{}%
+    }%
+  }{%
+    \expandafter\edef\csname scr@after@options@#1@hook\endcsname{%
+      \noexpand\@namedef{scr@after@options@#1@hook}{%
+        \unexpanded\expandafter\expandafter\expandafter
+        {\csname scr@after@options@#1@hook\endcsname}%
+      }%
+    }%
+  }%
+  \scr@ifundefinedorrelax{scr@after@options@#1@hook@topmost}{%
+    \@namedef{scr@after@options@#1@hook@topmost}{}%
+  }{}%
+  \expandafter\ifx\csname scr@after@options@#1@hook@topmost\endcsname\@empty
+    \expandafter\l@addto@macro\csname scr@after@options@#1@hook\endcsname{%
+      \@nameuse{scr@after@options@#1@hook@topmost}%
+    }%
+    \@namedef{scr@after@options@#1@hook@topmost}{%
+      \@namedef{scr@after@options@#1@hook@topmost}{}%
+    }%
+  \fi
   \@for\scr@key@atlist:=#2\do{%
     \ifx\scr@key@atlist\@empty\else
       \ifx\scr@key@atlist\space\else
         \expandafter\scr@key@split@name@value\scr@key@atlist==\@nil
         \let\scr@key@run@errors\@empty
         \scr@key@found@false
-        \edef\reserved@a{\csname #1@key@familylist\endcsname}%
+        \edef\reserved@a{#1,\csname #1@key@familylist\endcsname}%
         \@for\reserved@a:=\reserved@a\do{%
-          \scr@ifundefinedorrelax{KV@\reserved@a @\scr@key@name}{}{%
+          \scr@ifundefinedorrelax{KV@\reserved@a @\scr@key@name}{%
+            \ifstr{\reserved@a}{#1}{}{%
+              \scr@ifundefinedorrelax{KV@\reserved@a @@else@}{}{%
+                \expandafter\scr@execute@elseoption\expandafter{\reserved@a}%
+                \ifx\FamilyKeyState\FamilyKeyStateProcessed
+                  \scr@key@found@true
+                  \let\scr@key@run@errors\relax
+                \fi
+              }%
+            }%
+          }{%
             \expandafter\scr@execute@option\expandafter{\reserved@a}%
             \scr@key@found@true
             \ifx\scr@key@run@errors\relax\else
@@ -1302,21 +1497,21 @@
                   \edef\scr@key@run@errors{%
                     \unexpanded\expandafter{\scr@key@run@errors}%
                     \noexpand\MessageBreak
-                    \FamilyMemberOfKey: unkown value
-                    `\expandafter\detokenize\expandafter{\scr@key@value}'.%
+                    \space\space- `\FamilyMemberOfKey': unkown value
+                    `\expandafter\detokenize\expandafter{\scr@key@value}'%
                   }%
                 \else
                   \ifx\FamilyKeyState\FamilyKeyStateNeedValue
                     \edef\scr@key@run@errors{%
                       \unexpanded\expandafter{\scr@key@run@errors}%
                       \noexpand\MessageBreak
-                      \FamilyMemberOfKey: value expected.
+                      \space\space- `\FamilyMemberOfKey': value expected
                     }%
                   \else
                     \edef\scr@key@run@errors{%
                       \unexpanded\expandafter{\scr@key@run@errors}%
                       \noexpand\MessageBreak
-                      \FamilyMemberOfKey: \FamilyKeyState.
+                      \space\space- `\FamilyMemberOfKey': \FamilyKeyState
                     }%
                   \fi
                 \fi
@@ -1327,34 +1522,92 @@
         \ifscr@key@found@
           \ifx\scr@key@run@errors\relax\else
             \ifx\scr@key@run@errors\@empty\else
-              \PackageError{scrbase}{%
-                unknown option
-                `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+              \scr@ifundefinedorrelax{KV@#1@@else@}{%
+                \PackageError{scrbase}{%
+                  unknown option
+                  `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+                }{%
+                  The members of family `#1' cannot set option
+                  `\scr@key@name'
+                  \ifx\scr@key@value\@empty\else
+                    \MessageBreak
+                    to value
+                    `\expandafter\detokenize\expandafter{\scr@key@value}'%
+                  \fi.\MessageBreak
+                  Here's what each member says:
+                  \scr@key@run@errors\MessageBreak
+                  o\expandafter\@gobble
+                }%
               }{%
-                The members of family `#1' cannot set option
-                `\scr@key@name'
-                \ifx\scr@key@value\@empty\else
-                  \MessageBreak
-                  to value
-                  `\expandafter\detokenize\expandafter{\scr@key@value}'%
-                \fi.\MessageBreak
-                Here's what each member says:
-                \scr@key@run@errors
+                \scr@execute@elseoption{#1}%
+                \ifx\FamilyKeyState\FamilyKeyStateProcessed
+                  \PackageInfo{scrbase}{%
+                    option
+                    `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+                    \MessageBreak
+                    processed by `@else@' option of family\MessageBreak
+                    `#1', after the members said:
+                    \scr@key@run@errors\MessageBreak
+                    o\expandafter\@gobble
+                  }%
+                  \let\scr@key@run@errors\relax
+                \else
+                  \PackageError{scrbase}{%
+                    unknown option
+                    \ifx\FamilyKeyState\FamilyKeyStateUnknownValue
+                      value at
+                    \fi
+                    `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+                  }{%
+                    The members of family `#1' cannot set option
+                    `\scr@key@name'
+                    \ifx\scr@key@value\@empty\else
+                      \MessageBreak
+                      to value
+                      `\expandafter\detokenize\expandafter{\scr@key@value}'%
+                    \fi.\MessageBreak
+                    Here's what each member says:
+                    \scr@key@run@errors\MessageBreak
+                    o\expandafter\@gobble
+                  }%
+                \fi
               }%
             \fi
           \fi
         \else
-          \PackageError{scrbase}{%
-            unknown option
-            `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+          \scr@ifundefinedorrelax{KV@#1@@else@}{%
+            \PackageError{scrbase}{%
+              unknown option
+              `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+            }{%
+              No one of the members of family `#1'\MessageBreak
+              can handle option `\scr@key@name'.\MessageBreak
+              So it cannot be set%
+              \ifx\scr@key@value\@empty\else
+                \space to value
+                `\expandafter\detokenize\expandafter{\scr@key@value}'%
+              \fi.%
+            }%
           }{%
-            No one of the members of family `#1'\MessageBreak
-            can handle option `\scr@key@name'.\MessageBreak
-            So it cannot be set%
-            \ifx\scr@key@value\@empty\else
-              \space to value
-              `\expandafter\detokenize\expandafter{\scr@key@value}'%
-            \fi.%
+            \scr@execute@elseoption{#1}%
+            \ifx\FamilyKeyState\FamilyKeyStateProcessed
+            \else
+              \PackageError{scrbase}{%
+                unknown option
+                \ifx\FamilyKeyState\FamilyKeyStateUnknownValue
+                  value at
+                \fi
+                `\expandafter\detokenize\expandafter{\scr@key@atlist}'%
+              }{%
+                No one of the members of family `#1'\MessageBreak
+                can handle option `\scr@key@name'.\MessageBreak
+                So it cannot be set%
+                \ifx\scr@key@value\@empty\else
+                  \space to value
+                  `\expandafter\detokenize\expandafter{\scr@key@value}'%
+                \fi.%
+              }%
+            \fi
           }%
         \fi
       \fi
@@ -1379,20 +1632,13 @@
       \noexpand\def\noexpand\scr@key@run@errors{%
         \unexpanded\expandafter{\scr@key@run@errors}}%
     \fi
-    \expandafter\ifx\csname scr@after@options@#1@hook\endcsname\relax
-      \noexpand\expandafter\noexpand\let\noexpand\csname
-      scr@after@options@#1@hook\endcsname\relax
-    \else
-      \noexpand\def\expandafter\noexpand
-      \csname scr@after@options@#1@hook\endcsname{%
-        \expandafter\unexpanded\expandafter\expandafter\expandafter{%
-          \csname scr@after@options@#1@hook\endcsname
-        }}%
+    \ifx\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions@immediate
+      \noexpand\let\noexpand\AtEndOfFamilyOptions
+      \noexpand\scr@AtEndOfFamilyOptions@immediate
     \fi
   }%
   \let\AtEndOfFamilyOptions\scr@AtEndOfFamilyOptions
   \reserved@a
-  \let\AtEndOfFamilyOptions\@firstofone
   \ifx\FamilyKeyState\FamilyKeyStateUnknown
     \PackageInfo{scrbase}{Unknown processing state.\MessageBreak
       Processing option
@@ -1413,19 +1659,39 @@
 }
 \newcommand*{\scr@key@run@errors}{}
 \newcommand*{\scr@execute@elseoption}[1]{%
+  \begingroup
   \protected@edef\reserved@a{%
-    \noexpand\def\noexpand\scr@key@name{@else@}%
+    \unexpanded{%
+      \endgroup
+      \let\scr@key@name@else\scr@key@name
+      \let\scr@key@value@else\scr@key@value
+      \def\scr@key@name{@else@}%
+    }%
     \noexpand\def\noexpand\scr@key@value{%
       \unexpanded\expandafter{\scr@key@atlist}}%
     \noexpand\def\noexpand\scr@key@atlist{%
       @else@={\unexpanded\expandafter{\scr@key@atlist}}}%
     \noexpand\scr@execute@option{#1}%
-    \noexpand\def\noexpand\scr@key@atlist{
+    \noexpand\def\noexpand\scr@key@atlist{%
       \unexpanded\expandafter{\scr@key@atlist}}%
     \noexpand\def\noexpand\scr@key@name{%
       \unexpanded\expandafter{\scr@key@name}}%
     \noexpand\def\noexpand\scr@key@value{%
       \unexpanded\expandafter{\scr@key@value}}%
+    \scr@ifundefinedorrelax{scr@key@name@else}{%
+      \unexpanded{\let\scr@key@name@else\relax}%
+    }{%
+      \noexpand\def\noexpand\scr@key@name@else{%
+        \unexpanded\expandafter{\scr@key@name@else}%
+      }%
+    }%
+    \scr@ifundefinedorrelax{scr@key@value@else}{%
+      \unexpanded{\let\scr@key@value@else\relax}%
+    }{%
+      \noexpand\def\noexpand\scr@key@value@else{%
+        \unexpanded\expandafter{\scr@key@value@else}%
+      }%
+    }%
   }\reserved@a
 }
 \newif\ifscr@key@found@
@@ -1434,12 +1700,56 @@
 \newcommand*{\scr@key@value}{}
 \newcommand*{\scr@key@split@name@value}{}
 \long\def\scr@key@split@name@value#1=#2=#3\@nil{%
-  \KV@@sp@def\scr@key@name{#1}%
-  \KV@@sp@def\scr@key@value{#2}%
+  \scr@sp@def\scr@key@name{#1}%
+  \scr@sp@def\scr@key@value{#2}%
 }
-\newcommand*{\FamilyOption}[2]{\@FamilyOption{#1}{#2}}
+\newcommand*{\FamilyOption}[2]{%
+  \begingroup
+    \def\reserved@a##1,##2\@nil{\IfArgIsEmpty{##2}{}{\@tempswatrue}}%
+    \@tempswafalse\expandafter\reserved@a#2,\@nil
+    \if@tempswa
+      \PackageError{scrbase}{%
+        syntax error in key `\detokenize{#2}'%
+      }{%
+        You've used `\string\...Option' to set the key
+        `\detokenize{#2}'\MessageBreak
+        to new value(s), but `,' is not allowed in the key of
+        an option\MessageBreak
+        (and `\string\...Option' does not use `,' to separate several
+        keys).\MessageBreak
+        Maybe you've meant \string\...Options\space instead of
+        \string\...Option.\MessageBreak
+        If you'll continue, I'll give it a try, but you should expect
+        further\MessageBreak
+        and even strange error messages.%
+      }%
+    \else
+      \def\reserved@a##1=##2\@nil{%
+        \IfArgIsEmpty{##2}{}{\@tempswatrue\def\reserved@a{=}}}%
+      \expandafter\reserved@a#2=\@nil
+      \if@tempswa
+        \PackageError{scrbase}{%
+          syntax error in key `\detokenize{#2}'%
+        }{%
+          You've used `\string\...Option' to set the key
+          `\detokenize{#2}'\MessageBreak
+          to new value(s), but `=' is not allowed in the key of
+          an option\MessageBreak
+          (and `\string\...Option' does not use `=' to separate key and
+          value).\MessageBreak
+          Maybe you've meant \string\...Options\space instead of
+          \string\...Option.\MessageBreak
+          If you'll continue, I'll give it a try, but you should expect
+          further\MessageBreak
+          and even strange error messages.%
+        }%
+      \fi
+    \fi
+  \endgroup
+  \@FamilyOption{#1}{#2}%
+}
 \newcommand{\@FamilyOption}[3]{%
-  \expandafter\KV@@sp@def\expandafter\scr@key@name\expandafter{#2}%
+  \expandafter\scr@sp@def\expandafter\scr@key@name\expandafter{#2}%
   \let\reserved@a\@empty
   \@for\reserved@b:=#3\do{%
     \ifx\reserved@b\@empty\else
@@ -1452,34 +1762,6 @@
   \def\reserved@b{\FamilyOptions{#1}}%
   \expandafter\reserved@b\expandafter{\reserved@a}%
 }
-\@ifundefined{l@addto@macro}{}{%
-  \begingroup
-    \long\def\reserved@a#1#2{%
-      \edef#1{\unexpanded\expandafter{#1#2}}%
-    }%
-    \ifx\reserved@a\l@addto@macro\else
-      \PackageWarning{scrbase}{%
-        Someone also uses macro name \string\l@addto@macro.\MessageBreak
-        When KOMA-Script author decided to use macro name\MessageBreak
-        \string\l@addto@macro\space first, there was no other
-        free\MessageBreak
-        LaTeX package using this macro name.\MessageBreak
-        In the meantime other package authers decided to use\MessageBreak
-        same macro name, but unfortunatly not all of those\MessageBreak
-        are compatible with KOMA-Script's definition, e.g.,\MessageBreak
-        while adding definitions with arguments to macros.\MessageBreak
-        Because of such potentially incompatible definitions,\MessageBreak
-        KOMA-Script will redefine the command now.\MessageBreak
-        Please ask the author of the other package to\MessageBreak
-        rename his macro, if a problem results in the\MessageBreak
-        redefinition%
-      }%
-    \fi
-  \endgroup
-}
-\long\def\l@addto@macro#1#2{%
-  \edef#1{\unexpanded\expandafter{#1#2}}%
-}%
 \begingroup
   \catcode`\^^A=\catcode`\#
   \@makeother\#
@@ -1563,14 +1845,16 @@
   \DefineFamilyKey[{#1}]{#2}{#3}[true]{\FamilySetBool{#2}{#3}{#4}{##1}}%
 }
 \newcommand*{\FamilySetBool}[4]{%
-  \ifstr{#4}{true}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
-    \ifstr{#4}{on}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
-      \ifstr{#4}{yes}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
-        \ifstr{#4}{false}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
-          \ifstr{#4}{off}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
-            \ifstr{#4}{no}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
-              \FamilyUnknownKeyValue{#1}{#2}{#4}{%
-                `true', `on', `yes', `false', `off', `no'%
+  \ifstr{#4}{}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
+    \ifstr{#4}{true}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
+      \ifstr{#4}{on}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
+        \ifstr{#4}{yes}{\@nameuse{#3true}\FamilyKeyStateProcessed}{%
+          \ifstr{#4}{false}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
+            \ifstr{#4}{off}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
+              \ifstr{#4}{no}{\@nameuse{#3false}\FamilyKeyStateProcessed}{%
+                \FamilyUnknownKeyValue{#1}{#2}{#4}{%
+                  `true', `on', `yes', `false', `off', `no'%
+                }%
               }%
             }%
           }%
@@ -1579,6 +1863,23 @@
     }%
   }%
   \let\FamilyElseValues\@empty
+}
+\newcommand*{\FamilyInverseBoolKey}[4][.\@currname.\@currext]{%
+  \@ifundefined{if#4}{%
+    \expandafter\newif\csname if#4\endcsname
+    \@nameuse{#4true}%
+  }{}%
+  \DefineFamilyKey[{#1}]{#2}{#3}[true]{\FamilySetInverseBool{#2}{#3}{#4}{##1}}%
+}
+\newcommand*{\FamilySetInverseBool}[4]{%
+  \FamilySetBool{#1}{#2}{#3}{#4}%
+  \ifx\FamilyKeyState\FamilyKeyStateProcessed
+    \expandafter\ifx\csname if#3\expandafter\endcsname\csname iftrue\endcsname
+      \@nameuse{#3false}%
+    \else
+      \@nameuse{#3true}%
+    \fi
+  \fi
 }
 \newcommand*{\FamilyCounterKey}[3][.\@currname.\@currext]{%
   \kernel@ifnextchar [%]
@@ -1597,7 +1898,7 @@
 \newcommand*{\FamilySetCounter}[4]{%
   \begingroup
     \protected@edef\reserved@a{#4}%
-    \def\reserved@b{\endgroup\value{#3}=#4 \FamilyKeyStateProcessed}%
+    \def\reserved@b{\endgroup\value{#3}=#4\relax\FamilyKeyStateProcessed}%
     \expandafter\ifiscount\expandafter{\reserved@a}{}{%
       \expandafter\ifisdimen\expandafter{\reserved@a}{}{%
         \expandafter\ifisskip\expandafter{\reserved@a}{}{%
@@ -1799,13 +2100,15 @@
     \let\reserved@b=\@empty
     \@tempswafalse
     \@for\@valuelist:=#4\do{%
-      \if@tempswa\else
-        \edef\reserved@c{\expandafter\@firstoftwo\@valuelist}%
-        \edef\reserved@a{\reserved@a\reserved@b`\reserved@c'}%
-        \edef\reserved@b{, }%
-        \ifx\reserved@c\@searched
-          \@tempswatrue
-          \edef\reserved@a{\expandafter\@secondoftwo\@valuelist}%
+      \ifx\@valuelist\@empty\else
+        \if@tempswa\else
+          \edef\reserved@c{\expandafter\@firstoftwo\@valuelist}%
+          \edef\reserved@a{\reserved@a\reserved@b`\reserved@c'}%
+          \edef\reserved@b{, }%
+          \ifx\reserved@c\@searched
+            \@tempswatrue
+            \edef\reserved@a{\expandafter\@secondoftwo\@valuelist}%
+          \fi
         \fi
       \fi
     }%
@@ -1833,21 +2136,126 @@
 \newcommand{\Family@String@Key}[4]{%
   \DefineFamilyKey[{#1}]{#2}{#3}{\def#4{##1}\FamilyKeyStateProcessed}%
 }
-%%% From File: $Id: scrkernel-language.dtx 2429 2016-04-12 12:10:19Z kohm $
+\newcommand*{\FamilyCSKey}[3][.\@currname.\@currext]{%
+  \kernel@ifnextchar [%]
+    {\Family@@CS@@Key{#1}{#2}{#3}}{\Family@CS@Key{#1}{#2}{#3}}%
+}
+\newcommand*{\Family@@CS@@Key}{}
+\long\def\Family@@CS@@Key#1#2#3[#4]#5{%
+  \DefineFamilyKey[{#1}]{#2}{#3}[{#4}]{\@namedef{#5}{##1}}%
+}
+\newcommand{\Family@CS@Key}[4]{%
+  \DefineFamilyKey[{#1}]{#2}{#3}{\@namedef{#4}{##1}\FamilyKeyStateProcessed}%
+}
+\newcommand*{\ForDoHook}[2]{%
+  \ifstr{#1}{}{%
+    \PackageError{scrbase}{empty do-hook specificator}{%
+      You've tried to use an empty do-hook specificator,\MessageBreak
+      but do-hook specificators must not be empty.%
+    }%
+  }{%
+    \let\scr@hookname\relax
+    \edef\scr@hookargument{#1}%
+    \loop
+      \scr@hooksplit@specificator\scr@hookname\scr@hookargument
+                                 \scr@hookargument
+      \begingroup\edef\reserved@a{%
+        \unexpanded{\endgroup #2}{\scr@hookname}{\scr@hookargument}%
+      }\reserved@a
+    \ifx\scr@hookargument\@empty\else
+    \repeat
+    \let\scr@hookname\relax
+    \let\scr@hookargument\relax
+  }%
+}
+\newcommand*{\SplitDoHook}[3]{%
+  \ifstr{#1}{}{%
+    \PackageWarning{scrbase}{empty do-hook specificator}%
+    \let#2\@empty\let#3\@empty
+  }{%
+    \let#2\relax
+    \edef\reserved@a{%
+      \unexpanded{\scr@hooksplit@specificator{#2}{#3}}{#1}%
+    }\reserved@a
+  }%
+}
+\newcommand*{\scr@hooksplit@specificator}[3]{%
+  \expandafter\scr@@hooksplit@specificator\expandafter#1\expandafter#2#3/\@nil
+}
+\newcommand*{\scr@@hooksplit@specificator}{}
+\def\scr@@hooksplit@specificator#1#2#3/#4\@nil{%
+  \scr@ifundefinedorrelax{scr@hookname}{\def#1{#3}}{%
+    \edef#1{#1/#3}%
+  }%
+  \def#2{#4}%
+  \ifx#2\@empty\else \scr@@hookargument#2#4\@nil\fi
+}
+\newcommand*{\scr@@hookargument}{}
+\def\scr@@hookargument#1#2/\@nil{\def#1{#2}}%
+\newcommand*{\ExecuteDoHook}[1]{%
+  \@ifundefined{scr@execute@dohook}{%
+    \def\scr@execute@dohook##1##2{%
+      \def\scr@hook@do####1{####1{##2}}%
+      \@nameuse{scr@dohook@##1}%
+      \@nameuse{scr@otdohook@##1}%
+      \expandafter\global\expandafter\let
+      \csname scr@otdohook@##1\endcsname\@empty
+      \let\scr@hook@do\relax
+    }%
+    \ForDoHook{#1}{\scr@execute@dohook}%
+    \let\scr@execute@dohook\relax
+  }{%
+    \PackageWarning{scrbase}{cascaded do-hook detected.\MessageBreak
+      It seems, that the do-hook `\detokenize{#1}'\MessageBreak
+      is be executed, while another do-hook is active.\MessageBreak
+      This is not allowed and therefore ignored%
+    }%
+  }%
+}
+\newcommand*{\AddtoDoHook}[2]{%
+  \ifstr{#1}{}{%
+    \PackageError{scrbase}{empty hook specificator}{%
+      As hook specificators can never be empty, the first argument\MessageBreak
+      of \string\AddtoDoHook\space must expand to an not empty string.%
+    }%
+  }{%
+    \scr@ifundefinedorrelax{scr@dohook@#1}{\@namedef{scr@dohook@#1}{}}{}%
+    \expandafter\l@addto@macro\csname scr@dohook@#1\endcsname{%
+      \scr@hook@do{#2}%
+    }%
+  }%
+}
+\newcommand*{\AddtoOneTimeDoHook}[2]{%
+  \ifstr{#1}{}{%
+    \PackageError{scrbase}{empty hook specificator}{%
+      As hook specificators can never be empty, the first argument\MessageBreak
+      of \string\AddtoDoHook\space must expand to an not empty string.%
+    }%
+  }{%
+    \scr@ifundefinedorrelax{scr@otdohook@#1}{\@namedef{scr@otdohook@#1}{}}{}%
+    \expandafter\l@addto@macro\csname scr@otdohook@#1\endcsname{%
+      \scr@hook@do{#2}%
+    }%
+  }%
+}
+%%% From File: $Id: scrkernel-language.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand*{\defcaptionname}{%
   \kernel@ifstar\scr@def@scaptionname\scr@def@captionname
 }
 \newcommand*{\scr@def@scaptionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\def#2{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\defcaptionname}%
@@ -1900,20 +2308,59 @@
     }%
   \fi
 }
-\newcommand\scr@trim@spaces[1]{%
-  \expandafter\KV@@sp@def\expandafter#1\expandafter{#1}%
+\newcommand*{\scr@ifactivelanguageisoneof}[1]{%
+  \begingroup
+    \@tempswafalse
+    \@onelevel@sanitize\languagename
+    \edef\reserved@a{#1}%
+    \@for \reserved@a:=\reserved@a\do{%
+      \scr@trim@spaces\reserved@a
+      \@onelevel@sanitize\reserved@a
+      \ifx\languagename\reserved@a
+        \@tempswatrue
+      \else
+        \edef\reserved@b{\detokenize{german}}%
+        \ifx\languagename\reserved@b
+          \edef\reserved@b{%
+            \expandafter\ifx\csname if@german@oldspelling\expandafter\endcsname
+            \csname iffalse\endcsname n\fi
+            \expandafter\ifx \csname if@austrian@locale\expandafter\endcsname
+            \csname iftrue\endcsname austrian\else
+              \expandafter\ifx\csname if@swiss@locale\expandafter\endcsname
+              \csname iftrue\endcsname swiss\else german\fi\fi
+          }%
+          \@onelevel@sanitize\reserved@b
+          \ifx\reserved@a\reserved@b \@tempswatrue\fi
+        \fi
+        \if@tempswa\else
+          \ifcsname l@\reserved@a\endcsname
+            \expandafter\ifnum \csname l@\reserved@a\endcsname=\language
+              \@tempswatrue
+            \fi
+          \fi
+        \fi
+      \fi
+    }%
+    \if@tempswa
+      \aftergroup\@firstoftwo
+    \else
+      \aftergroup\@secondoftwo
+    \fi
+  \endgroup
 }
 \newcommand*{\scr@def@captionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\def#2{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\defcaptionname}%
@@ -1923,6 +2370,8 @@
             \@tempswafalse
             \ifcsname extras\scr@reserved@a\endcsname
               \let#2\relax
+              \expandafter\providecommand\expandafter*%
+              \csname abx@extras@\scr@reserved@a\endcsname{}%
               \csname extras\scr@reserved@a\endcsname
               \ifx #2\relax \else \aftergroup\@tempswatrue \fi
             \fi
@@ -1976,16 +2425,18 @@
   \kernel@ifstar\scr@provide@scaptionname\scr@provide@captionname
 }
 \newcommand*{\scr@provide@scaptionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\providecommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at
@@ -1993,6 +2444,8 @@
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname extras\scr@reserved@a\endcsname
             \csname captions\scr@reserved@a\endcsname
             \ifx #2\relax \aftergroup\@firstofone
@@ -2017,16 +2470,18 @@
   }%
 }
 \newcommand*{\scr@provide@captionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\providecommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at
@@ -2034,6 +2489,8 @@
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname captions\scr@reserved@a\endcsname
             \csname extras\scr@reserved@a\endcsname
             \ifx #2\relax \aftergroup\@firstofone
@@ -2061,22 +2518,26 @@
   \kernel@ifstar\scr@new@scaptionname\scr@new@captionname
 }
 \newcommand*{\scr@new@scaptionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\providecommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\newcaptionname}%
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname captions\scr@reserved@a\endcsname
             \csname extras\scr@reserved@a\endcsname
             \ifx #2\relax
@@ -2107,22 +2568,26 @@
   }%
 }
 \newcommand*{\scr@new@captionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\providecommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\newcaptionname}%
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname captions\scr@reserved@a\endcsname
             \csname extras\scr@reserved@a\endcsname
             \ifx #2\relax
@@ -2156,22 +2621,26 @@
   \kernel@ifstar\scr@renew@scaptionname\scr@renew@captionname
 }
 \newcommand*{\scr@renew@scaptionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\renewcommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\renewcaptionname}%
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname captions\scr@reserved@a\endcsname
             \csname extras\scr@reserved@a\endcsname
             \ifx #2\relax
@@ -2201,22 +2670,26 @@
   }%
 }
 \newcommand*{\scr@renew@captionname}[3]{%
-  \if@atdocument \expandafter\@firstofone
-  \else \expandafter\AtBeginDocument
+  \if@atdocument
+    \expandafter\@firstofone
+  \else
+    \scr@ifactivelanguageisoneof{#1}{\renewcommand*{#2}{#3}}{}%
+    \expandafter\AtBeginDocument
   \fi
   {%
     \begingroup
       \let\reserved@b\endgroup
       \edef\scr@reserved@a{#1}%
       \@onelevel@sanitize\scr@reserved@a
-      \expandafter\@for \expandafter\scr@reserved@a \expandafter:\expandafter=%
-      \scr@reserved@a \do{%
+      \@for\scr@reserved@a:=\scr@reserved@a\do{%
         \scr@trim@spaces\scr@reserved@a
         \ifx\scr@reserved@a\@empty
           \PackageWarning{scrbase}{empty language at \string\renewcaptionname}%
         \else
           \begingroup
             \let#2\relax
+            \expandafter\providecommand\expandafter*%
+            \csname abx@extras@\scr@reserved@a\endcsname{}%
             \csname extras\scr@reserved@a\endcsname
             \ifx #2\relax
               \csname captions\scr@reserved@a\endcsname
@@ -2253,7 +2726,7 @@
     \reserved@b
   }%
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

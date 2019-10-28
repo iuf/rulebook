@@ -9,7 +9,7 @@
 %% scrkernel-letterclassoptions.dtx  (with options: `lco,visualize,body')
 %% scrkernel-notepaper.dtx  (with options: `lco,visualize,body')
 %% 
-%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -37,11 +37,11 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -63,9 +63,10 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: head)
 \ProvidesFile{%
   visualize%
   .lco}[\KOMAScriptVersion\space letter-class-option]
@@ -79,12 +80,14 @@
     Letter class option  #1 Warning: #2%
   }%
 }
-%%% From File: $Id: scrkernel-letterclassoptions.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-letterclassoptions.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \RequirePackage{eso-pic}
 \newcommand*{\showfields}[1]{%
   \AtBeginLetter{%
     \begingroup
       \@for \@tempa:=#1\do{%
+        \scr@trim@spaces\@tempa
         \ifx\@tempa\@empty\else
           \@ifundefined{showfield@\@tempa}{%
             \LCOWarning{visualize}{Unknown field `\@tempa' ignored}%
@@ -574,7 +577,8 @@
 \newcommand*{\showUScheck}{%
   \showenvelope(8.625in,3.625in)%
 }
-%%% From File: $Id: scrkernel-notepaper.dtx 2462 2016-05-19 07:18:47Z kohm $
+%%% From File: $Id: scrkernel-notepaper.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \endinput
 %%
 %% End of file `visualize.lco'.

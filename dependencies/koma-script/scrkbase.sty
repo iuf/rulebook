@@ -5,6 +5,7 @@
 %% The original source files were:
 %%
 %% scrkernel-version.dtx  (with options: `package,scrkbase')
+%% scrkernel-basics.dtx  (with options: `package,prepare,koma')
 %% scrkernel-basics.dtx  (with options: `package,option,koma')
 %% scrkernel-fonts.dtx  (with options: `package,option,scrkbase')
 %% scrlfile.dtx  (with options: `load')
@@ -12,7 +13,7 @@
 %% scrkernel-fonts.dtx  (with options: `package,body,scrkbase')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 1994-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -40,11 +41,11 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrkernel-version.dtx 2461 2016-05-19 07:17:15Z kohm $
+%%% From File: $Id: scrkernel-version.dtx 3263 2019-10-12 14:50:03Z kohm $
 \begingroup
   \catcode`\@11\relax
   \ifx\KOMAScriptVersion\undefined
@@ -66,21 +67,23 @@
       \fi
     }
   \fi
-  \@CheckKOMAScriptVersion{2016/06/14 v3.21 KOMA-Script}%
+  \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
 \providecommand*{\scr@pkgextension}{\@pkgextension}
 \AtBeginDocument{%
   \let\scr@pkgextension\@pkgextension
 }
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: prepare)
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{%
   scrkbase%
 }[%
-  2016/06/14 v3.21 KOMA-Script
-  package (%
+  2019/10/12 v3.27 KOMA-Script
+  package
+  (%
     KOMA-Script-dependent
- basics and keyval usage)]
+  basics and keyval usage)]
 \RequirePackage{scrbase}[\KOMAScriptVersion]
 \newcommand*{\KOMA@key}[1][.\@currname.\@currext]{%
   \DefineFamilyMember[{#1}]{KOMA}%
@@ -240,13 +243,17 @@
 }
 \newcommand*{\KOMAProcessOptions}{\FamilyProcessOptions{KOMA}}
 \@onlypreamble\KOMAProcessOptions
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
 \KOMAProcessOptions\relax
-%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
-%%% From File: $Id: scrlfile.dtx 2429 2016-04-12 12:10:19Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: option)
+%%% From File: $Id: scrlfile.dtx 3243 2019-10-07 13:32:53Z kohm $
 \RequirePackage{scrlfile}[%
-  2016/06/14 v3.21 KOMA-Script
+  2019/10/12 v3.27 KOMA-Script
 ]
-%%% From File: $Id: scrkernel-basics.dtx 2467 2016-05-27 18:35:47Z kohm $
+%%% From File: $Id: scrkernel-basics.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand*{\KOMAExecuteOptions}[1][.\@currname.\@currext]{%
   \FamilyExecuteOptions[#1]{KOMA}%
 }
@@ -282,8 +289,7 @@
     \fi
   }%
 }
-\newcommand*{\AfterKOMAoptions}{}
-\let\AfterKOMAoptions\AtEndOfFamilyOptions
+\newcommand*{\AfterKOMAoptions}{\AtEndOfFamilyOptions}
 \newcommand*{\KOMAoption}{\FamilyOption{KOMA}}
 \newcommand*{\KOMA@unknown@keyval}{\FamilyUnknownKeyValue{KOMA}}
 \newcommand*{\KOMA@ifkey}[2][.\@currname.\@currext]{%
@@ -345,10 +351,10 @@
     \scr@ifundefinedorrelax{KV@KOMA.\@currname.\@currext @version}{%
       \edef\reserved@a{\noexpand\endgroup
         \noexpand#1{%
-          You've used obsolete option `#2'.\noexpand\MessageBreak
+          You've used obsolete option `\detokenize{#2}'.\noexpand\MessageBreak
           Usage of this option is deprecated.\noexpand\MessageBreak
-          You should simply replace `#2'\noexpand\MessageBreak
-          by `#3'%
+          You should simply replace `\detokenize{#2}'\noexpand\MessageBreak
+          by `\detokenize{#3}'%
         }%
         \noexpand\KOMAExecuteOptions{#3}%
         \noexpand\def\noexpand\CurrentOption{\CurrentOption}%
@@ -356,14 +362,14 @@
     }{%
       \edef\reserved@a{\noexpand\endgroup
         \noexpand#1{%
-          You've used obsolete option `#2'.\noexpand\MessageBreak
+          You've used obsolete option `\detokenize{#2}'.\noexpand\MessageBreak
           Usage of this option indicates an old document\noexpand\MessageBreak
           and changes compatibility level using\noexpand\MessageBreak
-          `#3,version=first,\noexpand\MessageBreak
+          `\detokenize{#3},version=first,\noexpand\MessageBreak
           enabledeprecatedfontcommands' that may result\noexpand\MessageBreak
           in further warnings.\noexpand\MessageBreak
           If you don't want this, you should simply\noexpand\MessageBreak
-          replace option `#2' by `#3'%
+          replace option `\detokenize{#2}' by `\detokenize{#3}'%
         }%
         \noexpand\KOMAExecuteOptions{%
           #3,version=first}%
@@ -414,12 +420,20 @@
   }%
   \KOMAoptions{#3}%
 }
-%%% From File: $Id: scrkernel-fonts.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: scrkernel-fonts.dtx 3262 2019-10-10 08:25:29Z kohm $
+%%%            (run: body)
 \newcommand*{\IfExistskomafont}[1]{%
-  \@ifundefined{scr@fnt@#1}{%
-    \@ifundefined{scr@fnt@instead@#1}{\@secondoftwo}{\@firstoftwo}%
+  \scr@ifundefinedorrelax{scr@fnt@#1}{%
+    \scr@ifundefinedorrelax{scr@fnt@instead@#1}{\@secondoftwo}{\@firstoftwo}%
   }{%
     \@firstoftwo
+  }%
+}
+\newcommand*{\IfIsAliaskomafont}[1]{%
+  \scr@ifundefinedorrelax{scr@fnt@#1}{%
+    \scr@ifundefinedorrelax{scr@fnt@instead@#1}{\@secondoftwo}{\@firstoftwo}%
+  }{%
+    \@secondoftwo
   }%
 }
 \newcommand*{\setkomafont}[2]{%
@@ -512,15 +526,19 @@
 \newcommand*{\usesizeofkomafont}[1]{%
   \begingroup
     \scr@prepareforkomafont
+    \def\selectfont{%
+      \global\let\g@scr@f@size\f@size
+      \global\let\g@scr@f@baselineskip\f@baselineskip
+      \global\let\g@scr@f@linespread\f@linespread
+    }%
+    \selectfont
     \sbox\@tempboxa{%
-      \usekomafont{#1}{%
-        \xdef\g@scr@usefont{%
-          \noexpand\fontsize{\f@size}{\f@baselineskip}\noexpand\selectfont
-        }%
-      }%
+      \usekomafont{#1}{\relax}%
     }%
   \endgroup
-  \g@scr@usefont
+  \linespread{\g@scr@f@linespread}%
+  \fontsize{\g@scr@f@size}{\g@scr@f@baselineskip}%
+  \selectfont
 }
 \newcommand*{\usefamilyofkomafont}{\use@ofkomafont{family}}
 \newcommand*{\useseriesofkomafont}{\use@ofkomafont{series}}
@@ -529,53 +547,59 @@
 \newcommand*{\usefontofkomafont}[1]{%
   \begingroup
     \scr@prepareforkomafont
+    \def\selectfont{%
+      \global\let\g@scr@f@encoding\f@encoding
+      \global\let\g@scr@f@family\f@family
+      \global\let\g@scr@f@series\f@series
+      \global\let\g@scr@f@shape\f@shape
+      \global\let\g@scr@f@size\f@size
+      \global\let\g@scr@f@baselineskip\f@baselineskip
+      \global\let\g@scr@f@linespread\f@linespread
+    }%
+    \selectfont
     \sbox\@tempboxa{%
-      \usekomafont{#1}{%
-        \xdef\g@scr@usefont{%
-          \noexpand\fontsize{\f@size}{\f@baselineskip}%
-          \noexpand\usefont{\f@encoding}{\f@family}{\f@series}{\f@shape}%
-        }%
-      }%
+      \usekomafont{#1}{\relax}%
     }%
   \endgroup
-  \g@scr@usefont
+  \linespread{\g@scr@f@linespread}%
+  \fontsize{\g@scr@f@size}{\g@scr@f@baselineskip}%
+  \usefont{\g@scr@f@encoding}{\g@scr@f@family}{\g@scr@f@series}{\g@scr@f@shape}%
 }
 \newcommand*{\use@ofkomafont}[2]{%
   \begingroup
     \scr@prepareforkomafont
+    \def\selectfont{%
+      \global\expandafter\let\csname g@scr@f@#1\expandafter\endcsname
+                             \csname f@#1\endcsname
+    }%
+    \selectfont
     \sbox\@tempboxa{%
-      \usekomafont{#2}{%
-        \xdef\g@scr@usefont{%
-          \expandafter\noexpand
-          \csname font#1\endcsname{\csname f@#1\endcsname}\noexpand\selectfont
-        }%
-      }%
+      \usekomafont{#2}{\relax}%
     }%
   \endgroup
-  \g@scr@usefont
+  \@nameuse{font#1}{\csname g@scr@f@#1\endcsname}%
+  \selectfont
 }
-\newcommand*{\g@scr@usefont}{%
-  \PackageError{scrkbase}{%
-    undefined usage of \string\g@scr@usefont
-  }{%
-    \string\g@scr@usefont\space is an internal macro of KOMA-Script and
-    should\MessageBreak
-    not be used this way.\MessageBreak
-    This may be an internal error of KOMA-Script, a mistake of a package
-    author,\MessageBreak
-    or a mistake of the user.%
-  }%
-}
+\newcommand*{\g@scr@f@encoding}{}\let\g@scr@f@encoding\f@encoding
+\newcommand*{\g@scr@f@family}{}\let\g@scr@f@family\f@family
+\newcommand*{\g@scr@f@series}{}\let\g@scr@f@series\f@series
+\newcommand*{\g@scr@f@shape}{}\let\g@scr@f@shape\f@shape
+\newcommand*{\g@scr@f@size}{}\let\g@scr@f@size\f@size
+\newcommand*{\g@scr@f@baselineskip}{}\let\g@scr@f@baselineskip\f@baselineskip
+\newcommand*{\g@scr@f@linespread}{}\let\g@scr@f@linespread\f@linespread
 \newcommand*{\scr@komafontrelaxlist}{%
   \do\normalcolor
-  \do\uppercase \do\lowercase \do\MakeUppercase \do\MakeLowercase
 }
 \newcommand*{\scr@komafontgobblelist}{%
   \do\color
 }
+\newcommand*{\scr@komafontonearglist}{%
+  \do\MakeUppercase \do\MakeLowercase
+}
 \newcommand*{\scr@prepareforkomafont}{%
   \long\def\do##1{\let##1\relax}\scr@komafontrelaxlist
   \long\def\do##1{\let##1\@gobble}\scr@komafontgobblelist
+  \long\def\do##1{\let##1\@firstofone}\scr@komafontonearglist
 }
 \newcommand*{\addtokomafontrelaxlist}[1]{%
   \l@addto@macro\scr@komafontrelaxlist{\do#1}%
@@ -583,7 +607,17 @@
 \newcommand*{\addtokomafontgobblelist}[1]{%
   \l@addto@macro\scr@komafontgobblelist{\do#1}%
 }
+\newcommand*{\addtokomafontonearglist}[1]{%
+  \l@addto@macro\scr@komafontonearglist{\do#1}%
+}
 \newcommand*{\newkomafont}[3][\relax]{%
+  \scr@ifundefinedorrelax{scr@fnt@instead@#2}{}{%
+    \PackageWarning{scrkbase}{%
+      Making stand-alone element `#2' from\MessageBreak
+      alias to `\@nameuse{scr@fnt@instead@#2}'
+    }%
+    \expandafter\let\csname scr@fnt@instead@#2\endcsname\relax
+  }%
   \expandafter\newcommand\expandafter*\csname @#2font\endcsname{#3}%
   \expandafter\expandafter\expandafter\newcommand
   \expandafter\expandafter\expandafter*%
@@ -595,11 +629,21 @@
   \fi
 }
 \newcommand*{\aliaskomafont}[2]{%
+  \scr@ifundefinedorrelax{scr@fnt@#1}{}{%
+    \PackageWarning{scrkbase}{%
+      Redefining stand alone element `#1' as\MessageBreak
+      alias to `#2'%
+    }
+    \expandafter\let\csname scr@fnt@#1\endcsname\relax
+  }%
+  \scr@ifundefinedorrelax{scr@fnt@wrn@#1}{}{%
+    \expandafter\let\csname scr@fnt@wrn@#1\encsname\relax
+  }
   \expandafter\newcommand\expandafter*\csname scr@fnt@instead@#1\endcsname{%
     #2%
   }%
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

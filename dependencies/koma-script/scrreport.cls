@@ -1,14 +1,12 @@
 %%
-%% This is file `lscape.hak',
+%% This is file `scrreport.cls',
 %% generated with the docstrip utility, extended by scrdocstrip.
 %%
 %% The original source files were:
 %%
-%% scrkernel-version.dtx  (with options: `file,lscape.hak')
-%% scrhack.dtx  (with options: `hack,lscape,identify')
-%% scrhack.dtx  (with options: `hack,lscape,body')
+%% scrkernel-version.dtx  (with options: `class,report,long')
 %% 
-%% Copyright (c) 2008-2019 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 1994-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -64,31 +62,27 @@
   \fi
   \@CheckKOMAScriptVersion{2019/10/12 v3.27 KOMA-Script}%
 \endgroup
-%%% From File: $Id: scrhack.dtx 3262 2019-10-10 08:25:29Z kohm $
-\ProvidesFile{lscape.hak}[%
-  2019/10/12 v3.27 KOMA-Script
-  scrhack part
-  (hacking package
-    lscape)%
-]
-%%% From File: $Id: scrhack.dtx 3262 2019-10-10 08:25:29Z kohm $
-\xpatchcmd{\landscape}{\textheight=\vsize}{%
-  \if@scrhack@lscape
-    \scrh@LT@textheight=\vsize
-    \let\scrh@LT@outputpage\@outputpage
-    \def\@outputpage{\scrh@LT@outputpage\global\@colht\scrh@LT@textheight}%
-  \else
-    \textheight=\vsize
-  \fi
-}{%
-  \PackageInfo{scrhack}{\string\landscape\space patched to make
-    \string\textheight\space change optional}%
-}{%
-  \PackageWarning{scrhack}{Cannot patch \string\landscape!\MessageBreak
-    Maybe you are using a unsupported lscape version}%
-  \@scrhack@lscapefalse
+\providecommand*{\scr@clsextension}{\@clsextension}
+\AtBeginDocument{%
+  \let\scr@clsextension\@clsextension
 }
-\newlength{\scrh@LT@textheight}
+\newcommand*{\KOMAClassName}{%
+  scrreprt%
+}
+\newcommand*{\ClassName}{%
+  report%
+}
+\newcommand*{\KOMALongClassName}{}
+\edef\KOMALongClassName{scr\ClassName}
+\newcommand*{\KOMALongClassFileName}{\KOMALongClassName.\@clsextension}
+\edef\KOMALongClassFileName{\KOMALongClassFileName}
+\ProvidesClass{\KOMALongClassName}[%
+  2019/10/12 v3.27 KOMA-Script
+  document class (\ClassName)%
+]
+\let\ClassName\relax
+\expandafter\let\expandafter\KOMAClassName\expandafter\relax
+\expandafter\LoadClassWithOptions\expandafter{\KOMAClassName}
 \endinput
 %%
-%% End of file `lscape.hak'.
+%% End of file `scrreport.cls'.

@@ -7,7 +7,7 @@
 %% tocstyle.dtx  (with options: `package,trace,tocstyle')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2007-2016 by Markus Kohm <komascript(at)gmx.info>
+%% Copyright (c) 2007-2019 by Markus Kohm <komascript(at)gmx.info>
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -27,32 +27,20 @@
 %% `tocstyle.dtx' and `scrlogo.dtx'. You may however distribute the files
 %% `tocstyle.dtx' and `scrlogo.dtx' without this file.
 %% 
-%% If this file is a beta version, you are not allowed to distribute it.
-%% 
-%% English and German manuals are part of KOMA-Script bundle.
-%% ----------------------------------------------------------
-%% 
 %% The english manual is in `tocstyle.dtx', too.
 %% 
-%% The KOMA-Script bundle (but not this file) was based upon the LaTeX2.09
-%% Script family created by Frank Neukam 1993 and the LaTeX2e standard
-%% classes created by The LaTeX3 Project 1994-1996.
+%% THIS IS AN OBSOLETE PACKAGE! YOU SHOULD NOT USE IT!
 %% 
-%% THIS IS AN ALPHA VERSION!
-%% USAGE OF THIS VERSION IS ON YOUR OWN RISK!
-%% EVERYTHING MAY HAPPEN!
-%% EVERYTHING MAY CHANGE IN FUTURE!
-%% THERE IS NO SUPPORT, IF YOU USE THIS PACKAGE!
-%% 
-%%% From File: $Id: tocstyle.dtx 2428 2016-04-12 10:31:07Z kohm $
+%%% From File: $Id: tocstyle.dtx 3249 2019-10-09 11:35:26Z kohm $
 \NeedsTeXFormat{LaTeX2e}[1995/06/01]
 \ProvidesPackage{tocstyle}
-  [2016/04/12 v0.2h-alpha KOMA-Script package (versatile toc styles)]
+  [2019/10/09 v0.2j-alpha deprecated package (versatile toc styles)]
 \PackageWarningNoLine{tocstyle}{%
-  THIS IS AN ALPHA VERSION!\MessageBreak
+  THIS IS A DEPRECATED ALPHA VERSION!\MessageBreak
   USAGE OF THIS VERSION IS ON YOUR OWN RISK!\MessageBreak
   EVERYTHING MAY HAPPEN!\MessageBreak
-  EVERYTHING MAY CHANGE IN FUTURE!\MessageBreak
+  THE PACKAGE IS FROZEN WITH ALL IT'S BUGS!\MessageBreak
+  IT WILL BE REMOVED FROM KOMA-SCRIPT SOON!\MessageBreak
   THERE IS NO SUPPORT, IF YOU USE THIS PACKAGE!\MessageBreak
   Maybe it would be better, not to load this package%
 }
@@ -255,9 +243,11 @@
       \fi
       \nobreak
       \ifx\tocstyle@feature@pagenumberbox\relax
-        \hb@xt@\@pnumwidth{\hfil\tocstyle@feature@pagenumberhook #5}%
+      \hb@xt@\@pnumwidth{\hfil\tocstyle@feature@pagenumberhook #5%
+        \kern-\p@\kern\p@}%
       \else
-        \tocstyle@feature@pagenumberbox{\tocstyle@feature@pagenumberhook #5}%
+        \tocstyle@feature@pagenumberbox{\tocstyle@feature@pagenumberhook #5%
+        \kern-\p@\kern\p@}%
       \fi
       \par
     }%
@@ -459,7 +449,26 @@
        \par}%
     \fi}%
   \ifx\@dottedtocline\@tempa\else
-    \tocstyle@macrochangewarning\@dottedtocline
+    \def\@tempa#1#2#3#4#5{%
+      \ifnum #1>\c@tocdepth \else
+        \vskip \z@ \@plus.2\p@
+        {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+         \parindent #2\relax\@afterindenttrue
+         \interlinepenalty\@M
+         \leavevmode
+         \@tempdima #3\relax
+         \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+         {#4}\nobreak
+         \leaders\hbox{$\m@th
+            \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+            mu$}\hfill
+         \nobreak
+         \hb@xt@\@pnumwidth{\hfil \normalfont \normalcolor #5\kern-\p@\kern\p@}%
+         \par}%
+      \fi}%
+    \ifx\@dottedtocline\@tempa\else
+      \tocstyle@macrochangewarning\@dottedtocline
+    \fi
   \fi
   \let\tocstyle@saved@dottedtocline\@dottedtocline
   \def\@tempa#1{\hb@xt@\@tempdima{#1\autodot\hfil}}%
@@ -841,6 +850,7 @@
     \fi
   \endgroup
 }
+\providecommand*{\ext@toc}{toc}
 \newtocstyle{standard}{%
   \settocfeature{dothook}{\normalfont}%
   \settocfeature[-1]{entryhook}{\bfseries}%
@@ -853,10 +863,7 @@
     \settocfeature[1]{entryvskip}{1em\@plus\p@}%
     \settocfeature[1]{leaders}{\hfill}%
     \settocfeature[1]{entryhook}{%
-      \begingroup
-        \edef\@tempa{toc}%
-        \ifx\tocstyleAliasTOC\@tempa\aftergroup\bfseries\fi
-      \endgroup
+      \ifx\tocstyleAliasTOC\ext@toc\bfseries\fi
     }%
   \fi
 }
@@ -876,20 +883,10 @@
       \settocfeature[1]{entryvskip}{1em\@plus\p@}%
       \settocfeature[1]{leaders}{\hfill}%
       \settocfeature[1]{entryhook}{%
-        \begingroup
-          \edef\@tempa{toc}%
-          \ifx\tocstyleAliasTOC\@tempa
-            \aftergroup\sffamily\aftergroup\bfseries
-          \fi
-        \endgroup
+        \ifx\tocstyleAliasTOC\ext@toc\sffamily\bfseries\fi
       }%
       \settocfeature[1]{pagenumberhook}{%
-        \begingroup
-          \edef\@tempa{toc}%
-          \ifx\tocstyleAliasTOC\@tempa
-            \aftergroup\sffamily\aftergroup\bfseries
-          \fi
-        \endgroup
+        \ifx\tocstyleAliasTOC\ext@toc\sffamily\bfseries\fi
       }%
     \fi
   }
@@ -909,8 +906,7 @@
       \settocfeature[1]{leaders}{\hfill}%
       \settocfeature[1]{entryhook}{%
         \begingroup
-          \edef\@tempa{toc}%
-          \ifx\tocstyleAliasTOC\@tempa
+          \ifx\tocstyleAliasTOC\ext@toc
             \def\@tempa{\endgroup\usekomafont{sectionentry}}%
           \else
             \let\@tempa\endgroup
@@ -919,8 +915,7 @@
       }%
       \settocfeature[1]{pagenumberhook}{%
         \begingroup
-          \edef\@tempa{toc}%
-          \ifx\tocstyleAliasTOC\@tempa
+          \ifx\tocstyleAliasTOC\ext@toc
             \def\@tempa{\endgroup\usekomafont{sectionentrypagenumber}}%
           \else
             \let\@tempa\endgroup
@@ -954,7 +949,7 @@
 }{%
   \PackageInfo{tocstyle}{no tocstyle.cfg found}%
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

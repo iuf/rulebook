@@ -7,7 +7,7 @@
 %% scrlfile.dtx  (with options: `scrlfile')
 %% scrlogo.dtx  (with options: `logo')
 %% 
-%% Copyright (c) 2002-2016 Markus Kohm [komascript at gmx info]
+%% Copyright (c) 2002-2019 Markus Kohm [komascript at gmx info]
 %% 
 %% This file was generated from file(s) of the KOMA-Script bundle.
 %% ---------------------------------------------------------------
@@ -35,23 +35,36 @@
 %% 
 %% The KOMA-Script bundle (but maybe not this file) was based upon the
 %% LaTeX 2.09 Script family created by Frank Neukam 1993 and the LaTeX2e
-%% standard classes created by The LaTeX3 Project 1994-1996.  You may
+%% standard classes created by The LaTeX3 Project 1994-1996.  You can
 %% find a complete unmodified copy of LaTeX2e at
-%% <http://www.ctan.org/pub/tex-archive/macros/latex/base/>.
+%% <http://mirror.ctan.org/tex-archive/macros/latex/base/>.
 %% 
-%%% From File: $Id: scrlfile.dtx 2429 2016-04-12 12:10:19Z kohm $
+%%% From File: $Id: scrlfile.dtx 3243 2019-10-07 13:32:53Z kohm $
 \ProvidesPackage{scrlfile}[%
-  2016/06/14 v3.21 KOMA-Script
-  package (loading files)]
-\typeout{Package scrlfile, \csname ver@scrlfile.sty\endcsname%
-  ^^J\@spaces\@spaces\@spaces\@spaces\space\space
-  Copyright (C) Markus Kohm^^J}
+  2019/10/12 v3.27 KOMA-Script
+  package
+  (loading files)]
 \ExecuteOptions{}
 \ProcessOptions\relax
-\CheckCommand{\InputIfFileExists}[2]{%
+\long\def\reserved@a#1#2{%
   \IfFileExists{#1}%
-    {#2\@addtofilelist{#1}\@@input \@filef@und}}
-\renewcommand{\InputIfFileExists}[2]{%
+    {#2\@addtofilelist{#1}\@@input \@filef@und}}%
+\ifx\reserved@a\InputIfFileExists\else
+  \expandafter\CheckCommand\expandafter*\expandafter\InputIfFileExists
+  \expandafter{%
+    \expandafter\protect\csname InputIfFileExists \endcsname
+  }%
+  \expandafter\CheckCommand \csname InputIfFileExists \endcsname[2]{%
+    \IfFileExists {#1}{%
+      \expandafter \@swaptwoargs \expandafter {\@filef@und }%
+      {#2\@addtofilelist {#1}\@@input }%
+    }%
+  }%
+\fi
+\expandafter\renewcommand\expandafter*\expandafter\InputIfFileExists
+\expandafter{\expandafter
+  \protect\csname InputIfFileExists \endcsname}%
+\expandafter\long\expandafter\def\csname InputIfFileExists \endcsname#1#2{%
   \begingroup\expandafter\expandafter\expandafter\endgroup
   \expandafter\ifx\csname #1-@alias\endcsname\relax
     \expandafter\@secondoftwo
@@ -64,12 +77,15 @@
       #1-@alias\endcsname}{#2}%
   }%
   {\IfFileExists{#1}{%
-      \scr@load@hook{before}{#1}%
-      #2\@addtofilelist{#1}%
-      \@@input \@filef@und
-      \scr@load@hook{after}{#1}%
+      \expandafter\scr@input@withhook\expandafter{\@filef@und}{#1}{#2}%
     }}%
 }
+\newcommand{\scr@input@withhook}[3]{%
+  \scr@load@hook{before}{#2}%
+  #3\@addtofilelist{#2}%
+  \@@input #1%
+  \scr@load@hook{after}{#2}%
+}%
 \newcommand*{\scr@@loadwithoptions}{}
 \newcommand*{\scr@loadwithoptions}{}
 \let\scr@loadwithoptions\@loadwithoptions
@@ -162,11 +178,12 @@
   }%
 }
 \newcommand*{\@@@AfterClass}[2]{%
-  \begingroup\ifx\csname #2.\@clsextension-h@@k\endcsname\relax
-    \aftergroup\@sAfterClass
-  \else
-    \aftergroup\AfterAtEndOfClass
-  \fi
+  \begingroup
+    \expandafter\ifx\csname #2.\@clsextension-h@@k\endcsname\relax
+      \aftergroup\@sAfterClass
+    \else
+      \aftergroup\AfterAtEndOfClass
+    \fi
   \endgroup{#2}%
 }
 \newcommand*{\AfterAtEndOfClass}[1]{%
@@ -202,11 +219,12 @@
   }%
 }
 \newcommand*{\@@@AfterPackage}[2]{%
-  \begingroup\ifx\csname #2.\@pkgextension-h@@k\endcsname\relax
-    \aftergroup\@sAfterPackage
-  \else
-    \aftergroup\AfterAtEndOfPackage
-  \fi
+  \begingroup
+    \expandafter\ifx\csname #2.\@pkgextension-h@@k\endcsname\relax
+      \aftergroup\@sAfterPackage
+    \else
+      \aftergroup\AfterAtEndOfPackage
+    \fi
   \endgroup{#2}%
 }
 \newcommand*{\AfterAtEndOfPackage}[1]{%
@@ -273,8 +291,7 @@
         \let\usepackage\RequirePackage
       \fi
     \fi
-    \expandafter\@for \expandafter\reserved@a\expandafter:\expandafter=%
-    \reserved@b\do {%
+    \@for\reserved@a:=\reserved@b\do {%
       \ifx\reserved@a\@empty
         #1{scrlfile}{%
           empty package argument for
@@ -484,7 +501,7 @@
   \endgroup
   \if@nobreak\ifvmode\nobreak\fi\fi
 }
-%%% From File: $Id: scrlogo.dtx 1380 2013-10-01 15:31:55Z mjk $
+%%% From File: $Id: scrlogo.dtx 2640 2017-05-08 09:36:55Z kohm $
 \@ifundefined{KOMAScript}{%
   \DeclareRobustCommand{\KOMAScript}{\textsf{K\kern.05em O\kern.05em%
       M\kern.05em A\kern.1em-\kern.1em Script}}}{}

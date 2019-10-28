@@ -1,6 +1,6 @@
 % ======================================================================
 % scrdoc.dtx
-% Copyright (c) Markus Kohm, 2002-2016
+% Copyright (c) Markus Kohm, 2002-2017
 %
 % This file is part of the LaTeX2e KOMA-Script bundle.
 %
@@ -18,7 +18,7 @@
 % This work consists of all files listed in manifest.txt.
 % ----------------------------------------------------------------------
 % scrdoc.dtx
-% Copyright (c) Markus Kohm, 2002-2016
+% Copyright (c) Markus Kohm, 2002-2017
 %
 % Dieses Werk darf nach den Bedingungen der LaTeX Project Public Lizenz,
 % Version 1.3c, verteilt und/oder veraendert werden.
@@ -195,6 +195,11 @@
   \MakePrivateLetters \m@cro@{6}}
 \long\def\m@cro@#1#2{\endgroup \topsep\MacroTopsep \trivlist
   \edef\saved@macroname{\string#2}%
+  \ifcase #1
+    \edef\saved@indexname{\expandafter\@gobble\string#2}%
+  \else
+    \let\saved@indexname\saved@macroname
+  \fi
   \def\makelabel##1{\llap{##1}}%
   \if@inlabel
     \let\@tempa\@empty \count@\macro@cnt
@@ -247,6 +252,13 @@
 \let\endLength\endmacro
 \let\endCounter\endmacro
 \let\endKOMAvar\endmacro
+
+% Some new command
+\newcommand*{\File}[1]{\texttt{\mbox{#1}}}
+\newcommand*{\Class}{\File}
+\newcommand*{\Package}{\File}
+\newcommand*{\Macro}{\cs}
+\newcommand*{\Option}{\File}
 
 % The new names we need
 \providecommand*{\EnvName}{Umgebung}% This is german
