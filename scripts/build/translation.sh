@@ -3,8 +3,8 @@ set -e # POSIX version of bash -e
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-if [ $BRANCH = "master" ]; then # hack to make master branch use 2017 transifex translation
-  BRANCH="2017"
+if [ $BRANCH = "master" ]; then # hack to make master branch use 2019 transifex translation
+  BRANCH="2019"
 fi
 
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
