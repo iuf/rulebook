@@ -87,9 +87,7 @@ rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be
 
 rm -rf .tx
 echo "Configuring Transifex..."
-touch ~/.transifexrc
-sudo echo $'[https://www.transifex.com]\nhostname = https://www.transifex.com\nusername = '"$TRANSIFEX_USER"$'\npassword = '"$TRANSIFEX_PASSWORD"$'\ntoken = '"$TRANSIFEX_API_TOKEN"$'\n' > ~/.transifexrc
-tx init --no-interactive
+tx init --token=$TRANSIFEX_API_TOKEN_2019 --force --no-interactive
 echo "Done."
 
 mkdir -p tmp

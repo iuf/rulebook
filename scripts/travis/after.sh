@@ -13,5 +13,5 @@ echo "Files:"
 ls -1 upload
 echo
 echo "Uploading files..."
-ncftpput -u $FTPUSER -p $FTPPASS -R elbert.dreamhost.com /rulebook.scott-wilton.com upload/*
+ncftpput -u $FTPUSER -p $FTPPASS -R elbert.dreamhost.com /rulebook.scott-wilton.com upload/* > /dev/null
 echo "Done."
