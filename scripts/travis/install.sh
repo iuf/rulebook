@@ -2,10 +2,6 @@
 set -e # POSIX version of bash -e
 
 install() {
-    # travis does a "shallow clone" on exactly one branch, so we need to unshallow and fetch all other branches, to be able to diff against them.
-    git_fetch_all_branches
-
-
     # gitinfo is a latex package which allows to put git metadata (like current hash) into the latex document.
     install_gitinfo
 
@@ -60,22 +56,6 @@ install_ulem() {
 
 install_transifex_client() {
     pip install transifex-client
-}
-
-git_fetch_all_branches() {
-    # cache current branch
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-
-    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-    git fetch --depth=3
-
-    # track all remote branches
-    for remote in `git branch -r | grep -v /HEAD`; do
-        git checkout --track $remote || true
-    done
-
-    # checkout originally selected branch
-    git checkout $current_branch
 }
 
 install

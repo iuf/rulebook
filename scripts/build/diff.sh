@@ -93,6 +93,8 @@ if [[ ! $DIFFBRANCH ]]; then
     exit 1
 fi
 
+git fetch --depth 1 origin $DIFFBRANCH:$DIFFBRANCH #fetch branch so we can diff on it
+
 # setup diretory structure as needed:
 mkdir -p pdf
 mkdir -p tmp/src_original/
