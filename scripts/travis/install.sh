@@ -19,6 +19,10 @@ install() {
 
     # handles online translations on transifex.com
     install_transifex_client
+
+    #latex font
+    install_lmodern
+
 }
 
 install_latexdiff() {
@@ -52,6 +56,11 @@ install_koma-script() {
 install_ulem() {
     cp -a dependencies/ulem.sty src
     cp -a dependencies/ulem.sty .
+}
+
+install_lmodern() {
+    cp -a dependencies/lmodern.sty src
+    cp -a dependencies/lmodern.sty .
 }
 
 install_transifex_client() {

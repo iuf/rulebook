@@ -29,7 +29,6 @@ addons:
       - texlive-latex-recommended
       - texlive-latex-extra
       - texlive-fonts-recommended
-      - lmodern
       - po4a
       # - texlive-extra-utils # texfot
 
