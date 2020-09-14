@@ -9,6 +9,8 @@ git:
 
 notifications:
   email:
+    recipients:  
+    - scott.o.wilton@gmail.com  
     on_success: never
     on_failure: change
 
