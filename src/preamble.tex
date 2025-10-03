@@ -1,4 +1,4 @@
-\documentclass[a4paper,oneside,parskip=half,numbers=noenddot]{scrbook}
+\documentclass[a4paper,oneside,parskip=half,numbers=noenddot, toc=allwithdot]{scrbook}
 
 
 %%% Page Layout %%%
@@ -122,12 +122,6 @@
 %% all of this comes after minitoc is loaded %%
 \setcounter{tocdepth}{-1} % only includes parts and chapters (not sections) in main TOC
 \mtcsetdepth{parttoc}{3} % only includes chapters and sections (not subsections) in part TOCs
-
-\usepackage[tocindentauto]{tocstyle} % prettier TOC
-\usetocstyle{allwithdot} %use 'KOMAlike" if you don't want dots
-\settocstylefeature [-1] {entryvskip} {15pt}
-\settocstylefeature [0] {entryvskip} {10pt}
-\settocstylefeature [0] {entryhook} {\hspace{18pt} }
 
 \renewcommand{\mtcgapbeforeheads}{0pt}
 \renewcommand{\mtcgapafterheads}{0pt}
