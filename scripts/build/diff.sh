@@ -123,14 +123,14 @@ verbose_cmd echo "Done"
 for CHAPTER in $CHAPTERS; do
     verbose_cmd echo "Diffing on chapter file: $CHAPTER"
     SLUG=$(echo $CHAPTER | cut -f 1 -d '.')
-    verbose_cmd latexdiff-vc --git --so --flatten --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
+    verbose_cmd latexdiff-vc --git --flatten --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
     # --exclude-textcmd=$EXCLUDE_TEXTCMDS
     verbose_cmd mv -v $CHAPTERDIR/$SLUG-diff$DIFFBRANCH.tex tmp/src_diff_$DIFFBRANCH/$SHORTCHAPTERDIR/$SLUG.tex
 done
 # TODO: remember to do something about toggle include for std skills
 
 # create title-page diff:
-verbose_cmd latexdiff-vc --git --so --force -r $DIFFBRANCH -r $BRANCH $SRC/titlepage.tex
+verbose_cmd latexdiff-vc --git --force -r $DIFFBRANCH -r $BRANCH $SRC/titlepage.tex
 verbose_cmd mv -v $SRC/titlepage-diff$DIFFBRANCH-$BRANCH.tex tmp/src_diff_$DIFFBRANCH/titlepage.tex # move titlepage diff to tmp
 rm -rf $SRC/titlepage-old* # remove tmp files created with latexdiff
 

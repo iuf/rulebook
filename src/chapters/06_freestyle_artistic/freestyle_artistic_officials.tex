@@ -85,8 +85,9 @@ Judges will also be eliminated from the list if they exhibit Judging weaknesses 
 At Unicons, if more than five judges each of Technical and Performance remain, judges who have not judged at a previous Unicon will be removed from the list.
 If there are still more than five each then the final list of judges for the category will be chosen by accuracy scores as defined in section \ref{subsec:freestyle_judging-panel_calculating-accuracy-scores}.
 
-\subsection{Judging Panel May Not Change}
-The individual members of the judging panel must remain the same for the entirety of an age groups or category; for example one judge may not be replaced by another except between age groups or categories.
+\subsection{Judging Panel May Not Change}\label{subsec:freestyle_judging-panel_not-change}
+A judging panel remains persistent minimum per age group.
+If the event awards athletes by class or uses class results, the judging panel must remain persistent per class.
 In the event of a medical or other emergency, this rule can be waived by the Chief Judge.
 
 \subsection{Rating Judge Performance \label{subsec:freestyle_judging-panel_rating-judge-performance}} %comment2016 we don't do this, This section should be reworked
@@ -148,17 +149,42 @@ The workshop will include a practice judging session.
 Each judge will be required to sign a statement indicating they have read the rules, attended the workshop, agree to follow the rules, and will accept being removed from the list of available judges if their judging accuracy scores show Judging Weaknesses.%comment2016 accuracy scores
 
 \section{Scoring}
-To tabulate the scores in Artistic Freestyle events, each judge's scores in a category or age group are totaled and restated as a percentage of that judge's total points for that category or age group, i.e.\ the judge's relative preferences for each performer.
-Then the percentages from all of the judges are averaged per riders.
-This is done first in Performance, Technical, and Dismount.
-Once the percentage average value for each competitor has been calculated, these three averaged percentages are added together according to their weighting to see the final results.
+To tabulate the scores in Artistic Freestyle competitions, the scores per judging part (Performance, Technical and Dismount) are averaged for all judges.
+For the published results, athletes will receive one value per judging part and the total score.
+Athletes are ranked based on the total score.
+
+Performance Score = AVG(Performance score of all judges)
+Technical Score = AVG(Technical score of all judges)
+Dismount Score = AVG(Dismount score of all judges)
+
+These scores are weighted for the total score:
+
+45\% Performance Score
+45\% Technical Score
+10\% Dismount Score
+
+Total Score = (Performance Score * 0.45 / 30 + Technical Score * 0.45 / 30 + Dismount Score * 0.1 / 10) * 100
+
+The total score is rounded to three fraction digits.
+The formula for total score respects the weighted scores but normalizes them to 100 pts maximum.
+For example a rider scoring 30 pts in performance and technical and 10 pts in dismount would have 100 pts as total score.
+
+Example for tabulated results*:
+\begin{tabular}{lllll}
+	\hline
+	Name	&	Performance Score	&	Technical Score	&	Dismount Score	&	Total Score\\
+	\hline
+	John Doe	&	23	&	14	&	7	&	62.5\\
+	\hline
+	Jane Doe	&	8	&	17	&	6	&	43.5\\
+	\hline
+\end{tabular}
+
+\subsection{Scope of Ranking}
+As routines are judged with scores, the results can be ranked per class and/or age group, see \ref{subsec:freestyle-age_groups_and_categories} which ranking(s) will be used.
 
 \subsection{Removing Scores}
-All of the judges scores must be kept.
-The Chief Judge has the power to remove scores only if they are deemed to be biased, inaccurate, or another extreme case.
-%comment2016 do we want more text here?
+The highest and lowest scores for Performance and Technical may be removed to increase accuracy of final results.
+A minimum of five judges per judging part is required.
 
-\subsection{Ties}
-In the case of a tie where more than one competitor has the same placing score after the above process, those riders will be ranked based on their placing scores for Technical.
-The scoring process must be repeated using only the Technical scores for the tied riders to determine this rank.
-If competitors' Technical ranking comes out equal, all competitors with the same score are awarded the same place.
+IUF Sanctioned and Endorsed events: The removal of highest and lowest scores is compulsory.

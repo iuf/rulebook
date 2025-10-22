@@ -22,6 +22,8 @@ src/*.hak
 src/*.cls
 src/*.clo
 
+*.fdb_latexmk
+*.fls
 *.texnicle
 *.aux
 *.toc
