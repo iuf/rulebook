@@ -130,8 +130,8 @@ done
 # TODO: remember to do something about toggle include for std skills
 
 # create title-page diff:
-verbose_cmd latexdiff-vc --git --force -r $DIFFBRANCH -r $BRANCH $SRC/titlepage.tex
-verbose_cmd mv -v $SRC/titlepage-diff$DIFFBRANCH-$BRANCH.tex tmp/src_diff_$DIFFBRANCH/titlepage.tex # move titlepage diff to tmp
+verbose_cmd latexdiff-vc --git --flatten --force -r $DIFFBRANCH $SRC/titlepage.tex
+verbose_cmd mv -v $SRC/titlepage-diff$DIFFBRANCH.tex tmp/src_diff_$DIFFBRANCH/titlepage.tex # move titlepage diff to tmp
 rm -rf $SRC/titlepage-old* # remove tmp files created with latexdiff
 
 # copy all source files to tmp except chapters (because they're already there):
