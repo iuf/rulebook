@@ -47,10 +47,7 @@ diff: ## Creates an output pdf that compares the current rulebook with the branc
 #
 # make translation
 #
-# Generates a translated version of the rulebook
-#
-# Parameters:
-#   LOCALE = the language-tag for the translated version
+# Generates translated versions of the rulebook for all languages pulled from Transifex
 #
 # TODO: change translated to translation ?
 # TODO: make translation-all task

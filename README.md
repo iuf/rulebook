@@ -49,3 +49,11 @@ The current branch will be combpared with the branch(es) in the `diff-branches` 
 
 ### Gitinfo package  
 If the build is failing because the gitinfo2 package cannot be found, copy the `gitinfo2.sty` from `dependencies` into the `src` directory.
+
+## Translations
+
+The translation build uses po4a to extract strings from LaTeX, Transifex to manage translated PO files, and latexmk to build translated PDFs.
+
+See [docs/translations.md](docs/translations.md) for the current workflow, including where POT/PO files are generated and how translated rulebooks are built.
+
+For local macOS dependency setup, see [docs/macos-setup.md](docs/macos-setup.md).

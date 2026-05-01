@@ -7,7 +7,12 @@ if [ $BRANCH = "master" ]; then # hack to make master branch use 2019 transifex 
   BRANCH="2019"
 fi
 
+TRANSIFEX_PROJECT=${TRANSIFEX_PROJECT:-rulebook-$BRANCH}
+TRANSIFEX_ORGANIZATION=${TRANSIFEX_ORGANIZATION:-iuf}
+TRANSIFEX_TOKEN=${TRANSIFEX_API_TOKEN:-$TRANSIFEX_API_TOKEN_2019}
+
 PO4ACHARSETS="--master-charset Utf-8 --localized-charset Utf-8"
+PO4A_MASTER_CHARSET="--master-charset Utf-8"
 
 # Usage info
 show_help() {
@@ -67,7 +72,14 @@ trap finish_script INT TERM SIGHUP SIGINT SIGTERM
 verbose_cmd() {
     # append 'verbose_cmd' before any command and it's output is silenced unless verbose is true
     if [[ $VERBOSE -eq 1 ]]; then
-        "$@" > /dev/null
+        local output_file
+        output_file=$(mktemp "${TMPDIR:-/tmp}/rulebook-translation.XXXXXX")
+        if ! "$@" > "$output_file" 2>&1; then
+            cat "$output_file"
+            rm -f "$output_file"
+            return 1
+        fi
+        rm -f "$output_file"
     else
         "$@"
     fi
@@ -85,9 +97,20 @@ fi
 
 rm -rf src/*/*diff*.tex src/*diff*.tex # remove any diff tex files that might be left over from the diff build
 
+if [[ -z "$TRANSIFEX_TOKEN" ]]; then
+    echo "Error: Set TRANSIFEX_API_TOKEN before building translations."
+    echo "For compatibility, TRANSIFEX_API_TOKEN_2019 is also accepted."
+    exit 1
+fi
+
 rm -rf .tx
 echo "Configuring Transifex..."
-tx init --token=$TRANSIFEX_API_TOKEN_2019 --force --no-interactive
+mkdir -p .tx
+cat > .tx/config << EOF
+[main]
+host = https://app.transifex.com
+
+EOF
 echo "Done."
 
 mkdir -p tmp
@@ -123,21 +146,30 @@ for CHAPTER in $CHAPTERS; do
     verbose_cmd echo $SLUG
     verbose_cmd echo $CHAPTERDIR/$CHAPTER
     echo -e '0r config/po4a-escape.tex\nw' | ed -s $CHAPTERDIR/$CHAPTER # add po4a escape commands to the beginning of each chapter
-    TEXINPUTS=$CHAPTERDIR verbose_cmd po4a-gettextize --format latex --master $CHAPTERDIR/$CHAPTER --po tmp/po/${SLUG}/template.pot $PO4ACHARSETS
+    mkdir -p tmp/po/${SLUG}
+    TEXINPUTS=$CHAPTERDIR verbose_cmd po4a-updatepo --format latex --master $CHAPTERDIR/$CHAPTER --po tmp/po/${SLUG}/template.pot $PO4A_MASTER_CHARSET
 
     sed -i.bak 's~charset=CHARSET~charset=UTF-8~' tmp/po/${SLUG}/template.pot # fix charset because po4a isn't setting it correctly
 
-    verbose_cmd tx set --auto-local --resource=rulebook-$BRANCH.$SLUG "tmp/po/${SLUG}/<lang>.po" --type PO --source-lang en --source-file tmp/po/${SLUG}/template.pot --execute
+    cat >> .tx/config << EOF
+[o:$TRANSIFEX_ORGANIZATION:p:$TRANSIFEX_PROJECT:r:$SLUG]
+file_filter = tmp/po/${SLUG}/<lang>.po
+source_file = tmp/po/${SLUG}/template.pot
+source_lang = en
+type = PO
+resource_name = $SLUG
+
+EOF
 done
 echo "Done."
 
 # upload all tempates to transifex
 echo "Pushing to transifex..."
-verbose_cmd tx push --source
+verbose_cmd tx --token=$TRANSIFEX_TOKEN push --source
 echo "Done."
 # download all translated strings from transifex
 echo "Pulling from transifex..."
-verbose_cmd tx pull --all #TODO: -- mode reviewed
+verbose_cmd tx --token=$TRANSIFEX_TOKEN pull --all #TODO: -- mode reviewed
 echo "Done."
 
 # extracts the list of languages by looking at one chapter's po-files
@@ -146,9 +178,9 @@ LANGUAGES=$(ls tmp/po/$(ls tmp/po | head -1)/*.po | xargs -n1 basename | sed "s/
 verbose_cmd echo "Languages:"
 verbose_cmd echo $LANGUAGES
 
-for LANG in $LANGUAGES; do
-    mkdir -p tmp/src_$LANG
-    rsync -a tmp/src_translation/ tmp/src_$LANG
+for LOCALE in $LANGUAGES; do
+    mkdir -p tmp/src_$LOCALE
+    rsync -a tmp/src_translation/ tmp/src_$LOCALE
 done
 
 verbose_cmd ls tmp
@@ -157,14 +189,14 @@ verbose_cmd ls tmp/src_translation/chapters
 for CHAPTER in $CHAPTERS; do
     SLUG=$(echo $CHAPTER | sed -e "s/[0-9][0-9]_\(.*\)\.tex/\1/")
 
-    TEXINPUTS=./tmp/src_translation/chapters po4a --variable chapter_file=$CHAPTER --variable chapter_slug=$SLUG $PO4ACHARSETS config/po4a.cfg
+    TEXINPUTS=./tmp/src_translation/chapters po4a --force --variable chapter_file=$CHAPTER --variable chapter_slug=$SLUG $PO4ACHARSETS config/po4a.cfg
 done > /dev/null
 
 #TODO: language specific titlepage and preamble
 
-for LANG in $LANGUAGES; do
-    echo "Building pdf for $LANG"
-    scripts/build/pdf.sh $VERBOSE_FLAG $CLEAN_FLAG -s tmp/src_$LANG -o iuf-rulebook-$BRANCH-$LANG.pdf iuf-rulebook.tex
+for LOCALE in $LANGUAGES; do
+    echo "Building pdf for $LOCALE"
+    scripts/build/pdf.sh $VERBOSE_FLAG $CLEAN_FLAG -s tmp/src_$LOCALE -o iuf-rulebook-$BRANCH-$LOCALE.pdf iuf-rulebook.tex
 done
 
 finish_script
