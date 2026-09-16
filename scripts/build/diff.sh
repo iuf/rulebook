@@ -8,6 +8,9 @@ SHORTCHAPTERDIR=${CHAPTERDIR##src/} # remove src/ from the start of CHAPTERDIR
 CHAPTERS=$(ls $CHAPTERDIR | grep ".*\.tex$")
 
 EXCLUDE_TEXTCMDS="part,chapter,section,subsection,subsubsection,iftoggle,comment2016" # for latexdiff
+# Keep hidden editorial notes out of the rendered diff, including deleted blocks.
+# Preserve latexdiff's standard comment handling as well.
+LATEXDIFF_OPTIONS=(--config 'VERBATIMENV=comment;comment2016')
 
 function clean_up {
   # Perform program exit housekeeping
@@ -123,14 +126,14 @@ verbose_cmd echo "Done"
 for CHAPTER in $CHAPTERS; do
     verbose_cmd echo "Diffing on chapter file: $CHAPTER"
     SLUG=$(echo $CHAPTER | cut -f 1 -d '.')
-    verbose_cmd latexdiff-vc --git --flatten --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
+    verbose_cmd latexdiff-vc "${LATEXDIFF_OPTIONS[@]}" --git --flatten --force -r $DIFFBRANCH $CHAPTERDIR/$CHAPTER
     # --exclude-textcmd=$EXCLUDE_TEXTCMDS
     verbose_cmd mv -v $CHAPTERDIR/$SLUG-diff$DIFFBRANCH.tex tmp/src_diff_$DIFFBRANCH/$SHORTCHAPTERDIR/$SLUG.tex
 done
 # TODO: remember to do something about toggle include for std skills
 
 # create title-page diff:
-verbose_cmd latexdiff-vc --git --flatten --force -r $DIFFBRANCH $SRC/titlepage.tex
+verbose_cmd latexdiff-vc "${LATEXDIFF_OPTIONS[@]}" --git --flatten --force -r $DIFFBRANCH $SRC/titlepage.tex
 verbose_cmd mv -v $SRC/titlepage-diff$DIFFBRANCH.tex tmp/src_diff_$DIFFBRANCH/titlepage.tex # move titlepage diff to tmp
 rm -rf $SRC/titlepage-old* # remove tmp files created with latexdiff
 

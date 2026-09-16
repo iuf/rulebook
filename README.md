@@ -46,6 +46,7 @@ Do this with **./install_hooks**. Build the document again and the information s
 To produce a PDF highlighting the changes, type **make diff**.
 This will generate **pdf/iuf-rulebook-$OLDBRANCH-diff-$BRANCH.pdf**.
 The current branch will be combpared with the branch(es) in the `diff-branches` file.
+Hidden editorial notes in `comment` and `comment2016` environments stay hidden in the diff PDF, including when those notes are removed.
 
 ### Gitinfo package  
 If the build is failing because the gitinfo2 package cannot be found, copy the `gitinfo2.sty` from `dependencies` into the `src` directory.
